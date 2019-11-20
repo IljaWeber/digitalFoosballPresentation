@@ -13,8 +13,8 @@ import java.util.Date;
 @ControllerAdvice
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {NameDuplicateException.class})
-    public ResponseEntity<Object> handleDuplicateException(NameDuplicateException exception, WebRequest request) {
+    @ExceptionHandler(value = {DuplicateException.class})
+    public ResponseEntity<Object> handleDuplicateException(DuplicateException exception, WebRequest request) {
         String errorMessageDescription = exception.getLocalizedMessage();
 
         if (errorMessageDescription == null){

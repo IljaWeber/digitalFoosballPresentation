@@ -13,64 +13,34 @@ export default class SignInForm extends React.Component {
 
     componentDidMount = async () => {
         const url = properties.url + "allTeams";
-
-        const requestOptions = {
+        const response = await fetch(url, {
             method: 'GET',
-            credentials: 'include',
-            Authorization: properties.auth,
-        };
-
-        const response = await fetch(url, requestOptions);
+            headers: {
+                Accepts: 'application/json'
+            },
+        });
         this.teams = await response.json();
     };
 
     setUpTeamOne = (team) => {
-        this.setState({teamOne: team})
+        this.setState({ teamOne: team })
     };
     setUpTeamTwo = (team) => {
-        this.setState({teamTwo: team})
+        this.setState({ teamTwo: team })
     };
 
-    adhoc = async (event) => {
-        event.preventDefault();
-        const url = properties.url + "initAdHoc";
-
-        const requestOptions = {
-            method: 'POST',
-            credentials: 'include',
-            Authorization: properties.auth,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
-
-        const response = await fetch(url, requestOptions);
-        const json = await response.json();
-
-        if (!response.ok) {
-            alert(json.errorMessage)
-        } else {
-            this.props.submitHandler(json)
-        }
-    };
-
-    sendForm = async (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault();
         const url = properties.url + "init";
-
-        const requestOptions = {
+        const response = await fetch(url, {
             method: 'POST',
-            credentials: 'include',
-            Authorization: properties.auth,
             headers: {
-                'Content-Type': 'application/json'
+                Accepts: 'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(this.state)
-        };
-
-        const response = await fetch(url, requestOptions);
+        });
         const json = await response.json();
-
         if (!response.ok) {
             alert(json.errorMessage)
         } else {
@@ -80,32 +50,21 @@ export default class SignInForm extends React.Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.sendForm} className="teamSignIn">
-                    <div className="teamSignIn_Forms">
-                        <div className="teamSignIn_Forms_TeamOne">
-                            <h2>Green</h2>
-                            <TeamForm number="1" onChange={this.setUpTeamOne} teams={this.teams}/>
-                        </div>
-                        <div className="teamSignIn_Forms_TeamTwo">
-                            <h2>Orange</h2>
-                            <TeamForm number="2" onChange={this.setUpTeamTwo} teams={this.teams}/>
-                        </div>
+            <form onSubmit={this.handleSubmit} className="teamSignIn">
+                <div className="teamSignIn_Forms">
+                    <div className="teamSignIn_Forms_TeamOne">
+                        <h2>Green</h2>
+                    <TeamForm number="1" onChange={this.setUpTeamOne} teams={this.teams}/>
                     </div>
-
-                    <div className="teamSignIn_Buttons">
-                        <div className="teamSignIn_Submit">
-                            <input type="submit" value="Submit" className="button slowDropIn"/>
-                        </div>
-                        <h2>
-                            OR
-                        </h2>
-                        <form onSubmit={this.adhoc} className="teamSignInAdHoc">
-                            <input type="submit" value="Ad-Hoc" className="button slowDropIn"/>
-                        </form>
+                    <div className="teamSignIn_Forms_TeamTwo">
+                        <h2>Orange</h2>
+                        <TeamForm number="2" onChange={this.setUpTeamTwo} teams={this.teams}/>
                     </div>
-                </form>
-            </div>
+                </div>
+                <div className="teamSignIn_Submit">
+                    <input type="submit" value="Submit" className="button slowDropIn" />
+                </div>
+            </form>
         )
     }
 }

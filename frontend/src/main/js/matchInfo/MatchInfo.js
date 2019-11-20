@@ -16,7 +16,7 @@ export default class MatchInfo extends React.Component {
     stompClient;
 
     connect() {
-        const stompClient = Stomp.over(new SockJS(properties.hostAndPort + 'socket-registry'));
+        const stompClient = Stomp.over(new SockJS(properties.url + 'socket-registry'));
 
         stompClient.connect({}, () => {
             stompClient.subscribe('/update/score', (message) => {
@@ -25,7 +25,6 @@ export default class MatchInfo extends React.Component {
                 this.setState({roundWinner: json.roundWinner});
                 this.setState({matchWinner: json.matchWinner});
             });
-            
         });
 
         return stompClient;
@@ -68,14 +67,7 @@ export default class MatchInfo extends React.Component {
 
     async updateState() {
         const url = properties.url + 'game';
-
-        const requestOptions = {
-            method: 'GET',
-            Authorization: properties.auth,
-            credentials: 'include'
-        };
-
-        const response = await fetch(url, requestOptions);
+        const response = await fetch(url, {method: 'GET', headers: {Accepts: 'application/json'}});
         const json = await response.json();
         this.setState({teams: [...json.teams]});
     }

@@ -51,9 +51,9 @@ export default class TeamForm extends React.Component {
                                                              selectedTeam={this.selectTeam}/>}
                 </div>
                 <input className={"teamContainer_TeamComponents teamInput" + this.props.number} value={this.state.nameOfPlayerOne}
-                       onChange={this.updatePlayerOne} placeholder="Striker"/>
+                       onChange={this.updatePlayerOne} placeholder="Player One"/>
                 <input className={"teamContainer_TeamComponents teamInput" + this.props.number} value={this.state.nameOfPlayerTwo}
-                       onChange={this.updatePlayerTwo} placeholder="Goalie"/>
+                       onChange={this.updatePlayerTwo} placeholder="Player Two"/>
             </div>
         )
     }

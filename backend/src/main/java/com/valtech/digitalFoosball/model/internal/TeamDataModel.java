@@ -1,15 +1,14 @@
 package com.valtech.digitalFoosball.model.internal;
 
-import com.valtech.digitalFoosball.service.TeamModels;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "team")
-public class TeamDataModel implements TeamModels {
+public class TeamDataModel {
     private String name;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -17,8 +16,7 @@ public class TeamDataModel implements TeamModels {
 
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
     @Transient
@@ -27,12 +25,21 @@ public class TeamDataModel implements TeamModels {
     @Transient
     private int wonRounds;
 
-    private int wonMatches;
+    public int getScore() {
+        return score;
+    }
+
+    public int getWonRounds() {
+        return wonRounds;
+    }
 
     public TeamDataModel() {
-        players = Arrays.asList(new PlayerDataModel(), new PlayerDataModel());
+        players = new ArrayList<>();
         name = "";
         score = 0;
+
+        players.add(new PlayerDataModel());
+        players.add(new PlayerDataModel());
     }
 
     public String getName() {
@@ -43,12 +50,12 @@ public class TeamDataModel implements TeamModels {
         this.name = name;
     }
 
-    public List<PlayerDataModel> getPlayers() {
-        return players;
+    public void setNameOfPlayerOne(String name) {
+        players.get(0).setName(name);
     }
 
-    public void setPlayers(List<PlayerDataModel> players) {
-        this.players = players;
+    public void setNameOfPlayerTwo(String name) {
+        players.get(1).setName(name);
     }
 
     public String getNameOfPlayerOne() {
@@ -59,14 +66,6 @@ public class TeamDataModel implements TeamModels {
         return players.get(1).getName();
     }
 
-    public void setNameOfPlayerOne(String name) {
-        players.get(0).setName(name);
-    }
-
-    public void setNameOfPlayerTwo(String name) {
-        players.get(1).setName(name);
-    }
-
     public UUID getId() {
         return id;
     }
@@ -75,11 +74,11 @@ public class TeamDataModel implements TeamModels {
         this.id = id;
     }
 
-    public int getScore() {
-        return score;
+    public List<PlayerDataModel> getPlayers() {
+        return players;
     }
 
-    public void countGoal() {
+    public void increaseScore() {
         score++;
     }
 
@@ -87,20 +86,8 @@ public class TeamDataModel implements TeamModels {
         score--;
     }
 
-    public void resetScore() {
-        score = 0;
-    }
-
-    public int getWonRounds() {
-        return wonRounds;
-    }
-
     public void increaseWonRounds() {
         wonRounds++;
-    }
-
-    public void decreaseWonRounds() {
-        wonRounds--;
     }
 
     public void resetValues() {
@@ -111,16 +98,15 @@ public class TeamDataModel implements TeamModels {
         }
     }
 
-    @Override
-    public String toString() {
-        return name + ": " + getNameOfPlayerOne() + ", " + getNameOfPlayerTwo();
+    public void resetScore() {
+        score = 0;
     }
 
-    public void increaseWonMatches() {
-        wonMatches++;
+    public void decreaseWonRounds() {
+        wonRounds--;
     }
 
-    public int getWonMatches() {
-        return wonMatches;
+    public void setPlayers(List<PlayerDataModel> players) {
+        this.players = players;
     }
 }

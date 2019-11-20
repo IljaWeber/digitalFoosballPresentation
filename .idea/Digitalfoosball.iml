@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">
-    <output url="file://$MODULE_DIR$/target/classes" />
-    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/target" />
-      <excludeFolder url="file://$MODULE_DIR$/venv" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/src/it/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/raspicontroller/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/raspicontroller/src/test/java" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

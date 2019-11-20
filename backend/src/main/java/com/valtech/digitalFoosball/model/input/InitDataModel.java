@@ -33,8 +33,4 @@ public class InitDataModel {
     public void setTeamTwo(TeamDataModel teamTwo) {
         this.teamTwo = teamTwo;
     }
-
-    public String toString(){
-        return teamOne.toString() + "; " + teamTwo.toString();
-    }
 }

@@ -12,7 +12,6 @@ class CorsConfig implements WebMvcConfigurer {
         registry
                 .addMapping("/**")
                 .allowedMethods("*")
-                .allowedOrigins("http://localhost:3000", "https://digital-football.valtech.io")
-                .allowCredentials(true);
+                .allowedOrigins("*");
     }
 }

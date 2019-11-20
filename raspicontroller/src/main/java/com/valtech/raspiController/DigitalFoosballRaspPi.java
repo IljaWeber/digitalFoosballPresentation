@@ -1,17 +1,21 @@
 package com.valtech.raspiController;
 
-import com.pi4j.io.gpio.*;
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPinDigitalInput;
+import com.pi4j.io.gpio.RaspiPin;
+
+import java.util.Scanner;
 
 public class DigitalFoosballRaspPi {
-
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         final GpioController gpio = GpioFactory.getInstance();
+        Scanner scanner = new Scanner(System.in);
 
-        GpioPinDigitalInput pinOne = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.OFF);
+        GpioPinDigitalInput pinOne = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02);
         GpioPinDigitalInput pinTwo = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03);
 
         PinListener listenerOne = new PinListener();
-
         listenerOne.setTeamNumber(1);
         pinOne.addListener(listenerOne);
 
@@ -19,10 +23,6 @@ public class DigitalFoosballRaspPi {
         listenerTwo.setTeamNumber(2);
         pinTwo.addListener(listenerTwo);
 
-        System.out.println("Controller started");
-
-        while (true) {
-            Thread.sleep(10000);
-        }
+        scanner.next();
     }
 }

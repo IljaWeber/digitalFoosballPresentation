@@ -1,6 +1,7 @@
 package com.valtech.digitalFoosball.service;
 
-import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
+import com.valtech.digitalFoosball.exceptions.PlayerDuplicateException;
+import com.valtech.digitalFoosball.exceptions.TeamDuplicateException;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
@@ -18,10 +19,9 @@ import java.util.Stack;
 public class GameManager {
     private List<TeamDataModel> teams;
     private TeamService teamService;
-    private Stack<TeamDataModel> historyOfGoals;
-    private Stack<TeamDataModel> historyOfUndo;
+    private Stack<Integer> historyOfGoals;
+    private Stack<Integer> historyOfUndo;
     private Converter converter;
-    private RoundWinApprover roundWinApprover;
 
     @Autowired
     public GameManager(TeamService teamService) {
@@ -29,7 +29,6 @@ public class GameManager {
         historyOfGoals = new Stack<>();
         converter = new Converter();
         historyOfUndo = new Stack<>();
-        roundWinApprover = new RoundWinApprover();
     }
 
     public void initGame(InitDataModel initDataModel) {
@@ -41,8 +40,6 @@ public class GameManager {
         for (TeamDataModel team : teams) {
             teamService.setUp(team);
         }
-
-        roundWinApprover.init(teams);
     }
 
     private void checkForDuplicateNames(InitDataModel initDataModel) {
@@ -52,148 +49,142 @@ public class GameManager {
         for (TeamDataModel team : initDataModel.getTeams()) {
 
             if (teamNames.contains(team.getName())) {
-                throw new NameDuplicateException(team.getName());
-            }
 
-            teamNames.add(team.getName());
+                throw new TeamDuplicateException(team.getName());
+
+            } else teamNames.add(team.getName());
 
             for (PlayerDataModel player : team.getPlayers()) {
 
                 if (playerNames.contains(player.getName())) {
-                    throw new NameDuplicateException(player.getName());
-                }
 
-                playerNames.add(player.getName());
+                    throw new PlayerDuplicateException(player.getName());
+
+                } else playerNames.add(player.getName());
             }
         }
-    }
-
-    public void countGoalFor(int team) {
-        TeamDataModel teamDataModel = teams.get(team - 1);
-
-        if (!roundIsOver()) {
-            teamDataModel.countGoal();
-            historyOfGoals.push(teamDataModel);
-
-            if (roundIsOver()) {
-                teamDataModel.increaseWonRounds();
-            }
-        }
-    }
-
-    private boolean roundIsOver() {
-        return roundWinApprover.getSetWinner() != 0;
-    }
-
-    public void undoGoal() {
-        if (!historyOfGoals.empty()) {
-            TeamDataModel lastScoringTeam = historyOfGoals.pop();
-
-            if (roundIsOver()) {
-                lastScoringTeam.decreaseWonRounds();
-            }
-
-            lastScoringTeam.decreaseScore();
-            historyOfUndo.push(lastScoringTeam);
-        }
-    }
-
-    public void redoGoal() {
-        if (!historyOfUndo.empty()) {
-            TeamDataModel teamDataModel = historyOfUndo.pop();
-
-            teamDataModel.countGoal();
-            historyOfGoals.push(teamDataModel);
-
-            if (roundIsOver()) {
-                teamDataModel.increaseWonRounds();
-            }
-        }
-    }
-
-    public void resetMatch() {
-        for (TeamDataModel team : teams) {
-            team.resetValues();
-        }
-
-        resetHistories();
-    }
-
-    public void changeover() {
-        for (TeamDataModel team : teams) {
-            team.resetScore();
-        }
-
-        resetHistories();
-    }
-
-    public GameDataModel getGameData() {
-        if (teams == null) {
-            return null;
-        }
-
-        List<TeamOutput> convertedTeams = converter.convertAllToTeamOutput(teams);
-
-        GameDataModel currentGameData = new GameDataModel(convertedTeams);
-        currentGameData.setRoundWinner(roundWinApprover.getSetWinner());
-        currentGameData.setMatchWinner(getMatchWinner());
-
-        return currentGameData;
     }
 
     public List<TeamDataModel> getTeams() {
         return teams;
     }
 
+    public void raiseScore(int teamNo) {
+
+        teams.get(teamNo - 1).increaseScore();
+        historyOfGoals.push(teamNo - 1);
+    }
+
+    public GameDataModel getGameData() {
+        GameDataModel currentGameData = new GameDataModel();
+        List<TeamOutput> convertedTeams = new ArrayList<>();
+
+        if (teams == null) {
+            return null;
+        }
+
+        for (TeamDataModel team : teams) {
+            TeamOutput teamOutput = converter.convertToTeamOutput(team);
+            convertedTeams.add(teamOutput);
+        }
+
+        currentGameData.setTeams(convertedTeams);
+        currentGameData.setRoundWinner(getRoundWinner());
+        currentGameData.setMatchWinner(getMatchWinner());
+
+        return currentGameData;
+    }
+
+    public void undoLastGoal() {
+        if (!historyOfGoals.empty()) {
+            Integer indexOfLastScoringTeam = historyOfGoals.pop();
+            TeamDataModel lastScoringTeam = teams.get(indexOfLastScoringTeam);
+
+            if (lastScoringTeam.getScore() == 6) {
+                lastScoringTeam.decreaseWonRounds();
+            }
+
+            lastScoringTeam.decreaseScore();
+            historyOfUndo.push(indexOfLastScoringTeam);
+        }
+    }
+
+    public void redoLastGoal() {
+        if (!historyOfUndo.empty()) {
+            Integer lastUndo = historyOfUndo.pop();
+            TeamDataModel teamDataModel = teams.get(lastUndo);
+
+            teamDataModel.increaseScore();
+            historyOfGoals.push(lastUndo);
+        }
+    }
+
+    public void resetGameValues() {
+        for (TeamDataModel team : teams) {
+            team.resetValues();
+        }
+        historyOfGoals = new Stack<>();
+    }
+
+    public int getRoundWinner() {
+        for (int teamNo = 0; teamNo < teams.size(); teamNo++) {
+            if (scoreGreaterOrEqualSixOfTeam(teamNo) && scoreDifferenceGreaterOrEqualTwo()) {
+                TeamDataModel roundWinner = teams.get(teamNo);
+                roundWinner.increaseWonRounds();
+                return teamNo + 1;
+            }
+        }
+
+        return 0;
+    }
+
+    private boolean scoreGreaterOrEqualSixOfTeam(int teamNo) {
+        return teams.get(teamNo).getScore() >= 6;
+    }
+
+    private boolean scoreDifferenceGreaterOrEqualTwo() {
+        final int necessaryScoreDifference = 2;
+
+        int actualScoreDifference = Math.abs(teams.get(0).getScore() - teams.get(1).getScore());
+
+        if (actualScoreDifference >= necessaryScoreDifference) {
+            return true;
+        }
+
+        return false;
+    }
+
     public List<TeamOutput> getAllTeams() {
         List<TeamDataModel> teamDataModels = teamService.getAll();
+        List<TeamOutput> teamOutputs = new ArrayList<>();
 
         if (teamDataModels.isEmpty()) {
             return new ArrayList<>();
         }
 
-        return converter.convertAllToTeamOutput(teamDataModels);
+        for (TeamDataModel teamDataModel : teamDataModels) {
+            teamOutputs.add(converter.convertToTeamOutput(teamDataModel));
+        }
+
+        return teamOutputs;
     }
 
     public int getMatchWinner() {
-        int matchWinner = 0;
-
-        for (TeamDataModel team : teams) {
+        for (int teamNo = 0; teamNo < teams.size(); teamNo++) {
+            TeamDataModel team = teams.get(teamNo);
             if (team.getWonRounds() >= 2) {
-                matchWinner = teams.indexOf(team) + 1;
+                return teamNo + 1;
             }
         }
 
-        return matchWinner;
+        return 0;
     }
 
-    private void resetHistories() {
+    public void newRound() {
+        for (TeamDataModel team : teams) {
+            team.resetScore();
+        }
+
         historyOfGoals = new Stack<>();
-        historyOfUndo = new Stack<>();
-    }
-
-    public void initAdHocGame() {
-        historyOfGoals = new Stack<>();
-        teams = new ArrayList<>();
-
-        TeamDataModel teamDataModelOne = new TeamDataModel();
-        TeamDataModel teamDataModelTwo = new TeamDataModel();
-
-        teamDataModelOne.setName("Orange");
-        teamDataModelOne.setNameOfPlayerOne("Goalie");
-        teamDataModelOne.setNameOfPlayerTwo("Striker");
-
-        teamDataModelTwo.setName("Green");
-        teamDataModelTwo.setNameOfPlayerOne("Goalie");
-        teamDataModelTwo.setNameOfPlayerTwo("Striker");
-
-        teams.add(teamDataModelOne);
-        teams.add(teamDataModelTwo);
-
-        roundWinApprover.init(teams);
-    }
-
-    public void setTeams(List<TeamDataModel> teams) {
-        this.teams = teams;
     }
 }

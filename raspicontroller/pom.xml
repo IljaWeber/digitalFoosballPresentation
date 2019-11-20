@@ -4,22 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>university.valtech.de</groupId>
-        <artifactId>digital-foosball</artifactId>
-        <version>1.0</version>
-    </parent>
     <groupId>com.valtech</groupId>
     <artifactId>RaspiController</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-
     <dependencies>
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
             <version>1.2</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
@@ -40,7 +35,6 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>raspicontroller</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

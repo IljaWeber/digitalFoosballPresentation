@@ -63,6 +63,7 @@ public class TeamServiceTest {
 
         List<PlayerDataModel> players = actual.getPlayers();
         assertThat(players).extracting(PlayerDataModel::getId).containsExactly(uuid, uuid);
+
     }
 
     @Test

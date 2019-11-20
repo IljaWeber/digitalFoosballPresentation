@@ -7,12 +7,12 @@ export default class RedoButton extends React.Component {
     handleSubmit = async(event) => {
         event.preventDefault();
         const url = properties.url + 'redo';
-        const requestOptions = {
+        const response = await fetch(url, {
             method: 'PUT',
-            Authorization: properties.auth,
-            credentials: 'include'
-        };
-        const response = await fetch(url, requestOptions);
+            headers: {
+                Accepts: 'application/json',
+            },
+        });
         const json = await response.json();
         this.props.redoHandler(json);
     };

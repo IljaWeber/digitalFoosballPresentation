@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/raspicontroller/RaspiController.iml" filepath="$PROJECT_DIR$/raspicontroller/RaspiController.iml" />
-      <module fileurl="file://$PROJECT_DIR$/backend/backend.iml" filepath="$PROJECT_DIR$/backend/backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/digitial-foosball.iml" filepath="$PROJECT_DIR$/.idea/digitial-foosball.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Digitalfoosball.iml" filepath="$PROJECT_DIR$/.idea/Digitalfoosball.iml" />
     </modules>
   </component>
 </project>

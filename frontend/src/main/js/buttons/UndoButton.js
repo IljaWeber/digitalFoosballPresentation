@@ -6,12 +6,12 @@ export default class UndoButton extends React.Component {
     handleSubmit = async(event) => {
         event.preventDefault();
         const url = properties.url + 'undo';
-        const requestOptions = {
+        const response = await fetch(url, {
             method: 'PUT',
-            Authorization: properties.auth,
-            credentials: 'include'
-        };
-        const response = await fetch(url, requestOptions);
+            headers: {
+                Accepts: 'application/json',
+            },
+        });
         const json = await response.json();
         this.props.undoHandler(json);
     };
