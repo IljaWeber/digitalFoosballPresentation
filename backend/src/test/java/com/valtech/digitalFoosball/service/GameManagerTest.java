@@ -23,7 +23,6 @@ import static org.assertj.core.groups.Tuple.tuple;
 
 public class GameManagerTest {
 
-
     private GameManager gameManager;
     private InitDataModel initDataModel;
     private final UUID id = UUID.randomUUID();
