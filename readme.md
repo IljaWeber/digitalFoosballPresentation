@@ -1,9 +1,9 @@
-This Repository includes the **Digital Foosball** project. It's seperated in three different modules:
+This Repository includes the **Digital Foosball** project. It's separated in three different modules:
 
-[Backend-readme](Digitial Foosball/backend/readme.md)
+[Backend-readme](backend/readme.md)
 
-[Frontend-readme](Digital Foosball/frontend/readme.md)
+[Frontend-readme](frontend/readme.md)
 
-[Raspberry-Controller-readme](Digital Foosball/raspiController/readme.md)
+[Raspberry-Controller-readme](raspicontroller/readme.md)
 
 
