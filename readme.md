@@ -1,15 +1,6 @@
-1. Clone the repo
-2. Open every subproject separately
-3. Configure:
+This Repository includes the **Digital Foosball** project. It's seperated in three different modules:
+1. **Frontend** 
+2. **Backend**
+3. **Raspi Controller**
 
-- Backend:
-    Configure the port the spring application should run on
 
-- Raspi Controller:
-    Open the class 'RequestSender' and change the IP and Port to the backend's one
-
-- Frontend:
-    Configure properties with the backend's IP and Port
-    
-    
-Enjoy :)
