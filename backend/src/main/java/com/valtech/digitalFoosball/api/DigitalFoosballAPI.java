@@ -4,6 +4,8 @@ import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.GameManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -12,11 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @Controller
 @RestController
 public class DigitalFoosballAPI {
     private GameManager gameManager;
     private SimpMessagingTemplate template;
+    private Logger logger = LogManager.getLogger(DigitalFoosballAPI.class);
 
     @Autowired
     public DigitalFoosballAPI(GameManager gameManager, SimpMessagingTemplate template) {
@@ -26,6 +30,7 @@ public class DigitalFoosballAPI {
 
     @PostMapping(path = "/init", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameDataModel initGame(@RequestBody InitDataModel initDataModel) {
+        logger.info("Teams were set");
         gameManager.initGame(initDataModel);
 
         return gameManager.getGameData();

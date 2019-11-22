@@ -12,7 +12,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="backend" target="11" />
-      <module name="Digitalfoosball" target="1.5" />
+      <module name="Digitalfoosball" target="11" />
       <module name="RaspiController" target="11" />
     </bytecodeTargetLevel>
   </component>
