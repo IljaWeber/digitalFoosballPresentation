@@ -12,14 +12,12 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="backend" target="11" />
-      <module name="Digitalfoosball" target="11" />
-      <module name="digitial-foosball" target="11" />
+      <module name="Digitalfoosball" target="1.5" />
       <module name="RaspiController" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="RaspiController" options="" />
       <module name="backend" options="-parameters" />
     </option>
   </component>

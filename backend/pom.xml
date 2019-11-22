@@ -5,13 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>university.valtech.de</groupId>
-    <artifactId>digital-foosball</artifactId>
+    <artifactId>backend</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.7.RELEASE</version>
+        <relativePath/>
     </parent>
 
     <dependencies>

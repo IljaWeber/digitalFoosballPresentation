@@ -6,4 +6,3 @@ This Repository includes the **Digital Foosball** project. It's separated in thr
 
 [Raspberry-Controller-readme](raspicontroller/readme.md)
 
-
