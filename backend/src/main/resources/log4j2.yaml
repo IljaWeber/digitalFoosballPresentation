@@ -1,21 +1,20 @@
 Configuration:
-  status: warn
-
+  status: debug
   appenders:
     Console:
-      name: LogToConsole
+      name: STDOUT
+      target: SYSTEM_OUT
       PatternLayout:
         Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
 
   Loggers:
     logger:
-      - name: com.valtech.digitalFoosball.DigitalFoosballAPI
-        level: info
-        additivity: false
-        AppenderRef:
-          - ref: LogToConsole
+      name: com.valtech.digitalFoosball.api.DigitalFoosballAPI
+      level: error
+      AppenderRef:
+        ref: STDOUT
 
     Root:
-      level: info
+      level: error
       AppenderRef:
-        ref: LogToConsole
+        ref: STDOUT
