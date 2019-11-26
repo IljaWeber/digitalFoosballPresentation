@@ -23,6 +23,7 @@ import static org.assertj.core.groups.Tuple.tuple;
 
 public class GameManagerTest {
 
+
     private GameManager gameManager;
     private InitDataModel initDataModel;
     private final UUID id = UUID.randomUUID();
@@ -134,18 +135,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void undoLastGoal_whenUndoIsMade_thenDecreaseTheScoreOfTheLastScoringTeamByOne() {
-        gameManager.initGame(initDataModel);
-        gameManager.raiseScore(1);
-
-        gameManager.undoLastGoal();
-
-        int actual = gameManager.getTeams().get(0).getScore();
-        assertThat(actual).isEqualTo(0);
-    }
-
-    @Test
-    public void undoLastGoal_whenSeveralGoalsAreScoredAndUndid_thenTheScoredOfBothTeamsAreZero() {
+    public void undoLastGoal_whenSeveralGoalsAreScored_thenUndoThemInTheOrderOfScoring() {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(2);
@@ -156,8 +146,7 @@ public class GameManagerTest {
         gameManager.undoLastGoal();
 
         List<TeamDataModel> actual = gameManager.getTeams();
-        assertThat(actual.get(0).getScore()).isEqualTo(0);
-        assertThat(actual.get(1).getScore()).isEqualTo(0);
+        assertThat(actual).extracting(TeamDataModel::getScore).containsExactly(0, 0);
     }
 
     @Test
@@ -171,24 +160,28 @@ public class GameManagerTest {
     }
 
     @Test
-    public void undoLastGoal_whenRoundWinningGoalIsUndid_thenDecreaseRoundWinsSoTheValueStaysSame() {
+    public void undoLastGoal_whenRoundWinConditionWasFulfilled_thenDecreaseRoundWins() {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(1);
         gameManager.raiseScore(1);
         gameManager.getGameData();
 
         gameManager.undoLastGoal();
+
         List<TeamDataModel> teams = gameManager.getTeams();
         TeamDataModel teamDataModel = teams.get(0);
-        int actualScore = teamDataModel.getScore();
-        int actualWonRounds = teamDataModel.getWonRounds();
-
-        assertThat(actualScore).isEqualTo(5);
-        assertThat(actualWonRounds).isEqualTo(0);
+        int actual = teamDataModel.getWonRounds();
+        assertThat(actual).isEqualTo(0);
     }
 
     @Test

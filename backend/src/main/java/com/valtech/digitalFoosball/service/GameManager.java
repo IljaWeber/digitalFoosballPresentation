@@ -74,10 +74,14 @@ public class GameManager {
     }
 
     public void raiseScore(int teamNo) {
-        teams.get(teamNo - 1).increaseScore();
-        historyOfGoals.push(teamNo - 1);
         logger.info("Score was raised for {}", teamNo);
 
+        TeamDataModel teamDataModel = teams.get(teamNo - 1);
+        teamDataModel.increaseScore();
+        historyOfGoals.push(teamNo - 1);
+        if (getRoundWinner() != 0) {
+            teamDataModel.increaseWonRounds();
+        }
     }
 
     public GameDataModel getGameData() {
@@ -105,7 +109,7 @@ public class GameManager {
             Integer indexOfLastScoringTeam = historyOfGoals.pop();
             TeamDataModel lastScoringTeam = teams.get(indexOfLastScoringTeam);
 
-            if (lastScoringTeam.getScore() == 6) {
+            if (getRoundWinner() != 0) {
                 lastScoringTeam.decreaseWonRounds();
             }
 
@@ -121,6 +125,10 @@ public class GameManager {
 
             teamDataModel.increaseScore();
             historyOfGoals.push(lastUndo);
+
+            if (getRoundWinner() != 0) {
+                teamDataModel.increaseWonRounds();
+            }
         }
     }
 
@@ -134,8 +142,6 @@ public class GameManager {
     public int getRoundWinner() {
         for (int teamNo = 0; teamNo < teams.size(); teamNo++) {
             if (scoreGreaterOrEqualSixOfTeam(teamNo) && scoreDifferenceGreaterOrEqualTwo()) {
-                TeamDataModel roundWinner = teams.get(teamNo);
-                roundWinner.increaseWonRounds();
                 return teamNo + 1;
             }
         }

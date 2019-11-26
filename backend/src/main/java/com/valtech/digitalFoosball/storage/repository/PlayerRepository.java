@@ -1,6 +1,5 @@
 package com.valtech.digitalFoosball.storage.repository;
 
-
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
