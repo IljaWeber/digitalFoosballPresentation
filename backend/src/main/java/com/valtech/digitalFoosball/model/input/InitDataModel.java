@@ -35,6 +35,6 @@ public class InitDataModel {
     }
 
     public String toString(){
-        return teamOne.getName() + ": " + teamOne.getNameOfPlayerOne() + ", " + teamOne.getNameOfPlayerTwo() + "; " + teamTwo.getName() + ": " + teamTwo.getNameOfPlayerOne() + ", " + teamTwo.getNameOfPlayerTwo();
+        return teamOne.toString() + "; " + teamTwo.toString();
     }
 }

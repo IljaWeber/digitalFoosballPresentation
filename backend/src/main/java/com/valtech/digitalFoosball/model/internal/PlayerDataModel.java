@@ -39,4 +39,9 @@ public class PlayerDataModel {
     public void resetValues() {
         name = "";
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

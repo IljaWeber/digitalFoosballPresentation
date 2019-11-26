@@ -2,6 +2,8 @@ package com.valtech.digitalFoosball.storage;
 
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.storage.repository.PlayerRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import java.util.Optional;
 public class PlayerService {
 
     private final PlayerRepository playerRepository;
+    private Logger logger = LogManager.getLogger(PlayerService.class);
+
 
     @Autowired
     public PlayerService(PlayerRepository playerRepository) {
@@ -21,8 +25,12 @@ public class PlayerService {
         Optional<PlayerDataModel> optionalPlayerDataModel = playerRepository.findByName(playerDataModel.getName());
 
         if (optionalPlayerDataModel.isEmpty()) {
+            logger.info("{} saved into DB", playerDataModel.toString());
+
             return playerRepository.save(playerDataModel);
         }
+
+        logger.info("{} loaded from DB", optionalPlayerDataModel.get().toString());
 
         return optionalPlayerDataModel.get();
     }

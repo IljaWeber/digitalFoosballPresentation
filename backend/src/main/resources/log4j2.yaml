@@ -30,6 +30,18 @@ Configuration:
         AppenderRef:
           ref: File_Appender
 
+      - name: com.valtech.digitalFoosball.storage.PlayerService
+        level: info
+        additivity: false
+        AppenderRef:
+          ref: File_Appender
+
+      - name: com.valtech.digitalFoosball.storage.TeamService
+        level: info
+        additivity: false
+        AppenderRef:
+          ref: File_Appender
+
 
     Root:
       level: warn

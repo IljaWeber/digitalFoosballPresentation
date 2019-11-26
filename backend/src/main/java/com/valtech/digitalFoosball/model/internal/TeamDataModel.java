@@ -109,4 +109,9 @@ public class TeamDataModel {
     public void setPlayers(List<PlayerDataModel> players) {
         this.players = players;
     }
+
+    @Override
+    public String toString() {
+        return name + ": " + getNameOfPlayerOne() + ", " + getNameOfPlayerTwo();
+    }
 }
