@@ -18,11 +18,18 @@ Configuration:
 
   Loggers:
     logger:
-      name: com.valtech.digitalFoosball.service.GameManager
-      level: info
-      additivity: false
-      AppenderRef:
-        ref: File_Appender
+      - name: com.valtech.digitalFoosball.service.GameManager
+        level: info
+        additivity: false
+        AppenderRef:
+          ref: File_Appender
+
+      - name: com.valtech.digitalFoosball.api.DigitalFoosballAPI
+        level: info
+        additivity: false
+        AppenderRef:
+          ref: File_Appender
+
 
     Root:
       level: warn

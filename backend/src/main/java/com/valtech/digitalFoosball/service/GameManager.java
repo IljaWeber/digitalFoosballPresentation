@@ -1,6 +1,5 @@
 package com.valtech.digitalFoosball.service;
 
-import com.valtech.digitalFoosball.api.DigitalFoosballAPI;
 import com.valtech.digitalFoosball.exceptions.PlayerDuplicateException;
 import com.valtech.digitalFoosball.exceptions.TeamDuplicateException;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
@@ -75,9 +74,10 @@ public class GameManager {
     }
 
     public void raiseScore(int teamNo) {
-
         teams.get(teamNo - 1).increaseScore();
         historyOfGoals.push(teamNo - 1);
+        logger.info("Score was raised for {}", teamNo);
+
     }
 
     public GameDataModel getGameData() {
