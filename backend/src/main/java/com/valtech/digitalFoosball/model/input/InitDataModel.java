@@ -34,5 +34,7 @@ public class InitDataModel {
         this.teamTwo = teamTwo;
     }
 
-
+    public String toString(){
+        return teamOne.getName() + ": " + teamOne.getNameOfPlayerOne() + ", " + teamOne.getNameOfPlayerTwo() + "; " + teamTwo.getName() + ": " + teamTwo.getNameOfPlayerOne() + ", " + teamTwo.getNameOfPlayerTwo();
+    }
 }

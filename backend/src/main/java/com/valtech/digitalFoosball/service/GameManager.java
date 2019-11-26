@@ -8,8 +8,6 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.storage.TeamService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +22,6 @@ public class GameManager {
     private Stack<Integer> historyOfGoals;
     private Stack<Integer> historyOfUndo;
     private Converter converter;
-    private Logger logger = LogManager.getLogger(GameManager.class);
 
     @Autowired
     public GameManager(TeamService teamService) {
@@ -41,7 +38,6 @@ public class GameManager {
         teams = initDataModel.getTeams();
 
         for (TeamDataModel team : teams) {
-            logger.info("Team {} signed in", team::getName);
             teamService.setUp(team);
         }
     }
@@ -74,8 +70,6 @@ public class GameManager {
     }
 
     public void raiseScore(int teamNo) {
-        logger.info("Score was raised for {}", teamNo);
-
         TeamDataModel teamDataModel = teams.get(teamNo - 1);
         teamDataModel.increaseScore();
         historyOfGoals.push(teamNo - 1);

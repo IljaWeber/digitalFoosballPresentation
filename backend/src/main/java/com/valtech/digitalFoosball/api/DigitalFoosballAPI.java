@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @Controller
 @RestController
 public class DigitalFoosballAPI {
@@ -30,6 +29,8 @@ public class DigitalFoosballAPI {
 
     @PostMapping(path = "/init", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameDataModel initGame(@RequestBody InitDataModel initDataModel) {
+        logger.info("Sign in: " + initDataModel.toString());
+
         gameManager.initGame(initDataModel);
 
         return gameManager.getGameData();
@@ -42,21 +43,22 @@ public class DigitalFoosballAPI {
 
     @GetMapping(path = "/allTeams", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TeamOutput> getAllTeamsStartingWith() {
-
         return gameManager.getAllTeams();
     }
 
     @PostMapping(path = "/raise", produces = MediaType.APPLICATION_JSON_VALUE)
     public void raiseScore(@RequestBody int teamNo) {
-        gameManager.raiseScore(teamNo);
+        logger.info("Score raised for {}", teamNo);
 
-        logger.info("Score raise was called for {}", teamNo);
+        gameManager.raiseScore(teamNo);
 
         updateClient();
     }
 
     @PostMapping(path = "/newRound", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameDataModel newRound() {
+        logger.info("New Round");
+
         gameManager.newRound();
 
         return gameManager.getGameData();
@@ -68,6 +70,8 @@ public class DigitalFoosballAPI {
 
     @PutMapping(path = "/undo", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameDataModel undoLastGoal() {
+        logger.info("Undo");
+
         gameManager.undoLastGoal();
 
         return gameManager.getGameData();
@@ -75,6 +79,8 @@ public class DigitalFoosballAPI {
 
     @PutMapping(path = "/redo", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameDataModel redoLastGoal() {
+        logger.info("Redo");
+
         gameManager.redoLastGoal();
 
         return gameManager.getGameData();
@@ -82,6 +88,8 @@ public class DigitalFoosballAPI {
 
     @DeleteMapping(path = "/reset", produces = MediaType.APPLICATION_JSON_VALUE)
     public boolean resetGameValues() {
+        logger.info("Reset");
+
         gameManager.resetGameValues();
 
         return true;
