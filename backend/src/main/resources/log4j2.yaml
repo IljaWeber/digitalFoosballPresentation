@@ -33,5 +33,6 @@ Configuration:
 
     Root:
       level: warn
+      additivity: false
       AppenderRef:
         ref: File_Appender

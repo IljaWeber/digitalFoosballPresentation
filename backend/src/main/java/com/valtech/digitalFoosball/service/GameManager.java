@@ -53,18 +53,18 @@ public class GameManager {
         for (TeamDataModel team : initDataModel.getTeams()) {
 
             if (teamNames.contains(team.getName())) {
-
                 throw new TeamDuplicateException(team.getName());
+            }
 
-            } else teamNames.add(team.getName());
+            teamNames.add(team.getName());
 
             for (PlayerDataModel player : team.getPlayers()) {
 
                 if (playerNames.contains(player.getName())) {
-
                     throw new PlayerDuplicateException(player.getName());
+                }
 
-                } else playerNames.add(player.getName());
+                playerNames.add(player.getName());
             }
         }
     }
