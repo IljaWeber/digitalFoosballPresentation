@@ -33,4 +33,6 @@ public class InitDataModel {
     public void setTeamTwo(TeamDataModel teamTwo) {
         this.teamTwo = teamTwo;
     }
+
+
 }

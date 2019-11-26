@@ -1,20 +1,30 @@
 Configuration:
-  status: debug
-  appenders:
-    Console:
-      name: STDOUT
-      target: SYSTEM_OUT
+  status: warn
+
+  Properties:
+    property:
+      - name: "LogDirectory"
+        value: "logs"
+      - name: "Pattern"
+        value: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+
+
+  Appenders:
+    File:
+      name: File_Appender
+      fileName: ${LogDirectory}/logfile.log
       PatternLayout:
-        Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+        Pattern: ${Pattern}
 
   Loggers:
     logger:
-      name: com.valtech.digitalFoosball.api.DigitalFoosballAPI
-      level: error
+      name: com.valtech.digitalFoosball.service.GameManager
+      level: info
+      additivity: false
       AppenderRef:
-        ref: STDOUT
+        ref: File_Appender
 
     Root:
-      level: error
+      level: warn
       AppenderRef:
-        ref: STDOUT
+        ref: File_Appender
