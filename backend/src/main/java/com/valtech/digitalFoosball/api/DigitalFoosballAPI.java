@@ -1,6 +1,5 @@
 package com.valtech.digitalFoosball.api;
 
-import com.google.gson.Gson;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
@@ -21,6 +20,7 @@ import java.util.List;
 public class DigitalFoosballAPI {
     private GameManager gameManager;
     private SimpMessagingTemplate template;
+    private Logger logger = LogManager.getLogger(DigitalFoosballAPI.class);
 
     @Autowired
     public DigitalFoosballAPI(GameManager gameManager, SimpMessagingTemplate template) {
@@ -49,6 +49,8 @@ public class DigitalFoosballAPI {
     @PostMapping(path = "/raise", produces = MediaType.APPLICATION_JSON_VALUE)
     public void raiseScore(@RequestBody int teamNo) {
         gameManager.raiseScore(teamNo);
+
+        logger.info("Score raise was called for {}", teamNo);
 
         updateClient();
     }
