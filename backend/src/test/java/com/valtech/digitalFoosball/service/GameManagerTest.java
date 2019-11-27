@@ -150,7 +150,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void undoLastGoal_whenSeveralGoalsAreScored_thenUndoThemInTheOrderOfScoring() {
+    public void undoLastGoal_whenSeveralGoalsAreScored_thenUndoThemInTheReverseOrderOfScoring() {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(2);
