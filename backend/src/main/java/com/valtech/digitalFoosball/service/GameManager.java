@@ -107,8 +107,7 @@ public class GameManager {
 
         List<TeamOutput> convertedTeams = converter.convertAllToTeamOutput(teams);
 
-        GameDataModel currentGameData = new GameDataModel();
-        currentGameData.setTeams(convertedTeams);
+        GameDataModel currentGameData = new GameDataModel(convertedTeams);
         currentGameData.setRoundWinner(getRoundWinner());
         currentGameData.setMatchWinner(getMatchWinner());
 

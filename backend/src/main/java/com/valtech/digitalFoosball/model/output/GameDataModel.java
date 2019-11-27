@@ -15,6 +15,10 @@ public class GameDataModel {
         teams = Arrays.asList(new TeamOutput(), new TeamOutput());
     }
 
+    public GameDataModel(List<TeamOutput> teams) {
+        this.teams = teams;
+    }
+
     public List<TeamOutput> getTeams() {
         return teams;
     }
