@@ -3,7 +3,7 @@ package com.valtech.digitalFoosball.model.internal;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,21 +25,10 @@ public class TeamDataModel {
     @Transient
     private int wonRounds;
 
-    public int getScore() {
-        return score;
-    }
-
-    public int getWonRounds() {
-        return wonRounds;
-    }
-
     public TeamDataModel() {
-        players = new ArrayList<>();
+        players = Arrays.asList(new PlayerDataModel(), new PlayerDataModel());
         name = "";
         score = 0;
-
-        players.add(new PlayerDataModel());
-        players.add(new PlayerDataModel());
     }
 
     public String getName() {
@@ -50,12 +39,12 @@ public class TeamDataModel {
         this.name = name;
     }
 
-    public void setNameOfPlayerOne(String name) {
-        players.get(0).setName(name);
+    public List<PlayerDataModel> getPlayers() {
+        return players;
     }
 
-    public void setNameOfPlayerTwo(String name) {
-        players.get(1).setName(name);
+    public void setPlayers(List<PlayerDataModel> players) {
+        this.players = players;
     }
 
     public String getNameOfPlayerOne() {
@@ -66,6 +55,14 @@ public class TeamDataModel {
         return players.get(1).getName();
     }
 
+    public void setNameOfPlayerOne(String name) {
+        players.get(0).setName(name);
+    }
+
+    public void setNameOfPlayerTwo(String name) {
+        players.get(1).setName(name);
+    }
+
     public UUID getId() {
         return id;
     }
@@ -74,8 +71,8 @@ public class TeamDataModel {
         this.id = id;
     }
 
-    public List<PlayerDataModel> getPlayers() {
-        return players;
+    public int getScore() {
+        return score;
     }
 
     public void increaseScore() {
@@ -86,8 +83,20 @@ public class TeamDataModel {
         score--;
     }
 
+    public void resetScore() {
+        score = 0;
+    }
+
+    public int getWonRounds() {
+        return wonRounds;
+    }
+
     public void increaseWonRounds() {
         wonRounds++;
+    }
+
+    public void decreaseWonRounds() {
+        wonRounds--;
     }
 
     public void resetValues() {
@@ -96,18 +105,6 @@ public class TeamDataModel {
         for (PlayerDataModel player : players) {
             player.resetValues();
         }
-    }
-
-    public void resetScore() {
-        score = 0;
-    }
-
-    public void decreaseWonRounds() {
-        wonRounds--;
-    }
-
-    public void setPlayers(List<PlayerDataModel> players) {
-        this.players = players;
     }
 
     @Override
