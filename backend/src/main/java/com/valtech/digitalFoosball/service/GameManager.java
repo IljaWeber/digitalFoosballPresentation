@@ -41,60 +41,14 @@ public class GameManager {
         }
     }
 
-    private void checkForDuplicateNames(InitDataModel initDataModel) {
-        List<String> playerNames = new ArrayList<>();
-        List<String> teamNames = new ArrayList<>();
-
-        for (TeamDataModel team : initDataModel.getTeams()) {
-
-            if (teamNames.contains(team.getName())) {
-                throw new NameDuplicateException(team.getName());
-            }
-
-            teamNames.add(team.getName());
-
-            for (PlayerDataModel player : team.getPlayers()) {
-
-                if (playerNames.contains(player.getName())) {
-                    throw new NameDuplicateException(player.getName());
-                }
-
-                playerNames.add(player.getName());
-            }
-        }
-    }
-
-    public List<TeamDataModel> getTeams() {
-        return teams;
-    }
-
     public void raiseScore(int teamNo) {
         TeamDataModel teamDataModel = teams.get(teamNo - 1);
         teamDataModel.increaseScore();
         historyOfGoals.push(teamNo - 1);
+
         if (getRoundWinner() != 0) {
             teamDataModel.increaseWonRounds();
         }
-    }
-
-    public GameDataModel getGameData() {
-        GameDataModel currentGameData = new GameDataModel();
-        List<TeamOutput> convertedTeams = new ArrayList<>();
-
-        if (teams == null) {
-            return null;
-        }
-
-        for (TeamDataModel team : teams) {
-            TeamOutput teamOutput = converter.convertToTeamOutput(team);
-            convertedTeams.add(teamOutput);
-        }
-
-        currentGameData.setTeams(convertedTeams);
-        currentGameData.setRoundWinner(getRoundWinner());
-        currentGameData.setMatchWinner(getMatchWinner());
-
-        return currentGameData;
     }
 
     public void undoLastGoal() {
@@ -134,30 +88,37 @@ public class GameManager {
         historyOfUndo = new Stack<>();
     }
 
-    public int getRoundWinner() {
-        for (int teamNo = 0; teamNo < teams.size(); teamNo++) {
-            if (scoreGreaterOrEqualSixOfTeam(teamNo) && scoreDifferenceGreaterOrEqualTwo()) {
-                return teamNo + 1;
-            }
+    public void newRound() {
+        for (TeamDataModel team : teams) {
+            team.resetScore();
         }
 
-        return 0;
+        historyOfGoals = new Stack<>();
+        historyOfUndo = new Stack<>();
     }
 
-    private boolean scoreGreaterOrEqualSixOfTeam(int teamNo) {
-        return teams.get(teamNo).getScore() >= 6;
-    }
+    public GameDataModel getGameData() {
+        GameDataModel currentGameData = new GameDataModel();
+        List<TeamOutput> convertedTeams = new ArrayList<>();
 
-    private boolean scoreDifferenceGreaterOrEqualTwo() {
-        final int necessaryScoreDifference = 2;
-
-        int actualScoreDifference = Math.abs(teams.get(0).getScore() - teams.get(1).getScore());
-
-        if (actualScoreDifference >= necessaryScoreDifference) {
-            return true;
+        if (teams == null) {
+            return null;
         }
 
-        return false;
+        for (TeamDataModel team : teams) {
+            TeamOutput teamOutput = converter.convertToTeamOutput(team);
+            convertedTeams.add(teamOutput);
+        }
+
+        currentGameData.setTeams(convertedTeams);
+        currentGameData.setRoundWinner(getRoundWinner());
+        currentGameData.setMatchWinner(getMatchWinner());
+
+        return currentGameData;
+    }
+
+    public List<TeamDataModel> getTeams() {
+        return teams;
     }
 
     public List<TeamOutput> getAllTeams() {
@@ -178,6 +139,7 @@ public class GameManager {
     public int getMatchWinner() {
         for (int teamNo = 0; teamNo < teams.size(); teamNo++) {
             TeamDataModel team = teams.get(teamNo);
+
             if (team.getWonRounds() >= 2) {
                 return teamNo + 1;
             }
@@ -186,12 +148,49 @@ public class GameManager {
         return 0;
     }
 
-    public void newRound() {
-        for (TeamDataModel team : teams) {
-            team.resetScore();
+    public int getRoundWinner() {
+        for (int teamNo = 0; teamNo < teams.size(); teamNo++) {
+            if (scoreGreaterOrEqualSixOfTeam(teamNo) && scoreDifferenceGreaterOrEqualTwo()) {
+                return teamNo + 1;
+            }
         }
 
-        historyOfGoals = new Stack<>();
-        historyOfUndo = new Stack<>();
+        return 0;
+    }
+
+    private boolean scoreGreaterOrEqualSixOfTeam(int teamNo) {
+        return teams.get(teamNo).getScore() >= 6;
+    }
+
+    private boolean scoreDifferenceGreaterOrEqualTwo() {
+        final int necessaryScoreDifference = 2;
+
+        int actualScoreDifference = Math.abs(teams.get(0).getScore() - teams.get(1).getScore());
+
+        return actualScoreDifference >= necessaryScoreDifference;
+    }
+
+    private void checkForDuplicateNames(InitDataModel initDataModel) {
+        List<String> playerNames = new ArrayList<>();
+        List<String> teamNames = new ArrayList<>();
+
+        for (TeamDataModel team : initDataModel.getTeams()) {
+
+            if (teamNames.contains(team.getName())) {
+                throw new NameDuplicateException(team.getName());
+            }
+
+            teamNames.add(team.getName());
+
+            for (PlayerDataModel player : team.getPlayers()) {
+
+                if (playerNames.contains(player.getName())) {
+                    throw new NameDuplicateException(player.getName());
+                }
+
+                playerNames.add(player.getName());
+            }
+        }
     }
 }
+
