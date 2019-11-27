@@ -67,14 +67,18 @@ public class GameManager {
     public void raiseScore(int teamNo) {
         TeamDataModel teamDataModel = teams.get(teamNo - 1);
 
-        if (getRoundWinner() == 0) {
+        if (!roundIsOver()) {
             teamDataModel.increaseScore();
             historyOfGoals.push(teamNo - 1);
         }
 
-        if (getRoundWinner() != 0) {
+        if (roundIsOver()) {
             teamDataModel.increaseWonRounds();
         }
+    }
+
+    private boolean roundIsOver() {
+        return getRoundWinner() != 0;
     }
 
     public void undoLastGoal() {
@@ -82,7 +86,7 @@ public class GameManager {
             Integer indexOfLastScoringTeam = historyOfGoals.pop();
             TeamDataModel lastScoringTeam = teams.get(indexOfLastScoringTeam);
 
-            if (getRoundWinner() != 0) {
+            if (roundIsOver()) {
                 lastScoringTeam.decreaseWonRounds();
             }
 
@@ -99,7 +103,7 @@ public class GameManager {
             teamDataModel.increaseScore();
             historyOfGoals.push(lastUndo);
 
-            if (getRoundWinner() != 0) {
+            if (roundIsOver()) {
                 teamDataModel.increaseWonRounds();
             }
         }
