@@ -101,18 +101,13 @@ public class GameManager {
     }
 
     public GameDataModel getGameData() {
-        GameDataModel currentGameData = new GameDataModel();
-        List<TeamOutput> convertedTeams = new ArrayList<>();
-
         if (teams == null) {
             return null;
         }
 
-        for (TeamDataModel team : teams) {
-            TeamOutput teamOutput = converter.convertToTeamOutput(team);
-            convertedTeams.add(teamOutput);
-        }
+        List<TeamOutput> convertedTeams = converter.convertAllToTeamOutput(teams);
 
+        GameDataModel currentGameData = new GameDataModel();
         currentGameData.setTeams(convertedTeams);
         currentGameData.setRoundWinner(getRoundWinner());
         currentGameData.setMatchWinner(getMatchWinner());
