@@ -28,12 +28,8 @@ public class TeamService {
     public TeamDataModel setUp(TeamDataModel teamDataModel) {
         Optional<TeamDataModel> optionalTeamDataModel = teamRepository.findByNameIgnoreCase(teamDataModel.getName());
 
-        List<PlayerDataModel> playersFromDatabase = new ArrayList<>();
-
-        for (PlayerDataModel player : teamDataModel.getPlayers()) {
-            PlayerDataModel playerDataModel = playerService.setUp(player);
-            playersFromDatabase.add(playerDataModel);
-        }
+        List<PlayerDataModel> unsetPlayers = teamDataModel.getPlayers();
+        List<PlayerDataModel> playersFromDatabase = getPlayersFromDatabase(unsetPlayers);
 
         teamDataModel.setPlayers(playersFromDatabase);
 
@@ -46,6 +42,17 @@ public class TeamService {
         logger.info("{} loaded from DB", optionalTeamDataModel.get().toString());
 
         return optionalTeamDataModel.get();
+    }
+
+    private List<PlayerDataModel> getPlayersFromDatabase(List<PlayerDataModel> players) {
+        List<PlayerDataModel> playersFromDatabase = new ArrayList<>();
+
+        for (PlayerDataModel player : players) {
+            PlayerDataModel playerDataModel = playerService.setUp(player);
+            playersFromDatabase.add(playerDataModel);
+        }
+
+        return playersFromDatabase;
     }
 
     public List<TeamDataModel> getAll() {
