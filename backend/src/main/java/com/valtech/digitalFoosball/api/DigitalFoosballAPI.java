@@ -55,6 +55,10 @@ public class DigitalFoosballAPI {
         updateClient();
     }
 
+    private void updateClient() {
+        template.convertAndSend("/update/score", gameManager.getGameData());
+    }
+
     @PostMapping(path = "/newRound", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameDataModel newRound() {
         logger.info("New Round");
@@ -62,10 +66,6 @@ public class DigitalFoosballAPI {
         gameManager.newRound();
 
         return gameManager.getGameData();
-    }
-
-    private void updateClient() {
-        template.convertAndSend("/update/score", gameManager.getGameData());
     }
 
     @PutMapping(path = "/undo", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -41,6 +41,29 @@ public class GameManager {
         }
     }
 
+    private void checkForDuplicateNames(InitDataModel initDataModel) {
+        List<String> playerNames = new ArrayList<>();
+        List<String> teamNames = new ArrayList<>();
+
+        for (TeamDataModel team : initDataModel.getTeams()) {
+
+            if (teamNames.contains(team.getName())) {
+                throw new NameDuplicateException(team.getName());
+            }
+
+            teamNames.add(team.getName());
+
+            for (PlayerDataModel player : team.getPlayers()) {
+
+                if (playerNames.contains(player.getName())) {
+                    throw new NameDuplicateException(player.getName());
+                }
+
+                playerNames.add(player.getName());
+            }
+        }
+    }
+
     public void raiseScore(int teamNo) {
         TeamDataModel teamDataModel = teams.get(teamNo - 1);
 
@@ -120,17 +143,12 @@ public class GameManager {
 
     public List<TeamOutput> getAllTeams() {
         List<TeamDataModel> teamDataModels = teamService.getAll();
-        List<TeamOutput> teamOutputs = new ArrayList<>();
 
         if (teamDataModels.isEmpty()) {
             return new ArrayList<>();
         }
 
-        for (TeamDataModel teamDataModel : teamDataModels) {
-            teamOutputs.add(converter.convertToTeamOutput(teamDataModel));
-        }
-
-        return teamOutputs;
+        return converter.convertAllToTeamOutput(teamDataModels);
     }
 
     public int getMatchWinner() {
@@ -165,29 +183,6 @@ public class GameManager {
         int actualScoreDifference = Math.abs(teams.get(0).getScore() - teams.get(1).getScore());
 
         return actualScoreDifference >= necessaryScoreDifference;
-    }
-
-    private void checkForDuplicateNames(InitDataModel initDataModel) {
-        List<String> playerNames = new ArrayList<>();
-        List<String> teamNames = new ArrayList<>();
-
-        for (TeamDataModel team : initDataModel.getTeams()) {
-
-            if (teamNames.contains(team.getName())) {
-                throw new NameDuplicateException(team.getName());
-            }
-
-            teamNames.add(team.getName());
-
-            for (PlayerDataModel player : team.getPlayers()) {
-
-                if (playerNames.contains(player.getName())) {
-                    throw new NameDuplicateException(player.getName());
-                }
-
-                playerNames.add(player.getName());
-            }
-        }
     }
 }
 
