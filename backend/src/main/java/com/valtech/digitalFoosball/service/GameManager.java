@@ -114,6 +114,10 @@ public class GameManager {
             team.resetValues();
         }
 
+        resetStacks();
+    }
+
+    private void resetStacks() {
         historyOfGoals = new Stack<>();
         historyOfUndo = new Stack<>();
     }
@@ -123,8 +127,7 @@ public class GameManager {
             team.resetScore();
         }
 
-        historyOfGoals = new Stack<>();
-        historyOfUndo = new Stack<>();
+        resetStacks();
     }
 
     public GameDataModel getGameData() {
