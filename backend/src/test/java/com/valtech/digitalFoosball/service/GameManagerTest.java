@@ -21,8 +21,6 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.groups.Tuple.tuple;
 
 public class GameManagerTest {
-
-
     private GameManager gameManager;
     private InitDataModel initDataModel;
     private final UUID id = UUID.randomUUID();
@@ -52,7 +50,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void initGame_whenTeamsAndPlayersAreGiven_thenTheyAreSet() {
+    public void initGame_whenTeamsWhereGiven_thenSetTheseValues() {
         gameManager.initGame(initDataModel);
 
         List<TeamDataModel> actual = gameManager.getTeams();
@@ -62,7 +60,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void initGame_whenTeamsAreGiven_thenTheyAreSavedIntoDatabase() {
+    public void initGame_whenTeamsWhereGiven_thenSaveItToDatabase() {
         gameManager.initGame(initDataModel);
 
         List<TeamDataModel> actual = gameManager.getTeams();
@@ -215,7 +213,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void redo_whenGoalWasUndidAndRedid_thenGoalIsSavedInHistoryAgain() throws Exception {
+    public void redo_whenGoalWasUndidAndRedid_thenSaveItIntoGoalHistory() throws Exception {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.undoLastGoal();
@@ -251,7 +249,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void getGameData_whenNoGameWasInitialized_thenReturnNull() {
+    public void getGameData_whenEmptyGameDataWhereRequested_thenReturnNull() {
         GameDataModel actual = gameManager.getGameData();
 
         assertThat(actual).isNull();
@@ -277,7 +275,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void resetGameValues_whenResetGameValuesIsCalled_thenTheLastScoringTeamsAreEmpty() throws Exception {
+    public void resetGameValues_whenResetGameValuesIsCalled_thenSetEmptyScoreHistory() throws Exception {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
 
@@ -289,7 +287,26 @@ public class GameManagerTest {
     }
 
     @Test
-    public void getRoundWinner_whenOneTeamScoredSixOrMoreGoalsAndHasMoreThanOneGoalDifferenceToTheOtherTeam_thenReturnTheNumberOfThisTeam() {
+    void resetGameValues_whenResetGameValuesIsCalled_thenSetEmptyUndoHistory() throws Exception {
+        gameManager.initGame(initDataModel);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.undoLastGoal();
+        gameManager.undoLastGoal();
+
+        gameManager.resetGameValues();
+
+        Field lastScoringTeams = gameManager.getClass().getDeclaredField("historyOfUndo");
+        lastScoringTeams.setAccessible(true);
+        assertThat(lastScoringTeams.get(gameManager)).isEqualTo(new Stack<Integer>());
+    }
+
+    @Test
+    public void getRoundWinner_whenATeamFulfillRoundWinCondition_thenReturnItsNumber() {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
@@ -304,7 +321,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void getRoundWinner_whenOneTeamScoredSixOrMoreGoalsButDoesNotHaveMoreThanOneGoalDifferenceToTheOtherTeam_thenReturnZero() {
+    public void getRoundWinner_whenATeamDoesNotFulfillRoundWinCondition_thenReturnZero() {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
@@ -333,25 +350,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void getRoundWinner_whenOneTeamHasFulfilledTheWinningCondition_thenRaiseThereWonRoundsByOne() {
-        gameManager.initGame(initDataModel);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-
-        gameManager.getRoundWinner();
-        List<TeamDataModel> teams = gameManager.getTeams();
-        TeamDataModel roundWinner = teams.get(0);
-        int actual = roundWinner.getWonRounds();
-
-        assertThat(actual).isEqualTo(1);
-    }
-
-    @Test
-    public void getMatchWinner_whenOneTeamHasWonTwoRounds_thenReturnTheNumberOfThisTeam() {
+    public void getMatchWinner_whenOneTeamHasWonTwoRounds_thenReturnItsNumber() {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
@@ -374,7 +373,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void newRound_whenNewRoundIsStarted_thenNamesAndPlayersAreSameButScoresAreZero() {
+    public void newRound_whenNewRoundIsStarted_thenTeamScoresAreZero() {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(2);
@@ -390,13 +389,28 @@ public class GameManagerTest {
     }
 
     @Test
-    public void newRound_whenNewRoundIsStartedAndUndoIsMade_thenScoreStaysZeroForBothTeams() {
+    public void newRound_whenNewRoundIsStartedAndUndoIsMade_thenDoNothing() {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(2);
 
         gameManager.newRound();
         gameManager.undoLastGoal();
+
+        List<TeamDataModel> teams = gameManager.getTeams();
+        assertThat(teams).extracting(TeamDataModel::getScore).containsExactly(0, 0);
+    }
+
+    @Test
+    public void newRound_whenNewRoundIsStartedAndRedoIsMade_thenDoNothing() {
+        gameManager.initGame(initDataModel);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(2);
+
+        gameManager.newRound();
+        gameManager.redoLastGoal();
 
         List<TeamDataModel> teams = gameManager.getTeams();
         assertThat(teams).extracting(TeamDataModel::getScore).containsExactly(0, 0);

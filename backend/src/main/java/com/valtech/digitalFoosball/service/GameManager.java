@@ -129,7 +129,9 @@ public class GameManager {
         for (TeamDataModel team : teams) {
             team.resetValues();
         }
+
         historyOfGoals = new Stack<>();
+        historyOfUndo = new Stack<>();
     }
 
     public int getRoundWinner() {
@@ -190,5 +192,6 @@ public class GameManager {
         }
 
         historyOfGoals = new Stack<>();
+        historyOfUndo = new Stack<>();
     }
 }
