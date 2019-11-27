@@ -50,7 +50,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void initGame_whenTeamsWhereGiven_thenSetTheseValues() {
+    public void initGame_whenNamesWereGiven_thenSetThese() {
         gameManager.initGame(initDataModel);
 
         List<TeamDataModel> actual = gameManager.getTeams();
@@ -60,7 +60,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void initGame_whenTeamsWhereGiven_thenSaveItToDatabase() {
+    public void initGame_whenTeamsWereGiven_thenSaveItToDatabase() {
         gameManager.initGame(initDataModel);
 
         List<TeamDataModel> actual = gameManager.getTeams();
@@ -122,13 +122,15 @@ public class GameManagerTest {
     }
 
     @Test
-    public void raiseScore_whenATeamScores_thenRaiseTheirCounter() {
+    public void raiseScore_whenATeamScoresMultipleGoals_thenRaiseTheirCounterForEachGoalByOne() {
         gameManager.initGame(initDataModel);
 
         gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
 
         int actual = gameManager.getTeams().get(0).getScore();
-        assertThat(actual).isEqualTo(1);
+        assertThat(actual).isEqualTo(3);
     }
 
     @Test
