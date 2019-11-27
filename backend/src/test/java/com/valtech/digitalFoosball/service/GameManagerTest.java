@@ -210,7 +210,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void redoLastGoal_whenGoalsWereUndid_thenRedoThemInTheOrderOfUndo() {
+    public void redoLastGoal_whenGoalsWereUndid_thenRedoThemInTheReverseOrderOfUndo() {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
