@@ -1,7 +1,6 @@
 package com.valtech.digitalFoosball.service;
 
-import com.valtech.digitalFoosball.exceptions.PlayerDuplicateException;
-import com.valtech.digitalFoosball.exceptions.TeamDuplicateException;
+import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
@@ -49,7 +48,7 @@ public class GameManager {
         for (TeamDataModel team : initDataModel.getTeams()) {
 
             if (teamNames.contains(team.getName())) {
-                throw new TeamDuplicateException(team.getName());
+                throw new NameDuplicateException(team.getName());
             }
 
             teamNames.add(team.getName());
@@ -57,7 +56,7 @@ public class GameManager {
             for (PlayerDataModel player : team.getPlayers()) {
 
                 if (playerNames.contains(player.getName())) {
-                    throw new PlayerDuplicateException(player.getName());
+                    throw new NameDuplicateException(player.getName());
                 }
 
                 playerNames.add(player.getName());

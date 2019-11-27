@@ -23,49 +23,18 @@ public class AppExceptionHandlerTest {
     }
 
     @Test
-    public void handlePlayerDuplicateException_whenCalled_thenReturnResponseEntityWithStatus500() {
-        ResponseEntity<Object> response = appExceptionHandler.handleDuplicateException(new PlayerDuplicateException(""), new WebRequestDummy());
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @Test
-    public void handlePlayerDuplicateException_whenCalled_thenReturnErrorMessageForPlayerGivenInTheException() {
-        ResponseEntity<Object> response = appExceptionHandler.handleDuplicateException(new PlayerDuplicateException("One"), new WebRequestDummy());
+    public void handlePlayerDuplicateException_whenANameIsUsedTwice_thenPutThisNameInDescription() {
+        ResponseEntity<Object> response = appExceptionHandler.handleDuplicateException(new NameDuplicateException("One"), new WebRequestDummy());
 
         ErrorMessage body = (ErrorMessage) response.getBody();
         assertThat(body.getErrorMessage()).isEqualTo("One is used more than once");
     }
 
     @Test
-    void handlePlayerDuplicateException_whenCalledWithoutMessage_thenReturnPlayerDuplicateExceptionAsErrorMessage() {
-        ResponseEntity<Object> response = appExceptionHandler.handleDuplicateException(new PlayerDuplicateException(null), new WebRequestDummy());
-
-        ErrorMessage body = (ErrorMessage) response.getBody();
-        assertThat(body.getErrorMessage()).isEqualTo("com.valtech.digitalFoosball.exceptions.PlayerDuplicateException");
-    }
-
-    @Test
-    public void handleTeamDuplicateException_whenCalled_thenReturnResponseEntityWithStatus500() {
-        ResponseEntity<Object> response = appExceptionHandler.handleDuplicateException(new TeamDuplicateException(""), new WebRequestDummy());
+    public void handleNameDuplicateException_whenCalled_thenHTTPStatusIsInternalServerError() {
+        ResponseEntity<Object> response = appExceptionHandler.handleDuplicateException(new NameDuplicateException(""), new WebRequestDummy());
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @Test
-    public void handleTeamDuplicateException_whenCalled_thenReturnErrorMessageForTeamGivenInTheException() {
-        ResponseEntity<Object> response = appExceptionHandler.handleDuplicateException(new TeamDuplicateException("One"), new WebRequestDummy());
-
-        ErrorMessage body = (ErrorMessage) response.getBody();
-        assertThat(body.getErrorMessage()).isEqualTo("One is used more than once");
-    }
-
-    @Test
-    void handleTeamDuplicateException_whenCalledWithoutMessage_thenReturnTeamDuplicateExceptionAsErrorMessage() {
-        ResponseEntity<Object> response = appExceptionHandler.handleDuplicateException(new TeamDuplicateException(null), new WebRequestDummy());
-
-        ErrorMessage body = (ErrorMessage) response.getBody();
-        assertThat(body.getErrorMessage()).isEqualTo("com.valtech.digitalFoosball.exceptions.TeamDuplicateException");
     }
 
     private class WebRequestDummy implements WebRequest{

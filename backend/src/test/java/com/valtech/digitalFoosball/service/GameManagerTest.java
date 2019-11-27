@@ -1,7 +1,6 @@
 package com.valtech.digitalFoosball.service;
 
-import com.valtech.digitalFoosball.exceptions.PlayerDuplicateException;
-import com.valtech.digitalFoosball.exceptions.TeamDuplicateException;
+import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
@@ -98,7 +97,7 @@ public class GameManagerTest {
         teamDataModels.add(teamDataModelTwo);
         initDataModel.setTeams(teamDataModels);
 
-        assertThatExceptionOfType(PlayerDuplicateException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> {
             gameManager.initGame(initDataModel);
         });
     }
@@ -119,7 +118,7 @@ public class GameManagerTest {
         teamDataModels.add(teamDataModelTwo);
         initDataModel.setTeams(teamDataModels);
 
-        assertThatExceptionOfType(TeamDuplicateException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> {
             gameManager.initGame(initDataModel);
         });
     }

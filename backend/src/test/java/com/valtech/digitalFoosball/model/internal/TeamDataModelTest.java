@@ -13,17 +13,16 @@ public class TeamDataModelTest {
     public void setUp() {
         teamDataModel = new TeamDataModel();
     }
-
     @Test
     public void increase_whenIncreaseIsCalled_thenIncreaseTheirScoreByOne() {
-        teamDataModel.countGoal();
+        teamDataModel.increaseScore();
 
         int actual = teamDataModel.getScore();
         assertThat(actual).isEqualTo(1);
     }
     @Test
     public void decrease_whenDecreaseIsCalled_thenDecreaseTheirScoreByOne() {
-        teamDataModel.countGoal();
+        teamDataModel.increaseScore();
 
         teamDataModel.decreaseScore();
 
@@ -32,19 +31,11 @@ public class TeamDataModelTest {
     }
 
     @Test
-    public void increaseWonMatches_whenATeamWinsAMatch_thenIncreaseWonMatchCounterByOne() {
-        teamDataModel.increaseWonMatches();
-
-        int actual = teamDataModel.getWonMatches();
-        assertThat(actual).isEqualTo(1);
-    }
-
-    @Test
     public void resetValues_whenResetValuesIsCalled_thenSetEmptyNamesAndScoreToZero() {
         teamDataModel.setName("T1");
         teamDataModel.setNameOfPlayerOne("P1");
         teamDataModel.setNameOfPlayerTwo("P2");
-        teamDataModel.countGoal();
+        teamDataModel.increaseScore();
 
         teamDataModel.resetValues();
 
@@ -56,7 +47,7 @@ public class TeamDataModelTest {
         teamDataModel.setName("T1");
         teamDataModel.setNameOfPlayerOne("P1");
         teamDataModel.setNameOfPlayerTwo("P2");
-        teamDataModel.countGoal();
+        teamDataModel.increaseScore();
 
         teamDataModel.resetScore();
 

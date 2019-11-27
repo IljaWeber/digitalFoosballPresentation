@@ -45,8 +45,6 @@ public class PlayerServiceTest {
     }
 
     private class PlayerRepositoryFake implements PlayerRepository {
-
-
         @Override
         public PlayerDataModel save(PlayerDataModel s) {
             return s;
@@ -84,22 +82,18 @@ public class PlayerServiceTest {
 
         @Override
         public void deleteById(UUID uuid) {
-
         }
 
         @Override
         public void delete(PlayerDataModel playerDataModel) {
-
         }
 
         @Override
         public void deleteAll(Iterable<? extends PlayerDataModel> iterable) {
-
         }
 
         @Override
         public void deleteAll() {
-
         }
 
         @Override
