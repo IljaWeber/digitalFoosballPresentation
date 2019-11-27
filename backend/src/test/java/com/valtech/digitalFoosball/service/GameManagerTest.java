@@ -272,12 +272,12 @@ public class GameManagerTest {
     }
 
     @Test
-    public void resetGameValues_whenResetGameValuesIsCalled_thenSetEmptyNamesAndScoreToZero() {
+    public void resetMatch_whenMatchIsReset_thenNamesAndScoresAreDefault() {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(2);
 
-        gameManager.resetGameValues();
+        gameManager.resetMatch();
 
         List<String> expectedPlayerNames = new ArrayList<>();
         expectedPlayerNames.add("");
@@ -291,11 +291,11 @@ public class GameManagerTest {
     }
 
     @Test
-    public void resetGameValues_whenResetGameValuesIsCalled_thenSetEmptyScoreHistory() throws Exception {
+    public void resetMatch_whenMatchIsReset_thenScoreHistoryIsEmpty() throws Exception {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
 
-        gameManager.resetGameValues();
+        gameManager.resetMatch();
 
         Field lastScoringTeams = gameManager.getClass().getDeclaredField("historyOfGoals");
         lastScoringTeams.setAccessible(true);
@@ -303,7 +303,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void resetGameValues_whenResetGameValuesIsCalled_thenSetEmptyUndoHistory() throws Exception {
+    public void resetMatch_whenMatchIsReset_thenUndoHistoryIsEmpty() throws Exception {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
@@ -314,7 +314,7 @@ public class GameManagerTest {
         gameManager.undoLastGoal();
         gameManager.undoLastGoal();
 
-        gameManager.resetGameValues();
+        gameManager.resetMatch();
 
         Field lastScoringTeams = gameManager.getClass().getDeclaredField("historyOfUndo");
         lastScoringTeams.setAccessible(true);
@@ -389,7 +389,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void newRound_whenNewRoundIsStarted_thenTeamScoresAreZero() {
+    public void newRound_whenNewRoundIsStarted_thenScoresAreZero() {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(2);
@@ -405,7 +405,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void newRound_whenNewRoundIsStartedAndUndoIsMade_thenDoNothing() {
+    public void newRound_whenNewRoundIsStarted_thenScoreHistoryIsEmpty() {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(2);
@@ -418,7 +418,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void newRound_whenNewRoundIsStartedAndRedoIsMade_thenDoNothing() {
+    public void newRound_whenNewRoundIsStarted_thenUndoHistoryIsEmpty() {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(2);
@@ -443,7 +443,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void getAllTeams_whenTeamsWereFound_thenReturnListWithTheseTeams() {
+    public void getAllTeams_whenTeamsWereFound_thenReturnThem() {
         teamDataModelOne.setName("Roto");
         teamDataModelTwo.setName("Rototo");
 

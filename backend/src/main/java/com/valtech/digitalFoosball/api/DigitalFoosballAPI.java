@@ -90,7 +90,7 @@ public class DigitalFoosballAPI {
     public boolean resetGameValues() {
         logger.info("Reset");
 
-        gameManager.resetGameValues();
+        gameManager.resetMatch();
 
         return true;
     }

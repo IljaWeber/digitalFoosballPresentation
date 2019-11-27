@@ -109,7 +109,7 @@ public class GameManager {
         }
     }
 
-    public void resetGameValues() {
+    public void resetMatch() {
         for (TeamDataModel team : teams) {
             team.resetValues();
         }
