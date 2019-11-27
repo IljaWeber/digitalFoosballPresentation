@@ -43,8 +43,11 @@ public class GameManager {
 
     public void raiseScore(int teamNo) {
         TeamDataModel teamDataModel = teams.get(teamNo - 1);
-        teamDataModel.increaseScore();
-        historyOfGoals.push(teamNo - 1);
+
+        if (getRoundWinner() == 0) {
+            teamDataModel.increaseScore();
+            historyOfGoals.push(teamNo - 1);
+        }
 
         if (getRoundWinner() != 0) {
             teamDataModel.increaseWonRounds();

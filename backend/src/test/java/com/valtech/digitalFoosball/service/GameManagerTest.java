@@ -132,6 +132,22 @@ public class GameManagerTest {
     }
 
     @Test
+    public void raiseScore_whenRoundWinConditionIsFulfilled_thenDoNothing() {
+        gameManager.initGame(initDataModel);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+
+        gameManager.raiseScore(1);
+
+        int actual = gameManager.getTeams().get(0).getScore();
+        assertThat(actual).isEqualTo(6);
+    }
+
+    @Test
     public void undoLastGoal_whenSeveralGoalsAreScored_thenUndoThemInTheOrderOfScoring() {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
@@ -213,7 +229,7 @@ public class GameManagerTest {
     }
 
     @Test
-    public void redo_whenGoalWasUndidAndRedid_thenSaveItIntoGoalHistory() throws Exception {
+    public void redoLastGoal_whenGoalWasUndidAndRedid_thenSaveItIntoGoalHistory() throws Exception {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.undoLastGoal();
@@ -287,7 +303,7 @@ public class GameManagerTest {
     }
 
     @Test
-    void resetGameValues_whenResetGameValuesIsCalled_thenSetEmptyUndoHistory() throws Exception {
+    public void resetGameValues_whenResetGameValuesIsCalled_thenSetEmptyUndoHistory() throws Exception {
         gameManager.initGame(initDataModel);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
