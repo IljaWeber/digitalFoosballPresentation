@@ -241,9 +241,9 @@ public class GameManagerTest {
         Class cls = Class.forName("com.valtech.digitalFoosball.service.GameManager");
         Field lastScoringTeams = cls.getDeclaredField("historyOfGoals");
         lastScoringTeams.setAccessible(true);
-        Stack<Integer> stack = (Stack<Integer>) lastScoringTeams.get(gameManager);
-        Integer actual = stack.peek();
-        assertThat(actual).isEqualTo(0);
+        Stack<TeamDataModel> stack = (Stack<TeamDataModel>) lastScoringTeams.get(gameManager);
+        TeamDataModel actual = stack.peek();
+        assertThat(actual).isEqualTo(gameManager.getTeams().get(0));
     }
 
     @Test
@@ -324,47 +324,35 @@ public class GameManagerTest {
     }
 
     @Test
-    public void getRoundWinner_whenATeamFulfillRoundWinCondition_thenReturnItsNumber() {
+    public void getRoundWinner_whenNoTeamFulfillsRoundWinCondition_thenReturnZero() {
         gameManager.initGame(initDataModel);
+
+        int actual = gameManager.getRoundWinner();
+
+        assertThat(actual).isEqualTo(0);
+    }
+
+    @Test
+    void getRoundWinner_whenATeamFulfillRoundWinCondition_thenReturnItsNumber() {
+        gameManager.initGame(initDataModel);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(2);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(2);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
 
         int actual = gameManager.getRoundWinner();
 
         assertThat(actual).isEqualTo(1);
-    }
-
-    @Test
-    public void getRoundWinner_whenATeamDoesNotFulfillRoundWinCondition_thenReturnZero() {
-        gameManager.initGame(initDataModel);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(2);
-        gameManager.raiseScore(2);
-        gameManager.raiseScore(2);
-        gameManager.raiseScore(2);
-        gameManager.raiseScore(2);
-        gameManager.raiseScore(1);
-
-        int actual = gameManager.getRoundWinner();
-
-        assertThat(actual).isEqualTo(0);
-    }
-
-    @Test
-    public void getRoundWinner_whenNoTeamHasScoredSixGoals_thenReturnZero() {
-        gameManager.initGame(initDataModel);
-
-        int actual = gameManager.getRoundWinner();
-
-        assertThat(actual).isEqualTo(0);
     }
 
     @Test

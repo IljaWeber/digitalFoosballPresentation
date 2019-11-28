@@ -161,23 +161,33 @@ public class GameManager {
     }
 
     public int getRoundWinner() {
-        for (int teamNo = 0; teamNo < teams.size(); teamNo++) {
-            if (scoreGreaterOrEqualSixOfTeam(teamNo) && scoreDifferenceGreaterOrEqualTwo()) {
-                return teamNo + 1;
+        int roundWinner = 0;
+
+        for (TeamDataModel team : teams) {
+            if (scoreGreaterOrEqualSixOfTeam(team) && leadingWithTwoOrMoreGoals(team)) {
+                roundWinner = teams.indexOf(team) + 1;
             }
         }
 
-        return 0;
+        return roundWinner;
     }
 
-    private boolean scoreGreaterOrEqualSixOfTeam(int teamNo) {
-        return teams.get(teamNo).getScore() >= 6;
+    private boolean scoreGreaterOrEqualSixOfTeam(TeamDataModel team) {
+        return team.getScore() >= 6;
     }
 
-    private boolean scoreDifferenceGreaterOrEqualTwo() {
+    private boolean leadingWithTwoOrMoreGoals(TeamDataModel team) {
         final int necessaryScoreDifference = 2;
 
-        int actualScoreDifference = Math.abs(teams.get(0).getScore() - teams.get(1).getScore());
+        TeamDataModel otherTeam = new TeamDataModel();
+
+        for (TeamDataModel teamDataModel : teams) {
+            if (!teamDataModel.equals(team)) {
+                otherTeam = teamDataModel;
+            }
+        }
+
+        final int actualScoreDifference = team.getScore() - otherTeam.getScore();
 
         return actualScoreDifference >= necessaryScoreDifference;
     }
