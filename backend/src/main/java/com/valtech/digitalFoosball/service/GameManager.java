@@ -178,17 +178,23 @@ public class GameManager {
     private boolean leadingWithTwoOrMoreGoals(TeamDataModel team) {
         final int necessaryScoreDifference = 2;
 
-        TeamDataModel otherTeam = new TeamDataModel();
+        TeamDataModel opponentTeam = getOpponent(team);
+
+        final int actualScoreDifference = team.getScore() - opponentTeam.getScore();
+
+        return actualScoreDifference >= necessaryScoreDifference;
+    }
+
+    private TeamDataModel getOpponent(TeamDataModel team) {
+        TeamDataModel opponent = new TeamDataModel();
 
         for (TeamDataModel teamDataModel : teams) {
             if (!teamDataModel.equals(team)) {
-                otherTeam = teamDataModel;
+                opponent = teamDataModel;
             }
         }
 
-        final int actualScoreDifference = team.getScore() - otherTeam.getScore();
-
-        return actualScoreDifference >= necessaryScoreDifference;
+        return opponent;
     }
 
     private void resetHistories() {
