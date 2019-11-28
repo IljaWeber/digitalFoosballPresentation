@@ -18,8 +18,8 @@ import java.util.Stack;
 public class GameManager {
     private List<TeamDataModel> teams;
     private TeamService teamService;
-    private Stack<Integer> historyOfGoals;
-    private Stack<Integer> historyOfUndo;
+    private Stack<TeamDataModel> historyOfGoals;
+    private Stack<TeamDataModel> historyOfUndo;
     private Converter converter;
 
     @Autowired
@@ -69,7 +69,7 @@ public class GameManager {
 
         if (!roundIsOver()) {
             teamDataModel.increaseScore();
-            historyOfGoals.push(teamNo - 1);
+            historyOfGoals.push(teamDataModel);
         }
 
         if (roundIsOver()) {
@@ -79,25 +79,23 @@ public class GameManager {
 
     public void undoLastGoal() {
         if (!historyOfGoals.empty()) {
-            Integer indexOfLastScoringTeam = historyOfGoals.pop();
-            TeamDataModel lastScoringTeam = teams.get(indexOfLastScoringTeam);
+            TeamDataModel lastScoringTeam = historyOfGoals.pop();
 
             if (roundIsOver()) {
                 lastScoringTeam.decreaseWonRounds();
             }
 
             lastScoringTeam.decreaseScore();
-            historyOfUndo.push(indexOfLastScoringTeam);
+            historyOfUndo.push(lastScoringTeam);
         }
     }
 
     public void redoLastGoal() {
         if (!historyOfUndo.empty()) {
-            Integer lastUndo = historyOfUndo.pop();
-            TeamDataModel teamDataModel = teams.get(lastUndo);
+            TeamDataModel teamDataModel = historyOfUndo.pop();
 
             teamDataModel.increaseScore();
-            historyOfGoals.push(lastUndo);
+            historyOfGoals.push(teamDataModel);
 
             if (roundIsOver()) {
                 teamDataModel.increaseWonRounds();
