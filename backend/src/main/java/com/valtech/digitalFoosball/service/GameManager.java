@@ -164,7 +164,7 @@ public class GameManager {
         int roundWinner = 0;
 
         for (TeamDataModel team : teams) {
-            if (scoreGreaterOrEqualSixOfTeam(team) && leadingWithTwoOrMoreGoals(team)) {
+            if (scoreGreaterOrEqualSix(team) && leadingWithTwoOrMoreGoals(team)) {
                 roundWinner = teams.indexOf(team) + 1;
             }
         }
@@ -172,7 +172,7 @@ public class GameManager {
         return roundWinner;
     }
 
-    private boolean scoreGreaterOrEqualSixOfTeam(TeamDataModel team) {
+    private boolean scoreGreaterOrEqualSix(TeamDataModel team) {
         return team.getScore() >= 6;
     }
 
