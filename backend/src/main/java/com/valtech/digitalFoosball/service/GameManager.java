@@ -206,4 +206,3 @@ public class GameManager {
         return getRoundWinner() != 0;
     }
 }
-
