@@ -22,7 +22,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 public class DigitalFoosballAPITest {
@@ -209,7 +208,6 @@ public class DigitalFoosballAPITest {
 
     @Test
     public void getAllTeams_whenAllTeamsWhereAsked_thenReturnTheseAsAList() throws Exception {
-
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
 
@@ -219,5 +217,4 @@ public class DigitalFoosballAPITest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].name").value("T1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].name").value("T2"));
     }
-
 }
