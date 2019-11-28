@@ -67,15 +67,14 @@ public class GameManager {
     public void raiseScore(int teamNo) {
         TeamDataModel teamDataModel = teams.get(teamNo - 1);
 
-        if (roundIsOver()) {
-            teamDataModel.increaseWonRounds();
-        }
-
         if (!roundIsOver()) {
             teamDataModel.increaseScore();
             historyOfGoals.push(teamNo - 1);
         }
 
+        if (roundIsOver()) {
+            teamDataModel.increaseWonRounds();
+        }
     }
 
     public void undoLastGoal() {
