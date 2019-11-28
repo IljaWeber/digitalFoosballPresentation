@@ -111,7 +111,6 @@ public class GameManager {
         resetHistories();
     }
 
-
     public void newRound() {
         for (TeamDataModel team : teams) {
             team.resetScore();
@@ -149,15 +148,15 @@ public class GameManager {
     }
 
     public int getMatchWinner() {
-        for (int teamNo = 0; teamNo < teams.size(); teamNo++) {
-            TeamDataModel team = teams.get(teamNo);
+        int matchWinner = 0;
 
+        for (TeamDataModel team : teams) {
             if (team.getWonRounds() >= 2) {
-                return teamNo + 1;
+                matchWinner = teams.indexOf(team) + 1;
             }
         }
 
-        return 0;
+        return matchWinner;
     }
 
     public int getRoundWinner() {
