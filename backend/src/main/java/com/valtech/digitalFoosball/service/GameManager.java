@@ -67,18 +67,15 @@ public class GameManager {
     public void raiseScore(int teamNo) {
         TeamDataModel teamDataModel = teams.get(teamNo - 1);
 
+        if (roundIsOver()) {
+            teamDataModel.increaseWonRounds();
+        }
+
         if (!roundIsOver()) {
             teamDataModel.increaseScore();
             historyOfGoals.push(teamNo - 1);
         }
 
-        if (roundIsOver()) {
-            teamDataModel.increaseWonRounds();
-        }
-    }
-
-    private boolean roundIsOver() {
-        return getRoundWinner() != 0;
     }
 
     public void undoLastGoal() {
@@ -114,20 +111,16 @@ public class GameManager {
             team.resetValues();
         }
 
-        resetStacks();
+        resetHistories();
     }
 
-    private void resetStacks() {
-        historyOfGoals = new Stack<>();
-        historyOfUndo = new Stack<>();
-    }
 
     public void newRound() {
         for (TeamDataModel team : teams) {
             team.resetScore();
         }
 
-        resetStacks();
+        resetHistories();
     }
 
     public GameDataModel getGameData() {
@@ -190,6 +183,15 @@ public class GameManager {
         int actualScoreDifference = Math.abs(teams.get(0).getScore() - teams.get(1).getScore());
 
         return actualScoreDifference >= necessaryScoreDifference;
+    }
+
+    private void resetHistories() {
+        historyOfGoals = new Stack<>();
+        historyOfUndo = new Stack<>();
+    }
+
+    private boolean roundIsOver() {
+        return getRoundWinner() != 0;
     }
 }
 
