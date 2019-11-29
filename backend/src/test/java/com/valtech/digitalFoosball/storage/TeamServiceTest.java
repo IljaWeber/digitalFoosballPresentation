@@ -86,6 +86,11 @@ public class TeamServiceTest {
         assertThat(actual).extracting(TeamDataModel::getName).containsExactly("Gelb", "Geld");
     }
 
+    @Test
+    void saveMatchWin_whenATeamHasWonAMatch_thenSaveIt() {
+
+    }
+
     private class TeamRepositoryFake implements TeamRepository {
         private UUID id;
 
