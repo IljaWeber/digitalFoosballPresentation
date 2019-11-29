@@ -31,6 +31,14 @@ public class TeamDataModelTest {
     }
 
     @Test
+    public void increaseWonMatches_whenATeamWinsAMatch_thenIncreaseWonMatchCounterByOne() {
+        teamDataModel.increaseWonMatches();
+
+        int actual = teamDataModel.getWonMatches();
+        assertThat(actual).isEqualTo(1);
+    }
+
+    @Test
     public void resetValues_whenResetValuesIsCalled_thenSetEmptyNamesAndScoreToZero() {
         teamDataModel.setName("T1");
         teamDataModel.setNameOfPlayerOne("P1");

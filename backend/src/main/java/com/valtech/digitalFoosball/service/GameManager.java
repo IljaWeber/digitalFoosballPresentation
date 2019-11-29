@@ -77,6 +77,10 @@ public class GameManager {
         }
     }
 
+    private boolean roundIsOver() {
+        return getRoundWinner() != 0;
+    }
+
     public void undoLastGoal() {
         if (!historyOfGoals.empty()) {
             TeamDataModel lastScoringTeam = historyOfGoals.pop();
@@ -201,8 +205,5 @@ public class GameManager {
         historyOfGoals = new Stack<>();
         historyOfUndo = new Stack<>();
     }
-
-    private boolean roundIsOver() {
-        return getRoundWinner() != 0;
-    }
 }
+

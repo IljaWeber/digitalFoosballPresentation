@@ -25,6 +25,8 @@ public class TeamDataModel {
     @Transient
     private int wonRounds;
 
+    private int wonMatches;
+
     public TeamDataModel() {
         players = Arrays.asList(new PlayerDataModel(), new PlayerDataModel());
         name = "";
@@ -110,5 +112,13 @@ public class TeamDataModel {
     @Override
     public String toString() {
         return name + ": " + getNameOfPlayerOne() + ", " + getNameOfPlayerTwo();
+    }
+
+    public void increaseWonMatches() {
+        wonMatches++;
+    }
+
+    public int getWonMatches() {
+        return wonMatches;
     }
 }

@@ -326,6 +326,11 @@ public class GameManagerTest {
     @Test
     public void getRoundWinner_whenNoTeamFulfillsRoundWinCondition_thenReturnZero() {
         gameManager.initGame(initDataModel);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
 
         int actual = gameManager.getRoundWinner();
 
