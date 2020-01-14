@@ -11,11 +11,13 @@ export default class ResetButton extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         const url = properties.url + 'reset';
-        fetch(url, {
+        const requestOptions = {
             method: 'DELETE',
-        }).then(response => {
-                this.props.resetHandler(response)
-            })
+            headers: {'Authorization': properties.auth},
+        };
+        fetch(url, requestOptions).then(response => {
+            this.props.resetHandler(response)
+        })
     };
 
     render() {

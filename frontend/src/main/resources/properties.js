@@ -3,7 +3,8 @@ export const properties = {
     port: 8888,
     context: "/digitalfoosball/",
     url: "https://digital-football.valtech.io/digitalfoosball/",
-    sock_url: "ws://digital-football.valtech.io/digitalfoosball/"
+    sock_url: "ws://digital-football.valtech.io/digitalfoosball/",
+    auth: "Basic ZGlnaXRhbC5mb290YmFsbDpVUnlnIyM0fSMpSzpcXHIyflErS301KSM/NURXM0cnXiQ9b3I6OyY8K31gJ1dVP01QeA=="
 };
 
 // export const properties = {

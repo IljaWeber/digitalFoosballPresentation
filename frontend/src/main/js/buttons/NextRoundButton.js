@@ -6,9 +6,11 @@ export default class NextRoundButton extends React.Component {
     handleSubmit = async (event) => {
         event.preventDefault();
         const url = properties.url + 'newRound';
-        const response = await fetch(url, {
+        const requestOptions = {
             method: 'POST',
-        });
+            headers: {'Authorization': properties.auth},
+        };
+        const response = await fetch(url, requestOptions);
         const json = await response.json();
         this.props.nextRoundHandler(json);
     };
