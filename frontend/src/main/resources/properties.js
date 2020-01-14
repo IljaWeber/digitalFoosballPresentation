@@ -1,5 +1,5 @@
 export const properties = {
-    host: "https://digital-football.valtech.io/",
+    host: "http://digital-football.valtech.io/",
     port: 8888,
     context: "/digitalfoosball/",
     url: "https://digital-football.valtech.io/digitalfoosball/",
