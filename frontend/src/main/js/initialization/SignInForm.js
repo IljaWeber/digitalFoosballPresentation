@@ -35,7 +35,8 @@ export default class SignInForm extends React.Component {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                Accepts: 'application/json',
+                Accepts: 'application/' +
+                    'json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(this.state)
