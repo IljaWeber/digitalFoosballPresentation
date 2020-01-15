@@ -38,10 +38,13 @@ public class TeamService {
 
             return teamRepository.save(teamDataModel);
         }
+        TeamDataModel teamFromDatabase = optionalTeamDataModel.get();
 
-        logger.info("{} loaded from DB", optionalTeamDataModel.get().toString());
+        teamFromDatabase.setPlayers(playersFromDatabase);
 
-        return optionalTeamDataModel.get();
+        logger.info("{} loaded from DB", teamFromDatabase.toString());
+
+        return teamFromDatabase;
     }
 
     private List<PlayerDataModel> getPlayersFromDatabase(List<PlayerDataModel> players) {
