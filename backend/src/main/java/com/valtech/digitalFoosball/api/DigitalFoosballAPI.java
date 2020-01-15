@@ -41,10 +41,8 @@ public class DigitalFoosballAPI {
         return gameManager.getGameData();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/allTeams", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TeamOutput> getAllTeamsStartingWith() {
-        logger.info("All Teams requested");
         return gameManager.getAllTeams();
     }
 
