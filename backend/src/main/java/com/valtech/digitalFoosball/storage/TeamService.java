@@ -38,6 +38,7 @@ public class TeamService {
 
             return teamRepository.save(teamDataModel);
         }
+
         TeamDataModel teamFromDatabase = optionalTeamDataModel.get();
 
         teamFromDatabase.setPlayers(playersFromDatabase);
