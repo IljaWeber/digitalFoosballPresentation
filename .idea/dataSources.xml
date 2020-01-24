@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="digitalFoosball@localhost" uuid="474bb288-43ff-4931-9af4-2a473f1e58d6">
+    <data-source source="LOCAL" name="VMDatabase" uuid="20d60388-fbd3-4e0d-885a-3a2591fe3641">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/digitalFoosball</jdbc-url>
+      <jdbc-url>jdbc:mysql://10.36.24.241:3306/digitalFoosball</jdbc-url>
     </data-source>
   </component>
 </project>

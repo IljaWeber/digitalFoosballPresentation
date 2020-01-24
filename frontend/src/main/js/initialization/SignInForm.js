@@ -12,11 +12,13 @@ export default class SignInForm extends React.Component {
     teams;
 
     componentDidMount = async () => {
-        const url = properties.url + "allTeams";
+        const url = properties.url + "/allTeams";
         const requestOptions = {
             method: 'GET',
-            headers: {'Authorization': properties.auth}
+            Authorization: properties.auth,
+            credentials: 'include',
         };
+
         const response = await fetch(url, requestOptions);
         this.teams = await response.json();
     };
@@ -32,8 +34,13 @@ export default class SignInForm extends React.Component {
         event.preventDefault();
         const url = properties.url + "init";
         const requestOptions = {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
             method: 'POST',
-            headers: {'Authorization': properties.auth},
+            Authorization: properties.auth,
+            credentials: 'include',
             body: JSON.stringify(this.state)
         };
 
