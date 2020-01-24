@@ -41,6 +41,7 @@ export default class SignInForm extends React.Component {
             method: 'POST',
             Authorization: properties.auth,
             credentials: 'include',
+
             body: JSON.stringify(this.state)
         };
 
