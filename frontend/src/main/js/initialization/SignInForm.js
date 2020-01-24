@@ -35,13 +35,13 @@ export default class SignInForm extends React.Component {
         const url = properties.url + "init";
         const requestOptions = {
             headers: {
+
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             method: 'POST',
             Authorization: properties.auth,
             credentials: 'include',
-
             body: JSON.stringify(this.state)
         };
 
