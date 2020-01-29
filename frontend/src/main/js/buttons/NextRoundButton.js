@@ -8,7 +8,8 @@ export default class NextRoundButton extends React.Component {
         const url = properties.url + 'newRound';
         const requestOptions = {
             method: 'POST',
-            headers: {'Authorization': properties.auth},
+            Authorization: properties.auth,
+            credentials: 'include'
         };
         const response = await fetch(url, requestOptions);
         const json = await response.json();

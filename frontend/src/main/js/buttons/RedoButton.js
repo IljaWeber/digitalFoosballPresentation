@@ -9,7 +9,8 @@ export default class RedoButton extends React.Component {
         const url = properties.url + 'redo';
         const requestOptions = {
             method: 'PUT',
-            headers: {'Authorization': properties.auth},
+            Authorization: properties.auth,
+            credentials: 'include'
         };
         const response = await fetch(url, requestOptions);
         const json = await response.json();

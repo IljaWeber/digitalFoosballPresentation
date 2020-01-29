@@ -8,7 +8,8 @@ export default class UndoButton extends React.Component {
         const url = properties.url + 'undo';
         const requestOptions = {
             method: 'PUT',
-            headers: {'Authorization': properties.auth},
+            Authorization: properties.auth,
+            credentials: 'include'
         };
         const response = await fetch(url, requestOptions);
         const json = await response.json();

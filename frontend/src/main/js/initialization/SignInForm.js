@@ -12,11 +12,12 @@ export default class SignInForm extends React.Component {
     teams;
 
     componentDidMount = async () => {
-        const url = properties.url + "/allTeams";
+        const url = properties.url + "allTeams";
+
         const requestOptions = {
             method: 'GET',
-            Authorization: properties.auth,
             credentials: 'include',
+            Authorization: properties.auth,
         };
 
         const response = await fetch(url, requestOptions);
@@ -24,25 +25,24 @@ export default class SignInForm extends React.Component {
     };
 
     setUpTeamOne = (team) => {
-        this.setState({ teamOne: team })
+        this.setState({teamOne: team})
     };
     setUpTeamTwo = (team) => {
-        this.setState({ teamTwo: team })
+        this.setState({teamTwo: team})
     };
 
     handleSubmit = async (event) => {
         event.preventDefault();
         const url = properties.url + "init";
-        const requestOptions = {
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-                Accepts: 'application/json; charset=UTF-8',
-            },
 
+        const requestOptions = {
             method: 'POST',
-            Authorization: properties.auth,
             credentials: 'include',
-            body: JSON.stringify(this.state),
+            Authorization: properties.auth,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state)
         };
 
         const response = await fetch(url, requestOptions);
@@ -61,7 +61,7 @@ export default class SignInForm extends React.Component {
                 <div className="teamSignIn_Forms">
                     <div className="teamSignIn_Forms_TeamOne">
                         <h2>Green</h2>
-                    <TeamForm number="1" onChange={this.setUpTeamOne} teams={this.teams}/>
+                        <TeamForm number="1" onChange={this.setUpTeamOne} teams={this.teams}/>
                     </div>
                     <div className="teamSignIn_Forms_TeamTwo">
                         <h2>Orange</h2>
@@ -69,7 +69,7 @@ export default class SignInForm extends React.Component {
                     </div>
                 </div>
                 <div className="teamSignIn_Submit">
-                    <input type="submit" value="Submit" className="button slowDropIn" />
+                    <input type="submit" value="Submit" className="button slowDropIn"/>
                 </div>
             </form>
         )

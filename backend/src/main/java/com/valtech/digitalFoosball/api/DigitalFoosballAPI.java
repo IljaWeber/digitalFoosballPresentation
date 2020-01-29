@@ -16,6 +16,7 @@ import java.util.List;
 
 @Controller
 @RestController
+@RequestMapping("api")
 public class DigitalFoosballAPI {
     private GameManager gameManager;
     private SimpMessagingTemplate template;
