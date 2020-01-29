@@ -16,7 +16,7 @@ export default class MatchInfo extends React.Component {
     stompClient;
 
     connect() {
-        const stompClient = Stomp.over(new SockJS(properties.ipAndPort + 'socket-registry'));
+        const stompClient = Stomp.over(new SockJS(properties.hostAndPort + 'socket-registry'));
 
         stompClient.connect({}, () => {
             stompClient.subscribe('/update/score', (message) => {
