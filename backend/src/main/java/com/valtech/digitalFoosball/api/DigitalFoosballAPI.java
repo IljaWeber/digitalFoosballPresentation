@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller("api")
-@RestController("api")
+@Controller()
+@RestController()
 @RequestMapping("api")
 public class DigitalFoosballAPI {
     private GameManager gameManager;
