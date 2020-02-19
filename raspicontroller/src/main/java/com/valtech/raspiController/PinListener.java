@@ -21,6 +21,7 @@ public class PinListener implements GpioPinListenerDigital {
     @Override
     public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 
+        System.out.println("Pin-state changed");
         if (event.getEdge().equals(PinEdge.RISING)) {
             try {
                 logger.info("Team " + teamNumber + "has scored");

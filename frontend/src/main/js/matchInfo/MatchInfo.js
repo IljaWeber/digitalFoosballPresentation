@@ -24,7 +24,8 @@ export default class MatchInfo extends React.Component {
                 this.setState({teams: json.teams});
                 this.setState({roundWinner: json.roundWinner});
                 this.setState({matchWinner: json.matchWinner});
-            });
+            });1234
+            
         });
 
         return stompClient;

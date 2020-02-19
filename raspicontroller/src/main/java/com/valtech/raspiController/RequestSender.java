@@ -1,5 +1,6 @@
 package com.valtech.raspiController;
 
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -11,7 +12,7 @@ import java.io.IOException;
 
 public class RequestSender {
     public int sendRaise(int teamNumber) throws IOException {
-        String url = "http://192.168.123.51:8888/digitalfoosball/raise";
+        String url = "https://digital-football.valtech.io/api/raise";
 
         HttpPost request = new HttpPost(url);
 
@@ -20,8 +21,13 @@ public class RequestSender {
 
         request.setEntity(myEntity);
 
+        String authHeader = "Basic ZGlnaXRhbC5mb290YmFsbDpVUnlnIyM0fSMpSzpcXHIyflErS301KSM/NURXM0cnXiQ9b3I6OyY8K31gJ1dVP01QeA==";
+        request.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
+
         HttpClient client = HttpClientBuilder.create().build();
+        System.out.println("Sending now");
         HttpResponse response = client.execute(request);
+        System.out.println("Response: " + response.toString());
 
         return response.getStatusLine().getStatusCode();
     }

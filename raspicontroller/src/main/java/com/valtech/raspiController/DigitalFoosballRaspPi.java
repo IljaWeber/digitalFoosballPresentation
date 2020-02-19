@@ -8,14 +8,11 @@ import com.pi4j.io.gpio.RaspiPin;
 import java.util.Scanner;
 
 public class DigitalFoosballRaspPi {
-
     public static void main(String[] args) {
         final GpioController gpio = GpioFactory.getInstance();
 
-        Scanner scanner = new Scanner(System.in);
-
-        GpioPinDigitalInput pinOne = gpio.provisionDigitalInputPin(RaspiPin.GPIO_17);
-        GpioPinDigitalInput pinTwo = gpio.provisionDigitalInputPin(RaspiPin.GPIO_27);
+        GpioPinDigitalInput pinOne = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02);
+        GpioPinDigitalInput pinTwo = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03);
 
         PinListener listenerOne = new PinListener();
         listenerOne.setTeamNumber(1);
@@ -25,6 +22,7 @@ public class DigitalFoosballRaspPi {
         listenerTwo.setTeamNumber(2);
         pinTwo.addListener(listenerTwo);
 
+        Scanner scanner = new Scanner(System.in);
         scanner.next();
     }
 }
