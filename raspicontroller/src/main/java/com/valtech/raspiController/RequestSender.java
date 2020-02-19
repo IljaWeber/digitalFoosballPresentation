@@ -20,9 +20,6 @@ public class RequestSender {
 
         request.setEntity(myEntity);
 
-//        String authHeader = "Basic ZGlnaXRhbC5mb290YmFsbDpVUnlnIyM0fSMpSzpcXHIyflErS301KSM/NURXM0cnXiQ9b3I6OyY8K31gJ1dVP01QeA==";
-//        request.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
-
         HttpClient client = HttpClientBuilder.create().build();
         HttpResponse response = client.execute(request);
 

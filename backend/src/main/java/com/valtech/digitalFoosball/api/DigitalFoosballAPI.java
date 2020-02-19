@@ -18,6 +18,7 @@ import java.util.List;
 @RestController()
 @RequestMapping("api")
 public class DigitalFoosballAPI {
+
     private GameManager gameManager;
     private SimpMessagingTemplate template;
     private Logger logger = LogManager.getLogger(DigitalFoosballAPI.class);

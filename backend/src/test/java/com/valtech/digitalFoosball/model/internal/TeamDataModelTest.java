@@ -13,6 +13,7 @@ public class TeamDataModelTest {
     public void setUp() {
         teamDataModel = new TeamDataModel();
     }
+
     @Test
     public void increase_whenIncreaseIsCalled_thenIncreaseTheirScoreByOne() {
         teamDataModel.increaseScore();
