@@ -4,6 +4,7 @@ import '../../resources/properties'
 import UndoButton from "../buttons/UndoButton";
 import ResetButton from "../buttons/ResetButton";
 import RedoButton from "../buttons/RedoButton";
+import RaiseButton from "../buttons/RaiseButton";
 
 export default class ScoreScreen extends React.Component {
     reset = (response) => {
@@ -40,7 +41,8 @@ export default class ScoreScreen extends React.Component {
                     return (
                         <li className={`team team${index + 1}`} key={index}>
                             <ul className={`score score${index + 1}`}>{team.score}
-                            <li className="roundWins">Won rounds: {team.roundWins}</li>
+                                <li className="roundWins">Won rounds: {team.roundWins}</li>
+                                <RaiseButton teamNo={index + 1}/>
                             </ul>
                             <ul className="name">{team.name}</ul>
                             <ul className="player">{team.playerOne + ", "}</ul>

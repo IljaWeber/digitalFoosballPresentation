@@ -392,6 +392,16 @@ nav ul {
   overflow-x: scroll;
 }
 
+.raiseContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1vh;
+}
+
+.raiseButton {
+  margin: 0;
+}
+
 .player {
   list-style: none;
   padding: 0;
