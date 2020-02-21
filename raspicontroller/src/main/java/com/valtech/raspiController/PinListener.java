@@ -9,6 +9,14 @@ import java.io.IOException;
 public class PinListener implements GpioPinListenerDigital {
     private int teamNumber;
     private RequestSender requestSender = new RequestSender();
+    private MyGui gui = null;
+
+    public PinListener() {
+    }
+
+    public PinListener(MyGui gui) {
+        this.gui = gui;
+    }
 
     public void setTeamNumber(int teamNumber) {
         this.teamNumber = teamNumber;
@@ -18,8 +26,9 @@ public class PinListener implements GpioPinListenerDigital {
     public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 
         if (event.getEdge().equals(PinEdge.RISING)) {
-            System.out.println("Pin-state changed");
+            System.out.println("Pin-state changed for Team " + teamNumber);
             try {
+                gui.raiseCounter(teamNumber);
                 requestSender.sendRaise(teamNumber);
             } catch (IOException e) {
                 e.printStackTrace();

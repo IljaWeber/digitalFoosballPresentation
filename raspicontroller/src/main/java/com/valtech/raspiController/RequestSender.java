@@ -25,9 +25,7 @@ public class RequestSender {
         request.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
 
         HttpClient client = HttpClientBuilder.create().build();
-        System.out.println("Sending now");
         HttpResponse response = client.execute(request);
-        System.out.println("Response: " + response.toString());
 
         return response.getStatusLine().getStatusCode();
     }
