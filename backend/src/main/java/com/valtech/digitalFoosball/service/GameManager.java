@@ -179,6 +179,12 @@ public class GameManager {
         return roundWinner;
     }
 
+    public TeamModels[] initAdHocGame() {
+        TeamModels[] adHocGame = new TeamModels[]{new TeamDataModel(), new TeamDataModel()};
+
+        return adHocGame;
+    }
+
     private boolean scoreGreaterOrEqualSix(TeamDataModel team) {
         return team.getScore() >= 6;
     }
@@ -210,7 +216,4 @@ public class GameManager {
         historyOfUndo = new Stack<>();
     }
 
-    public int[] initAdHocGame() {
-        return new int[]{0, 0};
-    }
 }

@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.service;
 
 public interface TeamModels {
-    void countGoal();
+    void increaseScore();
 
     void decreaseScore();
 

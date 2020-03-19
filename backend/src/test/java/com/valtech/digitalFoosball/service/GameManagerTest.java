@@ -128,12 +128,11 @@ public class GameManagerTest {
 
     @Test
     void initAdHocGame_whenNoTeamsAreGiven_thenReturnTwoScoreCounterWithValueOfZero() {
-        int[] expected = {0, 0};
         GameManager gameManager = new GameManager();
 
-        int[] actual = gameManager.initAdHocGame();
+        TeamModels[] actual = gameManager.initAdHocGame();
 
-        assertThat(actual).contains(expected);
+        assertThat(actual).extracting(TeamModels::getScore).containsExactly(0, 0);
     }
 
     @Test
