@@ -127,12 +127,14 @@ public class GameManagerTest {
 
 
     @Test
-    void initAdHocGame_whenNoTeamsAreGiven_thenReturnTwoScoreCounterWithValueOfZero() {
+    public void initAdHocGame_whenNoTeamsValuesWhereGiven_thenCreateTwoGenericTeams() {
         GameManager gameManager = new GameManager();
 
         TeamModels[] actual = gameManager.initAdHocGame();
 
-        assertThat(actual).extracting(TeamModels::getScore).containsExactly(0, 0);
+        assertThat(actual).extracting(TeamModels::getScore, TeamModels::getWonRounds).containsExactly(
+                tuple(0, 0),
+                tuple(0, 0));
     }
 
     @Test

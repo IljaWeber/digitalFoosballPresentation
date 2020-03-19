@@ -180,9 +180,8 @@ public class GameManager {
     }
 
     public TeamModels[] initAdHocGame() {
-        TeamModels[] adHocGame = new TeamModels[]{new TeamDataModel(), new TeamDataModel()};
 
-        return adHocGame;
+        return new TeamModels[]{new TeamDataModel(), new TeamDataModel()};
     }
 
     private boolean scoreGreaterOrEqualSix(TeamDataModel team) {
