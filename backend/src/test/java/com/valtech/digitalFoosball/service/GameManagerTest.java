@@ -127,6 +127,16 @@ public class GameManagerTest {
 
 
     @Test
+    void initAdHocGame_whenNoTeamsAreGiven_thenReturnTwoScoreCounterWithValueOfZero() {
+        int[] expected = {0, 0};
+        GameManager gameManager = new GameManager();
+
+        int[] actual = gameManager.initAdHocGame();
+
+        assertThat(actual).contains(expected);
+    }
+
+    @Test
     public void raiseScore_whenATeamScoresMultipleGoals_thenRaiseTheirCounterForEachGoalByOne() {
         gameManager.initGame(initDataModel);
 
