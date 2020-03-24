@@ -4,6 +4,7 @@ import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import com.valtech.digitalFoosball.model.output.AdHocGameOutput;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.storage.PlayerService;
@@ -512,6 +513,20 @@ public class GameManagerTest {
         assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
                 tuple("Orange", 1, 0),
                 tuple("Green", 2, 0));
+
+    }
+
+    @Test
+    void getDataOfAdHocGame_whenAdHocGameDataIsRequested_thenReturnItInOutputFormat() {
+        gameManager.initAdHocGame();
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(2);
+
+        List<AdHocGameOutput> actual = gameManager.getDataOfAdHocGame();
+
+        assertThat(actual).extracting(AdHocGameOutput::getName, AdHocGameOutput::getScore, AdHocGameOutput::getWonRounds).containsExactly(
+                tuple("Orange", 1, 0),
+                tuple("Green", 1, 0));
 
     }
 

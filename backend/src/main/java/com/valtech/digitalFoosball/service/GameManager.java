@@ -4,6 +4,7 @@ import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import com.valtech.digitalFoosball.model.output.AdHocGameOutput;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.storage.TeamService;
@@ -221,6 +222,12 @@ public class GameManager {
         teams.add(adHocTeamOrange);
         teams.add(adHocTeamGreen);
 
+    }
+
+    public List<AdHocGameOutput> getDataOfAdHocGame() {
+        AdHocConverter adHocConverter = new AdHocConverter();
+
+        return adHocConverter.convertForOutput(teams);
     }
 }
 
