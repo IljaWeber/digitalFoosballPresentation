@@ -30,6 +30,10 @@ public class GameManager {
         historyOfUndo = new Stack<>();
     }
 
+    public GameManager() {
+
+    }
+
     public void initGame(InitDataModel initDataModel) {
         historyOfGoals = new Stack<>();
         checkForDuplicateNames(initDataModel);
@@ -204,6 +208,19 @@ public class GameManager {
     private void resetHistories() {
         historyOfGoals = new Stack<>();
         historyOfUndo = new Stack<>();
+    }
+
+    public void initAdHocGame() {
+        teams = new ArrayList<>();
+        TeamDataModel adHocTeamOrange = new TeamDataModel();
+        TeamDataModel adHocTeamGreen = new TeamDataModel();
+
+        adHocTeamOrange.setName("Orange");
+        adHocTeamGreen.setName("Green");
+
+        teams.add(adHocTeamOrange);
+        teams.add(adHocTeamGreen);
+
     }
 }
 

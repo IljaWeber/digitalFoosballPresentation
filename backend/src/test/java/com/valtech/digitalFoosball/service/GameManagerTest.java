@@ -122,6 +122,15 @@ public class GameManagerTest {
     }
 
     @Test
+    void intiAdHocGame_whenNoTeamValuesWhereSet_thenCreateTwoGenericTeams() {
+        gameManager.initAdHocGame();
+
+        assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
+                tuple("Orange", 0, 0),
+                tuple("Green", 0, 0));
+    }
+
+    @Test
     public void raiseScore_whenATeamScoresMultipleGoals_thenRaiseTheirCounterForEachGoalByOne() {
         gameManager.initGame(initDataModel);
 
