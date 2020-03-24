@@ -121,27 +121,9 @@ public class GameManagerTest {
         });
     }
 
-    @Test
-    void intiAdHocGame_whenNoTeamValuesWhereSet_thenCreateTwoGenericTeams() {
-        gameManager.initAdHocGame();
 
-        assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
-                tuple("Orange", 0, 0),
-                tuple("Green", 0, 0));
-    }
 
-    @Test
-    void raiseScore_whenAnAdHocTeamScoresAGoal_thenIncreaseTheirCounterByOne() {
-        gameManager.initAdHocGame();
 
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(2);
-
-        assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
-                tuple("Orange", 2, 0),
-                tuple("Green", 1, 0));
-    }
 
     @Test
     public void raiseScore_whenATeamScoresMultipleGoals_thenRaiseTheirCounterForEachGoalByOne() {
@@ -219,25 +201,6 @@ public class GameManagerTest {
         TeamDataModel teamDataModel = teams.get(0);
         int actual = teamDataModel.getWonRounds();
         assertThat(actual).isEqualTo(0);
-    }
-
-
-    @Test
-    void undoLastGoal_whenSeveralGoalsAreScoredInAnAdHocGame_thenUndoThemInTheScoredOrder() {
-        gameManager.initAdHocGame();
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(2);
-        gameManager.raiseScore(2);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(2);
-
-        gameManager.undoLastGoal();
-        gameManager.undoLastGoal();
-        gameManager.undoLastGoal();
-
-        assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
-                tuple("Orange", 1, 0),
-                tuple("Green", 1, 0));
     }
 
     @Test
@@ -486,6 +449,70 @@ public class GameManagerTest {
         List<TeamOutput> actual = gameManager.getAllTeams();
 
         assertThat(actual).extracting(TeamOutput::getName).containsExactly("Roto", "Rototo");
+    }
+
+
+// --------------    Tests for AdHocGame   -----------------
+
+    @Test
+    void intiAdHocGame_whenNoTeamValuesWhereSet_thenCreateTwoGenericTeams() {
+        gameManager.initAdHocGame();
+
+        assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
+                tuple("Orange", 0, 0),
+                tuple("Green", 0, 0));
+    }
+
+    @Test
+    void raiseScore_whenAnAdHocTeamScoresAGoal_thenIncreaseTheirCounterByOne() {
+        gameManager.initAdHocGame();
+
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(2);
+
+        assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
+                tuple("Orange", 2, 0),
+                tuple("Green", 1, 0));
+    }
+
+    @Test
+    void undoLastGoal_whenSeveralGoalsAreScoredInAnAdHocGame_thenUndoThemInTheScoredOrder() {
+        gameManager.initAdHocGame();
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(2);
+
+        gameManager.undoLastGoal();
+        gameManager.undoLastGoal();
+        gameManager.undoLastGoal();
+
+        assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
+                tuple("Orange", 1, 0),
+                tuple("Green", 1, 0));
+    }
+
+    @Test
+    void redoLastGoal_whenGoalWhereUndidInAnAdHocGame_thenRedoIt() {
+        gameManager.initAdHocGame();
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(2);
+
+        gameManager.undoLastGoal();
+        gameManager.undoLastGoal();
+        gameManager.undoLastGoal();
+
+        gameManager.redoLastGoal();
+
+        assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
+                tuple("Orange", 1, 0),
+                tuple("Green", 2, 0));
+
     }
 
     private class TeamRepositoryFake implements TeamRepository {
