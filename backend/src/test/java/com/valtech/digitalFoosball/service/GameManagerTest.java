@@ -143,7 +143,6 @@ public class GameManagerTest {
                 tuple("Green", 1, 0));
     }
 
-
     @Test
     public void raiseScore_whenATeamScoresMultipleGoals_thenRaiseTheirCounterForEachGoalByOne() {
         gameManager.initGame(initDataModel);
@@ -220,6 +219,25 @@ public class GameManagerTest {
         TeamDataModel teamDataModel = teams.get(0);
         int actual = teamDataModel.getWonRounds();
         assertThat(actual).isEqualTo(0);
+    }
+
+
+    @Test
+    void undoLastGoal_whenSeveralGoalsAreScoredInAnAdHocGame_thenUndoThemInTheScoredOrder() {
+        gameManager.initAdHocGame();
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(2);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(2);
+
+        gameManager.undoLastGoal();
+        gameManager.undoLastGoal();
+        gameManager.undoLastGoal();
+
+        assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
+                tuple("Orange", 1, 0),
+                tuple("Green", 1, 0));
     }
 
     @Test
