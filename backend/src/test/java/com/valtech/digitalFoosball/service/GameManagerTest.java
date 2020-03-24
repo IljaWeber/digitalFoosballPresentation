@@ -135,12 +135,14 @@ public class GameManagerTest {
         gameManager.initAdHocGame();
 
         gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(2);
 
         assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
-                tuple("Orange", 1, 0),
-                tuple("Green", 0, 0));
-
+                tuple("Orange", 2, 0),
+                tuple("Green", 1, 0));
     }
+
 
     @Test
     public void raiseScore_whenATeamScoresMultipleGoals_thenRaiseTheirCounterForEachGoalByOne() {
