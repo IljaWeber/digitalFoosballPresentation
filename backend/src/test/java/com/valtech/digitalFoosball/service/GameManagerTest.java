@@ -517,6 +517,19 @@ public class GameManagerTest {
     }
 
     @Test
+    void getRoundWinner_whenAnAdHocTeamHasFulfilledTheWinCondition_thenReturnTheirNumber() {
+        gameManager.initAdHocGame();
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+
+        assertThat(gameManager.getRoundWinner()).isEqualTo(1);
+    }
+
+    @Test
     void getRoundWinner_whenAnAdHocTeamFulfillsTheRoundWinningConditions_thenReturnItsNumber() {
         gameManager.initAdHocGame();
         gameManager.raiseScore(1);
