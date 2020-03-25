@@ -243,13 +243,48 @@ public class DigitalFoosballAPITest {
 
         MvcResult result =
                 mockMvc.perform(
-                        MockMvcRequestBuilders.get("/api/initAdHocMatch")
-                                .contentType(MediaType.APPLICATION_JSON))
+                        MockMvcRequestBuilders.get("/api/initAdHocMatch").contentType(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andReturn();
 
         String actualResponseBody = result.getResponse().getContentAsString();
         String expectedResponseBody = mapper.writeValueAsString(expectedValues);
         assertThat(actualResponseBody).isEqualTo(expectedResponseBody);
+    }
+
+    @Test
+    void raiseScore_whenAnAdHocTeamScoresAGoal_thenReturnNewGameValues() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        AdHocGameOutput adHocTeamOne = new AdHocGameOutput();
+        AdHocGameOutput adHocTeamTwo = new AdHocGameOutput();
+        List<AdHocGameOutput> expectedValues = new ArrayList<>();
+        adHocTeamOne.setName("Orange");
+        adHocTeamOne.setScore(1);
+        adHocTeamOne.setWonRounds(0);
+        adHocTeamTwo.setName("Green");
+        adHocTeamTwo.setScore(0);
+        adHocTeamTwo.setWonRounds(0);
+        expectedValues.add(adHocTeamOne);
+        expectedValues.add(adHocTeamTwo);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/initAdHocMatch").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/raise").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(1)))
+                .andExpect(status().isOk());
+
+        MvcResult result =
+                mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/gameDataOfAdHocGame").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(1)))
+                        .andExpect(status().isOk())
+                        .andReturn();
+
+        String actualResponseBody = result.getResponse().getContentAsString();
+        String expectedResponseBody = mapper.writeValueAsString(expectedValues);
+        assertThat(actualResponseBody).isEqualTo(expectedResponseBody);
+
+
     }
 }

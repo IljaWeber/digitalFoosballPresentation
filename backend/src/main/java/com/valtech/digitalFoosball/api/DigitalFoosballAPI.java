@@ -106,4 +106,9 @@ public class DigitalFoosballAPI {
 
         return gameManager.getDataOfAdHocGame();
     }
+
+    @GetMapping(path = "/gameDataOfAdHocGame", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<AdHocGameOutput> getGameDataOfAdHocGame() {
+        return gameManager.getDataOfAdHocGame();
+    }
 }
