@@ -8,6 +8,7 @@ import com.valtech.digitalFoosball.model.output.AdHocGameOutput;
 import com.valtech.digitalFoosball.service.GameManager;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -225,66 +226,95 @@ public class DigitalFoosballAPITest {
 
     //---------------------- Ad Hoc Initialization -------------------------------
 
+    @Nested
+    public class AdHocInitialization {
 
-    @Test
-    void initAdHocMatch_whenAnAdHocGameIsCalled_thenReturnGenericTeamModels() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        AdHocGameOutput adHocTeamOne = new AdHocGameOutput();
-        AdHocGameOutput adHocTeamTwo = new AdHocGameOutput();
-        List<AdHocGameOutput> expectedValues = new ArrayList<>();
-        adHocTeamOne.setName("Orange");
-        adHocTeamOne.setScore(0);
-        adHocTeamOne.setWonRounds(0);
-        adHocTeamTwo.setName("Green");
-        adHocTeamTwo.setScore(0);
-        adHocTeamTwo.setWonRounds(0);
-        expectedValues.add(adHocTeamOne);
-        expectedValues.add(adHocTeamTwo);
+        private ObjectMapper mapper;
+        private AdHocGameOutput adHocTeamTwo;
+        private AdHocGameOutput adHocTeamOne;
+        private List<AdHocGameOutput> expectedValues;
+        private String expectedResponseBody;
+        private MvcResult result;
 
-        MvcResult result =
-                mockMvc.perform(
-                        MockMvcRequestBuilders.get("/api/initAdHocMatch").contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(status().isOk())
-                        .andReturn();
+        @BeforeEach
+        void setUp() throws Exception {
+            mapper = new ObjectMapper();
+            expectedValues = new ArrayList<>();
+            adHocTeamOne = new AdHocGameOutput();
+            adHocTeamTwo = new AdHocGameOutput();
+            adHocTeamOne.setName("Orange");
+            adHocTeamOne.setScore(0);
+            adHocTeamOne.setWonRounds(0);
+            adHocTeamTwo.setName("Green");
+            adHocTeamTwo.setScore(0);
+            adHocTeamTwo.setWonRounds(0);
+            expectedValues.add(adHocTeamOne);
+            expectedValues.add(adHocTeamTwo);
+            expectedResponseBody = mapper.writeValueAsString(expectedValues);
 
-        String actualResponseBody = result.getResponse().getContentAsString();
-        String expectedResponseBody = mapper.writeValueAsString(expectedValues);
-        assertThat(actualResponseBody).isEqualTo(expectedResponseBody);
-    }
+            result = mockMvc.perform(
+                    MockMvcRequestBuilders.get("/api/initAdHocMatch").contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andReturn();
+        }
 
-    @Test
-    void raiseScore_whenAnAdHocTeamScoresAGoal_thenReturnNewGameValues() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        AdHocGameOutput adHocTeamOne = new AdHocGameOutput();
-        AdHocGameOutput adHocTeamTwo = new AdHocGameOutput();
-        List<AdHocGameOutput> expectedValues = new ArrayList<>();
-        adHocTeamOne.setName("Orange");
-        adHocTeamOne.setScore(1);
-        adHocTeamOne.setWonRounds(0);
-        adHocTeamTwo.setName("Green");
-        adHocTeamTwo.setScore(0);
-        adHocTeamTwo.setWonRounds(0);
-        expectedValues.add(adHocTeamOne);
-        expectedValues.add(adHocTeamTwo);
+        @Test
+        void initAdHocMatch_whenAnAdHocGameIsCalled_thenReturnGenericTeamModels() throws Exception {
 
-        mockMvc.perform(
-                MockMvcRequestBuilders.get("/api/initAdHocMatch").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+            String actualResponseBody = result.getResponse().getContentAsString();
+            assertThat(actualResponseBody).isEqualTo(expectedResponseBody);
+        }
 
-        mockMvc.perform(
-                MockMvcRequestBuilders.post("/api/raise").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(1)))
-                .andExpect(status().isOk());
+        @Test
+        void raiseScore_whenAnAdHocTeamScoresAGoal_thenReturnNewGameValues() throws Exception {
+            adHocTeamOne.setScore(1);
+            expectedResponseBody = mapper.writeValueAsString(expectedValues);
 
-        MvcResult result =
-                mockMvc.perform(
-                        MockMvcRequestBuilders.get("/api/gameDataOfAdHocGame").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(1)))
-                        .andExpect(status().isOk())
-                        .andReturn();
+            mockMvc.perform(
+                    MockMvcRequestBuilders.post("/api/raise").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(1)))
+                    .andExpect(status().isOk());
 
-        String actualResponseBody = result.getResponse().getContentAsString();
-        String expectedResponseBody = mapper.writeValueAsString(expectedValues);
-        assertThat(actualResponseBody).isEqualTo(expectedResponseBody);
+            result =
+                    mockMvc.perform(
+                            MockMvcRequestBuilders.get("/api/gameDataOfAdHocGame").contentType(MediaType.APPLICATION_JSON))
+                            .andExpect(status().isOk())
+                            .andReturn();
 
+            String actualResponseBody = result.getResponse().getContentAsString();
+            assertThat(actualResponseBody).isEqualTo(expectedResponseBody);
+        }
 
+        @Test
+        void undoLastGoal_whenAGoalsNeedsToBeUndone_thenDecreaseTheTeamCounter() throws Exception {
+            adHocTeamOne.setScore(2);
+            adHocTeamTwo.setScore(0);
+            expectedResponseBody = mapper.writeValueAsString(expectedValues);
+
+            mockMvc.perform(
+                    MockMvcRequestBuilders.post("/api/raise").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(1)))
+                    .andExpect(status().isOk());
+
+            mockMvc.perform(
+                    MockMvcRequestBuilders.post("/api/raise").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(1)))
+                    .andExpect(status().isOk());
+
+            mockMvc.perform(
+                    MockMvcRequestBuilders.post("/api/raise").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(2)))
+                    .andExpect(status().isOk());
+
+            mockMvc.perform(
+                    MockMvcRequestBuilders.put("/api/undo").contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+            result = mockMvc.perform(
+                    MockMvcRequestBuilders.get("/api/gameDataOfAdHocGame").contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+            String actualResponseBody = result.getResponse().getContentAsString();
+            assertThat(actualResponseBody).isEqualTo(expectedResponseBody);
+
+        }
     }
 }
