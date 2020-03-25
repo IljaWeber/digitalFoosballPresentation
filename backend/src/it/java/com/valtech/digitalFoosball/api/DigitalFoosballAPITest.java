@@ -5,7 +5,7 @@ import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.GameManager;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -39,7 +39,7 @@ public class DigitalFoosballAPITest {
     private String json;
     private Gson gson;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         gson = new Gson();
         InitDataModel initDataModel = new InitDataModel();
@@ -59,7 +59,7 @@ public class DigitalFoosballAPITest {
         teamDataModels.add(teamDataModelTwo);
 
         initDataModel.setTeams(teamDataModels);
-        builder = MockMvcRequestBuilders.post("/init");
+        builder = MockMvcRequestBuilders.post("/api/init");
         json = gson.toJson(initDataModel);
     }
 
@@ -84,7 +84,7 @@ public class DigitalFoosballAPITest {
         mockMvc.perform(builder);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
-        builder = MockMvcRequestBuilders.put("/undo");
+        builder = MockMvcRequestBuilders.put("/api/undo");
 
         mockMvc.perform(builder).andExpect(MockMvcResultMatchers.jsonPath("$.teams[0].score").value("1"));
     }
@@ -100,7 +100,7 @@ public class DigitalFoosballAPITest {
         gameManager.undoLastGoal();
         gameManager.undoLastGoal();
 
-        builder = MockMvcRequestBuilders.put("/redo");
+        builder = MockMvcRequestBuilders.put("/api/redo");
         mockMvc.perform(builder);
         mockMvc.perform(builder);
 
@@ -116,7 +116,7 @@ public class DigitalFoosballAPITest {
         gameManager.raiseScore(1);
         gameManager.raiseScore(2);
 
-        builder = MockMvcRequestBuilders.delete("/reset");
+        builder = MockMvcRequestBuilders.delete("/api/reset");
 
         MvcResult result = mockMvc.perform(builder).andReturn();
         String actual = result.getResponse().getContentAsString();
@@ -127,12 +127,12 @@ public class DigitalFoosballAPITest {
     public void raiseScore_whenScoreForTeamOneIsRaised_thenScoreOfTeamOneIsOne() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        builder = MockMvcRequestBuilders.post("/raise");
+        builder = MockMvcRequestBuilders.post("/api/raise");
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(gson.toJson(1));
 
         mockMvc.perform(builder).andReturn();
 
-        builder = MockMvcRequestBuilders.get("/game");
+        builder = MockMvcRequestBuilders.get("/api/game");
         mockMvc.perform(builder).andExpect(MockMvcResultMatchers.jsonPath("$.teams[0].score").value("1"));
     }
 
@@ -140,12 +140,12 @@ public class DigitalFoosballAPITest {
     public void raiseScore_whenScoreForTeamTwoIsRaised_thenScoreOfTeamTwoIsOne() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        builder = MockMvcRequestBuilders.post("/raise");
+        builder = MockMvcRequestBuilders.post("/api/raise");
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(gson.toJson(2));
 
         mockMvc.perform(builder);
 
-        builder = MockMvcRequestBuilders.get("/game");
+        builder = MockMvcRequestBuilders.get("/api/game");
         mockMvc.perform(builder).andExpect(MockMvcResultMatchers.jsonPath("$.teams[1].score").value("1"));
     }
 
@@ -153,12 +153,12 @@ public class DigitalFoosballAPITest {
     public void getGameData_whenRoundWinConditionIsFulfilled_thenReturnTheCorrespondingGameDataModel() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        builder = MockMvcRequestBuilders.post("/raise");
+        builder = MockMvcRequestBuilders.post("/api/raise");
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(gson.toJson(2));
 
         performBuilderGivenTimes(6);
 
-        builder = MockMvcRequestBuilders.get("/game");
+        builder = MockMvcRequestBuilders.get("/api/game");
         mockMvc.perform(builder)
                 .andExpect(MockMvcResultMatchers.jsonPath("$.roundWinner").value("2"));
     }
@@ -173,16 +173,16 @@ public class DigitalFoosballAPITest {
     public void getGameData_whenGameWinConditionIsFulfilled_thenReturnTheCorrespondingGameDataModel() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        builder = MockMvcRequestBuilders.post("/raise");
+        builder = MockMvcRequestBuilders.post("/api/raise");
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(gson.toJson(1));
         performBuilderGivenTimes(6);
-        builder = MockMvcRequestBuilders.post("/newRound");
+        builder = MockMvcRequestBuilders.post("/api/newRound");
         mockMvc.perform(builder);
-        builder = MockMvcRequestBuilders.post("/raise");
+        builder = MockMvcRequestBuilders.post("/api/raise");
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(gson.toJson(1));
         performBuilderGivenTimes(6);
 
-        builder = MockMvcRequestBuilders.get("/game");
+        builder = MockMvcRequestBuilders.get("/api/game");
         mockMvc.perform(builder)
                 .andExpect(MockMvcResultMatchers.jsonPath("$.matchWinner").value("1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.teams[0].roundWins").value("2"));
@@ -192,11 +192,11 @@ public class DigitalFoosballAPITest {
     public void newRound_whenNewRoundIsStarted_thenNamesAndPlayersAreSameButScoresAreZero() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        builder = MockMvcRequestBuilders.post("/raise");
+        builder = MockMvcRequestBuilders.post("/api/raise");
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(gson.toJson(1));
         mockMvc.perform(builder);
 
-        builder = MockMvcRequestBuilders.post("/newRound");
+        builder = MockMvcRequestBuilders.post("/api/newRound");
         mockMvc.perform(builder)
                 .andExpect(MockMvcResultMatchers.jsonPath("$.teams[0].score").value("0"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.teams[1].score").value("0"))
@@ -213,7 +213,7 @@ public class DigitalFoosballAPITest {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
 
-        builder = MockMvcRequestBuilders.get("/allTeams");
+        builder = MockMvcRequestBuilders.get("/api/allTeams");
         mockMvc.perform(builder)
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].name").value("T1"))
