@@ -544,6 +544,28 @@ public class GameManagerTest {
     }
 
     @Test
+    void getMatchWinner_whenAnAdHocTeamFulfillsConditionForMatchWin_thenReturnItsNumber() {
+        gameManager.initAdHocGame();
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.getRoundWinner();
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.raiseScore(1);
+        gameManager.getRoundWinner();
+
+        assertThat(gameManager.getMatchWinner()).isEqualTo(1);
+
+    }
+
+    @Test
     void getDataOfAdHocGame_whenAdHocGameDataIsRequested_thenReturnItInOutputFormat() {
         gameManager.initAdHocGame();
         gameManager.raiseScore(1);
