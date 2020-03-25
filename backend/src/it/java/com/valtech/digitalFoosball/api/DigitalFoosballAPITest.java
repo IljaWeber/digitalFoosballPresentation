@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import com.valtech.digitalFoosball.model.output.AdHocGameOutput;
 import com.valtech.digitalFoosball.service.GameManager;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -218,5 +220,36 @@ public class DigitalFoosballAPITest {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].name").value("T1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].name").value("T2"));
+    }
+
+
+    //---------------------- Ad Hoc Initialization -------------------------------
+
+
+    @Test
+    void initAdHocMatch_whenAnAdHocGameIsCalled_thenReturnGenericTeamModels() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        AdHocGameOutput adHocTeamOne = new AdHocGameOutput();
+        AdHocGameOutput adHocTeamTwo = new AdHocGameOutput();
+        List<AdHocGameOutput> expectedValues = new ArrayList<>();
+        adHocTeamOne.setName("Orange");
+        adHocTeamOne.setScore(0);
+        adHocTeamOne.setWonRounds(0);
+        adHocTeamTwo.setName("Green");
+        adHocTeamTwo.setScore(0);
+        adHocTeamTwo.setWonRounds(0);
+        expectedValues.add(adHocTeamOne);
+        expectedValues.add(adHocTeamTwo);
+
+        MvcResult result =
+                mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/initAdHocMatch")
+                                .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+                        .andReturn();
+
+        String actualResponseBody = result.getResponse().getContentAsString();
+        String expectedResponseBody = mapper.writeValueAsString(expectedValues);
+        assertThat(actualResponseBody).isEqualTo(expectedResponseBody);
     }
 }

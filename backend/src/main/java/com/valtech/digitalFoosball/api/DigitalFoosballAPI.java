@@ -1,6 +1,7 @@
 package com.valtech.digitalFoosball.api;
 
 import com.valtech.digitalFoosball.model.input.InitDataModel;
+import com.valtech.digitalFoosball.model.output.AdHocGameOutput;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.GameManager;
@@ -95,5 +96,14 @@ public class DigitalFoosballAPI {
         gameManager.resetMatch();
 
         return true;
+    }
+
+    @GetMapping(path = "/initAdHocMatch", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<AdHocGameOutput> initAdHocGame() {
+        logger.info("AdHoc Game is initialising");
+
+        gameManager.initAdHocGame();
+
+        return gameManager.getDataOfAdHocGame();
     }
 }
