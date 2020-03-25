@@ -122,21 +122,6 @@ public class GameManagerTest {
         });
     }
 
-
-
-
-
-    @Test
-    public void initAdHocGame_whenNoTeamsValuesWhereGiven_thenCreateTwoGenericTeams() {
-        GameManager gameManager = new GameManager();
-
-        TeamModels[] actual = gameManager.initAdHocGame();
-
-        assertThat(actual).extracting(TeamModels::getScore, TeamModels::getWonRounds).containsExactly(
-                tuple(0, 0),
-                tuple(0, 0));
-    }
-
     @Test
     public void raiseScore_whenATeamScoresMultipleGoals_thenRaiseTheirCounterForEachGoalByOne() {
         gameManager.initGame(initDataModel);
