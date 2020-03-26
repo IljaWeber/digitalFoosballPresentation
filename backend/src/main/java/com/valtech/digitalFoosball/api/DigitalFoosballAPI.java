@@ -99,7 +99,7 @@ public class DigitalFoosballAPI {
     }
 
     @GetMapping(path = "/initAdHocMatch", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<AdHocGameOutput> initAdHocGame() {
+    public AdHocGameOutput initAdHocGame() {
         logger.info("AdHoc Game is initialising");
 
         gameManager.initAdHocGame();
@@ -108,7 +108,7 @@ public class DigitalFoosballAPI {
     }
 
     @GetMapping(path = "/gameDataOfAdHocGame", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<AdHocGameOutput> getGameDataOfAdHocGame() {
+    public AdHocGameOutput getGameDataOfAdHocGame() {
         return gameManager.getDataOfAdHocGame();
     }
 }

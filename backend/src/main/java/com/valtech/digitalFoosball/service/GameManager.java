@@ -4,6 +4,8 @@ import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import com.valtech.digitalFoosball.model.output.AdHocGameOutput;
+import com.valtech.digitalFoosball.model.output.AdHocTeamData;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.storage.TeamService;
@@ -28,10 +30,6 @@ public class GameManager {
         historyOfGoals = new Stack<>();
         converter = new Converter();
         historyOfUndo = new Stack<>();
-    }
-
-    public GameManager() {
-
     }
 
     public void initGame(InitDataModel initDataModel) {
@@ -179,11 +177,6 @@ public class GameManager {
         return roundWinner;
     }
 
-    public TeamModels[] initAdHocGame() {
-
-        return new TeamModels[]{new TeamDataModel(), new TeamDataModel()};
-    }
-
     private boolean scoreGreaterOrEqualSix(TeamDataModel team) {
         return team.getScore() >= 6;
     }
@@ -215,4 +208,29 @@ public class GameManager {
         historyOfUndo = new Stack<>();
     }
 
+    public void initAdHocGame() {
+        teams = new ArrayList<>();
+        TeamDataModel adHocTeamOrange = new TeamDataModel();
+        TeamDataModel adHocTeamGreen = new TeamDataModel();
+
+        adHocTeamOrange.setName("Orange");
+        adHocTeamGreen.setName("Green");
+
+        teams.add(adHocTeamOrange);
+        teams.add(adHocTeamGreen);
+
+    }
+
+    public AdHocGameOutput getDataOfAdHocGame() {
+        AdHocConverter adHocConverter = new AdHocConverter();
+        int matchWinner = getMatchWinner();
+        List<AdHocTeamData> adHocTeams = adHocConverter.convertForOutput(teams);
+
+        AdHocGameOutput adHocGameOutputs = new AdHocGameOutput();
+
+        adHocGameOutputs.setTeams(adHocTeams);
+        adHocGameOutputs.setMatchWinner(matchWinner);
+
+        return adHocGameOutputs;
+    }
 }

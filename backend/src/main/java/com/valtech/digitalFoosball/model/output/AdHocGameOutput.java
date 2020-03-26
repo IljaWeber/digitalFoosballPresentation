@@ -1,31 +1,24 @@
 package com.valtech.digitalFoosball.model.output;
 
+import java.util.List;
+
 public class AdHocGameOutput {
-    private String name;
-    private int Score;
-    private int wonRounds;
+    private List<AdHocTeamData> teams;
+    private int matchWinner;
 
-    public String getName() {
-        return name;
+    public List<AdHocTeamData> getTeams() {
+        return teams;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTeams(List<AdHocTeamData> teams) {
+        this.teams = teams;
     }
 
-    public int getScore() {
-        return Score;
+    public int getMatchWinner() {
+        return matchWinner;
     }
 
-    public void setScore(int score) {
-        Score = score;
-    }
-
-    public int getWonRounds() {
-        return wonRounds;
-    }
-
-    public void setWonRounds(int wonRounds) {
-        this.wonRounds = wonRounds;
+    public void setMatchWinner(int matchWinner) {
+        this.matchWinner = matchWinner;
     }
 }

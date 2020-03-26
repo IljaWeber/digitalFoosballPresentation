@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.model.output.AdHocGameOutput;
+import com.valtech.digitalFoosball.model.output.AdHocTeamData;
 import com.valtech.digitalFoosball.service.GameManager;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -230,9 +230,9 @@ public class DigitalFoosballAPITest {
     public class AdHocInitialization {
 
         private ObjectMapper mapper;
-        private AdHocGameOutput adHocTeamTwo;
-        private AdHocGameOutput adHocTeamOne;
-        private List<AdHocGameOutput> expectedValues;
+        private AdHocTeamData adHocTeamTwo;
+        private AdHocTeamData adHocTeamOne;
+        private List<AdHocTeamData> expectedValues;
         private String expectedResponseBody;
         private MvcResult result;
 
@@ -240,8 +240,8 @@ public class DigitalFoosballAPITest {
         void setUp() throws Exception {
             mapper = new ObjectMapper();
             expectedValues = new ArrayList<>();
-            adHocTeamOne = new AdHocGameOutput();
-            adHocTeamTwo = new AdHocGameOutput();
+            adHocTeamOne = new AdHocTeamData();
+            adHocTeamTwo = new AdHocTeamData();
             adHocTeamOne.setName("Orange");
             adHocTeamOne.setScore(0);
             adHocTeamOne.setWonRounds(0);

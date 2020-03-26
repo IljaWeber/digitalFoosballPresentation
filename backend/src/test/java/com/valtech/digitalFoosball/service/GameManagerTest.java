@@ -513,19 +513,6 @@ public class GameManagerTest {
     }
 
     @Test
-    void getRoundWinner_whenAnAdHocTeamHasFulfilledTheWinCondition_thenReturnTheirNumber() {
-        gameManager.initAdHocGame();
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-
-        assertThat(gameManager.getRoundWinner()).isEqualTo(1);
-    }
-
-    @Test
     void getRoundWinner_whenAnAdHocTeamFulfillsTheRoundWinningConditions_thenReturnItsNumber() {
         gameManager.initAdHocGame();
         gameManager.raiseScore(1);
@@ -534,13 +521,12 @@ public class GameManagerTest {
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
 
         assertThat(gameManager.getRoundWinner()).isEqualTo(1);
     }
 
     @Test
-    void getMatchWinner_whenAnAdHocTeamFulfillsConditionForMatchWin_thenReturnItsNumber() {
+    void getMatchWinner_whenATeamHasFulfilledMatchWinCondition_thenReturnItsNumber() {
         gameManager.initAdHocGame();
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
@@ -548,17 +534,21 @@ public class GameManagerTest {
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
-        gameManager.getRoundWinner();
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
         gameManager.raiseScore(1);
-        gameManager.getRoundWinner();
 
-        assertThat(gameManager.getMatchWinner()).isEqualTo(1);
+        AdHocGameOutput actual = gameManager.getDataOfAdHocGame();
 
+        assertThat(actual)
+                .extracting(
+                        e -> e.getTeams().get(0).getName(), e -> e.getTeams().get(0).getWonRounds(), e -> e.getTeams().get(0).getScore(),
+                        e -> e.getTeams().get(1).getName(), e -> e.getTeams().get(1).getWonRounds(), e -> e.getTeams().get(1).getScore(),
+                        AdHocGameOutput::getMatchWinner)
+                .containsExactly("Orange", 0, 0, "Green", 0, 0, 1);
     }
 
     @Test
@@ -567,12 +557,14 @@ public class GameManagerTest {
         gameManager.raiseScore(1);
         gameManager.raiseScore(2);
 
-        List<AdHocGameOutput> actual = gameManager.getDataOfAdHocGame();
+        AdHocGameOutput actual = gameManager.getDataOfAdHocGame();
 
-        assertThat(actual).extracting(AdHocGameOutput::getName, AdHocGameOutput::getScore, AdHocGameOutput::getWonRounds).containsExactly(
-                tuple("Orange", 1, 0),
-                tuple("Green", 1, 0));
-
+        assertThat(actual)
+                .extracting(
+                        e -> e.getTeams().get(0).getName(), e -> e.getTeams().get(0).getWonRounds(), e -> e.getTeams().get(0).getScore(),
+                        e -> e.getTeams().get(1).getName(), e -> e.getTeams().get(1).getWonRounds(), e -> e.getTeams().get(1).getScore(),
+                        AdHocGameOutput::getMatchWinner)
+                .containsExactly("Orange", 0, 1, "Green", 0, 1, 0);
     }
 
     private class TeamRepositoryFake implements TeamRepository {
