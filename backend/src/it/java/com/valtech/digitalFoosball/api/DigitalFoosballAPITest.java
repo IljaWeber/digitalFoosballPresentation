@@ -293,15 +293,12 @@ public class DigitalFoosballAPITest {
             adHocTeamOne.setScore(2);
             adHocTeamTwo.setScore(0);
             expectedResponseBody = mapper.writeValueAsString(expectedValues);
-
             mockMvc.perform(
                     MockMvcRequestBuilders.post("/api/raise").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(1)))
                     .andExpect(status().isOk());
-
             mockMvc.perform(
                     MockMvcRequestBuilders.post("/api/raise").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(1)))
                     .andExpect(status().isOk());
-
             mockMvc.perform(
                     MockMvcRequestBuilders.post("/api/raise").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(2)))
                     .andExpect(status().isOk());
@@ -315,10 +312,36 @@ public class DigitalFoosballAPITest {
                     MockMvcRequestBuilders.get("/api/gameDataOfAdHocGame").contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andReturn();
-
             String actualResponseBody = result.getResponse().getContentAsString();
             assertThat(actualResponseBody).isEqualTo(expectedResponseBody);
+        }
 
+        @Test
+        void redoLastGoal_whenGoalNeedsToBeReDone_thenRedoIt() throws Exception {
+            adHocTeamOne.setScore(2);
+            adHocTeamTwo.setScore(0);
+            expectedResponseBody = mapper.writeValueAsString(expectedValues);
+            mockMvc.perform(
+                    MockMvcRequestBuilders.post("/api/raise").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(1)))
+                    .andExpect(status().isOk());
+            mockMvc.perform(
+                    MockMvcRequestBuilders.post("/api/raise").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(1)))
+                    .andExpect(status().isOk());
+            mockMvc.perform(
+                    MockMvcRequestBuilders.put("/api/undo").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(2)))
+                    .andExpect(status().isOk());
+
+            mockMvc.perform(
+                    MockMvcRequestBuilders.put("/api/redo").contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+            result = mockMvc.perform(
+                    MockMvcRequestBuilders.get("/api/gameDataOfAdHocGame").contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andReturn();
+            String actualResponseBody = result.getResponse().getContentAsString();
+            assertThat(actualResponseBody).isEqualTo(expectedResponseBody);
         }
     }
 }

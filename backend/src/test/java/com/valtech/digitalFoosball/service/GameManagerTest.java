@@ -450,7 +450,6 @@ public class GameManagerTest {
     }
 
 
-// --------------    Tests for AdHocGame   -----------------
 
     @Nested
     public class AdHocGame {
