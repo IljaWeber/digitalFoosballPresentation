@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import com.valtech.digitalFoosball.model.output.AdHocGameOutput;
 import com.valtech.digitalFoosball.model.output.AdHocTeamData;
 import com.valtech.digitalFoosball.service.GameManager;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -232,14 +233,16 @@ public class DigitalFoosballAPITest {
         private ObjectMapper mapper;
         private AdHocTeamData adHocTeamTwo;
         private AdHocTeamData adHocTeamOne;
-        private List<AdHocTeamData> expectedValues;
+        private List<AdHocTeamData> teams;
         private String expectedResponseBody;
         private MvcResult result;
+        private AdHocGameOutput expectedValues;
 
         @BeforeEach
         void setUp() throws Exception {
+            expectedValues = new AdHocGameOutput();
             mapper = new ObjectMapper();
-            expectedValues = new ArrayList<>();
+            teams = new ArrayList<>();
             adHocTeamOne = new AdHocTeamData();
             adHocTeamTwo = new AdHocTeamData();
             adHocTeamOne.setName("Orange");
@@ -248,8 +251,9 @@ public class DigitalFoosballAPITest {
             adHocTeamTwo.setName("Green");
             adHocTeamTwo.setScore(0);
             adHocTeamTwo.setWonRounds(0);
-            expectedValues.add(adHocTeamOne);
-            expectedValues.add(adHocTeamTwo);
+            teams.add(adHocTeamOne);
+            teams.add(adHocTeamTwo);
+            expectedValues.setTeams(teams);
             expectedResponseBody = mapper.writeValueAsString(expectedValues);
 
             result = mockMvc.perform(
