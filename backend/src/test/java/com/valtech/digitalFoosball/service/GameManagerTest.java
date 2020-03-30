@@ -23,8 +23,8 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.groups.Tuple.tuple;
 
 public class GameManagerTest {
-    private GameManager gameManager;
-    private InitDataModel initDataModel;
+    public GameManager gameManager;
+    protected InitDataModel initDataModel;
     private final UUID id = UUID.randomUUID();
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
@@ -492,6 +492,14 @@ public class GameManagerTest {
             assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
                     tuple("Orange", 1, 0),
                     tuple("Green", 1, 0));
+        }
+
+
+        private void raiseScore(int... teams) {
+            for (int team : teams) {
+                gameManager.raiseScore(team);
+            }
+
         }
 
         @Test

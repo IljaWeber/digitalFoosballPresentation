@@ -1,47 +1,84 @@
 package com.valtech.digitalFoosball.service;
 
 import com.valtech.digitalFoosball.model.output.GameDataModel;
+import com.valtech.digitalFoosball.model.output.TeamOutput;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.valtech.digitalFoosball.service.GameManagerTestConstants.TEAM_ONE;
-import static com.valtech.digitalFoosball.service.GameManagerTestConstants.TEAM_TWO;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class GameManagerShouldUndoLastGoal extends GameManagerTest {
 
-    @Test
-    void in_the_reversed_order_of_scoring() {
-        gameManager.initGame(initDataModel);
-        super.raiseScoreOf(TEAM_ONE, TEAM_TWO, TEAM_ONE, TEAM_ONE, TEAM_ONE);
+    private TeamOutput teamTwo;
+    private TeamOutput teamOne;
+    private List<TeamOutput> teams;
+    private GameDataModel expected;
 
-        gameManager.undoGoal();
+    @Override
+    @BeforeEach
+    public void setUp() {
+        super.setUp();
+        teams = new ArrayList<>();
+        teamOne = new TeamOutput();
+        teamTwo = new TeamOutput();
+        expected = new GameDataModel();
 
-        GameDataModel actual = gameManager.getGameData();
-        assertThat(extractTeams(actual)).containsExactly(
-                "T1", "P1", "P2", 3, 0, "T2", "P3", "P4", 1, 0, 0, 0);
+        teamOne.setName("T1");
+        teamOne.setPlayerOne("P1");
+        teamOne.setPlayerTwo("P2");
+
+        teamTwo.setName("T2");
+        teamTwo.setPlayerOne("P3");
+        teamTwo.setPlayerTwo("P4");
+
+        teams.add(teamOne);
+        teams.add(teamTwo);
+
+        expected.setTeams(teams);
     }
 
     @Test
-    void but_if_no_scores_have_been_made_then_do_nothing() {
+    void is_possible_if_a_goal_was_shot() {
         gameManager.initGame(initDataModel);
+        setExpectedScore(3, 1);
+        raiseActual(1, 2, 1, 1, 1);
 
-        gameManager.undoGoal();
+        gameManager.undoLastGoal();
 
-        GameDataModel actual = gameManager.getGameData();
-        assertThat(extractTeams(actual)).containsExactly(
-                "T1", "P1", "P2", 0, 0, "T2", "P3", "P4", 0, 0, 0, 0);
+        assertThat(extractTeams(gameManager.getGameData())).containsExactly(
+                "T1", "P1", "P2", 3, "T2", "P3", "P4", 1, 0, 0);
     }
 
-    @Test
-    void when_win_condition_has_been_fulfilled() {
-        gameManager.initGame(initDataModel);
-        super.raiseScoreOf(TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_TWO, TEAM_TWO, TEAM_ONE, TEAM_ONE, TEAM_ONE);
+    private void setExpectedScore(int scoreOfTeamOne, int scoreOfTeamTwo) {
+        teams.get(0).setScore(scoreOfTeamOne);
+        teams.get(1).setScore(scoreOfTeamTwo);
+    }
 
-        gameManager.undoGoal();
+    private void raiseActual(int... teams) {
 
-        GameDataModel actual = gameManager.getGameData();
-        assertThat(extractTeams(actual)).containsExactly(
-                "T1", "P1", "P2", 5, 0, "T2", "P3", "P4", 2, 0, 0, 0);
+        for (int team : teams) {
+            gameManager.raiseScore(team);
+        }
+    }
+
+    private List extractTeams(GameDataModel gameDataModel) {
+        List<TeamOutput> list = gameDataModel.getTeams();
+        List mergedResult = new ArrayList();
+
+        for (TeamOutput teamOutput : list) {
+            mergedResult.add(teamOutput.getName());
+            mergedResult.add(teamOutput.getPlayerOne());
+            mergedResult.add(teamOutput.getPlayerTwo());
+            mergedResult.add(teamOutput.getScore());
+        }
+
+        mergedResult.add(gameDataModel.getRoundWinner());
+        mergedResult.add(gameDataModel.getMatchWinner());
+
+        return mergedResult;
     }
 }
