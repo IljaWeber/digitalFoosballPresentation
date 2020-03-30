@@ -35,5 +35,12 @@ public class GameManagerShouldRedoAnUndoneScore extends GameManagerTest {
         assertThat(actual).isEqualTo(gameManager.getTeams().get(0));
     }
 
+    @Test
+    void is_not_possible_when_no_score_has_been_undone() {
+        super.raiseActual(1, 2, 1);
 
+        gameManager.redoLastGoal();
+
+        assertThat(super.extractTeams(gameManager.getGameData())).containsExactly("T1", "P1", "P2", 2, "T2", "P3", "P4", 1, 0, 0);
+    }
 }
