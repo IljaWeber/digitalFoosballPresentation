@@ -137,30 +137,6 @@ public class GameManagerTest {
     }
 
     @Test
-    public void redoLastGoal_whenNoGoalWasUndid_thenDoNothing() {
-
-        gameManager.redoLastGoal();
-
-        List<TeamDataModel> actual = gameManager.getTeams();
-        assertThat(actual).extracting(TeamDataModel::getScore).containsExactly(0, 0);
-    }
-
-    @Test
-    public void redoLastGoal_whenGoalWasUndidAndRedid_thenSaveItIntoGoalHistory() throws Exception {
-        raiseActual(1);
-        gameManager.undoLastGoal();
-
-        gameManager.redoLastGoal();
-
-        Class cls = Class.forName("com.valtech.digitalFoosball.service.GameManager");
-        Field lastScoringTeams = cls.getDeclaredField("historyOfGoals");
-        lastScoringTeams.setAccessible(true);
-        Stack<TeamDataModel> stack = (Stack<TeamDataModel>) lastScoringTeams.get(gameManager);
-        TeamDataModel actual = stack.peek();
-        assertThat(actual).isEqualTo(gameManager.getTeams().get(0));
-    }
-
-    @Test
     public void getGameData_whenGameDataIsRequested_thenReturnCurrentGameDataReadyForOutput() {
         GameDataModel expected = new GameDataModel();
         List<TeamOutput> teamOutputs = new ArrayList<>();
