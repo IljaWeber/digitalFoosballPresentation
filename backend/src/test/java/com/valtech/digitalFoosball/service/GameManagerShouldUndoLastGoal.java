@@ -1,18 +1,11 @@
 package com.valtech.digitalFoosball.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class GameManagerShouldUndoLastGoal extends GameManagerTest {
-
-    @Override
-    @BeforeEach
-    public void setUp() {
-        super.setUp();
-    }
 
     @Test
     void is_possible_if_a_goal_was_shot() {

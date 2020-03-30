@@ -11,7 +11,6 @@ import com.valtech.digitalFoosball.storage.PlayerService;
 import com.valtech.digitalFoosball.storage.TeamService;
 import com.valtech.digitalFoosball.storage.repository.PlayerRepository;
 import com.valtech.digitalFoosball.storage.repository.TeamRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -29,10 +28,9 @@ public class GameManagerTest {
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
 
-    @BeforeEach
-    public void setUp() {
-        gameManager = new GameManager(new TeamService(new TeamRepositoryFake(id), new PlayerService(new PlayerRepositoryFake())));
+    public GameManagerTest() {
         initDataModel = new InitDataModel();
+        gameManager = new GameManager(new TeamService(new TeamRepositoryFake(id), new PlayerService(new PlayerRepositoryFake())));
         teamDataModelOne = new TeamDataModel();
         teamDataModelTwo = new TeamDataModel();
         List<TeamDataModel> teamDataModels = new ArrayList<>();
