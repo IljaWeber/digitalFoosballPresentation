@@ -152,31 +152,6 @@ public class GameManagerTest {
     }
 
     @Test
-    public void undoLastGoal_whenRoundWinConditionWasFulfilled_thenDecreaseRoundWins() {
-        gameManager.initGame(initDataModel);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(2);
-        gameManager.raiseScore(2);
-        gameManager.raiseScore(2);
-        gameManager.raiseScore(2);
-        gameManager.raiseScore(2);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.getGameData();
-
-        gameManager.undoLastGoal();
-
-        List<TeamDataModel> teams = gameManager.getTeams();
-        TeamDataModel teamDataModel = teams.get(0);
-        int actual = teamDataModel.getWonRounds();
-        assertThat(actual).isEqualTo(0);
-    }
-
-    @Test
     public void redoLastGoal_whenNoGoalWasUndid_thenDoNothing() {
         gameManager.initGame(initDataModel);
 
