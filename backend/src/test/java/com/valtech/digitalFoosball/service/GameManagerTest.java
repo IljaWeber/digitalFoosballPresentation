@@ -146,23 +146,6 @@ public class GameManagerTest {
     }
 
     @Test
-    public void redoLastGoal_whenGoalsWereUndid_thenRedoThemInTheReverseOrderOfUndo() {
-        raiseActual(1, 1, 2, 1);
-        gameManager.undoLastGoal();
-        gameManager.undoLastGoal();
-
-        gameManager.redoLastGoal();
-
-        List<TeamDataModel> actual = gameManager.getTeams();
-        assertThat(actual).extracting(TeamDataModel::getScore).containsExactly(2, 1);
-
-        gameManager.redoLastGoal();
-
-        actual = gameManager.getTeams();
-        assertThat(actual).extracting(TeamDataModel::getScore).containsExactly(3, 1);
-    }
-
-    @Test
     public void redoLastGoal_whenGoalWasUndidAndRedid_thenSaveItIntoGoalHistory() throws Exception {
         raiseActual(1);
         gameManager.undoLastGoal();
