@@ -30,6 +30,16 @@ public class GameManagerShouldUndoLastGoal extends GameManagerTest {
                 "T1", "P1", "P2", 3, "T2", "P3", "P4", 1, 0, 0);
     }
 
+    @Test
+    void is_not_possible_if_no_goal_was_made() {
+        gameManager.initGame(initDataModel);
+
+        gameManager.undoLastGoal();
+
+        assertThat(extractTeams(gameManager.getGameData())).containsExactly(
+                "T1", "P1", "P2", 0, "T2", "P3", "P4", 0, 0, 0);
+    }
+
 
     private void raiseActual(int... teams) {
 

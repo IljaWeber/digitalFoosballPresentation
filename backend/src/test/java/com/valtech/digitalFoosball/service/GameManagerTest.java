@@ -151,7 +151,6 @@ public class GameManagerTest {
         assertThat(actual).isEqualTo(6);
     }
 
-
     @Test
     public void undoLastGoal_whenNoGoalWasMade_thenDoNothing() {
         gameManager.initGame(initDataModel);
