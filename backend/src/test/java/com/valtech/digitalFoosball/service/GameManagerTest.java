@@ -151,20 +151,6 @@ public class GameManagerTest {
         assertThat(actual).isEqualTo(6);
     }
 
-    @Test
-    public void undoLastGoal_whenSeveralGoalsAreScored_thenUndoThemInTheReverseOrderOfScoring() {
-        gameManager.initGame(initDataModel);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(2);
-        gameManager.raiseScore(1);
-
-        gameManager.undoLastGoal();
-        gameManager.undoLastGoal();
-        gameManager.undoLastGoal();
-
-        List<TeamDataModel> actual = gameManager.getTeams();
-        assertThat(actual).extracting(TeamDataModel::getScore).containsExactly(0, 0);
-    }
 
     @Test
     public void undoLastGoal_whenNoGoalWasMade_thenDoNothing() {
