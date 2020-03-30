@@ -233,4 +233,8 @@ public class GameManager {
 
         return adHocGameOutputs;
     }
+
+    public void setTeams(List<TeamDataModel> teams) {
+        this.teams = teams;
+    }
 }
