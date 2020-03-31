@@ -17,7 +17,7 @@ public class GameManagerShouldRedoAnUndoneScore extends GameManagerTest {
 
         gameManager.redoLastGoal();
 
-        assertThat(super.extractTeams(gameManager.getGameData())).containsExactly("T1", "P1", "P2", 3, "T2", "P3", "P4", 2, 0, 0);
+        assertThat(super.extractTeams(gameManager.getGameData())).containsExactly("T1", "P1", "P2", 3, 0, "T2", "P3", "P4", 2, 0, 0, 0);
     }
 
     @Test
@@ -41,6 +41,6 @@ public class GameManagerShouldRedoAnUndoneScore extends GameManagerTest {
 
         gameManager.redoLastGoal();
 
-        assertThat(super.extractTeams(gameManager.getGameData())).containsExactly("T1", "P1", "P2", 2, "T2", "P3", "P4", 1, 0, 0);
+        assertThat(super.extractTeams(gameManager.getGameData())).containsExactly("T1", "P1", "P2", 2, 0, "T2", "P3", "P4", 1, 0, 0, 0);
     }
 }

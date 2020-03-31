@@ -15,7 +15,7 @@ public class GameManagerShouldUndoLastGoal extends GameManagerTest {
         gameManager.undoLastGoal();
 
         assertThat(extractTeams(gameManager.getGameData())).containsExactly(
-                "T1", "P1", "P2", 3, "T2", "P3", "P4", 1, 0, 0);
+                "T1", "P1", "P2", 3, 0, "T2", "P3", "P4", 1, 0, 0, 0);
     }
 
     @Test
@@ -25,7 +25,7 @@ public class GameManagerShouldUndoLastGoal extends GameManagerTest {
         gameManager.undoLastGoal();
 
         assertThat(extractTeams(gameManager.getGameData())).containsExactly(
-                "T1", "P1", "P2", 0, "T2", "P3", "P4", 0, 0, 0);
+                "T1", "P1", "P2", 0, 0, "T2", "P3", "P4", 0, 0, 0, 0);
     }
 
     @Test
@@ -36,7 +36,7 @@ public class GameManagerShouldUndoLastGoal extends GameManagerTest {
         gameManager.undoLastGoal();
 
         assertThat(extractTeams(gameManager.getGameData())).containsExactly(
-                "T1", "P1", "P2", 5, "T2", "P3", "P4", 2, 0, 0);
+                "T1", "P1", "P2", 5, 0, "T2", "P3", "P4", 2, 0, 0, 0);
     }
 
 }

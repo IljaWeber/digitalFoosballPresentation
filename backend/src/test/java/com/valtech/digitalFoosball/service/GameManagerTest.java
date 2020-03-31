@@ -121,22 +121,6 @@ public class GameManagerTest {
     }
 
     @Test
-    public void raiseScore_whenATeamScoresMultipleGoals_thenRaiseTheirCounterForEachGoalByOne() {
-        raiseActual(1, 1, 1);
-
-        int actual = gameManager.getTeams().get(0).getScore();
-        assertThat(actual).isEqualTo(3);
-    }
-
-    @Test
-    public void raiseScore_whenRoundWinConditionIsFulfilled_thenDoNothing() {
-        raiseActual(1, 1, 1, 1, 1, 1, 1);
-
-        int actual = gameManager.getTeams().get(0).getScore();
-        assertThat(actual).isEqualTo(6);
-    }
-
-    @Test
     public void getGameData_whenGameDataIsRequested_thenReturnCurrentGameDataReadyForOutput() {
         GameDataModel expected = new GameDataModel();
         List<TeamOutput> teamOutputs = new ArrayList<>();
@@ -302,6 +286,7 @@ public class GameManagerTest {
             mergedResult.add(teamOutput.getPlayerOne());
             mergedResult.add(teamOutput.getPlayerTwo());
             mergedResult.add(teamOutput.getScore());
+            mergedResult.add(teamOutput.getRoundWins());
         }
 
         mergedResult.add(gameDataModel.getRoundWinner());
