@@ -21,7 +21,7 @@ public class GameManagerShouldRedoAnUndoneScore extends GameManagerTest {
     }
 
     @Test
-    void and_save_it_to_the_match_history() throws Exception {
+    void save_it_to_the_match_history() throws Exception {
         raiseActual(1, 1, 2, 1);
         gameManager.undoLastGoal();
 
