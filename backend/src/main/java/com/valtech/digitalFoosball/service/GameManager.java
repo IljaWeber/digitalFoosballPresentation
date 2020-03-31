@@ -23,6 +23,7 @@ public class GameManager {
     private Stack<TeamDataModel> historyOfGoals;
     private Stack<TeamDataModel> historyOfUndo;
     private Converter converter;
+    private boolean matchIsRunning;
 
     @Autowired
     public GameManager(TeamService teamService) {
@@ -30,6 +31,7 @@ public class GameManager {
         historyOfGoals = new Stack<>();
         converter = new Converter();
         historyOfUndo = new Stack<>();
+        matchIsRunning = true;
     }
 
     public void initGame(InitDataModel initDataModel) {
@@ -236,5 +238,25 @@ public class GameManager {
 
     public void setTeams(List<TeamDataModel> teams) {
         this.teams = teams;
+    }
+
+    public void increaseScore(int teamNumber) {
+        TeamDataModel teamDataModel = teams.get(teamNumber - 1);
+
+        if (matchIsRunning) {
+            teamDataModel.increaseScore();
+            historyOfGoals.push(teamDataModel);
+            checkForEndOfMatch();
+
+            if (!matchIsRunning) {
+                teamDataModel.increaseWonRounds();
+            }
+        }
+    }
+
+    private void checkForEndOfMatch() {
+        if (roundIsOver()) {
+            matchIsRunning = false;
+        }
     }
 }
