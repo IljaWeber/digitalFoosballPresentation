@@ -35,6 +35,7 @@ public class GameManager {
     }
 
     public void initGame(InitDataModel initDataModel) {
+        historyOfUndo = new Stack<>();
         historyOfGoals = new Stack<>();
         checkForDuplicateNames(initDataModel);
 
@@ -65,19 +66,6 @@ public class GameManager {
 
                 playerNames.add(player.getName());
             }
-        }
-    }
-
-    public void raiseScore(int teamNo) {
-        TeamDataModel teamDataModel = teams.get(teamNo - 1);
-
-        if (!roundIsOver()) {
-            teamDataModel.increaseScore();
-            historyOfGoals.push(teamDataModel);
-        }
-
-        if (roundIsOver()) {
-            teamDataModel.increaseWonRounds();
         }
     }
 
@@ -116,6 +104,7 @@ public class GameManager {
             team.resetValues();
         }
 
+        matchIsRunning = true;
         resetHistories();
     }
 
@@ -124,6 +113,7 @@ public class GameManager {
             team.resetScore();
         }
 
+        matchIsRunning = true;
         resetHistories();
     }
 
@@ -240,7 +230,7 @@ public class GameManager {
         this.teams = teams;
     }
 
-    public void increaseScore(int teamNumber) {
+    public void raiseScore(int teamNumber) {
         TeamDataModel teamDataModel = teams.get(teamNumber - 1);
 
         if (matchIsRunning) {

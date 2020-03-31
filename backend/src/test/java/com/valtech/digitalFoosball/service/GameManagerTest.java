@@ -11,7 +11,6 @@ import com.valtech.digitalFoosball.storage.PlayerService;
 import com.valtech.digitalFoosball.storage.TeamService;
 import com.valtech.digitalFoosball.storage.repository.PlayerRepository;
 import com.valtech.digitalFoosball.storage.repository.TeamRepository;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
@@ -208,7 +207,9 @@ public class GameManagerTest {
 
     @Test
     public void getMatchWinner_whenOneTeamHasWonTwoRounds_thenReturnItsNumber() {
-        raiseActual(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+        raiseActual(1, 1, 1, 1, 1, 1);
+        gameManager.newRound();
+        raiseActual(1, 1, 1, 1, 1, 1);
 
         int actual = gameManager.getMatchWinner();
 
@@ -296,7 +297,6 @@ public class GameManagerTest {
     }
 
 
-    @Nested
     public class AdHocGame {
 
         @Test
@@ -339,13 +339,6 @@ public class GameManagerTest {
                     tuple("Green", 1, 0));
         }
 
-
-        private void raiseScore(int... teams) {
-            for (int team : teams) {
-                gameManager.raiseScore(team);
-            }
-
-        }
 
         @Test
         void redoLastGoal_whenGoalWhereUndidInAnAdHocGame_thenRedoIt() {
