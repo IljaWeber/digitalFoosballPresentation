@@ -4,7 +4,6 @@ import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.model.output.AdHocGameOutput;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.storage.PlayerService;
@@ -294,69 +293,6 @@ public class GameManagerTest {
         mergedResult.add(gameDataModel.getMatchWinner());
 
         return mergedResult;
-    }
-
-
-    public class AdHocGame {
-
-        @Test
-        void intiAdHocGame_whenNoTeamValuesWhereSet_thenCreateTwoGenericTeams() {
-            gameManager.initAdHocGame();
-
-            assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
-                    tuple("Orange", 0, 0),
-                    tuple("Green", 0, 0));
-        }
-
-        @Test
-        void getRoundWinner_whenAnAdHocTeamFulfillsTheRoundWinningConditions_thenReturnItsNumber() {
-            gameManager.initAdHocGame();
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-
-            assertThat(gameManager.getRoundWinner()).isEqualTo(1);
-        }
-
-        @Test
-        void getMatchWinner_whenATeamHasFulfilledMatchWinCondition_thenReturnItsNumber() {
-            gameManager.initAdHocGame();
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-
-            AdHocGameOutput actual = gameManager.getDataOfAdHocGame();
-
-            assertThat(actual).extracting(AdHocGameOutput::getMatchWinner).isEqualTo(1);
-        }
-
-        @Test
-        void getDataOfAdHocGame_whenAdHocGameDataIsRequested_thenReturnItInOutputFormat() {
-            gameManager.initAdHocGame();
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(2);
-
-            AdHocGameOutput actual = gameManager.getDataOfAdHocGame();
-
-            assertThat(actual)
-                    .extracting(
-                            e -> e.getTeams().get(0).getName(), e -> e.getTeams().get(0).getWonRounds(), e -> e.getTeams().get(0).getScore(),
-                            e -> e.getTeams().get(1).getName(), e -> e.getTeams().get(1).getWonRounds(), e -> e.getTeams().get(1).getScore(),
-                            AdHocGameOutput::getMatchWinner)
-                    .containsExactly("Orange", 0, 1, "Green", 0, 1, 0);
-        }
     }
 
     private class TeamRepositoryFake implements TeamRepository {
