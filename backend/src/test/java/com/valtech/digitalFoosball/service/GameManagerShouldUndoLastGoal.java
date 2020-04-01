@@ -38,5 +38,4 @@ public class GameManagerShouldUndoLastGoal extends GameManagerTest {
         assertThat(extractTeams(gameManager.getGameData())).containsExactly(
                 "T1", "P1", "P2", 5, 0, "T2", "P3", "P4", 2, 0, 0, 0);
     }
-
 }
