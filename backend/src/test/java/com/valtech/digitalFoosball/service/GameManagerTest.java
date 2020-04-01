@@ -309,59 +309,6 @@ public class GameManagerTest {
         }
 
         @Test
-        void raiseScore_whenAnAdHocTeamScoresAGoal_thenIncreaseTheirCounterByOne() {
-            gameManager.initAdHocGame();
-
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(2);
-
-            assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
-                    tuple("Orange", 2, 0),
-                    tuple("Green", 1, 0));
-        }
-
-        @Test
-        void undoLastGoal_whenSeveralGoalsAreScoredInAnAdHocGame_thenUndoThemInTheScoredOrder() {
-            gameManager.initAdHocGame();
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(2);
-            gameManager.raiseScore(2);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(2);
-
-            gameManager.undoLastGoal();
-            gameManager.undoLastGoal();
-            gameManager.undoLastGoal();
-
-            assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
-                    tuple("Orange", 1, 0),
-                    tuple("Green", 1, 0));
-        }
-
-
-        @Test
-        void redoLastGoal_whenGoalWhereUndidInAnAdHocGame_thenRedoIt() {
-            gameManager.initAdHocGame();
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(2);
-            gameManager.raiseScore(2);
-            gameManager.raiseScore(1);
-            gameManager.raiseScore(2);
-
-            gameManager.undoLastGoal();
-            gameManager.undoLastGoal();
-            gameManager.undoLastGoal();
-
-            gameManager.redoLastGoal();
-
-            assertThat(gameManager.getTeams()).extracting(TeamDataModel::getName, TeamDataModel::getScore, TeamDataModel::getWonRounds).containsExactly(
-                    tuple("Orange", 1, 0),
-                    tuple("Green", 2, 0));
-
-        }
-
-        @Test
         void getRoundWinner_whenAnAdHocTeamFulfillsTheRoundWinningConditions_thenReturnItsNumber() {
             gameManager.initAdHocGame();
             gameManager.raiseScore(1);
