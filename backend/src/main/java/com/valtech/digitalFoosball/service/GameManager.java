@@ -23,7 +23,6 @@ public class GameManager {
     private Stack<TeamDataModel> historyOfGoals;
     private Stack<TeamDataModel> historyOfUndo;
     private Converter converter;
-    private boolean matchIsRunning;
 
     @Autowired
     public GameManager(TeamService teamService) {
@@ -31,7 +30,6 @@ public class GameManager {
         historyOfGoals = new Stack<>();
         converter = new Converter();
         historyOfUndo = new Stack<>();
-        matchIsRunning = true;
     }
 
     public void initGame(InitDataModel initDataModel) {
@@ -79,7 +77,6 @@ public class GameManager {
                 teamDataModel.increaseWonRounds();
             }
         }
-
     }
 
     private boolean roundIsOver() {
@@ -227,12 +224,14 @@ public class GameManager {
     public AdHocGameOutput getDataOfAdHocGame() {
         AdHocConverter adHocConverter = new AdHocConverter();
         int matchWinner = getMatchWinner();
+        int roundWinner = getRoundWinner();
         List<AdHocTeamData> adHocTeams = adHocConverter.convertForOutput(teams);
 
         AdHocGameOutput adHocGameOutputs = new AdHocGameOutput();
 
         adHocGameOutputs.setTeams(adHocTeams);
         adHocGameOutputs.setMatchWinner(matchWinner);
+        adHocGameOutputs.setRoundWinner(roundWinner);
 
         return adHocGameOutputs;
     }

@@ -4,6 +4,7 @@ import java.util.List;
 
 public class AdHocGameOutput {
     private List<AdHocTeamData> teams;
+    private int roundWinner;
     private int matchWinner;
 
     public List<AdHocTeamData> getTeams() {
@@ -12,6 +13,14 @@ public class AdHocGameOutput {
 
     public void setTeams(List<AdHocTeamData> teams) {
         this.teams = teams;
+    }
+
+    public int getRoundWinner() {
+        return roundWinner;
+    }
+
+    public void setRoundWinner(int roundWinner) {
+        this.roundWinner = roundWinner;
     }
 
     public int getMatchWinner() {
