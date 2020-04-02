@@ -4,8 +4,6 @@ import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.model.output.AdHocGameOutput;
-import com.valtech.digitalFoosball.model.output.AdHocTeamData;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.storage.TeamService;
@@ -209,31 +207,22 @@ public class GameManager {
     }
 
     public void initAdHocGame() {
+        historyOfGoals = new Stack<>();
         teams = new ArrayList<>();
-        TeamDataModel adHocTeamOrange = new TeamDataModel();
-        TeamDataModel adHocTeamGreen = new TeamDataModel();
 
-        adHocTeamOrange.setName("Orange");
-        adHocTeamGreen.setName("Green");
+        TeamDataModel teamDataModelOne = new TeamDataModel();
+        TeamDataModel teamDataModelTwo = new TeamDataModel();
 
-        teams.add(adHocTeamOrange);
-        teams.add(adHocTeamGreen);
+        teamDataModelOne.setName("Orange");
+        teamDataModelOne.setNameOfPlayerOne("Goalie");
+        teamDataModelOne.setNameOfPlayerTwo("Striker");
 
-    }
+        teamDataModelTwo.setName("Green");
+        teamDataModelTwo.setNameOfPlayerOne("Goalie");
+        teamDataModelTwo.setNameOfPlayerTwo("Striker");
 
-    public AdHocGameOutput getDataOfAdHocGame() {
-        AdHocConverter adHocConverter = new AdHocConverter();
-        int matchWinner = getMatchWinner();
-        int roundWinner = getRoundWinner();
-        List<AdHocTeamData> adHocTeams = adHocConverter.convertForOutput(teams);
-
-        AdHocGameOutput adHocGameOutputs = new AdHocGameOutput();
-
-        adHocGameOutputs.setTeams(adHocTeams);
-        adHocGameOutputs.setMatchWinner(matchWinner);
-        adHocGameOutputs.setRoundWinner(roundWinner);
-
-        return adHocGameOutputs;
+        teams.add(teamDataModelOne);
+        teams.add(teamDataModelTwo);
     }
 
     public void setTeams(List<TeamDataModel> teams) {

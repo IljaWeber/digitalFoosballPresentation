@@ -13,6 +13,7 @@
     <bytecodeTargetLevel>
       <module name="backend" target="11" />
       <module name="Digitalfoosball" target="11" />
+      <module name="digitial-foosball" target="11" />
       <module name="RaspiController" target="11" />
     </bytecodeTargetLevel>
   </component>
