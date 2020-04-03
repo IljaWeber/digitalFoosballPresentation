@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GameManagerShouldUndoLastGoal extends GameManagerTest {
 
     @Test
-    void is_possible_if_a_goal_was_shot() {
+    void in_the_reversed_order_of_scoring() {
         gameManager.initGame(initDataModel);
         raiseActual(1, 2, 1, 1, 1);
 
@@ -19,7 +19,7 @@ public class GameManagerShouldUndoLastGoal extends GameManagerTest {
     }
 
     @Test
-    void is_not_possible_if_no_goal_was_made() {
+    void and_when_no_scores_have_been_made_then_do_nothing() {
         gameManager.initGame(initDataModel);
 
         gameManager.undoLastGoal();
@@ -29,7 +29,7 @@ public class GameManagerShouldUndoLastGoal extends GameManagerTest {
     }
 
     @Test
-    void is_possible_if_win_conditions_have_been_fulfilled() {
+    void when_win_condition_has_been_fulfilled() {
         gameManager.initGame(initDataModel);
         raiseActual(1, 1, 1, 2, 2, 1, 1, 1);
 
