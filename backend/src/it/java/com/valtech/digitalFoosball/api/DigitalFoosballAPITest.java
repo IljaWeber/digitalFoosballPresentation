@@ -40,7 +40,7 @@ public class DigitalFoosballAPITest {
     private Gson gson;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws Exception {
         gson = new Gson();
         InitDataModel initDataModel = new InitDataModel();
         TeamDataModel teamDataModelOne = new TeamDataModel();
