@@ -92,15 +92,19 @@ export default class SignInForm extends React.Component {
                             <TeamForm number="2" onChange={this.setUpTeamTwo} teams={this.teams}/>
                         </div>
                     </div>
-                    <div className="teamSignIn_Submit">
-                        <input type="submit" value="Submit" className="button slowDropIn"/>
+
+                    <div className="teamSignIn_Buttons">
+                        <div className="teamSignIn_Submit">
+                            <input type="submit" value="Submit" className="button slowDropIn"/>
+                        </div>
+                        <h2>
+                            OR
+                        </h2>
+                        <div onSubmit={this.adhoc} className="teamSignInAdHoc">
+                            <input type="submit" value="Ad-Hoc" className="button slowDropIn"/>
+                        </div>
                     </div>
                 </form>
-                <h2>OR</h2>
-                <form onSubmit={this.adhoc} className="teamSignInAdHoc">
-                    <input type="submit" value="Ad-Hoc" className="button slowDropIn"/>
-                </form>
-
             </div>
         )
     }
