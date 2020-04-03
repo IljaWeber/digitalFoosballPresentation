@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.model.output.AdHocGameOutput;
-import com.valtech.digitalFoosball.model.output.AdHocTeamData;
 import com.valtech.digitalFoosball.service.GameManager;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -226,7 +223,8 @@ public class DigitalFoosballAPITest {
 
     //---------------------- Ad Hoc Initialization -------------------------------
 
-    public class AdHocInitialization {
+
+    /*public class AdHocInitialization {
 
         private ObjectMapper mapper;
         private AdHocTeamData adHocTeamTwo;
@@ -266,5 +264,5 @@ public class DigitalFoosballAPITest {
             String actualResponseBody = result.getResponse().getContentAsString();
             assertThat(actualResponseBody).isEqualTo(expectedResponseBody);
         }
-    }
+    }*/
 }
