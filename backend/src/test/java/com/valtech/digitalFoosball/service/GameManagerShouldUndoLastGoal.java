@@ -19,7 +19,7 @@ public class GameManagerShouldUndoLastGoal extends GameManagerTest {
     }
 
     @Test
-    void and_when_no_scores_have_been_made_then_do_nothing() {
+    void but_if_no_scores_have_been_made_then_do_nothing() {
         gameManager.initGame(initDataModel);
 
         gameManager.undoLastGoal();

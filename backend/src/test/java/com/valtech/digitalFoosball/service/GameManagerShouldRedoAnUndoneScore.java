@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GameManagerShouldRedoAnUndoneScore extends GameManagerTest {
 
     @Test
-    void is_possible_when_a_score_has_undone() {
+    void if_a_score_has_been_undone_recently() {
         super.raiseActual(1, 2, 1, 1, 2);
         gameManager.undoLastGoal();
 
@@ -21,7 +21,7 @@ public class GameManagerShouldRedoAnUndoneScore extends GameManagerTest {
     }
 
     @Test
-    void save_it_to_the_match_history() throws Exception {
+    void and_save_it_into_the_match_history() throws Exception {
         raiseActual(1, 1, 2, 1);
         gameManager.undoLastGoal();
 
@@ -36,7 +36,7 @@ public class GameManagerShouldRedoAnUndoneScore extends GameManagerTest {
     }
 
     @Test
-    void is_not_possible_when_no_score_has_been_undone() {
+    void only_there_is_an_undone_score_otherwise_do_nothing() {
         super.raiseActual(1, 2, 1);
 
         gameManager.redoLastGoal();
