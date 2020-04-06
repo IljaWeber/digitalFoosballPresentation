@@ -26,7 +26,9 @@ public class GameManagerTest {
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
 
+
     public GameManagerTest() {
+
         initDataModel = new InitDataModel();
         gameManager = new GameManager(new TeamService(new TeamRepositoryFake(id), new PlayerService(new PlayerRepositoryFake())));
         teamDataModelOne = new TeamDataModel();
@@ -49,6 +51,7 @@ public class GameManagerTest {
         gameManager.initGame(initDataModel);
     }
 
+    //better naming for init!
     @Test
     public void initGame_whenNamesWereGiven_thenSetThese() {
 
@@ -127,7 +130,7 @@ public class GameManagerTest {
         }
         expected.setTeams(teamOutputs);
         gameManager.initGame(initDataModel);
-        raiseActual(1, 2);
+        raiseScoreOf(1, 2);
 
         GameDataModel gameDataModel = gameManager.getGameData();
         List<TeamOutput> actual = gameDataModel.getTeams();
@@ -147,7 +150,7 @@ public class GameManagerTest {
 
     @Test
     public void resetMatch_whenMatchIsReset_thenNamesAndScoresAreDefault() {
-        raiseActual(1, 2);
+        raiseScoreOf(1, 2);
 
         gameManager.resetMatch();
 
@@ -164,7 +167,7 @@ public class GameManagerTest {
 
     @Test
     public void resetMatch_whenMatchIsReset_thenScoreHistoryIsEmpty() throws Exception {
-        raiseActual(1);
+        raiseScoreOf(1);
 
         gameManager.resetMatch();
 
@@ -175,7 +178,7 @@ public class GameManagerTest {
 
     @Test
     public void resetMatch_whenMatchIsReset_thenUndoHistoryIsEmpty() throws Exception {
-        raiseActual(1, 1, 1, 1, 1, 1);
+        raiseScoreOf(1, 1, 1, 1, 1, 1);
         gameManager.undoLastGoal();
         gameManager.undoLastGoal();
 
@@ -188,7 +191,7 @@ public class GameManagerTest {
 
     @Test
     public void getRoundWinner_whenNoTeamFulfillsRoundWinCondition_thenReturnZero() {
-        raiseActual(1, 1, 1, 1, 1);
+        raiseScoreOf(1, 1, 1, 1, 1);
 
         int actual = gameManager.getRoundWinner();
 
@@ -197,7 +200,7 @@ public class GameManagerTest {
 
     @Test
     void getRoundWinner_whenATeamFulfillRoundWinCondition_thenReturnItsNumber() {
-        raiseActual(2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1);
+        raiseScoreOf(2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1);
 
         int actual = gameManager.getRoundWinner();
 
@@ -206,9 +209,9 @@ public class GameManagerTest {
 
     @Test
     public void getMatchWinner_whenOneTeamHasWonTwoRounds_thenReturnItsNumber() {
-        raiseActual(1, 1, 1, 1, 1, 1);
+        raiseScoreOf(1, 1, 1, 1, 1, 1);
         gameManager.newRound();
-        raiseActual(1, 1, 1, 1, 1, 1);
+        raiseScoreOf(1, 1, 1, 1, 1, 1);
 
         int actual = gameManager.getMatchWinner();
 
@@ -217,7 +220,7 @@ public class GameManagerTest {
 
     @Test
     public void newRound_whenNewRoundIsStarted_thenScoresAreZero() {
-        raiseActual(1, 2);
+        raiseScoreOf(1, 2);
 
         gameManager.newRound();
 
@@ -230,7 +233,7 @@ public class GameManagerTest {
 
     @Test
     public void newRound_whenNewRoundIsStarted_thenScoreHistoryIsEmpty() {
-        raiseActual(1, 2);
+        raiseScoreOf(1, 2);
 
         gameManager.newRound();
 
@@ -241,7 +244,7 @@ public class GameManagerTest {
 
     @Test
     public void newRound_whenNewRoundIsStarted_thenUndoHistoryIsEmpty() {
-        raiseActual(1, 2, 2, 2, 2);
+        raiseScoreOf(1, 2, 2, 2, 2);
 
         gameManager.newRound();
 
@@ -270,7 +273,7 @@ public class GameManagerTest {
         assertThat(actual).extracting(TeamOutput::getName).containsExactly("Roto", "Rototo");
     }
 
-    protected void raiseActual(int... teams) {
+    protected void raiseScoreOf(int... teams) {
 
         for (int team : teams) {
             gameManager.raiseScore(team);

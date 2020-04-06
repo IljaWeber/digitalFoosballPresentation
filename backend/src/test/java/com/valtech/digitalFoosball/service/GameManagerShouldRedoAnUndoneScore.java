@@ -1,28 +1,32 @@
 package com.valtech.digitalFoosball.service;
 
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import com.valtech.digitalFoosball.model.output.GameDataModel;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
 import java.util.Stack;
 
+import static com.valtech.digitalFoosball.service.GameManagerTestConstants.TEAM_ONE;
+import static com.valtech.digitalFoosball.service.GameManagerTestConstants.TEAM_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameManagerShouldRedoAnUndoneScore extends GameManagerTest {
 
     @Test
     void if_a_score_has_been_undone_recently() {
-        super.raiseActual(1, 2, 1, 1, 2);
+        super.raiseScoreOf(TEAM_ONE, TEAM_TWO, TEAM_ONE, TEAM_ONE, TEAM_TWO);
         gameManager.undoLastGoal();
 
         gameManager.redoLastGoal();
 
-        assertThat(super.extractTeams(gameManager.getGameData())).containsExactly("T1", "P1", "P2", 3, 0, "T2", "P3", "P4", 2, 0, 0, 0);
+        GameDataModel actual = gameManager.getGameData();
+        assertThat(super.extractTeams(actual)).containsExactly("T1", "P1", "P2", 3, 0, "T2", "P3", "P4", 2, 0, 0, 0);
     }
 
     @Test
     void and_save_it_into_the_match_history() throws Exception {
-        raiseActual(1, 1, 2, 1);
+        super.raiseScoreOf(TEAM_ONE, TEAM_ONE, TEAM_TWO, TEAM_ONE);
         gameManager.undoLastGoal();
 
         gameManager.redoLastGoal();
@@ -37,10 +41,11 @@ public class GameManagerShouldRedoAnUndoneScore extends GameManagerTest {
 
     @Test
     void only_there_is_an_undone_score_otherwise_do_nothing() {
-        super.raiseActual(1, 2, 1);
+        super.raiseScoreOf(TEAM_ONE, TEAM_TWO, TEAM_ONE);
 
         gameManager.redoLastGoal();
 
-        assertThat(super.extractTeams(gameManager.getGameData())).containsExactly("T1", "P1", "P2", 2, 0, "T2", "P3", "P4", 1, 0, 0, 0);
+        GameDataModel actual = gameManager.getGameData();
+        assertThat(super.extractTeams(actual)).containsExactly("T1", "P1", "P2", 2, 0, "T2", "P3", "P4", 1, 0, 0, 0);
     }
 }
