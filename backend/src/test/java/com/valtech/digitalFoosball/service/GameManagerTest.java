@@ -179,8 +179,8 @@ public class GameManagerTest {
     @Test
     public void resetMatch_whenMatchIsReset_thenUndoHistoryIsEmpty() throws Exception {
         raiseScoreOf(1, 1, 1, 1, 1, 1);
-        gameManager.undoLastGoal();
-        gameManager.undoLastGoal();
+        gameManager.undoGoal();
+        gameManager.undoGoal();
 
         gameManager.resetMatch();
 
@@ -190,9 +190,27 @@ public class GameManagerTest {
     }
 
     @Test
+    public void getRoundWinner_whenNoTeamFulfillsRoundWinCondition_thenReturnZero() {
+        raiseScoreOf(1, 1, 1, 1, 1);
+
+        int actual = gameManager.getSetWinner();
+
+        assertThat(actual).isEqualTo(0);
+    }
+
+    @Test
+    void getRoundWinner_whenATeamFulfillRoundWinCondition_thenReturnItsNumber() {
+        raiseScoreOf(2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1);
+
+        int actual = gameManager.getSetWinner();
+
+        assertThat(actual).isEqualTo(1);
+    }
+
+    @Test
     public void getMatchWinner_whenOneTeamHasWonTwoRounds_thenReturnItsNumber() {
         raiseScoreOf(1, 1, 1, 1, 1, 1);
-        gameManager.newRound();
+        gameManager.changeover();
         raiseScoreOf(1, 1, 1, 1, 1, 1);
 
         int actual = gameManager.getMatchWinner();
@@ -204,7 +222,7 @@ public class GameManagerTest {
     public void newRound_whenNewRoundIsStarted_thenScoresAreZero() {
         raiseScoreOf(1, 2);
 
-        gameManager.newRound();
+        gameManager.changeover();
 
         List<TeamDataModel> teams = gameManager.getTeams();
         assertThat(teams).extracting(TeamDataModel::getScore).containsExactly(0, 0);
@@ -217,9 +235,9 @@ public class GameManagerTest {
     public void newRound_whenNewRoundIsStarted_thenScoreHistoryIsEmpty() {
         raiseScoreOf(1, 2);
 
-        gameManager.newRound();
+        gameManager.changeover();
 
-        gameManager.undoLastGoal();
+        gameManager.undoGoal();
         List<TeamDataModel> teams = gameManager.getTeams();
         assertThat(teams).extracting(TeamDataModel::getScore).containsExactly(0, 0);
     }
@@ -228,9 +246,9 @@ public class GameManagerTest {
     public void newRound_whenNewRoundIsStarted_thenUndoHistoryIsEmpty() {
         raiseScoreOf(1, 2, 2, 2, 2);
 
-        gameManager.newRound();
+        gameManager.changeover();
 
-        gameManager.redoLastGoal();
+        gameManager.redoGoal();
         List<TeamDataModel> teams = gameManager.getTeams();
         assertThat(teams).extracting(TeamDataModel::getScore).containsExactly(0, 0);
     }
@@ -258,7 +276,7 @@ public class GameManagerTest {
     protected void raiseScoreOf(int... teams) {
 
         for (int team : teams) {
-            gameManager.raiseScore(team);
+            gameManager.countGoalFor(team);
         }
     }
 

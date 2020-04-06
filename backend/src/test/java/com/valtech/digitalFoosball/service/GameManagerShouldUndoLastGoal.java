@@ -15,7 +15,7 @@ public class GameManagerShouldUndoLastGoal extends GameManagerTest {
         gameManager.initGame(initDataModel);
         super.raiseScoreOf(TEAM_ONE, TEAM_TWO, TEAM_ONE, TEAM_ONE, TEAM_ONE);
 
-        gameManager.undoLastGoal();
+        gameManager.undoGoal();
 
         GameDataModel actual = gameManager.getGameData();
         assertThat(extractTeams(actual)).containsExactly(
@@ -26,7 +26,7 @@ public class GameManagerShouldUndoLastGoal extends GameManagerTest {
     void but_if_no_scores_have_been_made_then_do_nothing() {
         gameManager.initGame(initDataModel);
 
-        gameManager.undoLastGoal();
+        gameManager.undoGoal();
 
         GameDataModel actual = gameManager.getGameData();
         assertThat(extractTeams(actual)).containsExactly(
@@ -38,7 +38,7 @@ public class GameManagerShouldUndoLastGoal extends GameManagerTest {
         gameManager.initGame(initDataModel);
         super.raiseScoreOf(TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_TWO, TEAM_TWO, TEAM_ONE, TEAM_ONE, TEAM_ONE);
 
-        gameManager.undoLastGoal();
+        gameManager.undoGoal();
 
         GameDataModel actual = gameManager.getGameData();
         assertThat(extractTeams(actual)).containsExactly(

@@ -82,8 +82,8 @@ public class DigitalFoosballAPITest {
     public void undoLastGoal_whenSeveralGoalsWereShotAndTheLastGetsUndid_thenScoreIsSameAsWithoutTheLastGoal() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
+        gameManager.countGoalFor(1);
+        gameManager.countGoalFor(1);
         builder = MockMvcRequestBuilders.put("/api/undo");
 
         mockMvc.perform(builder).andExpect(MockMvcResultMatchers.jsonPath("$.teams[0].score").value("1"));
@@ -93,12 +93,12 @@ public class DigitalFoosballAPITest {
     public void redoLastGoal_whenSeveralGoalsWereUndid_thenRedoThem() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(2);
-        gameManager.undoLastGoal();
-        gameManager.undoLastGoal();
-        gameManager.undoLastGoal();
+        gameManager.countGoalFor(1);
+        gameManager.countGoalFor(1);
+        gameManager.countGoalFor(2);
+        gameManager.undoGoal();
+        gameManager.undoGoal();
+        gameManager.undoGoal();
 
         builder = MockMvcRequestBuilders.put("/api/redo");
         mockMvc.perform(builder);
@@ -113,8 +113,8 @@ public class DigitalFoosballAPITest {
     public void resetGameValues_whenResetGameValuesIsCalled_thenSetEmptyTeamNamesAndScoreToZero() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        gameManager.raiseScore(1);
-        gameManager.raiseScore(2);
+        gameManager.countGoalFor(1);
+        gameManager.countGoalFor(2);
 
         builder = MockMvcRequestBuilders.delete("/api/reset");
 

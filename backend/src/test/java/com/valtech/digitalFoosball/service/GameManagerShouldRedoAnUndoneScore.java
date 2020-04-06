@@ -16,9 +16,9 @@ public class GameManagerShouldRedoAnUndoneScore extends GameManagerTest {
     @Test
     void if_a_score_has_been_undone_recently() {
         super.raiseScoreOf(TEAM_ONE, TEAM_TWO, TEAM_ONE, TEAM_ONE, TEAM_TWO);
-        gameManager.undoLastGoal();
+        gameManager.undoGoal();
 
-        gameManager.redoLastGoal();
+        gameManager.redoGoal();
 
         GameDataModel actual = gameManager.getGameData();
         assertThat(super.extractTeams(actual)).containsExactly("T1", "P1", "P2", 3, 0, "T2", "P3", "P4", 2, 0, 0, 0);
@@ -27,9 +27,9 @@ public class GameManagerShouldRedoAnUndoneScore extends GameManagerTest {
     @Test
     void and_save_it_into_the_match_history() throws Exception {
         super.raiseScoreOf(TEAM_ONE, TEAM_ONE, TEAM_TWO, TEAM_ONE);
-        gameManager.undoLastGoal();
+        gameManager.undoGoal();
 
-        gameManager.redoLastGoal();
+        gameManager.redoGoal();
 
         Class cls = Class.forName("com.valtech.digitalFoosball.service.GameManager");
         Field lastScoringTeams = cls.getDeclaredField("historyOfGoals");
@@ -43,7 +43,7 @@ public class GameManagerShouldRedoAnUndoneScore extends GameManagerTest {
     void only_there_is_an_undone_score_otherwise_do_nothing() {
         super.raiseScoreOf(TEAM_ONE, TEAM_TWO, TEAM_ONE);
 
-        gameManager.redoLastGoal();
+        gameManager.redoGoal();
 
         GameDataModel actual = gameManager.getGameData();
         assertThat(super.extractTeams(actual)).containsExactly("T1", "P1", "P2", 2, 0, "T2", "P3", "P4", 1, 0, 0, 0);

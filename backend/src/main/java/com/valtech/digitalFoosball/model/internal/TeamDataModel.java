@@ -79,7 +79,7 @@ public class TeamDataModel implements TeamModels {
         return score;
     }
 
-    public void increaseScore() {
+    public void countGoal() {
         score++;
     }
 

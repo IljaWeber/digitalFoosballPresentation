@@ -52,7 +52,7 @@ public class DigitalFoosballAPI {
     public void raiseScore(@RequestBody int teamNo) {
         logger.info("Score raised for {}", teamNo);
 
-        gameManager.raiseScore(teamNo);
+        gameManager.countGoalFor(teamNo);
 
         updateClient();
     }
@@ -65,7 +65,7 @@ public class DigitalFoosballAPI {
     public GameDataModel newRound() {
         logger.info("New Round");
 
-        gameManager.newRound();
+        gameManager.changeover();
 
         return gameManager.getGameData();
     }
@@ -74,7 +74,7 @@ public class DigitalFoosballAPI {
     public GameDataModel undoLastGoal() {
         logger.info("Undo");
 
-        gameManager.undoLastGoal();
+        gameManager.undoGoal();
 
         return gameManager.getGameData();
     }
@@ -83,7 +83,7 @@ public class DigitalFoosballAPI {
     public GameDataModel redoLastGoal() {
         logger.info("Redo");
 
-        gameManager.redoLastGoal();
+        gameManager.redoGoal();
 
         return gameManager.getGameData();
     }
