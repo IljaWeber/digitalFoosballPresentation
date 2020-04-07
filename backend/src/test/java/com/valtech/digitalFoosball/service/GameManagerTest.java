@@ -190,24 +190,6 @@ public class GameManagerTest {
     }
 
     @Test
-    public void getRoundWinner_whenNoTeamFulfillsRoundWinCondition_thenReturnZero() {
-        raiseScoreOf(1, 1, 1, 1, 1);
-
-        int actual = gameManager.getRoundWinner();
-
-        assertThat(actual).isEqualTo(0);
-    }
-
-    @Test
-    void getRoundWinner_whenATeamFulfillRoundWinCondition_thenReturnItsNumber() {
-        raiseScoreOf(2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1);
-
-        int actual = gameManager.getRoundWinner();
-
-        assertThat(actual).isEqualTo(1);
-    }
-
-    @Test
     public void getMatchWinner_whenOneTeamHasWonTwoRounds_thenReturnItsNumber() {
         raiseScoreOf(1, 1, 1, 1, 1, 1);
         gameManager.newRound();
