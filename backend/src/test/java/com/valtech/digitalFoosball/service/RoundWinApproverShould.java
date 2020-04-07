@@ -35,4 +35,21 @@ public class RoundWinApproverShould {
 
         assertThat(actual).isEqualTo(0);
     }
+
+    @Test
+    void show_one_when_team_one_fulfills_the_win_condition() {
+        countGoalFor(1, 1, 1, 1, 1, 1);
+        assertThat(roundWinApprover.getSetWinner()).isEqualTo(1);
+    }
+
+
+    private void countGoalFor(int... teams) {
+        for (int team : teams) {
+            if (team == 1) {
+                teamOne.countGoal();
+            } else {
+                teamTwo.countGoal();
+            }
+        }
+    }
 }
