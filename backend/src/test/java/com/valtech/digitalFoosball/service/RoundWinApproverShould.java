@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.valtech.digitalFoosball.service.GameManagerTestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RoundWinApproverShould {
@@ -30,20 +31,32 @@ public class RoundWinApproverShould {
     }
 
     @Test
-    public void show_zero_when_there_is_no_winner() {
+    public void show_no_winner_when_no_team_scored_six_goals() {
         int actual = roundWinApprover.getSetWinner();
 
-        assertThat(actual).isEqualTo(0);
+        assertThat(actual).isEqualTo(NO_WINNER);
     }
 
     @Test
-    void show_one_when_team_one_fulfills_the_win_condition() {
-        countGoalFor(1, 1, 1, 1, 1, 1);
-        assertThat(roundWinApprover.getSetWinner()).isEqualTo(1);
+    void show_no_winner_when_the_score_difference_is_less_than_two() {
+        countGoalsFor(TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE);
+        countGoalsFor(TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO);
+
+        int actual = roundWinApprover.getSetWinner();
+
+        assertThat(actual).isEqualTo(NO_WINNER);
     }
 
+    @Test
+    public void show_the_team_that_scored_at_least_six_goals_with_a_lead_of_two() {
+        countGoalsFor(TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO);
 
-    private void countGoalFor(int... teams) {
+        int actual = roundWinApprover.getSetWinner();
+
+        assertThat(actual).isEqualTo(TEAM_TWO);
+    }
+
+    private void countGoalsFor(int... teams) {
         for (int team : teams) {
             if (team == 1) {
                 teamOne.countGoal();
