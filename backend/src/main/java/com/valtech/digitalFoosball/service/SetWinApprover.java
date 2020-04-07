@@ -4,7 +4,7 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
 import java.util.List;
 
-public class RoundWinApprover {
+public class SetWinApprover {
 
     private List<TeamDataModel> teams;
 

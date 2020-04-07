@@ -21,6 +21,7 @@ public class GameManager {
     private Stack<TeamDataModel> historyOfGoals;
     private Stack<TeamDataModel> historyOfUndo;
     private Converter converter;
+    private SetWinApprover setWinApprover;
 
     @Autowired
     public GameManager(TeamService teamService) {
@@ -28,6 +29,7 @@ public class GameManager {
         historyOfGoals = new Stack<>();
         converter = new Converter();
         historyOfUndo = new Stack<>();
+        setWinApprover = new SetWinApprover();
     }
 
     public void initGame(InitDataModel initDataModel) {
@@ -39,6 +41,8 @@ public class GameManager {
         for (TeamDataModel team : teams) {
             teamService.setUp(team);
         }
+
+        setWinApprover.init(teams);
     }
 
     private void checkForDuplicateNames(InitDataModel initDataModel) {
@@ -78,7 +82,7 @@ public class GameManager {
     }
 
     private boolean roundIsOver() {
-        return getSetWinner() != 0;
+        return setWinApprover.getSetWinner() != 0;
     }
 
     public void undoGoal() {
@@ -131,7 +135,7 @@ public class GameManager {
         List<TeamOutput> convertedTeams = converter.convertAllToTeamOutput(teams);
 
         GameDataModel currentGameData = new GameDataModel(convertedTeams);
-        currentGameData.setRoundWinner(getSetWinner());
+        currentGameData.setRoundWinner(setWinApprover.getSetWinner());
         currentGameData.setMatchWinner(getMatchWinner());
 
         return currentGameData;
@@ -163,44 +167,6 @@ public class GameManager {
         return matchWinner;
     }
 
-    public int getSetWinner() {
-        int setWinner = 0;
-
-        for (TeamDataModel team : teams) {
-            if (scoreGreaterOrEqualSix(team) && leadingWithTwoOrMoreGoals(team)) {
-                setWinner = teams.indexOf(team) + 1;
-            }
-        }
-
-        return setWinner;
-    }
-
-    private boolean scoreGreaterOrEqualSix(TeamDataModel team) {
-        return team.getScore() >= 6;
-    }
-
-    private boolean leadingWithTwoOrMoreGoals(TeamDataModel team) {
-        final int necessaryScoreDifference = 2;
-
-        TeamDataModel opponentTeam = getOpponent(team);
-
-        final int actualScoreDifference = team.getScore() - opponentTeam.getScore();
-
-        return actualScoreDifference >= necessaryScoreDifference;
-    }
-
-    private TeamDataModel getOpponent(TeamDataModel team) {
-        TeamDataModel opponent = new TeamDataModel();
-
-        for (TeamDataModel teamDataModel : teams) {
-            if (!teamDataModel.equals(team)) {
-                opponent = teamDataModel;
-            }
-        }
-
-        return opponent;
-    }
-
     private void resetHistories() {
         historyOfGoals = new Stack<>();
         historyOfUndo = new Stack<>();
@@ -223,6 +189,8 @@ public class GameManager {
 
         teams.add(teamDataModelOne);
         teams.add(teamDataModelTwo);
+
+        setWinApprover.init(teams);
     }
 
     public void setTeams(List<TeamDataModel> teams) {
