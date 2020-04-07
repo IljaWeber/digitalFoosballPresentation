@@ -1,0 +1,17 @@
+Configuration:
+  status: warn
+
+  Properties:
+    property:
+      - name: "Pi4JLogDirectory"
+        value: "pi4jLogfile.log"
+      - name: "Pattern"
+        value: "%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"
+
+
+  Appenders:
+    File:
+      name: File_Appender
+      fileName: ${Pi4JLogDirectory}/pi4jLogfile.log
+      PatternLayout:
+        Pattern: ${Pattern}

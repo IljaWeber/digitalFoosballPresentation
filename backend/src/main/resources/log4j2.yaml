@@ -1,0 +1,55 @@
+Configuration:
+  status: warn
+
+  Properties:
+    property:
+      - name: "LogDirectory"
+        value: "logs"
+      - name: "Pattern"
+        value: "%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"
+
+
+  Appenders:
+    File:
+      name: File_Appender
+      fileName: ${LogDirectory}/logfile.log
+      PatternLayout:
+        Pattern: ${Pattern}
+
+  Loggers:
+    logger:
+      - name: com.valtech.digitalFoosball.service.GameManager
+        level: info
+        additivity: false
+        AppenderRef:
+          ref: File_Appender
+
+      - name: com.valtech.digitalFoosball.api.DigitalFoosballAPI
+        level: info
+        additivity: false
+        AppenderRef:
+          ref: File_Appender
+
+      - name: com.valtech.digitalFoosball.storage.PlayerService
+        level: info
+        additivity: false
+        AppenderRef:
+          ref: File_Appender
+
+      - name: com.valtech.digitalFoosball.storage.TeamService
+        level: info
+        additivity: false
+        AppenderRef:
+          ref: File_Appender
+
+      - name: com.valtech.digitalFoosball.exceptions.NameDuplicateException
+        level: info
+        additivity: false
+        AppenderRef:
+          ref: File_Appender
+
+
+    Root:
+      level: warn
+      AppenderRef:
+        ref: File_Appender

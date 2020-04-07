@@ -1,0 +1,42 @@
+{
+  "name": "digital-foosball-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@stomp/stompjs": "^5.4.2",
+    "axios": "^0.19.2",
+    "node-sass": "^4.13.0",
+    "prop-types": "latest",
+    "react": "^16.9.0",
+    "react-autosuggest": "^9.4.3",
+    "react-dom": "^16.9.0",
+    "react-scripts": "3.1.1",
+    "react-splash": "^0.1.0",
+    "react-stomp": "^4.2.0",
+    "react-websocket": "^2.1.0",
+    "sockjs-client": "^1.4.0",
+    "stomp-websocket": "^2.3.4-next",
+    "styled-components": "^4.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

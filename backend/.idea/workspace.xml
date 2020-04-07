@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="002158e8-0ec8-4cd6-b1fe-4b642eadcf7a" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="163" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Enum" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RESET_MODE" value="HARD" />
+    <option name="UPDATE_TYPE" value="MERGE" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="downloadDocsAutomatically" value="true" />
+        <option name="downloadSourcesAutomatically" value="true" />
+        <option name="importAutomatically" value="true" />
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1RHFoHFsNPCU2uLIxhRXEeaigWc" />
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="extract.method.default.visibility" value="private" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.5860465" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.importing" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.valtech.digitalFoosball.service" />
+      <recent name="com.valtech.digitalFoosball" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.valtech.digitalFoosball" />
+      <recent name="com.valtech.digitalFoosball.rest.websocket" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="All in backend" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <option name="PARAMETERS" value="" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.All in backend" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="002158e8-0ec8-4cd6-b1fe-4b642eadcf7a" name="Default Changelist" comment="" />
+      <created>1569316287272</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1569316287272</updated>
+      <workItem from="1569316288847" duration="372000" />
+      <workItem from="1569316827184" duration="6326000" />
+      <workItem from="1569330747090" duration="1131000" />
+      <workItem from="1569401456436" duration="19000" />
+      <workItem from="1569401499826" duration="4926000" />
+      <workItem from="1569488207825" duration="5964000" />
+      <workItem from="1569827645634" duration="397000" />
+      <workItem from="1569828562958" duration="4781000" />
+      <workItem from="1569842539369" duration="2145000" />
+      <workItem from="1569848682808" duration="18936000" />
+      <workItem from="1570181114815" duration="735000" />
+      <workItem from="1570438593255" duration="15538000" />
+      <workItem from="1570540292774" duration="1171000" />
+      <workItem from="1570606700806" duration="4842000" />
+      <workItem from="1570694141574" duration="9680000" />
+      <workItem from="1570712640993" duration="672000" />
+      <workItem from="1570778323603" duration="579000" />
+      <workItem from="1571151466589" duration="1807000" />
+      <workItem from="1571159306568" duration="72000" />
+      <workItem from="1571223115897" duration="347000" />
+      <workItem from="1571224277883" duration="13000" />
+      <workItem from="1571225531866" duration="8000" />
+      <workItem from="1572197473547" duration="67000" />
+      <workItem from="1572254863066" duration="970000" />
+      <workItem from="1572268069472" duration="5000" />
+      <workItem from="1572268112114" duration="55000" />
+      <workItem from="1572268248635" duration="25000" />
+      <workItem from="1572269513402" duration="764000" />
+      <workItem from="1572350699530" duration="10000" />
+      <workItem from="1572350814468" duration="11000" />
+      <workItem from="1572351134221" duration="669000" />
+      <workItem from="1572370284832" duration="34000" />
+      <workItem from="1572429805108" duration="1931000" />
+      <workItem from="1572440556073" duration="1467000" />
+      <workItem from="1572628163476" duration="1074000" />
+      <workItem from="1572631399250" duration="361000" />
+      <workItem from="1572860453166" duration="475000" />
+      <workItem from="1572954105197" duration="1409000" />
+      <workItem from="1572963063495" duration="435000" />
+      <workItem from="1573031142540" duration="567000" />
+      <workItem from="1573036164946" duration="16000" />
+      <workItem from="1573036194855" duration="1370000" />
+      <workItem from="1573110554826" duration="245000" />
+      <workItem from="1573113892906" duration="313000" />
+      <workItem from="1573116252468" duration="1963000" />
+      <workItem from="1573124818332" duration="6287000" />
+      <workItem from="1573139803599" duration="680000" />
+      <workItem from="1573141631581" duration="15000" />
+      <workItem from="1573145421623" duration="142000" />
+      <workItem from="1573202461777" duration="2695000" />
+      <workItem from="1573228686147" duration="1658000" />
+      <workItem from="1573238317408" duration="71000" />
+      <workItem from="1573238774271" duration="16000" />
+      <workItem from="1573459558102" duration="44000" />
+      <workItem from="1573459617241" duration="26000" />
+      <workItem from="1573459657316" duration="5725000" />
+      <workItem from="1573489884265" duration="728000" />
+      <workItem from="1573546565926" duration="2277000" />
+      <workItem from="1573652109175" duration="102000" />
+      <workItem from="1573652609234" duration="249000" />
+      <workItem from="1573653401216" duration="6000" />
+      <workItem from="1573659892930" duration="404000" />
+      <workItem from="1573731228160" duration="52000" />
+      <workItem from="1573733667037" duration="3565000" />
+      <workItem from="1573739623490" duration="1697000" />
+      <workItem from="1573754043568" duration="70000" />
+      <workItem from="1573754970579" duration="9000" />
+      <workItem from="1573811370733" duration="1362000" />
+      <workItem from="1574073676891" duration="15000" />
+      <workItem from="1574074428764" duration="242000" />
+      <workItem from="1574075494898" duration="1355000" />
+      <workItem from="1574089907517" duration="902000" />
+      <workItem from="1574151050218" duration="12139000" />
+      <workItem from="1574254213829" duration="188000" />
+      <workItem from="1574254427076" duration="121000" />
+      <workItem from="1574254848021" duration="138000" />
+    </task>
+    <task id="LOCAL-00002" summary="implemented exception handling for duplicate team names">
+      <created>1569318529063</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1569318529063</updated>
+    </task>
+    <task id="LOCAL-00003" summary="cleaned up code">
+      <created>1569318944962</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1569318944962</updated>
+    </task>
+    <task id="LOCAL-00004" summary="implemented check for duplicate team names in GameManager">
+      <created>1569322063906</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1569322063906</updated>
+    </task>
+    <task id="LOCAL-00005" summary="cleaned up code">
+      <created>1569322086985</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1569322086985</updated>
+    </task>
+    <task id="LOCAL-00006" summary="added test to make sure that the stack of lastScoringTeams in GameManager gets cleared when reset is made">
+      <created>1569322940076</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1569322940076</updated>
+    </task>
+    <task id="LOCAL-00007" summary="added anotation in appExceptionHandler + added ip as allowed origin in restController + cleaned up code">
+      <created>1569330850196</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1569330850196</updated>
+    </task>
+    <task id="LOCAL-00008" summary="exported the cors configuration from the RestController in CorsConfig">
+      <created>1569409777430</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1569409777430</updated>
+    </task>
+    <task id="LOCAL-00009" summary="removed mysql support and added h2 again">
+      <created>1569409839656</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1569409839656</updated>
+    </task>
+    <task id="LOCAL-00010" summary="added winner and boolean if game is over in the GameDataModel + refactored">
+      <created>1569498760851</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1569498760851</updated>
+    </task>
+    <task id="LOCAL-00011" summary="refactored GameDataModel and GameManager - GameDataModel now only contains one int for the winner to reduce redundancy">
+      <created>1569831967164</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1569831967164</updated>
+    </task>
+    <task id="LOCAL-00012" summary="added tests to get better coverage in AppExceptionHandler + refactored">
+      <created>1569832360239</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1569832360239</updated>
+    </task>
+    <task id="LOCAL-00013" summary="resetting Stack of lastScoringTeams in initGame to prevent bugs">
+      <created>1569842705129</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1569842705129</updated>
+    </task>
+    <task id="LOCAL-00014" summary="implemented websocket to push a score raise">
+      <created>1570609634313</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1570609634313</updated>
+    </task>
+    <task id="LOCAL-00015" summary="implemented a return of null of getGameData() when no game was initialized">
+      <created>1570610749208</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1570610749208</updated>
+    </task>
+    <task id="LOCAL-00016" summary="moved WebSocketConfig in configurations folder">
+      <created>1570610913083</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1570610913083</updated>
+    </task>
+    <task id="LOCAL-00017" summary="implemented findAllByNameStartingWith in TeamRepository - can return empty List when no team is found">
+      <created>1570696107517</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1570696107518</updated>
+    </task>
+    <task id="LOCAL-00018" summary="implemented findAllByNameStartingWith in TeamRepository, it loads all team with this starting letters">
+      <created>1570697202598</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1570697202598</updated>
+    </task>
+    <task id="LOCAL-00019" summary="implemented findAllByNameStartingWith in TeamRepository, it loads all teams starting with these letters">
+      <created>1570698700581</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1570698700581</updated>
+    </task>
+    <task id="LOCAL-00020" summary="refactored">
+      <created>1570699029545</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1570699029545</updated>
+    </task>
+    <task id="LOCAL-00021" summary="added test that repository works as it should">
+      <created>1570699675902</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1570699675902</updated>
+    </task>
+    <task id="LOCAL-00022" summary="confirmed that teamrepository findByFirstName works with multiple teams too">
+      <created>1570700393955</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1570700393955</updated>
+    </task>
+    <task id="LOCAL-00023" summary="refactoring">
+      <created>1570700526351</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1570700526351</updated>
+    </task>
+    <task id="LOCAL-00024" summary="gameManager now can return null when searching for teams starting with given letters when there are none">
+      <created>1570701048885</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1570701048885</updated>
+    </task>
+    <task id="LOCAL-00025" summary="gameManager now can return the teams starting with given letters">
+      <created>1570702329621</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1570702329621</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Rest Api now can return list of teams starting with given letters">
+      <created>1570704907163</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1570704907163</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Rest Api now returns empty list when no team was found">
+      <created>1570713317279</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1570713317279</updated>
+    </task>
+    <task id="LOCAL-00028" summary="changed getWinningTeam to getRoundWinner and improved the tests">
+      <created>1573126984683</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1573126984684</updated>
+    </task>
+    <task id="LOCAL-00029" summary="implemented WonRounds">
+      <created>1573127948060</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1573127948060</updated>
+    </task>
+    <task id="LOCAL-00030" summary="implemented getMatchWinner in GameManager">
+      <created>1573132967439</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1573132967439</updated>
+    </task>
+    <task id="LOCAL-00031" summary="implemented getMatchWinner in REST-API">
+      <created>1573133395785</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1573133395785</updated>
+    </task>
+    <task id="LOCAL-00032" summary="implemented resetScore in TeamDataModel">
+      <created>1573133742676</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1573133742676</updated>
+    </task>
+    <task id="LOCAL-00033" summary="implemented resetScore in GameManager">
+      <created>1573134339583</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1573134339583</updated>
+    </task>
+    <task id="LOCAL-00034" summary="implemented newRound in REST API">
+      <created>1573135305038</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1573135305038</updated>
+    </task>
+    <task id="LOCAL-00035" summary="implemented case insensitivity for setUp in TeamService">
+      <created>1573229011588</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1573229011588</updated>
+    </task>
+    <task id="LOCAL-00036" summary="refactored">
+      <created>1573229344035</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1573229344035</updated>
+    </task>
+    <task id="LOCAL-00037" summary="implemented that roundWins gets decreased when undo is made and the last goal was the roundWinningGoal">
+      <created>1573462779147</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1573462779147</updated>
+    </task>
+    <task id="LOCAL-00038" summary="renamed resetScores in GameManager into newRound and implemented that the lastScoringTeams getting reset when new Round starts">
+      <created>1573464816203</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1573464816203</updated>
+    </task>
+    <task id="LOCAL-00039" summary="removed unnecessary dependency">
+      <created>1573557535201</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1573557535201</updated>
+    </task>
+    <task id="LOCAL-00040" summary="moved the setup of the players from the gameManager to the teamService&#10;and implemented that no player will get safed twice in the db">
+      <created>1573739200895</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1573739200895</updated>
+    </task>
+    <task id="LOCAL-00041" summary="implemented redoLastGoal() for no goal undid">
+      <created>1574151501615</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1574151501615</updated>
+    </task>
+    <task id="LOCAL-00042" summary="refactoring">
+      <created>1574151531372</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1574151531372</updated>
+    </task>
+    <task id="LOCAL-00043" summary="now can redo the last undid goal">
+      <created>1574152281943</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1574152281943</updated>
+    </task>
+    <task id="LOCAL-00044" summary="now can redo all undid goals in correct order">
+      <created>1574152820515</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1574152820515</updated>
+    </task>
+    <task id="LOCAL-00045" summary="refactoring">
+      <created>1574152838915</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1574152838915</updated>
+    </task>
+    <task id="LOCAL-00046" summary="refactoring">
+      <created>1574152955084</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1574152955084</updated>
+    </task>
+    <task id="LOCAL-00047" summary="refactoring">
+      <created>1574153846298</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1574153846298</updated>
+    </task>
+    <task id="LOCAL-00048" summary="implemented redo for api">
+      <created>1574154753061</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1574154753061</updated>
+    </task>
+    <task id="LOCAL-00049" summary="implemented that redid goals will be added to the history of goals">
+      <created>1574241790046</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1574241790046</updated>
+    </task>
+    <task id="LOCAL-00050" summary="refactoring">
+      <created>1574242552339</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1574242552339</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="gameManager now can return null when searching for teams starting with given letters when there are none" />
+    <MESSAGE value="gameManager now can return the teams starting with given letters" />
+    <MESSAGE value="Rest Api now can return list of teams starting with given letters" />
+    <MESSAGE value="Rest Api now returns empty list when no team was found" />
+    <MESSAGE value="changed getWinningTeam to getRoundWinner and improved the tests" />
+    <MESSAGE value="implemented WonRounds" />
+    <MESSAGE value="implemented getMatchWinner in GameManager" />
+    <MESSAGE value="implemented getMatchWinner in REST-API" />
+    <MESSAGE value="implemented resetScore in TeamDataModel" />
+    <MESSAGE value="implemented resetScore in GameManager" />
+    <MESSAGE value="implemented newRound in REST API" />
+    <MESSAGE value="implemented case insensitivity for setUp in TeamService" />
+    <MESSAGE value="refactored" />
+    <MESSAGE value="implemented that roundWins gets decreased when undo is made and the last goal was the roundWinningGoal" />
+    <MESSAGE value="renamed resetScores in GameManager into newRound and implemented that the lastScoringTeams getting reset when new Round starts" />
+    <MESSAGE value="removed unnecessary dependency" />
+    <MESSAGE value="moved the setup of the players from the gameManager to the teamService" />
+    <MESSAGE value="moved the setup of the players from the gameManager to the teamService&#10;and implemented that no player will get safed twice in the db" />
+    <MESSAGE value="implemented redoLastGoal() for no goal undid" />
+    <MESSAGE value="no can undo the last goal" />
+    <MESSAGE value="now can redo the last undid goal" />
+    <MESSAGE value="now can redo all undid goals in correct order" />
+    <MESSAGE value="implemented redo for api" />
+    <MESSAGE value="implemented that redid goals will be added to the history of goals" />
+    <MESSAGE value="refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/digital_foosball$Application.ic" NAME="Application Coverage Results" MODIFIED="1569842466753" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.valtech.digitalFoosball.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/digital_foosball$All_in_digital_foosball.ic" NAME="All in digital-foosball Coverage Results" MODIFIED="1573652126420" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

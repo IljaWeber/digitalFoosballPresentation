@@ -1,0 +1,447 @@
+@import url('https://fonts.googleapis.com/css?family=Fugaz+One&display=swap');
+
+$valtechBlue: rgb(0, 177, 255);
+$boxShadow: 5px 5px 10px black;
+$goalKeeperOne: rgba(50, 205, 50, 0.8);
+$goalKeeperTwo: rgba(255, 165, 0, 0.8);
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Fugaz One', cursive;
+}
+
+/* ANIMATIONS */
+
+.slowDropInWithOutDelay {
+  animation-name: dropInLongDelay;
+  animation-duration: 1.5s;
+}
+
+.slowDropIn {
+  animation-name: dropInLongDelay;
+  animation-duration: 3.6s;
+}
+
+.middleDropIn {
+  animation-name: dropInShortDelay;
+  animation-duration: 2s;
+}
+
+.fastDropIn {
+  animation-name: dropInShortDelay;
+  animation-duration: 1s;
+}
+
+@keyframes dropInFoosballImage {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1.0);
+  }
+}
+
+@keyframes dropInLongDelay {
+  0% {
+    transform: scale(1.1);
+    box-shadow: 50px 50px 150px black;
+  }
+  60% {
+    transform: scale(1.1);
+    box-shadow: 50px 50px 150px black;
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: $boxShadow;;
+  }
+}
+
+@keyframes dropInShortDelay {
+  0% {
+    transform: scale(1.1);
+    box-shadow: 50px 50px 150px black;
+  }
+  20% {
+    transform: scale(1.1);
+    box-shadow: 50px 50px 150px black;
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: $boxShadow;;
+  }
+}
+
+@keyframes dropInInit {
+  0% {
+    transform: scale(0);
+    text-shadow: 1px 1px 2px black;
+    opacity: 0;
+  }
+
+  45% {
+    transform: scale(1.2);
+    text-shadow: 5px 5px 5px black;
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes colorGradient {
+
+}
+
+/*APP*/
+
+.app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  position: relative;
+  color: white;
+}
+
+.app_foosballImage {
+  animation-name: dropInFoosballImage;
+  animation-delay: 2.1s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  height: 100vh;
+  flex: 1;
+  background-size: cover;
+}
+
+.app_containerSignIn {
+  width: 50%;
+  animation-name: dropInLongDelay;
+  animation-duration: 2.8s;
+  animation-fill-mode: both;
+  margin-left: 30px;
+  margin-right: 30px;
+  border-radius: 40px;
+  background-color: $valtechBlue;
+  background-image: linear-gradient(to right, $goalKeeperOne 0%, $goalKeeperTwo 80%);
+}
+
+.app_containerSignIn_Headline {
+  margin-top: 3%;
+  font-size: 300%;
+}
+
+.app_matchInfo {
+  align-items: center;
+  position: absolute;
+}
+
+/*AUTO-COMPLETION*/
+
+.suggestionList {
+  list-style: none;
+  position: absolute;
+  width: 100%;
+  background-color: white;
+  box-shadow: 2px 2px 10px black;
+  border-radius: 7px;
+  border-top: none;
+  color: black;
+}
+
+.suggestion {
+  text-align: left;
+  font-size: 30px;
+}
+
+.suggestion:hover {
+  cursor: pointer;
+  background-color: rgb(240, 240, 240);
+}
+
+.suggestionList:empty {
+  display: none;
+}
+
+nav ul {
+  max-height: 200px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+/* BUTTON */
+
+.button {
+  background-color: $valtechBlue;
+  width: 250px;
+  height: 50px;
+  border: 3px solid white;
+  border-radius: 5px;
+  color: white;
+  font-size: 5mm;
+  margin-top: 3vh;
+  margin-right: 2.5vw;
+  margin-left: 2.5vw;
+  box-shadow: $boxShadow;
+}
+
+.button:hover {
+  background-color: rgb(0, 160, 240);
+  cursor: pointer;
+}
+
+/* INIT-SCREEN */
+
+.init__container {
+  position: fixed;
+  background-color: $valtechBlue;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation-name: fadeOut;
+  animation-duration: 3s;
+}
+
+.init__container__headline {
+  background-color: $valtechBlue;
+  animation-name: dropInInit;
+  animation-delay: 0.4s;
+  opacity: 0;
+  animation-duration: 2.1s;
+  font-size: 15mm;
+  border-color: black;
+}
+
+/* SIGN-IN */
+
+.teamSignIn {
+  border-radius: 1rem;
+  padding: 50px;
+  margin-bottom: -7%;
+}
+
+.teamSignIn_Forms {
+  display: flex;
+  flex: 1;
+}
+
+.teamSignIn_Forms_TeamOne {
+  flex: 1;
+  padding-right: 40px;
+}
+
+.teamSignIn_Forms_TeamTwo {
+  flex: 1;
+  padding-left: 40px;
+}
+
+.teamSignIn_Buttons {
+  padding-bottom: 30px;
+}
+
+.teamSignIn_Submit {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.teamSignInAdHoc {
+  padding-bottom: 15px;
+}
+/* TEAM-FORM */
+
+.teamContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 5%;
+}
+
+.teamContainer_TeamInputContainer {
+  position: relative;
+}
+
+.teamContainer_TeamInputContainer_TeamInput {
+  width: 100%;
+  border-radius: 10px;
+  border-color: $valtechBlue;
+  padding: 5%;
+}
+
+.teamContainer_TeamComponents {
+  width: 100%;
+  border-radius: 10px;
+  border-color: $valtechBlue;
+  padding: 5%;
+  margin-top: 10px;
+}
+
+/* ROUND-END-SCREEN */
+
+.roundEndContainer {
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: $boxShadow;
+  border: 8px;
+  border-radius: 5%;
+  padding: 5%;
+  width: 80vw;
+}
+
+.congratulations {
+  font-size: 7vw;
+}
+
+.congratulationsInfo {
+  font-size: 2vw;
+}
+
+.buttonListRoundEnd {
+  list-style: none;
+  display: inline-flex;
+}
+
+/* SCORE-SCREEN */
+
+.teamContainer {
+  display: block;
+  margin: 0;
+  position: relative;
+}
+
+.buttonListScore {
+  list-style: none;
+  display: inline-flex;
+}
+
+.teams {
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+
+.team {
+  max-width: 25vw;
+  flex: 1 1;
+  border: 8px solid white;
+  border-radius: 3%;
+  width: 100%;
+  animation-name: dropInShortDelay;
+  animation-duration: 1s;
+  box-shadow: $boxShadow;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.team1 {
+  margin-right: 40px;
+}
+
+.team2 {
+  margin-left: 40px;
+}
+
+.score {
+  list-style: none;
+  display: block;
+  border-bottom: 4px solid white;
+  padding: 0;
+  font-size: 1500%;
+}
+
+.score1 {
+  color: $goalKeeperOne;
+}
+
+.score2 {
+  color: $goalKeeperTwo;
+}
+
+.roundWins {
+  font-size: 10%;
+  color: white;
+  text-align: left;
+  padding-left: 2%;
+}
+
+.name {
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  display: flex;
+  border-bottom: 2px solid white;
+  padding: 0;
+  font-size: 3vw;
+  overflow-x: scroll;
+}
+
+.raiseContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1vh;
+}
+
+.raiseButton {
+  margin: 0;
+}
+
+.player {
+  list-style: none;
+  padding: 0;
+  font-size: 3vw;
+  overflow-x: scroll;
+}
+
+/* VICTORY-SCREEN */
+
+.victoryContainer {
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: $boxShadow;
+  border: 8px;
+  border-radius: 5%;
+  padding: 5%;
+  width: 80vw;
+}
+
+.congratulations {
+  font-size: 700%;
+}
+
+.congratulationsInfo {
+  font-size: 250%;
+}
+
+.playersRule {
+  font-size: 150%;
+}
+
+.buttonListVictory {
+  list-style: none;
+  display: inline-flex;
+}
