@@ -31,7 +31,7 @@ public class WinConditionVerifierShould {
 
     @Test
     public void show_no_winner_when_no_team_scored_six_goals() {
-        int actual = winConditionVerifier.verifySetWinner();
+        int actual = winConditionVerifier.getWinnerOfActualSet();
 
         assertThat(actual).isEqualTo(NO_WINNER);
     }
@@ -41,7 +41,7 @@ public class WinConditionVerifierShould {
         countGoalsFor(TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE);
         countGoalsFor(TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO);
 
-        int actual = winConditionVerifier.verifySetWinner();
+        int actual = winConditionVerifier.getWinnerOfActualSet();
 
         assertThat(actual).isEqualTo(NO_WINNER);
     }
@@ -50,7 +50,7 @@ public class WinConditionVerifierShould {
     public void show_the_team_that_scored_at_least_six_goals_with_a_lead_of_two() {
         countGoalsFor(TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO);
 
-        int actual = winConditionVerifier.verifySetWinner();
+        int actual = winConditionVerifier.getWinnerOfActualSet();
 
         assertThat(actual).isEqualTo(TEAM_TWO);
     }

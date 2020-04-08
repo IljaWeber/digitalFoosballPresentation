@@ -11,7 +11,7 @@ public class WinConditionVerifier {
         this.teams = teams;
     }
 
-    public int verifySetWinner() {
+    public int getWinnerOfActualSet() {
         int winnerOfActualSet = 0;
 
         for (TeamDataModel team : teams) {
@@ -52,6 +52,6 @@ public class WinConditionVerifier {
     }
 
     public boolean isActualSetWon() {
-        return verifySetWinner() != 0;
+        return getWinnerOfActualSet() != 0;
     }
 }

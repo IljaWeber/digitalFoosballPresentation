@@ -132,7 +132,7 @@ public class GameManager {
         List<TeamOutput> convertedTeams = converter.convertAllToTeamOutput(teams);
 
         GameDataModel currentGameData = new GameDataModel(convertedTeams);
-        currentGameData.setRoundWinner(winConditionVerifier.verifySetWinner());
+        currentGameData.setRoundWinner(winConditionVerifier.getWinnerOfActualSet());
         currentGameData.setMatchWinner(getMatchWinner());
 
         return currentGameData;
