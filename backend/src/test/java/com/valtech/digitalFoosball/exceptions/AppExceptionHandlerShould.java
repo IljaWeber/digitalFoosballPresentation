@@ -13,7 +13,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AppExceptionHandlerTest {
+public class AppExceptionHandlerShould {
 
     private AppExceptionHandler appExceptionHandler;
 
@@ -23,15 +23,16 @@ public class AppExceptionHandlerTest {
     }
 
     @Test
-    public void handlePlayerDuplicateException_whenANameIsUsedTwice_thenPutThisNameInDescription() {
+    public void use_the_name_from_the_exception_to_create_the_error_message() {
         ResponseEntity<Object> response = appExceptionHandler.handleDuplicateException(new NameDuplicateException("One"), new WebRequestDummy());
 
         ErrorMessage body = (ErrorMessage) response.getBody();
-        assertThat(body.getErrorMessage()).isEqualTo("One is used more than once");
+        String errorMessage = body.getErrorMessage();
+        assertThat(errorMessage).isEqualTo("One is used more than once");
     }
 
     @Test
-    public void handleNameDuplicateException_whenCalled_thenHTTPStatusIsInternalServerError() {
+    public void answer_with_HTTP_status_500() {
         ResponseEntity<Object> response = appExceptionHandler.handleDuplicateException(new NameDuplicateException(""), new WebRequestDummy());
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
