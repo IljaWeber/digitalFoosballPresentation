@@ -51,34 +51,6 @@ public class GameManagerTest {
         gameManager.initGame(initDataModel);
     }
 
-    //better naming for init!
-    @Test
-    public void initGame_whenNamesWereGiven_thenSetThese() {
-
-        List<TeamDataModel> actual = gameManager.getTeams();
-        assertThat(actual).extracting(TeamDataModel::getName, TeamDataModel::getNameOfPlayerOne, TeamDataModel::getNameOfPlayerTwo).containsExactly(
-                tuple("T1", "P1", "P2"),
-                tuple("T2", "P3", "P4"));
-    }
-
-    @Test
-    public void initGame_whenTeamsWereGiven_thenSaveItToDatabase() {
-
-        List<TeamDataModel> actual = gameManager.getTeams();
-        assertThat(actual).extracting(TeamDataModel::getName, TeamDataModel::getNameOfPlayerOne, TeamDataModel::getNameOfPlayerTwo, TeamDataModel::getId).containsExactly(
-                tuple("T1", "P1", "P2", id),
-                tuple("T2", "P3", "P4", id));
-    }
-
-    @Test
-    public void initGame_whenPlayersAreGiven_thenSaveItToDatabase() {
-
-        List<PlayerDataModel> actual = gameManager.getTeams().get(0).getPlayers();
-        assertThat(actual).extracting(PlayerDataModel::getName, PlayerDataModel::getId).containsExactly(
-                tuple("P1", id),
-                tuple("P2", id));
-    }
-
     @Test
     public void initGame_whenAPlayerNameIsDuplicated_thenThrowPlayerDuplicateException() {
         initDataModel = new InitDataModel();
