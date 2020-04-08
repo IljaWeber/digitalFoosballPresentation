@@ -1,7 +1,10 @@
 package com.valtech.digitalFoosball.service;
 
 import com.valtech.digitalFoosball.model.output.GameDataModel;
+import com.valtech.digitalFoosball.model.output.TeamOutput;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static com.valtech.digitalFoosball.service.GameManagerTestConstants.TEAM_ONE;
 import static com.valtech.digitalFoosball.service.GameManagerTestConstants.TEAM_TWO;
@@ -14,14 +17,21 @@ public class GameManagerShouldRaiseScore extends GameManagerTest {
         super.raiseScoreOf(TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_TWO);
 
         GameDataModel gameData = gameManager.getGameData();
-        assertThat(super.extractTeams(gameData)).containsExactly("T1", "P1", "P2", 3, 0, "T2", "P3", "P4", 1, 0, 0, 0);
+        List<TeamOutput> teams = gameData.getTeams();
+        TeamOutput teamOne = teams.get(0);
+        TeamOutput teamTwo = teams.get(1);
+        assertThat(teamOne.getScore()).isEqualTo(3);
+        assertThat(teamTwo.getScore()).isEqualTo(1);
     }
 
     @Test
-    void only_during_a_running_match() {
-        super.raiseScoreOf(TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE);
+    void only_until_the_win_condition_is_fulfilled() {
+        super.raiseScoreOf(TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE);
 
-        GameDataModel actual = gameManager.getGameData();
-        assertThat(super.extractTeams(actual)).containsExactly("T1", "P1", "P2", 6, 1, "T2", "P3", "P4", 0, 0, 1, 0);
+        GameDataModel gameData = gameManager.getGameData();
+        List<TeamOutput> teams = gameData.getTeams();
+        TeamOutput teamOne = teams.get(0);
+        int actual = teamOne.getScore();
+        assertThat(actual).isEqualTo(6);
     }
 }
