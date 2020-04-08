@@ -1,7 +1,9 @@
 package com.valtech.digitalFoosball.model.internal;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,10 +11,14 @@ public class TeamDataModelShould {
 
     private TeamDataModel teamDataModel;
 
-    @BeforeEach
-    public void setUp() {
-        teamDataModel = new TeamDataModel();
+
+    public TeamDataModelShould() {
+        this.teamDataModel = new TeamDataModel();
+        teamDataModel.setName("T1");
+        teamDataModel.setNameOfPlayerOne("P1");
+        teamDataModel.setNameOfPlayerTwo("P2");
     }
+
 
     @Test
     public void increase_its_score_by_one() {
@@ -42,31 +48,33 @@ public class TeamDataModelShould {
 
     @Test
     public void have_empty_strings_as_names_and_0_as_score_after_resetValues_was_made() {
-        teamDataModel.setName("T1");
-        teamDataModel.setNameOfPlayerOne("P1");
-        teamDataModel.setNameOfPlayerTwo("P2");
         teamDataModel.countGoal();
 
         teamDataModel.resetValues();
 
-        assertThat(teamDataModel.getName()).isEqualTo("");
-        assertThat(teamDataModel.getNameOfPlayerOne()).isEqualTo("");
-        assertThat(teamDataModel.getNameOfPlayerTwo()).isEqualTo("");
+        List<String> actual = convert(teamDataModel);
+        assertThat(actual).containsExactly("", "", "");
         assertThat(teamDataModel.getScore()).isEqualTo(0);
     }
 
     @Test
     public void keep_the_names_and_set_the_score_to_zero_after_resetScore_was_made() {
-        teamDataModel.setName("T1");
-        teamDataModel.setNameOfPlayerOne("P1");
-        teamDataModel.setNameOfPlayerTwo("P2");
         teamDataModel.countGoal();
 
         teamDataModel.resetScore();
 
-        assertThat(teamDataModel.getName()).isEqualTo("T1");
-        assertThat(teamDataModel.getNameOfPlayerOne()).isEqualTo("P1");
-        assertThat(teamDataModel.getNameOfPlayerTwo()).isEqualTo("P2");
+        List<String> actual = convert(teamDataModel);
+        assertThat(actual).containsExactly("T1", "P1", "P2");
         assertThat(teamDataModel.getScore()).isEqualTo(0);
+    }
+
+    private List<String> convert(TeamDataModel teamDataModel) {
+        List<String> team = new ArrayList<>();
+
+        team.add(teamDataModel.getName());
+        team.add(teamDataModel.getNameOfPlayerOne());
+        team.add(teamDataModel.getNameOfPlayerTwo());
+
+        return team;
     }
 }
