@@ -1,25 +1,25 @@
 package com.valtech.digitalFoosball.service;
 
-import com.valtech.digitalFoosball.model.output.GameDataModel;
 import org.junit.jupiter.api.Test;
 
 import static com.valtech.digitalFoosball.service.GameManagerTestConstants.TEAM_ONE;
 import static com.valtech.digitalFoosball.service.GameManagerTestConstants.TEAM_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 public class GameManagerShouldUndoLastGoal extends GameManagerTest {
+
+    GameDataExtractor dataExtractor = new GameDataExtractor();
 
     @Test
     void in_the_reversed_order_of_scoring() {
         gameManager.initGame(initDataModel);
-        super.raiseScoreOf(TEAM_ONE, TEAM_TWO, TEAM_ONE, TEAM_ONE, TEAM_ONE);
+        super.raiseScoreOf(TEAM_ONE, TEAM_TWO, TEAM_ONE);
 
         gameManager.undoGoal();
 
-        GameDataModel actual = gameManager.getGameData();
-        assertThat(extractTeams(actual)).containsExactly(
-                "T1", "P1", "P2", 3, 0, "T2", "P3", "P4", 1, 0, 0, 0);
+        dataExtractor.setGameManager(gameManager);
+        int actual = dataExtractor.extractScoreOf(TEAM_ONE);
+        assertThat(actual).isEqualTo(1);
     }
 
     @Test
@@ -28,20 +28,22 @@ public class GameManagerShouldUndoLastGoal extends GameManagerTest {
 
         gameManager.undoGoal();
 
-        GameDataModel actual = gameManager.getGameData();
-        assertThat(extractTeams(actual)).containsExactly(
-                "T1", "P1", "P2", 0, 0, "T2", "P3", "P4", 0, 0, 0, 0);
+        dataExtractor.setGameManager(gameManager);
+        int actualScoreTeamOne = dataExtractor.extractScoreOf(TEAM_ONE);
+        int actualScoreTeamTwo = dataExtractor.extractScoreOf(TEAM_TWO);
+        assertThat(actualScoreTeamOne).isEqualTo(0);
+        assertThat(actualScoreTeamTwo).isEqualTo(0);
     }
 
     @Test
-    void when_win_condition_has_been_fulfilled() {
+    void and_decrease_the_number_of_won_sets_when_win_condition_has_been_fulfilled() {
         gameManager.initGame(initDataModel);
-        super.raiseScoreOf(TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_TWO, TEAM_TWO, TEAM_ONE, TEAM_ONE, TEAM_ONE);
+        super.raiseScoreOf(TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE);
 
         gameManager.undoGoal();
 
-        GameDataModel actual = gameManager.getGameData();
-        assertThat(extractTeams(actual)).containsExactly(
-                "T1", "P1", "P2", 5, 0, "T2", "P3", "P4", 2, 0, 0, 0);
+        dataExtractor.setGameManager(gameManager);
+        int actual = dataExtractor.extractNumberOfWonSetsOf(TEAM_ONE);
+        assertThat(actual).isEqualTo(0);
     }
 }
