@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TeamDataModelTest {
+public class TeamDataModelShould {
 
     private TeamDataModel teamDataModel;
 
@@ -15,14 +15,15 @@ public class TeamDataModelTest {
     }
 
     @Test
-    public void increase_whenIncreaseIsCalled_thenIncreaseTheirScoreByOne() {
+    public void increase_its_score_by_one() {
         teamDataModel.countGoal();
 
         int actual = teamDataModel.getScore();
         assertThat(actual).isEqualTo(1);
     }
+
     @Test
-    public void decrease_whenDecreaseIsCalled_thenDecreaseTheirScoreByOne() {
+    public void decrease_its_score_by_one() {
         teamDataModel.countGoal();
 
         teamDataModel.decreaseScore();
@@ -32,7 +33,7 @@ public class TeamDataModelTest {
     }
 
     @Test
-    public void increaseWonMatches_whenATeamWinsAMatch_thenIncreaseWonMatchCounterByOne() {
+    public void increase_its_won_matches_by_one() {
         teamDataModel.increaseWonMatches();
 
         int actual = teamDataModel.getWonMatches();
@@ -40,7 +41,7 @@ public class TeamDataModelTest {
     }
 
     @Test
-    public void resetValues_whenResetValuesIsCalled_thenSetEmptyNamesAndScoreToZero() {
+    public void have_empty_strings_as_names_and_0_as_score_after_resetValues_was_made() {
         teamDataModel.setName("T1");
         teamDataModel.setNameOfPlayerOne("P1");
         teamDataModel.setNameOfPlayerTwo("P2");
@@ -48,11 +49,14 @@ public class TeamDataModelTest {
 
         teamDataModel.resetValues();
 
-        assertThat(teamDataModel).extracting(TeamDataModel::getName, TeamDataModel::getNameOfPlayerOne, TeamDataModel::getNameOfPlayerTwo, TeamDataModel::getScore).containsExactly("", "", "", 0);
+        assertThat(teamDataModel.getName()).isEqualTo("");
+        assertThat(teamDataModel.getNameOfPlayerOne()).isEqualTo("");
+        assertThat(teamDataModel.getNameOfPlayerTwo()).isEqualTo("");
+        assertThat(teamDataModel.getScore()).isEqualTo(0);
     }
 
     @Test
-    void resetScore_whenScoreIsReset_thenScoreIsZeroAllOtherValuesStaySame() {
+    public void keep_the_names_and_set_the_score_to_zero_after_resetScore_was_made() {
         teamDataModel.setName("T1");
         teamDataModel.setNameOfPlayerOne("P1");
         teamDataModel.setNameOfPlayerTwo("P2");
@@ -60,6 +64,9 @@ public class TeamDataModelTest {
 
         teamDataModel.resetScore();
 
-        assertThat(teamDataModel).extracting(TeamDataModel::getName, TeamDataModel::getNameOfPlayerOne, TeamDataModel::getNameOfPlayerTwo, TeamDataModel::getScore).containsExactly("T1", "P1", "P2", 0);
+        assertThat(teamDataModel.getName()).isEqualTo("T1");
+        assertThat(teamDataModel.getNameOfPlayerOne()).isEqualTo("P1");
+        assertThat(teamDataModel.getNameOfPlayerTwo()).isEqualTo("P2");
+        assertThat(teamDataModel.getScore()).isEqualTo(0);
     }
 }

@@ -1,6 +1,5 @@
 package com.valtech.digitalFoosball.model.internal;
 
-import com.valtech.digitalFoosball.service.TeamModels;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "team")
-public class TeamDataModel implements TeamModels {
+public class TeamDataModel {
     private String name;
 
     @ManyToMany(cascade = CascadeType.ALL)
