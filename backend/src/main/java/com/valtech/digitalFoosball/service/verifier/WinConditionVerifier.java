@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.service;
+package com.valtech.digitalFoosball.service.verifier;
 
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 

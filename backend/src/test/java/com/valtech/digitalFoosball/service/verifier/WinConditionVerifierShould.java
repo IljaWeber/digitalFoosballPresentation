@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.service;
+package com.valtech.digitalFoosball.service.verifier;
 
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,6 @@ import static com.valtech.digitalFoosball.service.GameManagerTestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class WinConditionVerifierShould {
-
     private WinConditionVerifier winConditionVerifier;
     private TeamDataModel teamOne;
     private TeamDataModel teamTwo;
