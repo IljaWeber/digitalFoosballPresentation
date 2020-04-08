@@ -14,7 +14,8 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TeamServiceTest {
+public class TeamServiceShouldGetAll {
+
     private TeamDataModel data;
     private final UUID uuid = UUID.randomUUID();
     private TeamRepositoryFake teamRepo;
@@ -32,49 +33,7 @@ public class TeamServiceTest {
     }
 
     @Test
-    public void setUp_whenSearchingForExistingTeam_thenLoadThisTeam() {
-        data.setName("TeamOne");
-        data.setNameOfPlayerOne("PlayerOne");
-        data.setNameOfPlayerTwo("PlayerTwo");
-
-        TeamDataModel actual = teamService.setUp(data);
-
-        assertThat(actual).extracting(TeamDataModel::getId, TeamDataModel::getName, TeamDataModel::getNameOfPlayerOne, TeamDataModel::getNameOfPlayerTwo).containsExactly(uuid, "TeamOne", "PlayerOne", "PlayerTwo");
-    }
-
-    @Test
-    public void setUp_whenSearchingForNonExistingTeam_thenCreateAndLoadThisTeam() {
-        data.setName("x");
-        data.setNameOfPlayerOne("y");
-        data.setNameOfPlayerTwo("z");
-
-        TeamDataModel actual = teamService.setUp(data);
-
-        assertThat(actual).extracting(TeamDataModel::getId, TeamDataModel::getName, TeamDataModel::getNameOfPlayerOne, TeamDataModel::getNameOfPlayerTwo).containsExactly(uuid, "x", "y", "z");
-    }
-
-    @Test
-    public void setUp_whenPlayersAlreadyExists_thenLoadThem() {
-        data.setName("x");
-        data.setNameOfPlayerOne("y");
-        data.setNameOfPlayerTwo("z");
-
-        TeamDataModel actual = teamService.setUp(data);
-
-        List<PlayerDataModel> players = actual.getPlayers();
-        assertThat(players).extracting(PlayerDataModel::getId).containsExactly(uuid, uuid);
-    }
-
-    @Test
-    public void getAll_whenNoTeamIsFound_thenLoadNoTeam() {
-        teamService = new TeamService(new TeamRepositoryFakeTwo(uuid), playerService);
-        List<TeamDataModel> actual = teamService.getAll();
-
-        assertThat(actual).isEmpty();
-    }
-
-    @Test
-    public void getAll_whenTeamsWereFound_thenLoadTheseTeams() {
+    public void when_teams_were_found_ignoring_case() {
         List<TeamDataModel> expected = new ArrayList<>();
         data.setName("Gelb");
         expected.add(data);
@@ -84,6 +43,14 @@ public class TeamServiceTest {
         List<TeamDataModel> actual = teamService.getAll();
 
         assertThat(actual).extracting(TeamDataModel::getName).containsExactly("Gelb", "Geld");
+    }
+
+    @Test
+    public void when_no_teams_were_found_then_load_none() {
+        teamService = new TeamService(new TeamRepositoryFakeTwo(uuid), playerService);
+        List<TeamDataModel> actual = teamService.getAll();
+
+        assertThat(actual).isEmpty();
     }
 
     private class TeamRepositoryFake implements TeamRepository {
@@ -242,6 +209,7 @@ public class TeamServiceTest {
         }
     }
 
+
     private class PlayerRepositoryFake implements PlayerRepository {
 
         @Override
@@ -307,4 +275,5 @@ public class TeamServiceTest {
 
         }
     }
+
 }
