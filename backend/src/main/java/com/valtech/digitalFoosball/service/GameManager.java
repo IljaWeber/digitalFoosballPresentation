@@ -193,4 +193,12 @@ public class GameManager {
     public void setTeams(List<TeamDataModel> teams) {
         this.teams = teams;
     }
+
+    public Stack<TeamDataModel> getHistoryOfGoals() {
+        return historyOfGoals;
+    }
+
+    public Stack<TeamDataModel> getHistoryOfUndo() {
+        return historyOfUndo;
+    }
 }

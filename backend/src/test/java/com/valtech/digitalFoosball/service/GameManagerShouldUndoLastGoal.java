@@ -7,7 +7,7 @@ import static com.valtech.digitalFoosball.helper.constants.TestConstants.TEAM_ON
 import static com.valtech.digitalFoosball.helper.constants.TestConstants.TEAM_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GameManagerShouldUndoLastGoal extends GameManagerTest {
+public class GameManagerShouldUndoLastGoal extends GameManagerShould {
 
     GameDataExtractor dataExtractor = new GameDataExtractor();
 
