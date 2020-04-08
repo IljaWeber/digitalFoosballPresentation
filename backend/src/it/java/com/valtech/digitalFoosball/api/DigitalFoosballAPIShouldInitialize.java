@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = Application.class)
 @SpringBootTest(classes = DigitalFoosballAPI.class)
-public class DigitalFoosballAPIShouldProvideInitializationOfAnAdHocGame {
+public class DigitalFoosballAPIShouldInitialize {
 
     @Autowired
     private MockMvc mockMvc;
@@ -63,7 +63,7 @@ public class DigitalFoosballAPIShouldProvideInitializationOfAnAdHocGame {
     }
 
     @Test
-    void initAdHocMatch_whenAnAdHocGameIsCalled_thenReturnGenericTeamModels() throws Exception {
+    void an_ad_hoc_match_with_default_values_for_the_teams() throws Exception {
 
         String actualResponseBody = result.getResponse().getContentAsString();
         assertThat(actualResponseBody).isEqualTo(expectedResponseBody);
