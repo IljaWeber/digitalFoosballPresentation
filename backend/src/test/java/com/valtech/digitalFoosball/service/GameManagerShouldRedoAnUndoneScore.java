@@ -2,9 +2,11 @@ package com.valtech.digitalFoosball.service;
 
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
+import com.valtech.digitalFoosball.model.output.TeamOutput;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Stack;
 
 import static com.valtech.digitalFoosball.service.GameManagerTestConstants.TEAM_ONE;
@@ -15,37 +17,29 @@ public class GameManagerShouldRedoAnUndoneScore extends GameManagerTest {
 
     @Test
     void if_a_score_has_been_undone_recently() {
-        super.raiseScoreOf(TEAM_ONE, TEAM_TWO, TEAM_ONE, TEAM_ONE, TEAM_TWO);
+        super.raiseScoreOf(TEAM_ONE);
         gameManager.undoGoal();
 
         gameManager.redoGoal();
 
-        GameDataModel actual = gameManager.getGameData();
-        assertThat(super.extractTeams(actual)).containsExactly("T1", "P1", "P2", 3, 0, "T2", "P3", "P4", 2, 0, 0, 0);
+        GameDataModel gameData = gameManager.getGameData();
+        List<TeamOutput> teams = gameData.getTeams();
+        TeamOutput team = teams.get(0);
+        int actual = team.getScore();
+        assertThat(actual).isEqualTo(1);
     }
 
     @Test
-    void and_save_it_into_the_match_history() throws Exception {
-        super.raiseScoreOf(TEAM_ONE, TEAM_ONE, TEAM_TWO, TEAM_ONE);
-        gameManager.undoGoal();
-
+    void only_when_a_goal_was_undid_otherwise_do_nothing() {
         gameManager.redoGoal();
 
-        Class cls = Class.forName("com.valtech.digitalFoosball.service.GameManager");
-        Field lastScoringTeams = cls.getDeclaredField("historyOfGoals");
-        lastScoringTeams.setAccessible(true);
-        Stack<TeamDataModel> stack = (Stack<TeamDataModel>) lastScoringTeams.get(gameManager);
-        TeamDataModel actual = stack.peek();
-        assertThat(actual).isEqualTo(gameManager.getTeams().get(0));
-    }
-
-    @Test
-    void only_there_is_an_undone_score_otherwise_do_nothing() {
-        super.raiseScoreOf(TEAM_ONE, TEAM_TWO, TEAM_ONE);
-
-        gameManager.redoGoal();
-
-        GameDataModel actual = gameManager.getGameData();
-        assertThat(super.extractTeams(actual)).containsExactly("T1", "P1", "P2", 2, 0, "T2", "P3", "P4", 1, 0, 0, 0);
+        GameDataModel gameData = gameManager.getGameData();
+        List<TeamOutput> teams = gameData.getTeams();
+        TeamOutput teamOne = teams.get(0);
+        TeamOutput teamTwo = teams.get(1);
+        int actualScoreTeamOne = teamOne.getScore();
+        int actualScoreTeamTwo = teamTwo.getScore();
+        assertThat(actualScoreTeamOne).isEqualTo(0);
+        assertThat(actualScoreTeamTwo).isEqualTo(0);
     }
 }
