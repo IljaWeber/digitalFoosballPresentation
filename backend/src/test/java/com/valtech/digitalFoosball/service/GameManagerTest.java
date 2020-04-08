@@ -288,10 +288,10 @@ public class GameManagerTest {
             mergedResult.add(teamOutput.getPlayerOne());
             mergedResult.add(teamOutput.getPlayerTwo());
             mergedResult.add(teamOutput.getScore());
-            mergedResult.add(teamOutput.getRoundWins());
+            mergedResult.add(teamOutput.getSetWins());
         }
 
-        mergedResult.add(gameDataModel.getRoundWinner());
+        mergedResult.add(gameDataModel.getWinnerOfActualSet());
         mergedResult.add(gameDataModel.getMatchWinner());
 
         return mergedResult;

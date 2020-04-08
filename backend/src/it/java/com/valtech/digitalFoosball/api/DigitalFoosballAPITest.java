@@ -160,7 +160,7 @@ public class DigitalFoosballAPITest {
 
         builder = MockMvcRequestBuilders.get("/api/game");
         mockMvc.perform(builder)
-                .andExpect(MockMvcResultMatchers.jsonPath("$.roundWinner").value("2"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.winnerOfActualSet").value("2"));
     }
 
     private void performBuilderGivenTimes(int times) throws Exception {
@@ -185,7 +185,7 @@ public class DigitalFoosballAPITest {
         builder = MockMvcRequestBuilders.get("/api/game");
         mockMvc.perform(builder)
                 .andExpect(MockMvcResultMatchers.jsonPath("$.matchWinner").value("1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.teams[0].roundWins").value("2"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.teams[0].setWins").value("2"));
     }
 
     @Test

@@ -7,7 +7,7 @@ public class GameDataModel {
 
     private List<TeamOutput> teams;
 
-    private int roundWinner;
+    private int winnerOfActualSet;
 
     private int matchWinner;
 
@@ -27,12 +27,12 @@ public class GameDataModel {
         this.teams = teams;
     }
 
-    public int getRoundWinner() {
-        return roundWinner;
+    public int getWinnerOfActualSet() {
+        return winnerOfActualSet;
     }
 
-    public void setRoundWinner(int winner) {
-        this.roundWinner = winner;
+    public void setWinnerOfActualSet(int winner) {
+        this.winnerOfActualSet = winner;
     }
 
     public int getMatchWinner() {

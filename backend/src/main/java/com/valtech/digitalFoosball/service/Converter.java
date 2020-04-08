@@ -13,7 +13,7 @@ public class Converter {
         teamOutput.setScore(team.getScore());
         teamOutput.setPlayerOne(team.getNameOfPlayerOne());
         teamOutput.setPlayerTwo(team.getNameOfPlayerTwo());
-        teamOutput.setRoundWins(team.getWonRounds());
+        teamOutput.setWinsForActualSet(team.getWonSets());
 
         return teamOutput;
     }

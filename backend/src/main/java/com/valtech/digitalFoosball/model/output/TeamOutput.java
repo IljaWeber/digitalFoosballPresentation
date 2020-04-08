@@ -5,7 +5,7 @@ public class TeamOutput {
     private String playerOne;
     private String playerTwo;
     private int score;
-    private int roundWins;
+    private int setWins;
 
     public String getName() {
         return name;
@@ -39,12 +39,12 @@ public class TeamOutput {
         this.score = score;
     }
 
-    public int getRoundWins() {
-        return roundWins;
+    public int getSetWins() {
+        return setWins;
     }
 
-    public void setRoundWins(int roundWins) {
-        this.roundWins = roundWins;
+    public void setWinsForActualSet(int setWins) {
+        this.setWins = setWins;
     }
 }
 

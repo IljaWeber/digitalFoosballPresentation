@@ -77,7 +77,7 @@ public class GameManager {
             historyOfGoals.push(teamDataModel);
 
             if (winConditionVerifier.isActualSetWon()) {
-                teamDataModel.increaseWonRounds();
+                teamDataModel.increaseWonSets();
             }
         }
     }
@@ -87,7 +87,7 @@ public class GameManager {
             TeamDataModel lastScoringTeam = historyOfGoals.pop();
 
             if (winConditionVerifier.isActualSetWon()) {
-                lastScoringTeam.decreaseWonRounds();
+                lastScoringTeam.decreaseWonSets();
             }
 
             lastScoringTeam.decreaseScore();
@@ -103,7 +103,7 @@ public class GameManager {
             historyOfGoals.push(teamDataModel);
 
             if (winConditionVerifier.isActualSetWon()) {
-                teamDataModel.increaseWonRounds();
+                teamDataModel.increaseWonSets();
             }
         }
     }
@@ -132,7 +132,7 @@ public class GameManager {
         List<TeamOutput> convertedTeams = converter.convertAllToTeamOutput(teams);
 
         GameDataModel currentGameData = new GameDataModel(convertedTeams);
-        currentGameData.setRoundWinner(winConditionVerifier.getWinnerOfActualSet());
+        currentGameData.setWinnerOfActualSet(winConditionVerifier.getWinnerOfActualSet());
         currentGameData.setMatchWinner(getMatchWinner());
 
         return currentGameData;
@@ -156,7 +156,7 @@ public class GameManager {
         int matchWinner = 0;
 
         for (TeamDataModel team : teams) {
-            if (team.getWonRounds() >= 2) {
+            if (team.getWonSets() >= 2) {
                 matchWinner = teams.indexOf(team) + 1;
             }
         }

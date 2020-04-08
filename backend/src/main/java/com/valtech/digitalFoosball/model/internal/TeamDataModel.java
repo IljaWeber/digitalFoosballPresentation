@@ -24,7 +24,7 @@ public class TeamDataModel {
     private int score;
 
     @Transient
-    private int wonRounds;
+    private int wonSets;
 
     private int wonMatches;
 
@@ -90,16 +90,16 @@ public class TeamDataModel {
         score = 0;
     }
 
-    public int getWonRounds() {
-        return wonRounds;
+    public int getWonSets() {
+        return wonSets;
     }
 
-    public void increaseWonRounds() {
-        wonRounds++;
+    public void increaseWonSets() {
+        wonSets++;
     }
 
-    public void decreaseWonRounds() {
-        wonRounds--;
+    public void decreaseWonSets() {
+        wonSets--;
     }
 
     public void resetValues() {
