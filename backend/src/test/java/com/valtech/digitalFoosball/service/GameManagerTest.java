@@ -279,24 +279,6 @@ public class GameManagerTest {
         }
     }
 
-    protected List extractTeams(GameDataModel gameDataModel) {
-        List<TeamOutput> list = gameDataModel.getTeams();
-        List mergedResult = new ArrayList();
-
-        for (TeamOutput teamOutput : list) {
-            mergedResult.add(teamOutput.getName());
-            mergedResult.add(teamOutput.getPlayerOne());
-            mergedResult.add(teamOutput.getPlayerTwo());
-            mergedResult.add(teamOutput.getScore());
-            mergedResult.add(teamOutput.getSetWins());
-        }
-
-        mergedResult.add(gameDataModel.getWinnerOfActualSet());
-        mergedResult.add(gameDataModel.getMatchWinner());
-
-        return mergedResult;
-    }
-
     private class TeamRepositoryFake implements TeamRepository {
         private UUID id;
 

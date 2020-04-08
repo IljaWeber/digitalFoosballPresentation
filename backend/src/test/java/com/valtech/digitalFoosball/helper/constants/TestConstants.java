@@ -1,6 +1,6 @@
-package com.valtech.digitalFoosball.service;
+package com.valtech.digitalFoosball.helper.constants;
 
-public class GameManagerTestConstants {
+public class TestConstants {
 
     public static int NO_WINNER = 0;
     public static int TEAM_ONE = 1;

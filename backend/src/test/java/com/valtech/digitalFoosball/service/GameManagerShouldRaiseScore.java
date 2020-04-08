@@ -1,9 +1,10 @@
 package com.valtech.digitalFoosball.service;
 
+import com.valtech.digitalFoosball.helper.extractor.GameDataExtractor;
 import org.junit.jupiter.api.Test;
 
-import static com.valtech.digitalFoosball.service.GameManagerTestConstants.TEAM_ONE;
-import static com.valtech.digitalFoosball.service.GameManagerTestConstants.TEAM_TWO;
+import static com.valtech.digitalFoosball.helper.constants.TestConstants.TEAM_ONE;
+import static com.valtech.digitalFoosball.helper.constants.TestConstants.TEAM_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameManagerShouldRaiseScore extends GameManagerTest {

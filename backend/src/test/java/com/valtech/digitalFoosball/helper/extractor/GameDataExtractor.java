@@ -1,7 +1,8 @@
-package com.valtech.digitalFoosball.service;
+package com.valtech.digitalFoosball.helper.extractor;
 
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
+import com.valtech.digitalFoosball.service.GameManager;
 
 import java.util.List;
 

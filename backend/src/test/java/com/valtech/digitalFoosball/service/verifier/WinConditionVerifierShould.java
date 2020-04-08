@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.valtech.digitalFoosball.service.GameManagerTestConstants.*;
+import static com.valtech.digitalFoosball.helper.constants.TestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class WinConditionVerifierShould {
