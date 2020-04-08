@@ -10,36 +10,37 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PlayerServiceTest {
+public class PlayerServiceShould {
 
     private final UUID id = UUID.randomUUID();
-    private PlayerDataModel data;
+    private PlayerDataModel initalDataModel;
     private PlayerRepositoryFake playerRepository;
     private PlayerService playerService;
 
     @BeforeEach
     public void setUp() {
         playerRepository = new PlayerRepositoryFake();
-        data = new PlayerDataModel();
+        initalDataModel = new PlayerDataModel();
         playerService = new PlayerService(playerRepository);
     }
 
     @Test
-    public void setUp_whenSearchingForExistingPlayer_thenLoadThisPlayer() {
-        data.setId(id);
-        data.setName("a");
+    public void load_existing_player_ignoring_case() {
+        initalDataModel.setId(id);
+        initalDataModel.setName("a");
 
-        PlayerDataModel playerDataModel = playerService.setUp(data);
+        PlayerDataModel playerDataModel = playerService.setUp(initalDataModel);
 
-        assertThat(playerDataModel).extracting(PlayerDataModel::getId, PlayerDataModel::getName).containsExactly(id, "a");
+        UUID actual = playerDataModel.getId();
+        assertThat(actual).isEqualTo(id);
     }
 
     @Test
-    public void setUp_whenSearchingForNotExistingPlayer_thenCreateAndLoadThisPlayer() {
-        data.setId(id);
-        data.setName("b");
+    public void save_player_into_database_when_player_did_not_exist_yet() {
+        initalDataModel.setId(id);
+        initalDataModel.setName("b");
 
-        PlayerDataModel playerDataModel = playerService.setUp(data);
+        PlayerDataModel playerDataModel = playerService.setUp(initalDataModel);
 
         assertThat(playerDataModel).extracting(PlayerDataModel::getId, PlayerDataModel::getName).containsExactly(id, "b");
     }
@@ -102,7 +103,7 @@ public class PlayerServiceTest {
                 return Optional.empty();
             }
 
-            return Optional.of(data);
+            return Optional.of(initalDataModel);
         }
     }
 }
