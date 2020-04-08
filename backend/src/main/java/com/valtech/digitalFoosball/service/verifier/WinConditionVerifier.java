@@ -15,8 +15,10 @@ public class WinConditionVerifier {
         int winnerOfActualSet = 0;
 
         for (TeamDataModel team : teams) {
-            if (scoreGreaterOrEqualSix(team) && leadOfTwo(team)) {
-                winnerOfActualSet = teams.indexOf(team) + 1;
+            if (scoreGreaterOrEqualSix(team)) {
+                if (leadOfTwo(team)) {
+                    winnerOfActualSet = teams.indexOf(team) + 1;
+                }
             }
         }
 
@@ -47,5 +49,9 @@ public class WinConditionVerifier {
         }
 
         return opponent;
+    }
+
+    public boolean isActualSetWon() {
+        return verifySetWinner() != 0;
     }
 }

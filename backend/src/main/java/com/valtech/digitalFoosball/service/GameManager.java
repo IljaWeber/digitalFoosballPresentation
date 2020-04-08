@@ -72,25 +72,21 @@ public class GameManager {
     public void countGoalFor(int team) {
         TeamDataModel teamDataModel = teams.get(team - 1);
 
-        if (!roundIsOver()) {
+        if (!winConditionVerifier.isActualSetWon()) {
             teamDataModel.countGoal();
             historyOfGoals.push(teamDataModel);
 
-            if (roundIsOver()) {
+            if (winConditionVerifier.isActualSetWon()) {
                 teamDataModel.increaseWonRounds();
             }
         }
-    }
-
-    private boolean roundIsOver() {
-        return winConditionVerifier.verifySetWinner() != 0;
     }
 
     public void undoGoal() {
         if (!historyOfGoals.empty()) {
             TeamDataModel lastScoringTeam = historyOfGoals.pop();
 
-            if (roundIsOver()) {
+            if (winConditionVerifier.isActualSetWon()) {
                 lastScoringTeam.decreaseWonRounds();
             }
 
@@ -106,7 +102,7 @@ public class GameManager {
             teamDataModel.countGoal();
             historyOfGoals.push(teamDataModel);
 
-            if (roundIsOver()) {
+            if (winConditionVerifier.isActualSetWon()) {
                 teamDataModel.increaseWonRounds();
             }
         }
