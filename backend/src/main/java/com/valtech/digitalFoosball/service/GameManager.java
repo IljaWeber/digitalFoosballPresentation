@@ -21,7 +21,7 @@ public class GameManager {
     private Stack<TeamDataModel> historyOfGoals;
     private Stack<TeamDataModel> historyOfUndo;
     private Converter converter;
-    private SetWinApprover setWinApprover;
+    private WinConditionVerifier winConditionVerifier;
 
     @Autowired
     public GameManager(TeamService teamService) {
@@ -29,7 +29,7 @@ public class GameManager {
         historyOfGoals = new Stack<>();
         converter = new Converter();
         historyOfUndo = new Stack<>();
-        setWinApprover = new SetWinApprover();
+        winConditionVerifier = new WinConditionVerifier();
     }
 
     public void initGame(InitDataModel initDataModel) {
@@ -42,7 +42,7 @@ public class GameManager {
             teamService.setUp(team);
         }
 
-        setWinApprover.init(teams);
+        winConditionVerifier.init(teams);
     }
 
     private void checkForDuplicateNames(InitDataModel initDataModel) {
@@ -82,7 +82,7 @@ public class GameManager {
     }
 
     private boolean roundIsOver() {
-        return setWinApprover.getSetWinner() != 0;
+        return winConditionVerifier.verifySetWinner() != 0;
     }
 
     public void undoGoal() {
@@ -135,7 +135,7 @@ public class GameManager {
         List<TeamOutput> convertedTeams = converter.convertAllToTeamOutput(teams);
 
         GameDataModel currentGameData = new GameDataModel(convertedTeams);
-        currentGameData.setRoundWinner(setWinApprover.getSetWinner());
+        currentGameData.setRoundWinner(winConditionVerifier.verifySetWinner());
         currentGameData.setMatchWinner(getMatchWinner());
 
         return currentGameData;
@@ -190,7 +190,7 @@ public class GameManager {
         teams.add(teamDataModelOne);
         teams.add(teamDataModelTwo);
 
-        setWinApprover.init(teams);
+        winConditionVerifier.init(teams);
     }
 
     public void setTeams(List<TeamDataModel> teams) {

@@ -4,38 +4,37 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
 import java.util.List;
 
-public class SetWinApprover {
-
+public class WinConditionVerifier {
     private List<TeamDataModel> teams;
 
     public void init(List<TeamDataModel> teams) {
         this.teams = teams;
     }
 
-    public int getSetWinner() {
-        int roundWinner = 0;
+    public int verifySetWinner() {
+        int winnerOfActualSet = 0;
 
         for (TeamDataModel team : teams) {
-            if (scoreGreaterOrEqualSix(team) && leadingWithTwoOrMoreGoals(team)) {
-                roundWinner = teams.indexOf(team) + 1;
+            if (scoreGreaterOrEqualSix(team) && leadOfTwo(team)) {
+                winnerOfActualSet = teams.indexOf(team) + 1;
             }
         }
 
-        return roundWinner;
+        return winnerOfActualSet;
     }
 
     private boolean scoreGreaterOrEqualSix(TeamDataModel team) {
         return team.getScore() >= 6;
     }
 
-    private boolean leadingWithTwoOrMoreGoals(TeamDataModel team) {
-        final int necessaryScoreDifference = 2;
+    private boolean leadOfTwo(TeamDataModel team) {
+        final int neededLead = 2;
 
         TeamDataModel opponentTeam = getOpponent(team);
 
-        final int actualScoreDifference = team.getScore() - opponentTeam.getScore();
+        final int currentLead = team.getScore() - opponentTeam.getScore();
 
-        return actualScoreDifference >= necessaryScoreDifference;
+        return currentLead >= neededLead;
     }
 
     private TeamDataModel getOpponent(TeamDataModel team) {

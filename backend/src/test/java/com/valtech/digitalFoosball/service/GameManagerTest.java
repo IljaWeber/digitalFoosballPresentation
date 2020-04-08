@@ -274,7 +274,6 @@ public class GameManagerTest {
     }
 
     protected void raiseScoreOf(int... teams) {
-
         for (int team : teams) {
             gameManager.countGoalFor(team);
         }

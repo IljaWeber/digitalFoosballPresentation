@@ -10,15 +10,15 @@ import java.util.List;
 import static com.valtech.digitalFoosball.service.GameManagerTestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SetWinApproverShould {
+public class WinConditionVerifierShould {
 
-    private SetWinApprover setWinApprover;
+    private WinConditionVerifier winConditionVerifier;
     private TeamDataModel teamOne;
     private TeamDataModel teamTwo;
 
     @BeforeEach
     void setUp() {
-        setWinApprover = new SetWinApprover();
+        winConditionVerifier = new WinConditionVerifier();
 
         teamOne = new TeamDataModel();
         teamTwo = new TeamDataModel();
@@ -27,12 +27,12 @@ public class SetWinApproverShould {
         teams.add(teamOne);
         teams.add(teamTwo);
 
-        setWinApprover.init(teams);
+        winConditionVerifier.init(teams);
     }
 
     @Test
     public void show_no_winner_when_no_team_scored_six_goals() {
-        int actual = setWinApprover.getSetWinner();
+        int actual = winConditionVerifier.verifySetWinner();
 
         assertThat(actual).isEqualTo(NO_WINNER);
     }
@@ -42,7 +42,7 @@ public class SetWinApproverShould {
         countGoalsFor(TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE, TEAM_ONE);
         countGoalsFor(TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO);
 
-        int actual = setWinApprover.getSetWinner();
+        int actual = winConditionVerifier.verifySetWinner();
 
         assertThat(actual).isEqualTo(NO_WINNER);
     }
@@ -51,7 +51,7 @@ public class SetWinApproverShould {
     public void show_the_team_that_scored_at_least_six_goals_with_a_lead_of_two() {
         countGoalsFor(TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO, TEAM_TWO);
 
-        int actual = setWinApprover.getSetWinner();
+        int actual = winConditionVerifier.verifySetWinner();
 
         assertThat(actual).isEqualTo(TEAM_TWO);
     }
