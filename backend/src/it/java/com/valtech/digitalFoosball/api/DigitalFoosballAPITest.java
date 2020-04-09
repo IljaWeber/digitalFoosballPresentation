@@ -2,6 +2,7 @@ package com.valtech.digitalFoosball.api;
 
 import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
+import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.GameManager;
@@ -82,8 +83,8 @@ public class DigitalFoosballAPITest {
     public void undoLastGoal_whenSeveralGoalsWereShotAndTheLastGetsUndid_thenScoreIsSameAsWithoutTheLastGoal() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        gameManager.countGoalFor(1);
-        gameManager.countGoalFor(1);
+        gameManager.countGoalFor(Team.ONE);
+        gameManager.countGoalFor(Team.ONE);
         builder = MockMvcRequestBuilders.put("/api/undo");
 
         mockMvc.perform(builder).andExpect(MockMvcResultMatchers.jsonPath("$.teams[0].score").value("1"));
@@ -93,9 +94,9 @@ public class DigitalFoosballAPITest {
     public void redoLastGoal_whenSeveralGoalsWereUndid_thenRedoThem() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        gameManager.countGoalFor(1);
-        gameManager.countGoalFor(1);
-        gameManager.countGoalFor(2);
+        gameManager.countGoalFor(Team.ONE);
+        gameManager.countGoalFor(Team.ONE);
+        gameManager.countGoalFor(Team.TWO);
         gameManager.undoGoal();
         gameManager.undoGoal();
         gameManager.undoGoal();
@@ -105,7 +106,7 @@ public class DigitalFoosballAPITest {
         mockMvc.perform(builder);
 
         mockMvc.perform(builder)
-                .andExpect(MockMvcResultMatchers.jsonPath("$.teams[0].score").value("2"))
+               .andExpect(MockMvcResultMatchers.jsonPath("$.teams[0].score").value("2"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.teams[1].score").value("1"));
     }
 
@@ -113,8 +114,8 @@ public class DigitalFoosballAPITest {
     public void resetGameValues_whenResetGameValuesIsCalled_thenSetEmptyTeamNamesAndScoreToZero() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        gameManager.countGoalFor(1);
-        gameManager.countGoalFor(2);
+        gameManager.countGoalFor(Team.ONE);
+        gameManager.countGoalFor(Team.TWO);
 
         builder = MockMvcRequestBuilders.delete("/api/reset");
 

@@ -1,10 +1,12 @@
 package com.valtech.digitalFoosball.service;
 
+import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Converter {
     public TeamOutput convertToTeamOutput(TeamDataModel team) {
@@ -18,7 +20,7 @@ public class Converter {
         return teamOutput;
     }
 
-    public List<TeamOutput> convertAllToTeamOutput(List<TeamDataModel> teams) {
+    public List<TeamOutput> convertListToTeamOutputs(List<TeamDataModel> teams) {
         List<TeamOutput> convertedTeams = new ArrayList<>();
 
         for (TeamDataModel team : teams) {
@@ -28,4 +30,13 @@ public class Converter {
 
         return convertedTeams;
     }
+
+    public List<TeamOutput> convertMapToTeamOutputs(Map<Team, TeamDataModel> teams) {
+        List<TeamOutput> convertedTeams = new ArrayList<>();
+
+        teams.forEach((k, v) -> convertedTeams.add(convertToTeamOutput(v)));
+
+        return convertedTeams;
+    }
+
 }

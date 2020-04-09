@@ -1,57 +1,37 @@
 package com.valtech.digitalFoosball.service.verifier;
 
+import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
-import java.util.List;
+import java.util.Map;
 
 public class WinConditionVerifier {
-    private List<TeamDataModel> teams;
 
-    public void init(List<TeamDataModel> teams) {
+    private final int neededGoals = 6;
+    private Map<Team, TeamDataModel> teams;
+    private final int neededDifference = 2;
+
+    public boolean teamWon(Map<Team, TeamDataModel> teams, Team scoringTeam) {
         this.teams = teams;
+        TeamDataModel scoringTeamDataModel = teams.get(scoringTeam);
+
+        return enoughGoals(scoringTeamDataModel) && bigEnoughScoreDifference();
     }
 
-    public int getWinnerOfActualSet() {
-        int winnerOfActualSet = 0;
-
-        for (TeamDataModel team : teams) {
-            if (scoreGreaterOrEqualSix(team)) {
-                if (leadOfTwo(team)) {
-                    winnerOfActualSet = teams.indexOf(team) + 1;
-                }
-            }
-        }
-
-        return winnerOfActualSet;
+    private boolean enoughGoals(TeamDataModel team) {
+        return team.getScore() >= neededGoals;
     }
 
-    private boolean scoreGreaterOrEqualSix(TeamDataModel team) {
-        return team.getScore() >= 6;
-    }
+    private boolean bigEnoughScoreDifference() {
+        TeamDataModel teamOne = teams.get(Team.ONE);
+        TeamDataModel teamTwo = teams.get(Team.TWO);
 
-    private boolean leadOfTwo(TeamDataModel team) {
-        final int neededLead = 2;
+        int scoreTeamOne = teamOne.getScore();
+        int scoreTeamTwo = teamTwo.getScore();
 
-        TeamDataModel opponentTeam = getOpponent(team);
+        int currentDifference = scoreTeamOne - scoreTeamTwo;
+        int absoluteDifference = Math.abs(currentDifference);
 
-        final int currentLead = team.getScore() - opponentTeam.getScore();
-
-        return currentLead >= neededLead;
-    }
-
-    private TeamDataModel getOpponent(TeamDataModel team) {
-        TeamDataModel opponent = new TeamDataModel();
-
-        for (TeamDataModel teamDataModel : teams) {
-            if (!teamDataModel.equals(team)) {
-                opponent = teamDataModel;
-            }
-        }
-
-        return opponent;
-    }
-
-    public boolean isActualSetWon() {
-        return getWinnerOfActualSet() != 0;
+        return absoluteDifference >= neededDifference;
     }
 }

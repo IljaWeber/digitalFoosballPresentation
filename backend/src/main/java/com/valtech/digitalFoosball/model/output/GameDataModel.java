@@ -31,7 +31,7 @@ public class GameDataModel {
         return winnerOfActualSet;
     }
 
-    public void setWinnerOfActualSet(int winner) {
+    public void setWinnerOfSet(int winner) {
         this.winnerOfActualSet = winner;
     }
 

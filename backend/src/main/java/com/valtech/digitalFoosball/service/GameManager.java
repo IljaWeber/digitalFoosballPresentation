@@ -1,5 +1,6 @@
 package com.valtech.digitalFoosball.service;
 
+import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
@@ -11,18 +12,17 @@ import com.valtech.digitalFoosball.storage.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 @Service
 public class GameManager {
-    private List<TeamDataModel> teams;
+    private Map<Team, TeamDataModel> teams;
     private TeamService teamService;
-    private Stack<TeamDataModel> historyOfGoals;
-    private Stack<TeamDataModel> historyOfUndo;
+    private Stack<Team> historyOfGoals;
+    private Stack<Team> historyOfUndo;
     private Converter converter;
     private WinConditionVerifier winConditionVerifier;
+    private Team setWinner;
 
     @Autowired
     public GameManager(TeamService teamService) {
@@ -31,19 +31,22 @@ public class GameManager {
         converter = new Converter();
         historyOfUndo = new Stack<>();
         winConditionVerifier = new WinConditionVerifier();
+        teams = new HashMap<>();
     }
 
     public void initGame(InitDataModel initDataModel) {
         historyOfGoals = new Stack<>();
         checkForDuplicateNames(initDataModel);
 
-        teams = initDataModel.getTeams();
+        List<TeamDataModel> teamsList = initDataModel.getTeams();
+        teams.put(Team.ONE, teamsList.get(0));
+        teams.put(Team.TWO, teamsList.get(1));
 
-        for (TeamDataModel team : teams) {
+        for (TeamDataModel team : teamsList) {
             teamService.setUp(team);
         }
 
-        winConditionVerifier.init(teams);
+        setWinner = Team.NO_TEAM;
     }
 
     private void checkForDuplicateNames(InitDataModel initDataModel) {
@@ -69,76 +72,80 @@ public class GameManager {
         }
     }
 
-    public void countGoalFor(int team) {
-        TeamDataModel teamDataModel = teams.get(team - 1);
+    public void countGoalFor(Team team) {
+        TeamDataModel teamDataModel = teams.get(team);
 
-        if (!winConditionVerifier.isActualSetWon()) {
+        if (setWinner == Team.NO_TEAM) {
             teamDataModel.countGoal();
-            historyOfGoals.push(teamDataModel);
+            historyOfGoals.push(team);
 
-            if (winConditionVerifier.isActualSetWon()) {
+            if (winConditionVerifier.teamWon(teams, team)) {
                 teamDataModel.increaseWonSets();
+                setWinner = team;
             }
         }
     }
 
     public void undoGoal() {
         if (!historyOfGoals.empty()) {
-            TeamDataModel lastScoringTeam = historyOfGoals.pop();
+            Team team = historyOfGoals.pop();
+            TeamDataModel lastScoringTeam = teams.get(team);
 
-            if (winConditionVerifier.isActualSetWon()) {
+            if (setWinner != Team.NO_TEAM) {
                 lastScoringTeam.decreaseWonSets();
+                setWinner = Team.NO_TEAM;
             }
 
             lastScoringTeam.decreaseScore();
-            historyOfUndo.push(lastScoringTeam);
+            historyOfUndo.push(team);
         }
     }
 
     public void redoGoal() {
         if (!historyOfUndo.empty()) {
-            TeamDataModel teamDataModel = historyOfUndo.pop();
+            Team team = historyOfUndo.pop();
+            TeamDataModel teamDataModel = teams.get(team);
 
             teamDataModel.countGoal();
-            historyOfGoals.push(teamDataModel);
+            historyOfGoals.push(team);
 
-            if (winConditionVerifier.isActualSetWon()) {
+            if (winConditionVerifier.teamWon(teams, team)) {
                 teamDataModel.increaseWonSets();
+                setWinner = team;
             }
         }
     }
 
     public void resetMatch() {
-        for (TeamDataModel team : teams) {
-            team.resetValues();
-        }
+        teams.forEach((k, v) -> v.resetValues());
+        setWinner = Team.NO_TEAM;
 
         resetHistories();
     }
 
     public void changeover() {
-        for (TeamDataModel team : teams) {
-            team.resetScore();
-        }
+        teams.forEach((k, v) -> v.resetScore());
+        setWinner = Team.NO_TEAM;
 
         resetHistories();
     }
 
     public GameDataModel getGameData() {
-        if (teams == null) {
+        if (teams.isEmpty()) {
             return null;
         }
 
-        List<TeamOutput> convertedTeams = converter.convertAllToTeamOutput(teams);
+        List<TeamOutput> convertedTeams = converter.convertMapToTeamOutputs(teams);
 
         GameDataModel currentGameData = new GameDataModel(convertedTeams);
-        currentGameData.setWinnerOfActualSet(winConditionVerifier.getWinnerOfActualSet());
+        int anInt = setWinner.getInt();
+        currentGameData.setWinnerOfSet(anInt);
         currentGameData.setMatchWinner(getMatchWinner());
 
         return currentGameData;
     }
 
-    public List<TeamDataModel> getTeams() {
+    public Map<Team, TeamDataModel> getTeams() {
         return teams;
     }
 
@@ -149,15 +156,19 @@ public class GameManager {
             return new ArrayList<>();
         }
 
-        return converter.convertAllToTeamOutput(teamDataModels);
+        return converter.convertListToTeamOutputs(teamDataModels);
     }
 
     public int getMatchWinner() {
         int matchWinner = 0;
 
-        for (TeamDataModel team : teams) {
+        ArrayList<TeamDataModel> teamsList = new ArrayList<>();
+        teamsList.add(teams.get(Team.ONE));
+        teamsList.add(teams.get(Team.TWO));
+
+        for (TeamDataModel team : teamsList) {
             if (team.getWonSets() >= 2) {
-                matchWinner = teams.indexOf(team) + 1;
+                return teamsList.indexOf(team) + 1;
             }
         }
 
@@ -171,7 +182,6 @@ public class GameManager {
 
     public void initAdHocGame() {
         historyOfGoals = new Stack<>();
-        teams = new ArrayList<>();
 
         TeamDataModel teamDataModelOne = new TeamDataModel();
         TeamDataModel teamDataModelTwo = new TeamDataModel();
@@ -184,21 +194,17 @@ public class GameManager {
         teamDataModelTwo.setNameOfPlayerOne("Goalie");
         teamDataModelTwo.setNameOfPlayerTwo("Striker");
 
-        teams.add(teamDataModelOne);
-        teams.add(teamDataModelTwo);
+        teams.put(Team.ONE, teamDataModelOne);
+        teams.put(Team.ONE, teamDataModelTwo);
 
-        winConditionVerifier.init(teams);
+        setWinner = Team.NO_TEAM;
     }
 
-    public void setTeams(List<TeamDataModel> teams) {
-        this.teams = teams;
-    }
-
-    public Stack<TeamDataModel> getHistoryOfGoals() {
+    public Stack<Team> getHistoryOfGoals() {
         return historyOfGoals;
     }
 
-    public Stack<TeamDataModel> getHistoryOfUndo() {
+    public Stack<Team> getHistoryOfUndo() {
         return historyOfUndo;
     }
 }

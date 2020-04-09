@@ -1,5 +1,6 @@
 package com.valtech.digitalFoosball.api;
 
+import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
@@ -52,7 +53,9 @@ public class DigitalFoosballAPI {
     public void raiseScore(@RequestBody int teamNo) {
         logger.info("Score raised for {}", teamNo);
 
-        gameManager.countGoalFor(teamNo);
+        Team team = Team.getTeamBy(teamNo);
+
+        gameManager.countGoalFor(team);
 
         updateClient();
     }
