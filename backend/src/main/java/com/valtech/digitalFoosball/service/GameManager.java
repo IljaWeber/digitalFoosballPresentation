@@ -2,6 +2,7 @@ package com.valtech.digitalFoosball.service;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
+import com.valtech.digitalFoosball.factories.TeamDataModelFactory;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
@@ -47,6 +48,17 @@ public class GameManager {
         }
 
         setWinner = Team.NO_TEAM;
+    }
+
+    public void initAdHocGame() {
+        TeamDataModel teamDataModelOne = TeamDataModelFactory.getInstanceWithAdHocPlayerNames("Orange");
+        TeamDataModel teamDataModelTwo = TeamDataModelFactory.getInstanceWithAdHocPlayerNames("Green");
+
+        InitDataModel initDataModel = new InitDataModel();
+        initDataModel.setTeamOne(teamDataModelOne);
+        initDataModel.setTeamTwo(teamDataModelTwo);
+
+        initGame(initDataModel);
     }
 
     private void checkForDuplicateNames(InitDataModel initDataModel) {
@@ -178,26 +190,6 @@ public class GameManager {
     private void resetHistories() {
         historyOfGoals = new Stack<>();
         historyOfUndo = new Stack<>();
-    }
-
-    public void initAdHocGame() {
-        historyOfGoals = new Stack<>();
-
-        TeamDataModel teamDataModelOne = new TeamDataModel();
-        TeamDataModel teamDataModelTwo = new TeamDataModel();
-
-        teamDataModelOne.setName("Orange");
-        teamDataModelOne.setNameOfPlayerOne("Goalie");
-        teamDataModelOne.setNameOfPlayerTwo("Striker");
-
-        teamDataModelTwo.setName("Green");
-        teamDataModelTwo.setNameOfPlayerOne("Goalie");
-        teamDataModelTwo.setNameOfPlayerTwo("Striker");
-
-        teams.put(Team.ONE, teamDataModelOne);
-        teams.put(Team.ONE, teamDataModelTwo);
-
-        setWinner = Team.NO_TEAM;
     }
 
     public Stack<Team> getHistoryOfGoals() {
