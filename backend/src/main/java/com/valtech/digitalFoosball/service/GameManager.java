@@ -1,13 +1,13 @@
 package com.valtech.digitalFoosball.service;
 
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
-import com.valtech.digitalFoosball.factories.TeamDataModelFactory;
+import com.valtech.digitalFoosball.factories.InitDataModelBuilder;
+import com.valtech.digitalFoosball.factories.TeamDataModelBuilder;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
-import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
+import com.valtech.digitalFoosball.service.verifier.UniqueNameVerifier;
 import com.valtech.digitalFoosball.service.verifier.WinConditionVerifier;
 import com.valtech.digitalFoosball.storage.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ import java.util.*;
 
 @Service
 public class GameManager {
+    private final UniqueNameVerifier uniqueNameVerifier = new UniqueNameVerifier();
     private SortedMap<Team, TeamDataModel> teams;
     private TeamService teamService;
     private Stack<Team> historyOfGoals;
@@ -36,8 +37,22 @@ public class GameManager {
     }
 
     public void initGame(InitDataModel initDataModel) {
-        historyOfGoals = new Stack<>();
-        checkForDuplicateNames(initDataModel);
+        uniqueNameVerifier.checkForDuplicateNames(initDataModel);
+
+        prepareAndStartMatch(initDataModel);
+    }
+
+    public void initAdHocGame() {
+        TeamDataModel teamDataModelOne = TeamDataModelBuilder.buildWithAdHocPlayerNames("Orange");
+        TeamDataModel teamDataModelTwo = TeamDataModelBuilder.buildWithAdHocPlayerNames("Green");
+
+        InitDataModel initDataModel = InitDataModelBuilder.buildWithTeams(teamDataModelOne, teamDataModelTwo);
+
+        prepareAndStartMatch(initDataModel);
+    }
+
+    private void prepareAndStartMatch(InitDataModel initDataModel) {
+        resetGameValues();
 
         List<TeamDataModel> teamsList = initDataModel.getTeams();
         teams.put(Team.ONE, teamsList.get(0));
@@ -46,42 +61,12 @@ public class GameManager {
         for (TeamDataModel team : teamsList) {
             teamService.setUp(team);
         }
+    }
 
+    private void resetGameValues() {
         setWinner = Team.NO_TEAM;
-    }
-
-    public void initAdHocGame() {
-        TeamDataModel teamDataModelOne = TeamDataModelFactory.getInstanceWithAdHocPlayerNames("Orange");
-        TeamDataModel teamDataModelTwo = TeamDataModelFactory.getInstanceWithAdHocPlayerNames("Green");
-
-        InitDataModel initDataModel = new InitDataModel();
-        initDataModel.setTeamOne(teamDataModelOne);
-        initDataModel.setTeamTwo(teamDataModelTwo);
-
-        initGame(initDataModel);
-    }
-
-    private void checkForDuplicateNames(InitDataModel initDataModel) {
-        List<String> playerNames = new ArrayList<>();
-        List<String> teamNames = new ArrayList<>();
-
-        for (TeamDataModel team : initDataModel.getTeams()) {
-
-            if (teamNames.contains(team.getName())) {
-                throw new NameDuplicateException(team.getName());
-            }
-
-            teamNames.add(team.getName());
-
-            for (PlayerDataModel player : team.getPlayers()) {
-
-                if (playerNames.contains(player.getName())) {
-                    throw new NameDuplicateException(player.getName());
-                }
-
-                playerNames.add(player.getName());
-            }
-        }
+        historyOfGoals = new Stack<>();
+        historyOfUndo = new Stack<>();
     }
 
     public void countGoalFor(Team team) {
@@ -131,19 +116,13 @@ public class GameManager {
     public void resetMatch() {
         teams.forEach((teamConstant, dataModel) -> dataModel.resetValues());
 
-        newRound();
+        resetGameValues();
     }
 
     public void changeover() {
         teams.forEach((teamConstant, dataModel) -> dataModel.resetScore());
 
-        newRound();
-    }
-
-    private void newRound() {
-        setWinner = Team.NO_TEAM;
-        historyOfGoals = new Stack<>();
-        historyOfUndo = new Stack<>();
+        resetGameValues();
     }
 
     public GameDataModel getGameData() {

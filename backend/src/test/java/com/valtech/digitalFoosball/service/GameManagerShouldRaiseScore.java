@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.service;
 
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.factories.TeamDataModelFactory;
+import com.valtech.digitalFoosball.factories.TeamDataModelBuilder;
 import com.valtech.digitalFoosball.helper.extractor.GameDataExtractor;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
@@ -25,11 +25,11 @@ public class GameManagerShouldRaiseScore {
     private final UUID id = UUID.randomUUID();
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
-    private TeamDataModelFactory teamDataModelFactory;
+    private TeamDataModelBuilder teamDataModelBuilder;
     GameDataExtractor dataExtractor = new GameDataExtractor();
 
     public GameManagerShouldRaiseScore() {
-        teamDataModelFactory = new TeamDataModelFactory();
+        teamDataModelBuilder = new TeamDataModelBuilder();
         initDataModel = new InitDataModel();
         TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
         PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
@@ -40,8 +40,8 @@ public class GameManagerShouldRaiseScore {
 
     private void setUpTeams() {
         List<TeamDataModel> teamDataModels = new ArrayList<>();
-        teamDataModelOne = teamDataModelFactory.getInstanceWithNames("T1", "P1", "P2");
-        teamDataModelTwo = teamDataModelFactory.getInstanceWithNames("T2", "P3", "P4");
+        teamDataModelOne = teamDataModelBuilder.buildWithNames("T1", "P1", "P2");
+        teamDataModelTwo = teamDataModelBuilder.buildWithNames("T2", "P3", "P4");
         teamDataModels.add(teamDataModelOne);
         teamDataModels.add(teamDataModelTwo);
         initDataModel.setTeams(teamDataModels);
