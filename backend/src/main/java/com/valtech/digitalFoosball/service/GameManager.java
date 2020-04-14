@@ -1,8 +1,9 @@
 package com.valtech.digitalFoosball.service;
 
+import com.valtech.digitalFoosball.builders.GameDataModelBuilder;
+import com.valtech.digitalFoosball.builders.InitDataModelBuilder;
+import com.valtech.digitalFoosball.builders.TeamDataModelBuilder;
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.factories.InitDataModelBuilder;
-import com.valtech.digitalFoosball.factories.TeamDataModelBuilder;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
@@ -130,17 +131,9 @@ public class GameManager {
             return null;
         }
 
-        List<TeamOutput> teamOutputs = Converter.convertMapToTeamOutputs(teams);
-
-        GameDataModel currentGameData = new GameDataModel(teamOutputs);
-
         int setWinnerInt = setWinner.getInt();
-        currentGameData.setWinnerOfSet(setWinnerInt);
 
-        int matchWinner = matchWinVerifier.getMatchWinner(teams);
-        currentGameData.setMatchWinner(matchWinner);
-
-        return currentGameData;
+        return GameDataModelBuilder.buildWithTeamsAndSetWinner(teams, setWinnerInt);
     }
 
     public Map<Team, TeamDataModel> getCurrentTeams() {

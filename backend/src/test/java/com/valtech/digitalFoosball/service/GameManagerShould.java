@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.service;
 
+import com.valtech.digitalFoosball.builders.TeamDataModelBuilder;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
-import com.valtech.digitalFoosball.factories.TeamDataModelBuilder;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;

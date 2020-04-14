@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.factories;
+package com.valtech.digitalFoosball.builders;
 
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
