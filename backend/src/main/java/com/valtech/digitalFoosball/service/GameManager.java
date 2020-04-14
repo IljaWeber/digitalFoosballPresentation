@@ -21,7 +21,6 @@ public class GameManager {
     private TeamService teamService;
     private Stack<Team> historyOfGoals;
     private Stack<Team> historyOfUndo;
-    private Converter converter;
     private WinConditionVerifier winConditionVerifier;
     private Team setWinner;
 
@@ -29,14 +28,14 @@ public class GameManager {
     public GameManager(TeamService teamService) {
         this.teamService = teamService;
         historyOfGoals = new Stack<>();
-        converter = new Converter();
         historyOfUndo = new Stack<>();
         winConditionVerifier = new WinConditionVerifier();
         teams = new TreeMap<>();
     }
 
     public void initGame(InitDataModel initDataModel) {
-        UniqueNameVerifier.checkForDuplicateNames(initDataModel);
+        UniqueNameVerifier uniqueNameVerifier = new UniqueNameVerifier();
+        uniqueNameVerifier.checkForDuplicateNames(initDataModel);
 
         prepareAndStartMatch(initDataModel);
     }
@@ -129,7 +128,7 @@ public class GameManager {
             return null;
         }
 
-        List<TeamOutput> convertedTeams = converter.convertMapToTeamOutputs(teams);
+        List<TeamOutput> convertedTeams = Converter.convertMapToTeamOutputs(teams);
 
         GameDataModel currentGameData = new GameDataModel(convertedTeams);
         int anInt = setWinner.getInt();
@@ -150,7 +149,7 @@ public class GameManager {
             return new ArrayList<>();
         }
 
-        return converter.convertListToTeamOutputs(teamDataModels);
+        return Converter.convertListToTeamOutputs(teamDataModels);
     }
 
     public int getMatchWinner() {

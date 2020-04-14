@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Converter {
-    public TeamOutput convertToTeamOutput(TeamDataModel team) {
+    public static TeamOutput convertToTeamOutput(TeamDataModel team) {
         TeamOutput teamOutput = new TeamOutput();
         teamOutput.setName(team.getName());
         teamOutput.setScore(team.getScore());
@@ -20,7 +20,7 @@ public class Converter {
         return teamOutput;
     }
 
-    public List<TeamOutput> convertListToTeamOutputs(List<TeamDataModel> teams) {
+    public static List<TeamOutput> convertListToTeamOutputs(List<TeamDataModel> teams) {
         List<TeamOutput> convertedTeams = new ArrayList<>();
 
         for (TeamDataModel team : teams) {
@@ -31,7 +31,7 @@ public class Converter {
         return convertedTeams;
     }
 
-    public List<TeamOutput> convertMapToTeamOutputs(Map<Team, TeamDataModel> teams) {
+    public static List<TeamOutput> convertMapToTeamOutputs(Map<Team, TeamDataModel> teams) {
         List<TeamOutput> convertedTeams = new ArrayList<>();
 
         teams.forEach((k, v) -> convertedTeams.add(convertToTeamOutput(v)));

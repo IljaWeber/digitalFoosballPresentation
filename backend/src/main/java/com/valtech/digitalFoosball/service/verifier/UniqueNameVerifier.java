@@ -10,10 +10,10 @@ import java.util.List;
 
 public class UniqueNameVerifier {
 
-    private static List<String> processedPlayerNames;
-    private static List<String> processedTeamNames;
+    private List<String> processedPlayerNames;
+    private List<String> processedTeamNames;
 
-    public static void checkForDuplicateNames(InitDataModel initDataModel) {
+    public void checkForDuplicateNames(InitDataModel initDataModel) {
         processedPlayerNames = new ArrayList<>();
         processedTeamNames = new ArrayList<>();
 
@@ -28,7 +28,7 @@ public class UniqueNameVerifier {
         }
     }
 
-    private static void checkPlayerNames(TeamDataModel team) {
+    private void checkPlayerNames(TeamDataModel team) {
         for (PlayerDataModel player : team.getPlayers()) {
             String playerName = player.getName();
 
@@ -38,7 +38,7 @@ public class UniqueNameVerifier {
         }
     }
 
-    private static void checkName(String name, List<String> names) {
+    private void checkName(String name, List<String> names) {
         if (names.contains(name)) {
             throw new NameDuplicateException(name);
         }
