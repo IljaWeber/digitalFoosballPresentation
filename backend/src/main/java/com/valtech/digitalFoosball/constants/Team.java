@@ -1,9 +1,9 @@
 package com.valtech.digitalFoosball.constants;
 
 public enum Team {
-    NO_TEAM(0),
     ONE(1),
-    TWO(2);
+    TWO(2),
+    NO_TEAM(3);
 
     private int teamNumber;
 
@@ -19,7 +19,7 @@ public enum Team {
         return TWO;
     }
 
-    public int getInt() {
+    public int value() {
         return teamNumber;
     }
 }

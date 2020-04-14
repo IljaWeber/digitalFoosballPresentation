@@ -1,5 +1,7 @@
 package com.valtech.digitalFoosball.model.output;
 
+import com.valtech.digitalFoosball.constants.Team;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,5 +43,9 @@ public class GameDataModel {
 
     public void setMatchWinner(int matchWinner) {
         this.matchWinner = matchWinner;
+    }
+
+    public TeamOutput getTeam(Team team) {
+        return teams.get(team.value() - 1);
     }
 }

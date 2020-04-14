@@ -20,7 +20,7 @@ import java.util.*;
 public class GameManager {
     private SortedMap<Team, TeamDataModel> teams;
     private TeamService teamService;
-    private Stack<Team> historyOfGoals;
+    private GoalHistory historyOfGoals;
     private Stack<Team> historyOfUndo;
     private SetWinVerifier setWinVerifier;
     private Team setWinner;
@@ -28,7 +28,7 @@ public class GameManager {
     @Autowired
     public GameManager(TeamService teamService) {
         this.teamService = teamService;
-        historyOfGoals = new Stack<>();
+        historyOfGoals = new GoalHistory();
         historyOfUndo = new Stack<>();
         setWinVerifier = new SetWinVerifier();
         teams = new TreeMap<>();
@@ -64,7 +64,7 @@ public class GameManager {
 
     private void resetGameValues() {
         setWinner = Team.NO_TEAM;
-        historyOfGoals = new Stack<>();
+        historyOfGoals = new GoalHistory();
         historyOfUndo = new Stack<>();
     }
 
@@ -73,7 +73,7 @@ public class GameManager {
 
         if (setWinner == Team.NO_TEAM) {
             teamDataModel.countGoal();
-            historyOfGoals.push(team);
+            historyOfGoals.rememberLastGoalFrom(team);
 
             if (setWinVerifier.teamWon(teams, team)) {
                 teamDataModel.increaseWonSets();
@@ -83,8 +83,8 @@ public class GameManager {
     }
 
     public void undoGoal() {
-        if (!historyOfGoals.empty()) {
-            Team team = historyOfGoals.pop();
+        if (historyOfGoals.thereAreGoals()) {
+            Team team = historyOfGoals.removeOneGoalFromHistory();
             TeamDataModel lastScoringTeam = teams.get(team);
 
             if (setWinner != Team.NO_TEAM) {
@@ -103,7 +103,7 @@ public class GameManager {
             TeamDataModel teamDataModel = teams.get(team);
 
             teamDataModel.countGoal();
-            historyOfGoals.push(team);
+            historyOfGoals.rememberLastGoalFrom(team);
 
             if (setWinVerifier.teamWon(teams, team)) {
                 teamDataModel.increaseWonSets();
@@ -129,7 +129,7 @@ public class GameManager {
             return null;
         }
 
-        int setWinnerInt = setWinner.getInt();
+        int setWinnerInt = setWinner.value();
 
         return GameDataModelBuilder.buildWithTeamsAndSetWinner(teams, setWinnerInt);
     }
@@ -149,7 +149,7 @@ public class GameManager {
     }
 
     public Stack<Team> getHistoryOfGoals() {
-        return historyOfGoals;
+        return historyOfGoals.getHistoryOfGoals();
     }
 
     public Stack<Team> getHistoryOfUndo() {

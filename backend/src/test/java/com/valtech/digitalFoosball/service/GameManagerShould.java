@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
+import static com.valtech.digitalFoosball.constants.Team.ONE;
+import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static com.valtech.digitalFoosball.helper.constants.TestConstants.TEAM_ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -61,7 +63,7 @@ public class GameManagerShould {
     @Test
     public void sum_up_all_relevant_game_data_in_a_gameDataModel() {
         setUpTeams();
-        raiseScoreOf(Team.ONE, Team.TWO);
+        raiseScoreOf(ONE, TWO);
 
         GameDataModel gameDataModel = gameManager.getGameData();
 
@@ -83,7 +85,7 @@ public class GameManagerShould {
     @Test
     public void delete_the_names_and_set_scores_to_zero() {
         setUpTeams();
-        raiseScoreOf(Team.ONE, Team.TWO);
+        raiseScoreOf(ONE, TWO);
 
         gameManager.resetMatch();
 
@@ -100,23 +102,28 @@ public class GameManagerShould {
     @Test
     public void forget_about_shot_and_undid_goals_from_the_past_match() {
         setUpTeams();
-        raiseScoreOf(Team.ONE);
-        gameManager.undoGoal();
+        raiseScoreOf(ONE);
 
         gameManager.resetMatch();
 
-        Stack<Team> historyOfGoals = gameManager.getHistoryOfGoals();
-        Stack<Team> historyOfUndo = gameManager.getHistoryOfUndo();
-        assertThat(historyOfGoals).isEmpty();
-        assertThat(historyOfUndo).isEmpty();
+        gameManager.undoGoal();
+        GameDataModel gameData = gameManager.getGameData();
+        assertThatThereAreNoGoalsForTeam(ONE, gameData);
+        assertThatThereAreNoGoalsForTeam(TWO, gameData);
+    }
+
+    private void assertThatThereAreNoGoalsForTeam(Team team, GameDataModel gameData) {
+        TeamOutput teamOne = gameData.getTeam(team);
+        int actual = teamOne.getScore();
+        assertThat(actual).isEqualTo(0);
     }
 
     @Test
     public void set_the_match_winner_when_a_team_won_two_sets() {
         setUpTeams();
-        raiseScoreOf(Team.ONE, Team.ONE, Team.ONE, Team.ONE, Team.ONE, Team.ONE);
+        raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
         gameManager.changeover();
-        raiseScoreOf(Team.ONE, Team.ONE, Team.ONE, Team.ONE, Team.ONE, Team.ONE);
+        raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
 
         GameDataModel gameData = gameManager.getGameData();
         int actualMatchWinner = gameData.getMatchWinner();
@@ -127,14 +134,14 @@ public class GameManagerShould {
     @Test
     public void reset_the_scores_to_zero_but_keep_the_names_saved() {
         setUpTeams();
-        raiseScoreOf(Team.ONE, Team.TWO);
+        raiseScoreOf(ONE, TWO);
 
         gameManager.changeover();
 
         Map<Team, TeamDataModel> teamsMap = gameManager.getCurrentTeams();
         ArrayList<TeamDataModel> teams = new ArrayList<>();
-        teams.add(teamsMap.get(Team.ONE));
-        teams.add(teamsMap.get(Team.TWO));
+        teams.add(teamsMap.get(ONE));
+        teams.add(teamsMap.get(TWO));
         assertThat(teams).extracting(TeamDataModel::getScore).containsExactly(0, 0);
         assertThat(teams).extracting(TeamDataModel::getName).containsExactly("T1", "T2");
         assertThat(teams).extracting(TeamDataModel::getNameOfPlayerOne).containsExactly("P1", "P3");
@@ -144,7 +151,7 @@ public class GameManagerShould {
     @Test
     public void forget_about_shot_and_undid_goals_from_the_past_set() {
         setUpTeams();
-        raiseScoreOf(Team.ONE);
+        raiseScoreOf(ONE);
         gameManager.undoGoal();
 
         gameManager.changeover();
