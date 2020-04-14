@@ -10,15 +10,15 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class WinConditionVerifierShould {
-    private WinConditionVerifier winConditionVerifier;
+public class SetWinVerifierShould {
+    private SetWinVerifier setWinVerifier;
     private TeamDataModel teamOne;
     private TeamDataModel teamTwo;
     private Map<Team, TeamDataModel> teams;
 
     @BeforeEach
     void setUp() {
-        winConditionVerifier = new WinConditionVerifier();
+        setWinVerifier = new SetWinVerifier();
         teams = new HashMap<>();
 
         teamOne = new TeamDataModel();
@@ -30,7 +30,7 @@ public class WinConditionVerifierShould {
 
     @Test
     public void show_no_winner_when_no_team_scored_six_goals() {
-        boolean actual = winConditionVerifier.teamWon(teams, Team.ONE);
+        boolean actual = setWinVerifier.teamWon(teams, Team.ONE);
 
         assertThat(actual).isEqualTo(false);
     }
@@ -40,7 +40,7 @@ public class WinConditionVerifierShould {
         countGoalsFor(Team.ONE, Team.ONE, Team.ONE, Team.ONE, Team.ONE);
         countGoalsFor(Team.TWO, Team.TWO, Team.TWO, Team.TWO, Team.TWO, Team.TWO);
 
-        boolean actual = winConditionVerifier.teamWon(teams, Team.ONE);
+        boolean actual = setWinVerifier.teamWon(teams, Team.ONE);
 
         assertThat(actual).isEqualTo(false);
     }
@@ -49,7 +49,7 @@ public class WinConditionVerifierShould {
     public void show_that_the_last_scoring_team_won_when_they_scored_at_least_six_goals_with_a_lead_of_two() {
         countGoalsFor(Team.TWO, Team.TWO, Team.TWO, Team.TWO, Team.TWO, Team.TWO);
 
-        boolean actual = winConditionVerifier.teamWon(teams, Team.TWO);
+        boolean actual = setWinVerifier.teamWon(teams, Team.TWO);
 
         assertThat(actual).isEqualTo(true);
     }

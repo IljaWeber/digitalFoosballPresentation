@@ -7,8 +7,9 @@ import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
+import com.valtech.digitalFoosball.service.verifier.MatchWinVerifier;
+import com.valtech.digitalFoosball.service.verifier.SetWinVerifier;
 import com.valtech.digitalFoosball.service.verifier.UniqueNameVerifier;
-import com.valtech.digitalFoosball.service.verifier.WinConditionVerifier;
 import com.valtech.digitalFoosball.storage.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,12 @@ import java.util.*;
 
 @Service
 public class GameManager {
+    private MatchWinVerifier matchWinVerifier = new MatchWinVerifier();
     private SortedMap<Team, TeamDataModel> teams;
     private TeamService teamService;
     private Stack<Team> historyOfGoals;
     private Stack<Team> historyOfUndo;
-    private WinConditionVerifier winConditionVerifier;
+    private SetWinVerifier setWinVerifier;
     private Team setWinner;
 
     @Autowired
@@ -29,7 +31,7 @@ public class GameManager {
         this.teamService = teamService;
         historyOfGoals = new Stack<>();
         historyOfUndo = new Stack<>();
-        winConditionVerifier = new WinConditionVerifier();
+        setWinVerifier = new SetWinVerifier();
         teams = new TreeMap<>();
     }
 
@@ -74,7 +76,7 @@ public class GameManager {
             teamDataModel.countGoal();
             historyOfGoals.push(team);
 
-            if (winConditionVerifier.teamWon(teams, team)) {
+            if (setWinVerifier.teamWon(teams, team)) {
                 teamDataModel.increaseWonSets();
                 setWinner = team;
             }
@@ -104,7 +106,7 @@ public class GameManager {
             teamDataModel.countGoal();
             historyOfGoals.push(team);
 
-            if (winConditionVerifier.teamWon(teams, team)) {
+            if (setWinVerifier.teamWon(teams, team)) {
                 teamDataModel.increaseWonSets();
                 setWinner = team;
             }
@@ -118,7 +120,7 @@ public class GameManager {
     }
 
     public void changeover() {
-        teams.forEach((teamConstant, dataModel) -> dataModel.resetScore());
+        teams.forEach((teamConstant, dataModel) -> dataModel.changeover());
 
         resetGameValues();
     }
@@ -128,21 +130,24 @@ public class GameManager {
             return null;
         }
 
-        List<TeamOutput> convertedTeams = Converter.convertMapToTeamOutputs(teams);
+        List<TeamOutput> teamOutputs = Converter.convertMapToTeamOutputs(teams);
 
-        GameDataModel currentGameData = new GameDataModel(convertedTeams);
-        int anInt = setWinner.getInt();
-        currentGameData.setWinnerOfSet(anInt);
-        currentGameData.setMatchWinner(getMatchWinner());
+        GameDataModel currentGameData = new GameDataModel(teamOutputs);
+
+        int setWinnerInt = setWinner.getInt();
+        currentGameData.setWinnerOfSet(setWinnerInt);
+
+        int matchWinner = matchWinVerifier.getMatchWinner(teams);
+        currentGameData.setMatchWinner(matchWinner);
 
         return currentGameData;
     }
 
-    public Map<Team, TeamDataModel> getTeams() {
+    public Map<Team, TeamDataModel> getCurrentTeams() {
         return teams;
     }
 
-    public List<TeamOutput> getAllTeams() {
+    public List<TeamOutput> getAllTeamsFromDatabase() {
         List<TeamDataModel> teamDataModels = teamService.getAll();
 
         if (teamDataModels.isEmpty()) {
@@ -150,22 +155,6 @@ public class GameManager {
         }
 
         return Converter.convertListToTeamOutputs(teamDataModels);
-    }
-
-    public int getMatchWinner() {
-        int matchWinner = 0;
-
-        ArrayList<TeamDataModel> teamsList = new ArrayList<>();
-        teamsList.add(teams.get(Team.ONE));
-        teamsList.add(teams.get(Team.TWO));
-
-        for (TeamDataModel team : teamsList) {
-            if (team.getWonSets() >= 2) {
-                return teamsList.indexOf(team) + 1;
-            }
-        }
-
-        return matchWinner;
     }
 
     public Stack<Team> getHistoryOfGoals() {

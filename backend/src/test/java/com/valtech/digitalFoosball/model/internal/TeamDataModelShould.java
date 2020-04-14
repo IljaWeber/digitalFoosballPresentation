@@ -61,7 +61,7 @@ public class TeamDataModelShould {
     public void keep_the_names_and_set_the_score_to_zero_after_resetScore_was_made() {
         teamDataModel.countGoal();
 
-        teamDataModel.resetScore();
+        teamDataModel.changeover();
 
         List<String> actual = convert(teamDataModel);
         assertThat(actual).containsExactly("T1", "P1", "P2");

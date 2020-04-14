@@ -124,7 +124,8 @@ public class GameManagerShould {
         gameManager.changeover();
         raiseScoreOf(Team.ONE, Team.ONE, Team.ONE, Team.ONE, Team.ONE, Team.ONE);
 
-        int actualMatchWinner = gameManager.getMatchWinner();
+        GameDataModel gameData = gameManager.getGameData();
+        int actualMatchWinner = gameData.getMatchWinner();
 
         assertThat(actualMatchWinner).isEqualTo(TEAM_ONE);
     }
@@ -136,7 +137,7 @@ public class GameManagerShould {
 
         gameManager.changeover();
 
-        Map<Team, TeamDataModel> teamsMap = gameManager.getTeams();
+        Map<Team, TeamDataModel> teamsMap = gameManager.getCurrentTeams();
         ArrayList<TeamDataModel> teams = new ArrayList<>();
         teams.add(teamsMap.get(Team.ONE));
         teams.add(teamsMap.get(Team.TWO));
@@ -166,7 +167,7 @@ public class GameManagerShould {
         teamDataModelOne.setName("Roto");
         teamDataModelTwo.setName("Rototo");
 
-        List<TeamOutput> actual = gameManager.getAllTeams();
+        List<TeamOutput> actual = gameManager.getAllTeamsFromDatabase();
 
         assertThat(actual).extracting(TeamOutput::getName).containsExactly("Roto", "Rototo");
     }
@@ -178,7 +179,7 @@ public class GameManagerShould {
                                                       new PlayerService(new PlayerRepositoryFake())));
         gameManager.initGame(initDataModel);
 
-        List<TeamOutput> actual = gameManager.getAllTeams();
+        List<TeamOutput> actual = gameManager.getAllTeamsFromDatabase();
 
         assertThat(actual).isEmpty();
     }

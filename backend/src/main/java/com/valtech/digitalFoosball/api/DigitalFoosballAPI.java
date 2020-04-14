@@ -46,7 +46,7 @@ public class DigitalFoosballAPI {
 
     @GetMapping(path = "/allTeams", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TeamOutput> getAllTeamsStartingWith() {
-        return gameManager.getAllTeams();
+        return gameManager.getAllTeamsFromDatabase();
     }
 
     @PostMapping(path = "/raise", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -5,11 +5,11 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
 import java.util.Map;
 
-public class WinConditionVerifier {
+public class SetWinVerifier {
 
     private final int neededGoals = 6;
     private Map<Team, TeamDataModel> teams;
-    private final int neededDifference = 2;
+    private final int requiredDifference = 2;
 
     public boolean teamWon(Map<Team, TeamDataModel> teams, Team scoringTeam) {
         this.teams = teams;
@@ -32,6 +32,6 @@ public class WinConditionVerifier {
         int currentDifference = scoreTeamOne - scoreTeamTwo;
         int absoluteDifference = Math.abs(currentDifference);
 
-        return absoluteDifference >= neededDifference;
+        return absoluteDifference >= requiredDifference;
     }
 }

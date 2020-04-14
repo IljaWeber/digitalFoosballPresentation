@@ -14,7 +14,7 @@ public class GameDataExtractor {
     }
 
     public int extractScoreOf(Team team) {
-        Map<Team, TeamDataModel> teams = gameManager.getTeams();
+        Map<Team, TeamDataModel> teams = gameManager.getCurrentTeams();
         TeamDataModel teamDataModel = teams.get(team);
 
         int score = teamDataModel.getScore();
@@ -23,7 +23,7 @@ public class GameDataExtractor {
     }
 
     public int extractNumberOfWonSetsOf(Team team) {
-        Map<Team, TeamDataModel> teams = gameManager.getTeams();
+        Map<Team, TeamDataModel> teams = gameManager.getCurrentTeams();
         TeamDataModel teamDataModel = teams.get(team);
 
         int setWins = teamDataModel.getWonSets();

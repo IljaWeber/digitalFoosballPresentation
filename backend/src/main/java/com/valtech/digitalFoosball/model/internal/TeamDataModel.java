@@ -86,7 +86,7 @@ public class TeamDataModel {
         score--;
     }
 
-    public void resetScore() {
+    public void changeover() {
         score = 0;
     }
 
