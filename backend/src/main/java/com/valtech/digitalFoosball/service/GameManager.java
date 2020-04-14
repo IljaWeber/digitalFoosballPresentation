@@ -129,17 +129,21 @@ public class GameManager {
     }
 
     public void resetMatch() {
-        teams.forEach((k, v) -> v.resetValues());
-        setWinner = Team.NO_TEAM;
+        teams.forEach((teamConstant, dataModel) -> dataModel.resetValues());
 
-        resetHistories();
+        newRound();
     }
 
     public void changeover() {
-        teams.forEach((k, v) -> v.resetScore());
-        setWinner = Team.NO_TEAM;
+        teams.forEach((teamConstant, dataModel) -> dataModel.resetScore());
 
-        resetHistories();
+        newRound();
+    }
+
+    private void newRound() {
+        setWinner = Team.NO_TEAM;
+        historyOfGoals = new Stack<>();
+        historyOfUndo = new Stack<>();
     }
 
     public GameDataModel getGameData() {
@@ -185,11 +189,6 @@ public class GameManager {
         }
 
         return matchWinner;
-    }
-
-    private void resetHistories() {
-        historyOfGoals = new Stack<>();
-        historyOfUndo = new Stack<>();
     }
 
     public Stack<Team> getHistoryOfGoals() {
