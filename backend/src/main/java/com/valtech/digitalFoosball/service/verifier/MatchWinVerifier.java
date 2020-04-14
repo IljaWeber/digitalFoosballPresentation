@@ -24,7 +24,7 @@ public class MatchWinVerifier {
         TeamDataModel teamDataModel = teams.get(team);
 
         if (winConditionFulfilled(teamDataModel)) {
-            matchWinner = team.value();
+            matchWinner = team.hardwareValue();
         }
     }
 

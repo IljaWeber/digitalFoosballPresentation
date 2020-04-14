@@ -46,6 +46,6 @@ public class GameDataModel {
     }
 
     public TeamOutput getTeam(Team team) {
-        return teams.get(team.value() - 1);
+        return teams.get(team.listAssociationNumber());
     }
 }

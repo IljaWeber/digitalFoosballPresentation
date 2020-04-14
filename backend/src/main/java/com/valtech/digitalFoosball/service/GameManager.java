@@ -20,18 +20,18 @@ import java.util.*;
 public class GameManager {
     private SortedMap<Team, TeamDataModel> teams;
     private TeamService teamService;
-    private GoalHistory historyOfGoals;
-    private Stack<Team> historyOfUndo;
+    private GoalHistory goalHistory;
+    private UndoHistory undoHistory;
     private SetWinVerifier setWinVerifier;
     private Team setWinner;
 
     @Autowired
     public GameManager(TeamService teamService) {
         this.teamService = teamService;
-        historyOfGoals = new GoalHistory();
-        historyOfUndo = new Stack<>();
+        goalHistory = new GoalHistory();
         setWinVerifier = new SetWinVerifier();
         teams = new TreeMap<>();
+        undoHistory = new UndoHistory();
     }
 
     public void initGame(InitDataModel initDataModel) {
@@ -64,16 +64,16 @@ public class GameManager {
 
     private void resetGameValues() {
         setWinner = Team.NO_TEAM;
-        historyOfGoals = new GoalHistory();
-        historyOfUndo = new Stack<>();
+        goalHistory = new GoalHistory();
+        undoHistory = new UndoHistory();
     }
 
     public void countGoalFor(Team team) {
         TeamDataModel teamDataModel = teams.get(team);
 
-        if (setWinner == Team.NO_TEAM) {
+        if (setHasNoWinner()) {
             teamDataModel.countGoal();
-            historyOfGoals.rememberLastGoalFrom(team);
+            goalHistory.rememberLastGoalFrom(team);
 
             if (setWinVerifier.teamWon(teams, team)) {
                 teamDataModel.increaseWonSets();
@@ -82,9 +82,13 @@ public class GameManager {
         }
     }
 
+    private boolean setHasNoWinner() {
+        return setWinner == Team.NO_TEAM;
+    }
+
     public void undoGoal() {
-        if (historyOfGoals.thereAreGoals()) {
-            Team team = historyOfGoals.removeOneGoalFromHistory();
+        if (goalHistory.thereAreGoals()) {
+            Team team = goalHistory.removeOneGoalFromHistory();
             TeamDataModel lastScoringTeam = teams.get(team);
 
             if (setWinner != Team.NO_TEAM) {
@@ -93,17 +97,18 @@ public class GameManager {
             }
 
             lastScoringTeam.decreaseScore();
-            historyOfUndo.push(team);
+
+            undoHistory.rememberUndoneGoal(team);
         }
     }
 
     public void redoGoal() {
-        if (!historyOfUndo.empty()) {
-            Team team = historyOfUndo.pop();
+        if (undoHistory.hasUndoneGoals()) {
+            Team team = undoHistory.removeUndoneGoal();
             TeamDataModel teamDataModel = teams.get(team);
 
             teamDataModel.countGoal();
-            historyOfGoals.rememberLastGoalFrom(team);
+            goalHistory.rememberLastGoalFrom(team);
 
             if (setWinVerifier.teamWon(teams, team)) {
                 teamDataModel.increaseWonSets();
@@ -126,10 +131,10 @@ public class GameManager {
 
     public GameDataModel getGameData() {
         if (teams.isEmpty()) {
-            return null;
+            return new GameDataModel();
         }
 
-        int setWinnerInt = setWinner.value();
+        int setWinnerInt = setWinner.hardwareValue();
 
         return GameDataModelBuilder.buildWithTeamsAndSetWinner(teams, setWinnerInt);
     }
@@ -148,11 +153,11 @@ public class GameManager {
         return Converter.convertListToTeamOutputs(teamDataModels);
     }
 
-    public Stack<Team> getHistoryOfGoals() {
-        return historyOfGoals.getHistoryOfGoals();
+    public Stack<Team> getGoalHistory() {
+        return goalHistory.getHistoryOfGoals();
     }
 
     public Stack<Team> getHistoryOfUndo() {
-        return historyOfUndo;
+        return undoHistory.getHistoryOfUndo();
     }
 }
