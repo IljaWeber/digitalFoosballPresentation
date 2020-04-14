@@ -9,29 +9,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UniqueNameVerifier {
-    public UniqueNameVerifier() {
-    }
 
-    public void checkForDuplicateNames(InitDataModel initDataModel) {
-        List<String> playerNames = new ArrayList<>();
-        List<String> teamNames = new ArrayList<>();
+    private static List<String> processedPlayerNames;
+    private static List<String> processedTeamNames;
+
+    public static void checkForDuplicateNames(InitDataModel initDataModel) {
+        processedPlayerNames = new ArrayList<>();
+        processedTeamNames = new ArrayList<>();
 
         for (TeamDataModel team : initDataModel.getTeams()) {
+            String teamName = team.getName();
 
-            if (teamNames.contains(team.getName())) {
-                throw new NameDuplicateException(team.getName());
-            }
+            checkName(teamName, processedTeamNames);
 
-            teamNames.add(team.getName());
+            processedTeamNames.add(teamName);
 
-            for (PlayerDataModel player : team.getPlayers()) {
+            checkPlayerNames(team);
+        }
+    }
 
-                if (playerNames.contains(player.getName())) {
-                    throw new NameDuplicateException(player.getName());
-                }
+    private static void checkPlayerNames(TeamDataModel team) {
+        for (PlayerDataModel player : team.getPlayers()) {
+            String playerName = player.getName();
 
-                playerNames.add(player.getName());
-            }
+            checkName(playerName, processedPlayerNames);
+
+            processedPlayerNames.add(playerName);
+        }
+    }
+
+    private static void checkName(String name, List<String> names) {
+        if (names.contains(name)) {
+            throw new NameDuplicateException(name);
         }
     }
 }

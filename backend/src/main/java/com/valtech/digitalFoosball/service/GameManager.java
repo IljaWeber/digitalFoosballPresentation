@@ -17,7 +17,6 @@ import java.util.*;
 
 @Service
 public class GameManager {
-    private final UniqueNameVerifier uniqueNameVerifier = new UniqueNameVerifier();
     private SortedMap<Team, TeamDataModel> teams;
     private TeamService teamService;
     private Stack<Team> historyOfGoals;
@@ -37,7 +36,7 @@ public class GameManager {
     }
 
     public void initGame(InitDataModel initDataModel) {
-        uniqueNameVerifier.checkForDuplicateNames(initDataModel);
+        UniqueNameVerifier.checkForDuplicateNames(initDataModel);
 
         prepareAndStartMatch(initDataModel);
     }
