@@ -16,7 +16,7 @@ import java.util.*;
 
 @Service
 public class GameManager {
-    private Map<Team, TeamDataModel> teams;
+    private SortedMap<Team, TeamDataModel> teams;
     private TeamService teamService;
     private Stack<Team> historyOfGoals;
     private Stack<Team> historyOfUndo;
@@ -31,7 +31,7 @@ public class GameManager {
         converter = new Converter();
         historyOfUndo = new Stack<>();
         winConditionVerifier = new WinConditionVerifier();
-        teams = new HashMap<>();
+        teams = new TreeMap<>();
     }
 
     public void initGame(InitDataModel initDataModel) {
