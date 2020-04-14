@@ -8,7 +8,6 @@ import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
-import com.valtech.digitalFoosball.service.verifier.MatchWinVerifier;
 import com.valtech.digitalFoosball.service.verifier.SetWinVerifier;
 import com.valtech.digitalFoosball.service.verifier.UniqueNameVerifier;
 import com.valtech.digitalFoosball.storage.TeamService;
@@ -19,7 +18,6 @@ import java.util.*;
 
 @Service
 public class GameManager {
-    private MatchWinVerifier matchWinVerifier = new MatchWinVerifier();
     private SortedMap<Team, TeamDataModel> teams;
     private TeamService teamService;
     private Stack<Team> historyOfGoals;

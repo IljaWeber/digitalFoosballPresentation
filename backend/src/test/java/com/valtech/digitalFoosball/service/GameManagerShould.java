@@ -1,5 +1,6 @@
 package com.valtech.digitalFoosball.service;
 
+import com.valtech.digitalFoosball.builders.InitDataModelBuilder;
 import com.valtech.digitalFoosball.builders.TeamDataModelBuilder;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
@@ -22,13 +23,12 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.groups.Tuple.tuple;
 
 public class GameManagerShould {
+    private final UUID id = UUID.randomUUID();
     public GameManager gameManager;
     protected InitDataModel initDataModel;
-    private final UUID id = UUID.randomUUID();
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
     private TeamDataModelBuilder teamDataModelBuilder;
-
 
     public GameManagerShould() {
         teamDataModelBuilder = new TeamDataModelBuilder();
@@ -41,12 +41,9 @@ public class GameManagerShould {
     }
 
     private void setUpTeams() {
-        List<TeamDataModel> teamDataModels = new ArrayList<>();
         teamDataModelOne = teamDataModelBuilder.buildWithNames("T1", "P1", "P2");
         teamDataModelTwo = teamDataModelBuilder.buildWithNames("T2", "P3", "P4");
-        teamDataModels.add(teamDataModelOne);
-        teamDataModels.add(teamDataModelTwo);
-        initDataModel.setTeams(teamDataModels);
+        initDataModel = InitDataModelBuilder.buildWithTeams(teamDataModelOne, teamDataModelTwo);
         gameManager.initGame(initDataModel);
     }
 
@@ -54,10 +51,7 @@ public class GameManagerShould {
     public void throw_name_duplicate_exception_when_a_name_is_used_twice() {
         teamDataModelOne = teamDataModelBuilder.buildWithNames("T1", "P1", "P2");
         teamDataModelTwo = teamDataModelBuilder.buildWithNames("T2", "P3", "P1");
-        List<TeamDataModel> teamDataModels = new ArrayList<>();
-        teamDataModels.add(teamDataModelOne);
-        teamDataModels.add(teamDataModelTwo);
-        initDataModel.setTeams(teamDataModels);
+        initDataModel = InitDataModelBuilder.buildWithTeams(teamDataModelOne, teamDataModelTwo);
 
         assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> {
             gameManager.initGame(initDataModel);
@@ -175,8 +169,12 @@ public class GameManagerShould {
     @Test
     public void load_nothing_when_there_are_no_teams_starting_with_given_letters() {
         setUpTeams();
-        gameManager = new GameManager(new TeamService(new TeamRepositoryFakeTwo(id),
-                                                      new PlayerService(new PlayerRepositoryFake())));
+        TeamRepositoryFakeTwo teamRepository = new TeamRepositoryFakeTwo(id);
+        PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
+        PlayerService playerService = new PlayerService(playerRepository);
+        TeamService teamService = new TeamService(teamRepository,
+                                                  playerService);
+        gameManager = new GameManager(teamService);
         gameManager.initGame(initDataModel);
 
         List<TeamOutput> actual = gameManager.getAllTeamsFromDatabase();
@@ -259,7 +257,6 @@ public class GameManagerShould {
             teamDataModels.add(teamDataModelOne);
             teamDataModels.add(teamDataModelTwo);
 
-
             return teamDataModels;
         }
     }
@@ -276,7 +273,6 @@ public class GameManagerShould {
 
             return s;
         }
-
 
         @Override
         public <S extends PlayerDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
