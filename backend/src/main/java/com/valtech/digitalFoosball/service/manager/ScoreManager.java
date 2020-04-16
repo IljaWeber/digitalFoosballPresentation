@@ -7,7 +7,6 @@ import com.valtech.digitalFoosball.service.histories.UndoHistory;
 import com.valtech.digitalFoosball.service.verifier.SetWinVerifier;
 
 import java.util.SortedMap;
-import java.util.Stack;
 import java.util.TreeMap;
 
 public class ScoreManager {
@@ -87,13 +86,5 @@ public class ScoreManager {
 
     public Team getSetWinner() {
         return setWinner;
-    }
-
-    public Stack<Team> getHistoryOfGoals() {
-        return goalHistory.getHistoryOfGoals();
-    }
-
-    public Stack<Team> getHistoryOfUndo() {
-        return undoHistory.getHistoryOfUndo();
     }
 }

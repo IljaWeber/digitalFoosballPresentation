@@ -2,7 +2,7 @@ package com.valtech.digitalFoosball.model.output;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.service.Converter;
+import com.valtech.digitalFoosball.service.converter.Converter;
 import com.valtech.digitalFoosball.service.verifier.MatchWinVerifier;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.service;
+package com.valtech.digitalFoosball.service.converter;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;

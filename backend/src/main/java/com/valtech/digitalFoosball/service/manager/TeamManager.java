@@ -3,7 +3,7 @@ package com.valtech.digitalFoosball.service.manager;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
-import com.valtech.digitalFoosball.service.Converter;
+import com.valtech.digitalFoosball.service.converter.Converter;
 import com.valtech.digitalFoosball.service.verifier.UniqueNameVerifier;
 import com.valtech.digitalFoosball.storage.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
