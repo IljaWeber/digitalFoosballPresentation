@@ -1,7 +1,5 @@
-package com.valtech.digitalFoosball.service;
+package com.valtech.digitalFoosball.service.manager;
 
-import com.valtech.digitalFoosball.builders.InitDataModelBuilder;
-import com.valtech.digitalFoosball.builders.TeamDataModelBuilder;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
@@ -13,14 +11,14 @@ import com.valtech.digitalFoosball.storage.PlayerService;
 import com.valtech.digitalFoosball.storage.TeamService;
 import com.valtech.digitalFoosball.storage.repository.PlayerRepository;
 import com.valtech.digitalFoosball.storage.repository.TeamRepository;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-import static com.valtech.digitalFoosball.constants.Team.ONE;
-import static com.valtech.digitalFoosball.constants.Team.TWO;
-import static com.valtech.digitalFoosball.helper.constants.TestConstants.TEAM_ONE;
+import static com.valtech.digitalFoosball.constants.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.groups.Tuple.tuple;
@@ -31,10 +29,8 @@ public class GameManagerShould {
     protected InitDataModel initDataModel;
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
-    private TeamDataModelBuilder teamDataModelBuilder;
 
     public GameManagerShould() {
-        teamDataModelBuilder = new TeamDataModelBuilder();
         initDataModel = new InitDataModel();
         TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
         PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
@@ -44,17 +40,17 @@ public class GameManagerShould {
     }
 
     private void setUpTeams() {
-        teamDataModelOne = teamDataModelBuilder.buildWithNames("T1", "P1", "P2");
-        teamDataModelTwo = teamDataModelBuilder.buildWithNames("T2", "P3", "P4");
-        initDataModel = InitDataModelBuilder.buildWithTeams(teamDataModelOne, teamDataModelTwo);
+        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
+        teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
+        initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
         gameManager.initGame(initDataModel);
     }
 
     @Test
     public void throw_name_duplicate_exception_when_a_name_is_used_twice() {
-        teamDataModelOne = teamDataModelBuilder.buildWithNames("T1", "P1", "P2");
-        teamDataModelTwo = teamDataModelBuilder.buildWithNames("T2", "P3", "P1");
-        initDataModel = InitDataModelBuilder.buildWithTeams(teamDataModelOne, teamDataModelTwo);
+        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
+        teamDataModelTwo = new TeamDataModel("T2", "P3", "P1");
+        initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
 
         assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> {
             gameManager.initGame(initDataModel);
@@ -77,11 +73,16 @@ public class GameManagerShould {
                 tuple("T2", "P3", "P4", 1));
     }
 
-    @Ignore("TODO: define nothing as empty gameDataModel")
     @Test
-    public void return_nothing_when_no_teams_are_set_up() {
+    public void return_empty_model_when_no_teams_are_set_up() {
         GameDataModel actual = gameManager.getGameData();
-        assertThat(actual).isNull();
+
+        List<TeamOutput> teams = actual.getTeams();
+        Team matchWinner = actual.getMatchWinner();
+        Team winnerOfSet = actual.getWinnerOfSet();
+        assertThat(teams).isEmpty();
+        assertThat(matchWinner).isEqualTo(NO_TEAM);
+        assertThat(winnerOfSet).isEqualTo(NO_TEAM);
     }
 
     @Test
@@ -128,9 +129,9 @@ public class GameManagerShould {
         raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
 
         GameDataModel gameData = gameManager.getGameData();
-        int actualMatchWinner = gameData.getMatchWinner();
+        Team actualMatchWinner = gameData.getMatchWinner();
 
-        assertThat(actualMatchWinner).isEqualTo(TEAM_ONE);
+        assertThat(actualMatchWinner).isEqualTo(ONE);
     }
 
     @Test
@@ -140,28 +141,42 @@ public class GameManagerShould {
 
         gameManager.changeover();
 
-        Map<Team, TeamDataModel> teamsMap = gameManager.getCurrentTeams();
-        ArrayList<TeamDataModel> teams = new ArrayList<>();
-        teams.add(teamsMap.get(ONE));
-        teams.add(teamsMap.get(TWO));
-        assertThat(teams).extracting(TeamDataModel::getScore).containsExactly(0, 0);
-        assertThat(teams).extracting(TeamDataModel::getName).containsExactly("T1", "T2");
-        assertThat(teams).extracting(TeamDataModel::getNameOfPlayerOne).containsExactly("P1", "P3");
-        assertThat(teams).extracting(TeamDataModel::getNameOfPlayerTwo).containsExactly("P2", "P4");
+        GameDataModel gameData = gameManager.getGameData();
+        List<TeamOutput> teams = gameData.getTeams();
+        assertThat(teams).extracting(TeamOutput::getScore).containsExactly(0, 0);
+        assertThat(teams).extracting(TeamOutput::getName).containsExactly("T1", "T2");
+        assertThat(teams).extracting(TeamOutput::getPlayerOne).containsExactly("P1", "P3");
+        assertThat(teams).extracting(TeamOutput::getPlayerTwo).containsExactly("P2", "P4");
     }
 
     @Test
-    public void forget_about_shot_and_undid_goals_from_the_past_set() {
+    public void forget_about_shot_goals_from_the_past_set() {
         setUpTeams();
         raiseScoreOf(ONE);
         gameManager.undoGoal();
-
         gameManager.changeover();
 
-        Stack<Team> historyOfGoals = gameManager.getGoalHistory();
-        Stack<Team> historyOfUndo = gameManager.getHistoryOfUndo();
-        assertThat(historyOfGoals).isEmpty();
-        assertThat(historyOfUndo).isEmpty();
+        gameManager.undoGoal();
+
+        GameDataModel gameData = gameManager.getGameData();
+        TeamOutput team = gameData.getTeam(ONE);
+        int actual = team.getScore();
+        assertThat(actual).isEqualTo(0);
+    }
+
+    @Test
+    public void forget_about_undid_goals_from_the_past_set() {
+        setUpTeams();
+        raiseScoreOf(ONE);
+        gameManager.undoGoal();
+        gameManager.changeover();
+
+        gameManager.redoGoal();
+
+        GameDataModel gameData = gameManager.getGameData();
+        TeamOutput team = gameData.getTeam(ONE);
+        int actual = team.getScore();
+        assertThat(actual).isEqualTo(0);
     }
 
     @Test

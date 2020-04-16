@@ -5,33 +5,32 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
 import java.util.Map;
 
+import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
+
 public class MatchWinVerifier {
 
-    private int matchWinner;
+    private Team matchWinner;
     private Map<Team, TeamDataModel> teams;
 
-    public int getMatchWinner(Map<Team, TeamDataModel> teams) {
+    public Team getMatchWinner(Map<Team, TeamDataModel> teams) {
         this.teams = teams;
 
-        matchWinner = 0;
+        matchWinner = NO_TEAM;
 
-        teams.forEach((team, dataModel) -> checkForMatchWin(team));
+        teams.forEach((team, dataModel) -> checkForWin(team));
 
         return matchWinner;
     }
 
-    private void checkForMatchWin(Team team) {
+    private void checkForWin(Team team) {
         TeamDataModel teamDataModel = teams.get(team);
 
-        if (winConditionFulfilled(teamDataModel)) {
-            matchWinner = team.hardwareValue();
-        }
-    }
-
-    private boolean winConditionFulfilled(TeamDataModel teamDataModel) {
         int requiredSetWins = 2;
         int actualWonSets = teamDataModel.getWonSets();
 
-        return actualWonSets >= requiredSetWins;
+        if (actualWonSets >= requiredSetWins) {
+            matchWinner = team;
+        }
     }
+
 }

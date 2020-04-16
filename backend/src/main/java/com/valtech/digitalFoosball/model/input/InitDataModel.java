@@ -9,6 +9,14 @@ public class InitDataModel {
     private TeamDataModel teamOne;
     private TeamDataModel teamTwo;
 
+    public InitDataModel() {
+    }
+
+    public InitDataModel(TeamDataModel teamDataModelOne, TeamDataModel teamDataModelTwo) {
+        teamOne = teamDataModelOne;
+        teamTwo = teamDataModelTwo;
+    }
+
     public List<TeamDataModel> getTeams() {
         return Arrays.asList(teamOne, teamTwo);
     }
@@ -34,7 +42,7 @@ public class InitDataModel {
         this.teamTwo = teamTwo;
     }
 
-    public String toString(){
+    public String toString() {
         return teamOne.toString() + "; " + teamTwo.toString();
     }
 }

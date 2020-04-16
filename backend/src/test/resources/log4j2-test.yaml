@@ -18,7 +18,7 @@ Configuration:
 
   Loggers:
     logger:
-      - name: com.valtech.digitalFoosball.service.GameManager
+      - name: com.valtech.digitalFoosball.service.manager.GameManager
         level: info
         additivity: false
         AppenderRef:

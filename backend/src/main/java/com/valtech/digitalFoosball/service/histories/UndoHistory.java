@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.service;
+package com.valtech.digitalFoosball.service.histories;
 
 import com.valtech.digitalFoosball.constants.Team;
 
@@ -11,15 +11,15 @@ public class UndoHistory {
         historyOfUndo = new Stack<>();
     }
 
-    Team rememberUndoneGoal(Team team) {
+    public Team rememberUndoneGoal(Team team) {
         return historyOfUndo.push(team);
     }
 
-    Team removeUndoneGoal() {
+    public Team removeUndoneGoal() {
         return historyOfUndo.pop();
     }
 
-    boolean hasUndoneGoals() {
+    public boolean hasUndoneGoals() {
         return !historyOfUndo.empty();
     }
 

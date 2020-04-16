@@ -3,7 +3,7 @@ package com.valtech.digitalFoosball.constants;
 public enum Team {
     ONE(1, 0),
     TWO(2, 1),
-    NO_TEAM(3, -1);
+    NO_TEAM(0, 999);
 
     private int hardwareAssociationNumber;
     private int listAssociationNumber;
@@ -27,5 +27,13 @@ public enum Team {
 
     public int listAssociationNumber() {
         return listAssociationNumber;
+    }
+
+    public Team getOpponent() {
+        if (hardwareAssociationNumber == 1) {
+            return TWO;
+        } else {
+            return ONE;
+        }
     }
 }

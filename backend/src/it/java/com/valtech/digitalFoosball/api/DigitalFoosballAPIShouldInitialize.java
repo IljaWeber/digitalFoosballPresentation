@@ -1,6 +1,7 @@
 package com.valtech.digitalFoosball.api;
 
 import com.valtech.digitalFoosball.Application;
+import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -53,13 +54,15 @@ public class DigitalFoosballAPIShouldInitialize {
         teams.add(teamTwo);
 
         expectedValues.setTeams(teams);
+        expectedValues.setWinnerOfSet(Team.NO_TEAM);
+        expectedValues.setMatchWinner(Team.NO_TEAM);
 
         expectedResponseBody = mapper.writeValueAsString(expectedValues);
 
         result = mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/initAdHoc").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
+                        .andExpect(status().isOk())
+                        .andReturn();
     }
 
     @Test

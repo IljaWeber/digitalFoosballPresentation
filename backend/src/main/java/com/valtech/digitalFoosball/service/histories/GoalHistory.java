@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.service;
+package com.valtech.digitalFoosball.service.histories;
 
 import com.valtech.digitalFoosball.constants.Team;
 
@@ -12,7 +12,7 @@ public class GoalHistory {
         historyOfGoals = new Stack<>();
     }
 
-    void rememberLastGoalFrom(Team team) {
+    public void rememberLastGoalFrom(Team team) {
         historyOfGoals.push(team);
     }
 

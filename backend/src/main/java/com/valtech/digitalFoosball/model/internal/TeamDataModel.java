@@ -1,11 +1,14 @@
 package com.valtech.digitalFoosball.model.internal;
 
+import com.valtech.digitalFoosball.constants.Team;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+
+import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
 @Entity(name = "team")
 public class TeamDataModel {
@@ -28,10 +31,22 @@ public class TeamDataModel {
 
     private int wonMatches;
 
+    private Team team;
+
     public TeamDataModel() {
         players = Arrays.asList(new PlayerDataModel(), new PlayerDataModel());
         name = "";
         score = 0;
+        team = NO_TEAM;
+    }
+
+    public TeamDataModel(String teamName, String playerOne, String playerTwo) {
+        players = Arrays.asList(new PlayerDataModel(), new PlayerDataModel());
+        score = 0;
+        name = teamName;
+        team = NO_TEAM;
+        setNameOfPlayerOne(playerOne);
+        setNameOfPlayerTwo(playerTwo);
     }
 
     public String getName() {
@@ -54,12 +69,12 @@ public class TeamDataModel {
         return players.get(0).getName();
     }
 
-    public String getNameOfPlayerTwo() {
-        return players.get(1).getName();
-    }
-
     public void setNameOfPlayerOne(String name) {
         players.get(0).setName(name);
+    }
+
+    public String getNameOfPlayerTwo() {
+        return players.get(1).getName();
     }
 
     public void setNameOfPlayerTwo(String name) {
@@ -121,5 +136,17 @@ public class TeamDataModel {
 
     public int getWonMatches() {
         return wonMatches;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public boolean isTeam(Team team) {
+        return this.team == team;
     }
 }

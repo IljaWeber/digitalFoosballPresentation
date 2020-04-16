@@ -1,24 +1,37 @@
 package com.valtech.digitalFoosball.model.output;
 
 import com.valtech.digitalFoosball.constants.Team;
+import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import com.valtech.digitalFoosball.service.Converter;
+import com.valtech.digitalFoosball.service.verifier.MatchWinVerifier;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GameDataModel {
 
     private List<TeamOutput> teams;
 
-    private int winnerOfSet;
+    private Team winnerOfSet;
 
-    private int matchWinner;
+    private Team matchWinner;
 
     public GameDataModel() {
-        teams = Arrays.asList(new TeamOutput(), new TeamOutput());
+        teams = new ArrayList<>();
+        winnerOfSet = Team.NO_TEAM;
+        matchWinner = Team.NO_TEAM;
     }
 
-    public GameDataModel(List<TeamOutput> teams) {
-        this.teams = teams;
+    public GameDataModel(Map<Team, TeamDataModel> teams, Team setWinner) {
+        MatchWinVerifier matchWinVerifier = new MatchWinVerifier();
+        List<TeamOutput> teamOutputs = Converter.convertMapToTeamOutputs(teams);
+
+        this.teams = teamOutputs;
+
+        winnerOfSet = setWinner;
+
+        matchWinner = matchWinVerifier.getMatchWinner(teams);
     }
 
     public List<TeamOutput> getTeams() {
@@ -29,19 +42,19 @@ public class GameDataModel {
         this.teams = teams;
     }
 
-    public int getWinnerOfSet() {
+    public Team getWinnerOfSet() {
         return winnerOfSet;
     }
 
-    public void setWinnerOfSet(int winner) {
+    public void setWinnerOfSet(Team winner) {
         this.winnerOfSet = winner;
     }
 
-    public int getMatchWinner() {
+    public Team getMatchWinner() {
         return matchWinner;
     }
 
-    public void setMatchWinner(int matchWinner) {
+    public void setMatchWinner(Team matchWinner) {
         this.matchWinner = matchWinner;
     }
 
