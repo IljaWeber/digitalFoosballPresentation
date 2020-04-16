@@ -7,13 +7,15 @@ import com.valtech.digitalFoosball.service.converter.Converter;
 import com.valtech.digitalFoosball.service.verifier.UniqueNameVerifier;
 import com.valtech.digitalFoosball.storage.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class TeamManager {
 
-    private TeamService teamService;
+    private final TeamService teamService;
 
     @Autowired
     public TeamManager(TeamService teamService) {
