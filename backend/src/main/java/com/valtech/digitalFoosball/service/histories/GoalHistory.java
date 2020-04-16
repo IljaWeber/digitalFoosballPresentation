@@ -23,8 +23,4 @@ public class GoalHistory {
     public boolean thereAreGoals() {
         return !historyOfGoals.empty();
     }
-
-    public Stack<Team> getHistoryOfGoals() {
-        return historyOfGoals;
-    }
 }

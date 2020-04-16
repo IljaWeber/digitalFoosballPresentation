@@ -25,9 +25,8 @@ public class GameDataModel {
 
     public GameDataModel(Map<Team, TeamDataModel> teams, Team setWinner) {
         MatchWinVerifier matchWinVerifier = new MatchWinVerifier();
-        List<TeamOutput> teamOutputs = Converter.convertMapToTeamOutputs(teams);
 
-        this.teams = teamOutputs;
+        this.teams = Converter.convertMapToTeamOutputs(teams);
 
         winnerOfSet = setWinner;
 

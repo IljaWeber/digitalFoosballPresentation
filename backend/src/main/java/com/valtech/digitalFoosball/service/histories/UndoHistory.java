@@ -22,8 +22,4 @@ public class UndoHistory {
     public boolean hasUndoneGoals() {
         return !historyOfUndo.empty();
     }
-
-    public Stack<Team> getHistoryOfUndo() {
-        return historyOfUndo;
-    }
 }
