@@ -8,24 +8,21 @@ import java.util.Map;
 public class SetWinVerifier {
 
     private final int neededGoals = 6;
-    private Map<Team, TeamDataModel> teams;
     private final int requiredDifference = 2;
 
     public boolean teamWon(Map<Team, TeamDataModel> teams, Team scoringTeam) {
-        this.teams = teams;
         TeamDataModel scoringTeamDataModel = teams.get(scoringTeam);
+        TeamDataModel teamOne = teams.get(Team.ONE);
+        TeamDataModel teamTwo = teams.get(Team.TWO);
 
-        return enoughGoals(scoringTeamDataModel) && bigEnoughScoreDifference();
+        return enoughGoals(scoringTeamDataModel) && bigEnoughScoreDifference(teamOne, teamTwo);
     }
 
     private boolean enoughGoals(TeamDataModel team) {
         return team.getScore() >= neededGoals;
     }
 
-    private boolean bigEnoughScoreDifference() {
-        TeamDataModel teamOne = teams.get(Team.ONE);
-        TeamDataModel teamTwo = teams.get(Team.TWO);
-
+    private boolean bigEnoughScoreDifference(TeamDataModel teamOne, TeamDataModel teamTwo) {
         int scoreTeamOne = teamOne.getScore();
         int scoreTeamTwo = teamTwo.getScore();
 
