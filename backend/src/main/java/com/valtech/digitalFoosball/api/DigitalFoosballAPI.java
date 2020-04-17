@@ -10,19 +10,17 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller()
 @RestController()
 @RequestMapping("api")
 public class DigitalFoosballAPI {
 
-    private GameManager gameManager;
-    private SimpMessagingTemplate template;
-    private Logger logger = LogManager.getLogger(DigitalFoosballAPI.class);
+    private final GameManager gameManager;
+    private final SimpMessagingTemplate template;
+    private final Logger logger = LogManager.getLogger(DigitalFoosballAPI.class);
 
     @Autowired
     public DigitalFoosballAPI(GameManager gameManager, SimpMessagingTemplate template) {
@@ -56,12 +54,6 @@ public class DigitalFoosballAPI {
         Team team = Team.getTeamBy(teamNo);
 
         gameManager.countGoalFor(team);
-
-        updateClient();
-    }
-
-    private void updateClient() {
-        template.convertAndSend("/update/score", gameManager.getGameData());
     }
 
     @PostMapping(path = "/newRound", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -36,7 +36,7 @@ public class GameManagerShould {
         PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
         PlayerService playerService = new PlayerService(playerRepository);
         TeamService teamService = new TeamService(teamRepository, playerService);
-        gameManager = new GameManager(teamService);
+//        gameManager = new GameManager(teamService, new );
     }
 
     private void setUpTeams() {
@@ -198,7 +198,7 @@ public class GameManagerShould {
         PlayerService playerService = new PlayerService(playerRepository);
         TeamService teamService = new TeamService(teamRepository,
                                                   playerService);
-        gameManager = new GameManager(teamService);
+//        gameManager = new GameManager(teamService);
         gameManager.initGame(initDataModel);
 
         List<TeamOutput> actual = gameManager.getAllTeamsFromDatabase();
@@ -213,7 +213,7 @@ public class GameManagerShould {
     }
 
     private class TeamRepositoryFake implements TeamRepository {
-        private UUID id;
+        private final UUID id;
 
         public TeamRepositoryFake(UUID id) {
             this.id = id;
@@ -351,7 +351,7 @@ public class GameManagerShould {
     }
 
     private class TeamRepositoryFakeTwo implements TeamRepository {
-        private UUID id;
+        private final UUID id;
 
         public TeamRepositoryFakeTwo(UUID id) {
             this.id = id;

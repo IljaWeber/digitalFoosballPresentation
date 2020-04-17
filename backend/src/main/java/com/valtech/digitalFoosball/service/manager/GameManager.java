@@ -1,5 +1,6 @@
 package com.valtech.digitalFoosball.service.manager;
 
+import com.valtech.digitalFoosball.api.IUpdateClient;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
@@ -18,15 +19,17 @@ import static com.valtech.digitalFoosball.constants.Team.TWO;
 
 @Service
 public class GameManager {
-    private TeamManager teamManager;
-    private ScoreManager scoreManager;
-    private SortedMap<Team, TeamDataModel> teams;
+    private final IUpdateClient clientUpdater;
+    private final TeamManager teamManager;
+    private final ScoreManager scoreManager;
+    private final SortedMap<Team, TeamDataModel> teams;
 
     @Autowired
-    public GameManager(TeamService teamService) {
+    public GameManager(TeamService teamService, IUpdateClient clientUpdater) {
         teamManager = new TeamManager(teamService);
         scoreManager = new ScoreManager();
         teams = new TreeMap<>();
+        this.clientUpdater = clientUpdater;
     }
 
     public List<TeamOutput> getAllTeamsFromDatabase() {
@@ -60,6 +63,7 @@ public class GameManager {
 
     public void countGoalFor(Team team) {
         scoreManager.countGoalFor(team);
+        clientUpdater.updateClientWith(getGameData());
     }
 
     public void undoGoal() {
