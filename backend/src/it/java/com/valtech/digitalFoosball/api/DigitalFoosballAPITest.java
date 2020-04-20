@@ -201,7 +201,7 @@ public class DigitalFoosballAPITest {
         builder = MockMvcRequestBuilders.get("/api/allTeams");
         mockMvc.perform(builder)
                .andExpect(status().isOk())
-               .andExpect(MockMvcResultMatchers.jsonPath("$.[0].name").value("Orange"))
-               .andExpect(MockMvcResultMatchers.jsonPath("$.[1].name").value("Green"));
+               .andExpect(MockMvcResultMatchers.jsonPath("$.[0].name").value("T1"))
+               .andExpect(MockMvcResultMatchers.jsonPath("$.[1].name").value("T2"));
     }
 }

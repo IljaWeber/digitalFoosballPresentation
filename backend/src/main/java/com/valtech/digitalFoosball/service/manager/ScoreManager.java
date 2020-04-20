@@ -5,16 +5,18 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.histories.GoalHistory;
 import com.valtech.digitalFoosball.service.histories.UndoHistory;
 import com.valtech.digitalFoosball.service.verifier.SetWinVerifier;
+import org.springframework.stereotype.Service;
 
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+@Service
 public class ScoreManager {
     private SortedMap<Team, TeamDataModel> teams;
 
     private GoalHistory goalHistory;
     private UndoHistory undoHistory;
-    private SetWinVerifier setWinVerifier;
+    private final SetWinVerifier setWinVerifier;
     private Team setWinner;
 
     public ScoreManager() {

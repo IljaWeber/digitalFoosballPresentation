@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 
 @Controller()
 public class Publisher implements IUpdateClient {
-
     private final SimpMessagingTemplate template;
 
     public Publisher(SimpMessagingTemplate template) {

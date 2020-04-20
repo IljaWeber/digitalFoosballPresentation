@@ -18,7 +18,7 @@ import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static com.valtech.digitalFoosball.constants.Team.TWO;
 
 @Service
-public class GameManager {
+public class GameManager implements IReactToGoals {
     private final IUpdateClient clientUpdater;
     private final TeamManager teamManager;
     private final ScoreManager scoreManager;
@@ -61,6 +61,7 @@ public class GameManager {
         teams.put(team, teamOne);
     }
 
+    @Override
     public void countGoalFor(Team team) {
         scoreManager.countGoalFor(team);
         clientUpdater.updateClientWith(getGameData());
