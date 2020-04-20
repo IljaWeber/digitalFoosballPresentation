@@ -4,7 +4,8 @@ import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
-import com.valtech.digitalFoosball.service.manager.GameManager;
+import com.valtech.digitalFoosball.service.manager.IReactToGoals;
+import com.valtech.digitalFoosball.service.manager.IReactToPlayerCommands;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,31 +18,33 @@ import java.util.List;
 @RequestMapping("api")
 public class DigitalFoosballAPI {
 
-    private final GameManager gameManager;
+    private final IReactToGoals goalPort;
+    private final IReactToPlayerCommands playerCommandPort;
     private final Logger logger = LogManager.getLogger(DigitalFoosballAPI.class);
 
     @Autowired
-    public DigitalFoosballAPI(GameManager gameManager) {
-        this.gameManager = gameManager;
+    public DigitalFoosballAPI(IReactToGoals goalPort, IReactToPlayerCommands playerCommandPort) {
+        this.goalPort = goalPort;
+        this.playerCommandPort = playerCommandPort;
     }
 
     @PostMapping(path = "/init", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameDataModel initGame(@RequestBody InitDataModel initDataModel) {
         logger.info("Sign in: " + initDataModel.toString());
 
-        gameManager.initGame(initDataModel);
+        playerCommandPort.initGame(initDataModel);
 
-        return gameManager.getGameData();
+        return playerCommandPort.getGameData();
     }
 
     @GetMapping(path = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameDataModel getGameData() {
-        return gameManager.getGameData();
+        return playerCommandPort.getGameData();
     }
 
     @GetMapping(path = "/allTeams", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TeamOutput> getAllTeamsStartingWith() {
-        return gameManager.getAllTeamsFromDatabase();
+        return playerCommandPort.getAllTeamsFromDatabase();
     }
 
     @PostMapping(path = "/raise", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,41 +53,41 @@ public class DigitalFoosballAPI {
 
         Team team = Team.getTeamBy(teamNo);
 
-        gameManager.countGoalFor(team);
+        goalPort.countGoalFor(team);
     }
 
     @PostMapping(path = "/newRound", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameDataModel newRound() {
         logger.info("New Round");
 
-        gameManager.changeover();
+        playerCommandPort.changeover();
 
-        return gameManager.getGameData();
+        return playerCommandPort.getGameData();
     }
 
     @PutMapping(path = "/undo", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameDataModel undoLastGoal() {
         logger.info("Undo");
 
-        gameManager.undoGoal();
+        playerCommandPort.undoGoal();
 
-        return gameManager.getGameData();
+        return playerCommandPort.getGameData();
     }
 
     @PutMapping(path = "/redo", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameDataModel redoLastGoal() {
         logger.info("Redo");
 
-        gameManager.redoGoal();
+        playerCommandPort.redoGoal();
 
-        return gameManager.getGameData();
+        return playerCommandPort.getGameData();
     }
 
     @DeleteMapping(path = "/reset", produces = MediaType.APPLICATION_JSON_VALUE)
     public boolean resetGameValues() {
         logger.info("Reset");
 
-        gameManager.resetMatch();
+        playerCommandPort.resetMatch();
 
         return true;
     }
@@ -93,8 +96,8 @@ public class DigitalFoosballAPI {
     public GameDataModel initAdHocGame() {
         logger.info("Ad-Hoc-Game started");
 
-        gameManager.initAdHocGame();
+        playerCommandPort.initAdHocGame();
 
-        return gameManager.getGameData();
+        return playerCommandPort.getGameData();
     }
 }

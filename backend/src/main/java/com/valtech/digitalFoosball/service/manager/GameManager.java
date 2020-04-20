@@ -18,7 +18,7 @@ import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static com.valtech.digitalFoosball.constants.Team.TWO;
 
 @Service
-public class GameManager implements IReactToGoals {
+public class GameManager implements IReactToGoals, IReactToPlayerCommands {
     private final IUpdateClient clientUpdater;
     private final TeamManager teamManager;
     private final ScoreManager scoreManager;
@@ -32,16 +32,19 @@ public class GameManager implements IReactToGoals {
         this.clientUpdater = clientUpdater;
     }
 
+    @Override
     public List<TeamOutput> getAllTeamsFromDatabase() {
         return teamManager.getAllTeamsFromDatabase();
     }
 
+    @Override
     public void initGame(InitDataModel initDataModel) {
         List<TeamDataModel> teamDataModels = teamManager.init(initDataModel);
 
         setUpTeams(teamDataModels);
     }
 
+    @Override
     public void initAdHocGame() {
         List<TeamDataModel> teamDataModels = teamManager.initAdHocGame();
 
@@ -67,26 +70,31 @@ public class GameManager implements IReactToGoals {
         clientUpdater.updateClientWith(getGameData());
     }
 
+    @Override
     public void undoGoal() {
         scoreManager.undoGoal();
     }
 
+    @Override
     public void redoGoal() {
         scoreManager.redoGoal();
     }
 
+    @Override
     public void changeover() {
         teams.forEach((teamConstant, dataModel) -> dataModel.changeover());
 
         scoreManager.resetOldGameValues();
     }
 
+    @Override
     public void resetMatch() {
         teams.forEach((teamConstant, dataModel) -> dataModel.resetValues());
 
         scoreManager.resetOldGameValues();
     }
 
+    @Override
     public GameDataModel getGameData() {
         if (teams.isEmpty()) {
             return new GameDataModel();
