@@ -6,7 +6,7 @@ import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
-import com.valtech.digitalFoosball.storage.TeamService;
+import com.valtech.digitalFoosball.storage.IObtainTeams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +25,8 @@ public class GameManager implements IReactToGoals, IReactToPlayerCommands {
     private final SortedMap<Team, TeamDataModel> teams;
 
     @Autowired
-    public GameManager(TeamService teamService, IUpdateClient clientUpdater) {
-        teamManager = new TeamManager(teamService);
+    public GameManager(IObtainTeams IObtainTeams, IUpdateClient clientUpdater) {
+        teamManager = new TeamManager(IObtainTeams);
         scoreManager = new ScoreManager();
         teams = new TreeMap<>();
         this.clientUpdater = clientUpdater;
@@ -34,7 +34,7 @@ public class GameManager implements IReactToGoals, IReactToPlayerCommands {
 
     @Override
     public List<TeamOutput> getAllTeamsFromDatabase() {
-        return teamManager.getAllTeamsFromDatabase();
+        return teamManager.getAllTeams();
     }
 
     @Override

@@ -13,11 +13,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TeamService {
-    private TeamRepository teamRepository;
-    private PlayerService playerService;
-    private Logger logger = LogManager.getLogger(TeamService.class);
-
+public class TeamService implements IObtainTeams {
+    private final TeamRepository teamRepository;
+    private final PlayerService playerService;
+    private final Logger logger = LogManager.getLogger(TeamService.class);
 
     @Autowired
     public TeamService(TeamRepository teamRepository, PlayerService playerService) {
@@ -25,7 +24,8 @@ public class TeamService {
         this.playerService = playerService;
     }
 
-    public TeamDataModel setUp(TeamDataModel teamDataModel) {
+    @Override
+    public TeamDataModel loadOrSaveIntoDatabase(TeamDataModel teamDataModel) {
         Optional<TeamDataModel> optionalTeamDataModel = teamRepository.findByNameIgnoreCase(teamDataModel.getName());
 
         List<PlayerDataModel> unsetPlayers = teamDataModel.getPlayers();
@@ -59,7 +59,8 @@ public class TeamService {
         return playersFromDatabase;
     }
 
-    public List<TeamDataModel> getAll() {
+    @Override
+    public List<TeamDataModel> getAllTeamsFromDatabase() {
         return teamRepository.findAll();
     }
 }

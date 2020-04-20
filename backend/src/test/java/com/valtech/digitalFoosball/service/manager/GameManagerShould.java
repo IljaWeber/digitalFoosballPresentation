@@ -8,6 +8,7 @@ import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
+import com.valtech.digitalFoosball.storage.IObtainTeams;
 import com.valtech.digitalFoosball.storage.PlayerService;
 import com.valtech.digitalFoosball.storage.TeamService;
 import com.valtech.digitalFoosball.storage.repository.PlayerRepository;
@@ -37,9 +38,9 @@ public class GameManagerShould {
         TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
         PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
         PlayerService playerService = new PlayerService(playerRepository);
-        TeamService teamService = new TeamService(teamRepository, playerService);
+        IObtainTeams IObtainTeams = new TeamService(teamRepository, playerService);
         clientUpdater = new FakeClientUpdates();
-        gameManager = new GameManager(teamService, clientUpdater);
+        gameManager = new GameManager(IObtainTeams, clientUpdater);
     }
 
     private void setUpTeams() {
@@ -199,9 +200,9 @@ public class GameManagerShould {
         TeamRepositoryFakeTwo teamRepository = new TeamRepositoryFakeTwo(id);
         PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
         PlayerService playerService = new PlayerService(playerRepository);
-        TeamService teamService = new TeamService(teamRepository,
-                                                  playerService);
-        gameManager = new GameManager(teamService, clientUpdater);
+        IObtainTeams IObtainTeams = new TeamService(teamRepository,
+                                                    playerService);
+        gameManager = new GameManager(IObtainTeams, clientUpdater);
         gameManager.initGame(initDataModel);
 
         List<TeamOutput> actual = gameManager.getAllTeamsFromDatabase();

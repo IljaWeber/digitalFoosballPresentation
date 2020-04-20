@@ -21,7 +21,7 @@ public class TeamServiceShouldGetAll {
     private TeamRepositoryFake teamRepo;
     private PlayerService playerService;
     private PlayerRepositoryFake playerRepo;
-    private TeamService teamService;
+    private IObtainTeams IObtainTeams;
 
     @BeforeEach
     public void setUp() {
@@ -29,7 +29,7 @@ public class TeamServiceShouldGetAll {
         playerRepo = new PlayerRepositoryFake();
         playerService = new PlayerService(playerRepo);
         data = new TeamDataModel();
-        teamService = new TeamService(teamRepo, playerService);
+        IObtainTeams = new TeamService(teamRepo, playerService);
     }
 
     @Test
@@ -40,21 +40,21 @@ public class TeamServiceShouldGetAll {
         data.setName("Geld");
         expected.add(data);
 
-        List<TeamDataModel> actual = teamService.getAll();
+        List<TeamDataModel> actual = IObtainTeams.getAllTeamsFromDatabase();
 
         assertThat(actual).extracting(TeamDataModel::getName).containsExactly("Gelb", "Geld");
     }
 
     @Test
     public void when_no_teams_were_found_then_load_none() {
-        teamService = new TeamService(new TeamRepositoryFakeTwo(uuid), playerService);
-        List<TeamDataModel> actual = teamService.getAll();
+        IObtainTeams = new TeamService(new TeamRepositoryFakeTwo(uuid), playerService);
+        List<TeamDataModel> actual = IObtainTeams.getAllTeamsFromDatabase();
 
         assertThat(actual).isEmpty();
     }
 
     private class TeamRepositoryFake implements TeamRepository {
-        private UUID id;
+        private final UUID id;
 
         public TeamRepositoryFake(UUID id) {
             this.id = id;
@@ -137,7 +137,7 @@ public class TeamServiceShouldGetAll {
     }
 
     private class TeamRepositoryFakeTwo implements TeamRepository {
-        private UUID id;
+        private final UUID id;
 
         public TeamRepositoryFakeTwo(UUID id) {
             this.id = id;

@@ -20,7 +20,7 @@ public class TeamServiceShould {
     private TeamRepositoryFake teamRepo;
     private PlayerService playerService;
     private PlayerRepositoryFake playerRepo;
-    private TeamService teamService;
+    private IObtainTeams IObtainTeams;
 
     @BeforeEach
     public void setUp() {
@@ -28,7 +28,7 @@ public class TeamServiceShould {
         playerRepo = new PlayerRepositoryFake();
         playerService = new PlayerService(playerRepo);
         data = new TeamDataModel();
-        teamService = new TeamService(teamRepo, playerService);
+        IObtainTeams = new TeamService(teamRepo, playerService);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class TeamServiceShould {
         data.setNameOfPlayerOne("PlayerOne");
         data.setNameOfPlayerTwo("PlayerTwo");
 
-        TeamDataModel teamDataModel = teamService.setUp(data);
+        TeamDataModel teamDataModel = IObtainTeams.loadOrSaveIntoDatabase(data);
         UUID actual = teamDataModel.getId();
 
         assertThat(actual).isEqualTo(uuid);
@@ -49,7 +49,7 @@ public class TeamServiceShould {
         data.setNameOfPlayerOne("y");
         data.setNameOfPlayerTwo("z");
 
-        TeamDataModel teamDataModel = teamService.setUp(data);
+        TeamDataModel teamDataModel = IObtainTeams.loadOrSaveIntoDatabase(data);
         UUID actual = teamDataModel.getId();
 
         assertThat(actual).isEqualTo(uuid);
@@ -61,7 +61,7 @@ public class TeamServiceShould {
         data.setNameOfPlayerOne("y");
         data.setNameOfPlayerTwo("z");
 
-        TeamDataModel actual = teamService.setUp(data);
+        TeamDataModel actual = IObtainTeams.loadOrSaveIntoDatabase(data);
 
         List<PlayerDataModel> players = actual.getPlayers();
         assertThat(players).extracting(PlayerDataModel::getId).containsExactly(uuid, uuid);
@@ -70,7 +70,7 @@ public class TeamServiceShould {
 
 
     private class TeamRepositoryFake implements TeamRepository {
-        private UUID id;
+        private final UUID id;
 
         public TeamRepositoryFake(UUID id) {
             this.id = id;

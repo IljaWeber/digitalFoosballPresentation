@@ -5,7 +5,7 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.converter.Converter;
 import com.valtech.digitalFoosball.service.verifier.UniqueNameVerifier;
-import com.valtech.digitalFoosball.storage.TeamService;
+import com.valtech.digitalFoosball.storage.IObtainTeams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,27 +15,27 @@ import java.util.List;
 @Service
 public class TeamManager {
 
-    private final TeamService teamService;
+    private final IObtainTeams teamDataPort;
 
     @Autowired
-    public TeamManager(TeamService teamService) {
-        this.teamService = teamService;
+    public TeamManager(IObtainTeams teamDataPort) {
+        this.teamDataPort = teamDataPort;
     }
 
     public List<TeamDataModel> init(InitDataModel initDataModel) {
         UniqueNameVerifier uniqueNameVerifier = new UniqueNameVerifier();
         uniqueNameVerifier.checkForDuplicateNames(initDataModel);
 
-        return loadTeamsFromDatabase(initDataModel);
+        return prepare(initDataModel);
     }
 
-    private List<TeamDataModel> loadTeamsFromDatabase(InitDataModel initDataModel) {
+    private List<TeamDataModel> prepare(InitDataModel initDataModel) {
         List<TeamDataModel> teamsFromDatabase = new ArrayList<>();
 
         List<TeamDataModel> teamsList = initDataModel.getTeams();
 
         for (TeamDataModel team : teamsList) {
-            TeamDataModel teamFromDatabase = teamService.setUp(team);
+            TeamDataModel teamFromDatabase = teamDataPort.loadOrSaveIntoDatabase(team);
             teamsFromDatabase.add(teamFromDatabase);
         }
 
@@ -48,11 +48,11 @@ public class TeamManager {
 
         InitDataModel initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
 
-        return loadTeamsFromDatabase(initDataModel);
+        return prepare(initDataModel);
     }
 
-    public List<TeamOutput> getAllTeamsFromDatabase() {
-        List<TeamDataModel> teamDataModels = teamService.getAll();
+    public List<TeamOutput> getAllTeams() {
+        List<TeamDataModel> teamDataModels = teamDataPort.getAllTeamsFromDatabase();
 
         if (teamDataModels.isEmpty()) {
             return new ArrayList<>();
@@ -60,5 +60,4 @@ public class TeamManager {
 
         return Converter.convertListToTeamOutputs(teamDataModels);
     }
-
 }

@@ -3,6 +3,7 @@ package com.valtech.digitalFoosball.service.manager;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import com.valtech.digitalFoosball.storage.IObtainTeams;
 import com.valtech.digitalFoosball.storage.PlayerService;
 import com.valtech.digitalFoosball.storage.TeamService;
 import com.valtech.digitalFoosball.storage.repository.PlayerRepository;
@@ -31,9 +32,9 @@ public class TeamManagerShould {
         PlayerService playerService = new PlayerService(
                 playerRepository);
         TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
-        TeamService teamService = new TeamService(teamRepository,
-                                                  playerService);
-        teamManager = new TeamManager(teamService);
+        IObtainTeams IObtainTeams = new TeamService(teamRepository,
+                                                    playerService);
+        teamManager = new TeamManager(IObtainTeams);
     }
 
     @Test
@@ -48,7 +49,7 @@ public class TeamManagerShould {
     }
 
     private class TeamRepositoryFake implements TeamRepository {
-        private UUID id;
+        private final UUID id;
 
         public TeamRepositoryFake(UUID id) {
             this.id = id;
@@ -186,7 +187,7 @@ public class TeamManagerShould {
     }
 
     private class TeamRepositoryFakeTwo implements TeamRepository {
-        private UUID id;
+        private final UUID id;
 
         public TeamRepositoryFakeTwo(UUID id) {
             this.id = id;
