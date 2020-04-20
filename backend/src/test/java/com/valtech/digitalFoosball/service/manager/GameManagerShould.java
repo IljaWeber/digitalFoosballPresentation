@@ -1,5 +1,6 @@
 package com.valtech.digitalFoosball.service.manager;
 
+import com.valtech.digitalFoosball.api.IUpdateClient;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
@@ -29,6 +30,7 @@ public class GameManagerShould {
     protected InitDataModel initDataModel;
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
+    private final FakeClientUpdates clientUpdater;
 
     public GameManagerShould() {
         initDataModel = new InitDataModel();
@@ -36,7 +38,8 @@ public class GameManagerShould {
         PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
         PlayerService playerService = new PlayerService(playerRepository);
         TeamService teamService = new TeamService(teamRepository, playerService);
-//        gameManager = new GameManager(teamService, new );
+        clientUpdater = new FakeClientUpdates();
+        gameManager = new GameManager(teamService, clientUpdater);
     }
 
     private void setUpTeams() {
@@ -198,7 +201,7 @@ public class GameManagerShould {
         PlayerService playerService = new PlayerService(playerRepository);
         TeamService teamService = new TeamService(teamRepository,
                                                   playerService);
-//        gameManager = new GameManager(teamService);
+        gameManager = new GameManager(teamService, clientUpdater);
         gameManager.initGame(initDataModel);
 
         List<TeamOutput> actual = gameManager.getAllTeamsFromDatabase();
@@ -209,6 +212,13 @@ public class GameManagerShould {
     private void raiseScoreOf(Team... teams) {
         for (Team team : teams) {
             gameManager.countGoalFor(team);
+        }
+    }
+
+    private class FakeClientUpdates implements IUpdateClient {
+
+        @Override
+        public void updateClientWith(GameDataModel gameData) {
         }
     }
 
