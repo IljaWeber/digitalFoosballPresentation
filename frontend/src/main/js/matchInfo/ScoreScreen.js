@@ -41,7 +41,7 @@ export default class ScoreScreen extends React.Component {
                     return (
                         <li className={`team team${index + 1}`} key={index}>
                             <ul className={`score score${index + 1}`}>{team.score}
-                                <li className="roundWins">Won rounds: {team.roundWins}</li>
+                                <li className="roundWins">Won rounds: {team.setWins}</li>
                                 <RaiseButton teamNo={index + 1}/>
                             </ul>
                             <ul className="name">{team.name}</ul>

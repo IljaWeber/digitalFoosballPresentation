@@ -100,10 +100,11 @@ export default class SignInForm extends React.Component {
                         <h2>
                             OR
                         </h2>
-                        <form onSubmit={this.adhoc} className="teamSignInAdHoc">
-                            <input type="submit" value="Ad-Hoc" className="button slowDropIn"/>
-                        </form>
                     </div>
+                </form>
+
+                <form onSubmit={this.adhoc} className="teamSignInAdHoc">
+                    <input type="submit" value="Ad-Hoc" className="button slowDropIn"/>
                 </form>
             </div>
         )
