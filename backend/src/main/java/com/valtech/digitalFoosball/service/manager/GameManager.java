@@ -19,17 +19,17 @@ import static com.valtech.digitalFoosball.constants.Team.TWO;
 
 @Service
 public class GameManager implements IReactToGoals, IReactToPlayerCommands {
-    private final IUpdateClient clientUpdater;
     private final TeamManager teamManager;
     private final ScoreManager scoreManager;
+    private final IUpdateClient clientUpdater;
     private final SortedMap<Team, TeamDataModel> teams;
 
     @Autowired
     public GameManager(IObtainTeams IObtainTeams, IUpdateClient clientUpdater) {
-        teamManager = new TeamManager(IObtainTeams);
-        scoreManager = new ScoreManager();
         teams = new TreeMap<>();
+        scoreManager = new ScoreManager();
         this.clientUpdater = clientUpdater;
+        teamManager = new TeamManager(IObtainTeams);
     }
 
     @Override
