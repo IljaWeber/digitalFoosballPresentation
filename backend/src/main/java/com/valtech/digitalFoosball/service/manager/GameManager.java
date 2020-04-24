@@ -2,6 +2,7 @@ package com.valtech.digitalFoosball.service.manager;
 
 import com.valtech.digitalFoosball.api.IUpdateClient;
 import com.valtech.digitalFoosball.constants.Team;
+import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
@@ -12,21 +13,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.SortedMap;
-import java.util.TreeMap;
-
-import static com.valtech.digitalFoosball.constants.Team.ONE;
-import static com.valtech.digitalFoosball.constants.Team.TWO;
 
 @Service
 public class GameManager implements IReactToGoals, IReactToPlayerCommands {
     private final TeamManager teamManager;
     private final ScoreManager scoreManager;
     private final IUpdateClient clientUpdater;
-    private final SortedMap<Team, TeamDataModel> teams;
+    private GameDataModel gameDataModel;
 
     @Autowired
     public GameManager(IObtainTeams IObtainTeams, IUpdateClient clientUpdater) {
-        teams = new TreeMap<>();
+        gameDataModel = new GameDataModel();
         scoreManager = new ScoreManager();
         this.clientUpdater = clientUpdater;
         teamManager = new TeamManager(IObtainTeams);
@@ -39,69 +36,60 @@ public class GameManager implements IReactToGoals, IReactToPlayerCommands {
 
     @Override
     public void initGame(InitDataModel initDataModel) {
-        List<TeamDataModel> teamDataModels = teamManager.init(initDataModel);
+        gameDataModel = teamManager.init(initDataModel);
 
-        setUpTeams(teamDataModels);
+        scoreManager.resetOldGameValues();
     }
 
     @Override
     public void initAdHocGame() {
-        List<TeamDataModel> teamDataModels = teamManager.initAdHocGame();
+        gameDataModel = teamManager.initAdHocGame();
 
-        setUpTeams(teamDataModels);
-    }
-
-    private void setUpTeams(List<TeamDataModel> teamDataModels) {
-        setUpTeam(ONE, teamDataModels);
-        setUpTeam(TWO, teamDataModels);
-
-        scoreManager.setTeams(teams);
-    }
-
-    private void setUpTeam(Team team, List<TeamDataModel> teamDataModels) {
-        TeamDataModel teamOne = teamDataModels.get(team.listAssociationNumber());
-        teamOne.setTeam(team);
-        teams.put(team, teamOne);
+        scoreManager.resetOldGameValues();
     }
 
     @Override
     public void countGoalFor(Team team) {
-        scoreManager.countGoalFor(team);
+        scoreManager.countGoalFor(team, gameDataModel);
         clientUpdater.updateClientWith(getGameData());
     }
 
     @Override
     public void undoGoal() {
-        scoreManager.undoGoal();
+        scoreManager.undoGoal(gameDataModel);
     }
 
     @Override
     public void redoGoal() {
-        scoreManager.redoGoal();
+        scoreManager.redoGoal(gameDataModel);
     }
 
     @Override
     public void changeover() {
+        SortedMap<Team, TeamDataModel> teams = gameDataModel.getTeams();
         teams.forEach((teamConstant, dataModel) -> dataModel.changeover());
 
         scoreManager.resetOldGameValues();
+        gameDataModel.resetMatch();
     }
 
     @Override
     public void resetMatch() {
+        SortedMap<Team, TeamDataModel> teams = gameDataModel.getTeams();
         teams.forEach((teamConstant, dataModel) -> dataModel.resetValues());
 
         scoreManager.resetOldGameValues();
+        gameDataModel.resetMatch();
     }
 
     @Override
     public GameOutputModel getGameData() {
-        if (teams.isEmpty()) {
+        if (gameDataModel.isEmpty()) {
             return new GameOutputModel();
         }
 
         Team setWinner = scoreManager.getSetWinner();
 
-        return new GameOutputModel(teams, setWinner);
+        return new GameOutputModel(gameDataModel.getTeams(), setWinner);
     }
 }

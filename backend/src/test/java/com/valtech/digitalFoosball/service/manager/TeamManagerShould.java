@@ -1,5 +1,6 @@
 package com.valtech.digitalFoosball.service.manager;
 
+import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
@@ -16,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.valtech.digitalFoosball.constants.Team.ONE;
+import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TeamManagerShould {
@@ -43,9 +46,12 @@ public class TeamManagerShould {
         teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
         InitDataModel initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
 
-        List<TeamDataModel> actualTeams = teamManager.init(initDataModel);
+        GameDataModel gameDataModel = teamManager.init(initDataModel);
+        TeamDataModel teamOne = gameDataModel.getTeam(ONE);
+        TeamDataModel teamTwo = gameDataModel.getTeam(TWO);
 
-        assertThat(actualTeams).containsExactly(teamDataModelOne, teamDataModelTwo);
+        assertThat(teamOne).isEqualTo(teamDataModelOne);
+        assertThat(teamTwo).isEqualTo(teamDataModelTwo);
     }
 
     private class TeamRepositoryFake implements TeamRepository {

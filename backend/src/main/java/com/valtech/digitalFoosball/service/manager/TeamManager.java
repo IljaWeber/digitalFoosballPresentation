@@ -1,5 +1,6 @@
 package com.valtech.digitalFoosball.service.manager;
 
+import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
@@ -22,14 +23,14 @@ public class TeamManager {
         this.teamDataPort = teamDataPort;
     }
 
-    public List<TeamDataModel> init(InitDataModel initDataModel) {
+    public GameDataModel init(InitDataModel initDataModel) {
         UniqueNameVerifier uniqueNameVerifier = new UniqueNameVerifier();
         uniqueNameVerifier.checkForDuplicateNames(initDataModel);
 
         return prepare(initDataModel);
     }
 
-    private List<TeamDataModel> prepare(InitDataModel initDataModel) {
+    private GameDataModel prepare(InitDataModel initDataModel) {
         List<TeamDataModel> teamsFromDatabase = new ArrayList<>();
 
         List<TeamDataModel> teamsList = initDataModel.getTeams();
@@ -39,10 +40,12 @@ public class TeamManager {
             teamsFromDatabase.add(teamFromDatabase);
         }
 
-        return teamsFromDatabase;
+        GameDataModel gameDataModel = new GameDataModel(teamsFromDatabase);
+
+        return gameDataModel;
     }
 
-    public List<TeamDataModel> initAdHocGame() {
+    public GameDataModel initAdHocGame() {
         TeamDataModel teamDataModelOne = new TeamDataModel("Orange", "Goalie", "Striker");
         TeamDataModel teamDataModelTwo = new TeamDataModel("Green", "Goalie", "Striker");
 
