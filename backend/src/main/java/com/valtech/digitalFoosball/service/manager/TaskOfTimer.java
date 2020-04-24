@@ -2,11 +2,11 @@ package com.valtech.digitalFoosball.service.manager;
 
 import java.util.TimerTask;
 
-public class Task extends TimerTask {
+public class TaskOfTimer extends TimerTask {
 
     private final TimeManager timeManager;
 
-    public Task(TimeManager timeManager) {
+    public TaskOfTimer(TimeManager timeManager) {
         this.timeManager = timeManager;
     }
 

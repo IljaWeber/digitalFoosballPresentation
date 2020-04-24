@@ -18,7 +18,7 @@ public class TimeManager {
 
     public void setTimer(long timeDuration) {
         timer = new Timer();
-        timer.schedule(new Task(this), timeDuration);
+        timer.schedule(new TaskOfTimer(this), timeDuration);
     }
 
     public void countGoalFor(Team team) {
