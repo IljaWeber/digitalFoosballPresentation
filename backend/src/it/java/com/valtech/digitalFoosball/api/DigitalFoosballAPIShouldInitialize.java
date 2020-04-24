@@ -2,7 +2,7 @@ package com.valtech.digitalFoosball.api;
 
 import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.model.output.GameDataModel;
+import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +39,7 @@ public class DigitalFoosballAPIShouldInitialize {
         mapper = new ObjectMapper();
         TeamOutput teamOne = new TeamOutput();
         TeamOutput teamTwo = new TeamOutput();
-        GameDataModel expectedValues = new GameDataModel();
+        GameOutputModel expectedValues = new GameOutputModel();
         List<TeamOutput> teams = new ArrayList<>();
 
         teamOne.setName("Orange");

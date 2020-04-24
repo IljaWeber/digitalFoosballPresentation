@@ -4,7 +4,7 @@ import com.valtech.digitalFoosball.api.IUpdateClient;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.model.output.GameDataModel;
+import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.storage.IObtainTeams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,13 +95,13 @@ public class GameManager implements IReactToGoals, IReactToPlayerCommands {
     }
 
     @Override
-    public GameDataModel getGameData() {
+    public GameOutputModel getGameData() {
         if (teams.isEmpty()) {
-            return new GameDataModel();
+            return new GameOutputModel();
         }
 
         Team setWinner = scoreManager.getSetWinner();
 
-        return new GameDataModel(teams, setWinner);
+        return new GameOutputModel(teams, setWinner);
     }
 }

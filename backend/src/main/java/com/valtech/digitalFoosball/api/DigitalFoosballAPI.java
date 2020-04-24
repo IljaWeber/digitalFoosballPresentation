@@ -2,7 +2,7 @@ package com.valtech.digitalFoosball.api;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
-import com.valtech.digitalFoosball.model.output.GameDataModel;
+import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.manager.IReactToGoals;
 import com.valtech.digitalFoosball.service.manager.IReactToPlayerCommands;
@@ -29,7 +29,7 @@ public class DigitalFoosballAPI {
     }
 
     @PostMapping(path = "/init", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GameDataModel initGame(@RequestBody InitDataModel initDataModel) {
+    public GameOutputModel initGame(@RequestBody InitDataModel initDataModel) {
         logger.info("Sign in: " + initDataModel.toString());
 
         playerCommandPort.initGame(initDataModel);
@@ -38,7 +38,7 @@ public class DigitalFoosballAPI {
     }
 
     @GetMapping(path = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GameDataModel getGameData() {
+    public GameOutputModel getGameData() {
         return playerCommandPort.getGameData();
     }
 
@@ -57,7 +57,7 @@ public class DigitalFoosballAPI {
     }
 
     @PostMapping(path = "/newRound", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GameDataModel newRound() {
+    public GameOutputModel newRound() {
         logger.info("New Round");
 
         playerCommandPort.changeover();
@@ -66,7 +66,7 @@ public class DigitalFoosballAPI {
     }
 
     @PutMapping(path = "/undo", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GameDataModel undoLastGoal() {
+    public GameOutputModel undoLastGoal() {
         logger.info("Undo");
 
         playerCommandPort.undoGoal();
@@ -75,7 +75,7 @@ public class DigitalFoosballAPI {
     }
 
     @PutMapping(path = "/redo", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GameDataModel redoLastGoal() {
+    public GameOutputModel redoLastGoal() {
         logger.info("Redo");
 
         playerCommandPort.redoGoal();
@@ -93,7 +93,7 @@ public class DigitalFoosballAPI {
     }
 
     @PostMapping(path = "/initAdHoc", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GameDataModel initAdHocGame() {
+    public GameOutputModel initAdHocGame() {
         logger.info("Ad-Hoc-Game started");
 
         playerCommandPort.initAdHocGame();

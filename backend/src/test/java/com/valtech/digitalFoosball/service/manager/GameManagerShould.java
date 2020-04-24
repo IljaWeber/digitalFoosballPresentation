@@ -6,7 +6,7 @@ import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.model.output.GameDataModel;
+import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.storage.IObtainTeams;
 import com.valtech.digitalFoosball.storage.PlayerService;
@@ -66,9 +66,9 @@ public class GameManagerShould {
         setUpTeams();
         raiseScoreOf(ONE, TWO);
 
-        GameDataModel gameDataModel = gameManager.getGameData();
+        GameOutputModel gameOutputModel = gameManager.getGameData();
 
-        List<TeamOutput> actual = gameDataModel.getTeams();
+        List<TeamOutput> actual = gameOutputModel.getTeams();
         assertThat(actual).extracting(TeamOutput::getName,
                                       TeamOutput::getPlayerOne,
                                       TeamOutput::getPlayerTwo,
@@ -79,7 +79,7 @@ public class GameManagerShould {
 
     @Test
     public void return_empty_model_when_no_teams_are_set_up() {
-        GameDataModel actual = gameManager.getGameData();
+        GameOutputModel actual = gameManager.getGameData();
 
         List<TeamOutput> teams = actual.getTeams();
         Team matchWinner = actual.getMatchWinner();
@@ -96,7 +96,7 @@ public class GameManagerShould {
 
         gameManager.resetMatch();
 
-        GameDataModel gameData = gameManager.getGameData();
+        GameOutputModel gameData = gameManager.getGameData();
         List<TeamOutput> actual = gameData.getTeams();
         assertThat(actual).extracting(TeamOutput::getName,
                                       TeamOutput::getPlayerOne,
@@ -114,12 +114,12 @@ public class GameManagerShould {
         gameManager.resetMatch();
 
         gameManager.undoGoal();
-        GameDataModel gameData = gameManager.getGameData();
+        GameOutputModel gameData = gameManager.getGameData();
         assertThatThereAreNoGoalsForTeam(ONE, gameData);
         assertThatThereAreNoGoalsForTeam(TWO, gameData);
     }
 
-    private void assertThatThereAreNoGoalsForTeam(Team team, GameDataModel gameData) {
+    private void assertThatThereAreNoGoalsForTeam(Team team, GameOutputModel gameData) {
         TeamOutput teamOne = gameData.getTeam(team);
         int actual = teamOne.getScore();
         assertThat(actual).isEqualTo(0);
@@ -132,7 +132,7 @@ public class GameManagerShould {
         gameManager.changeover();
         raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
 
-        GameDataModel gameData = gameManager.getGameData();
+        GameOutputModel gameData = gameManager.getGameData();
         Team actualMatchWinner = gameData.getMatchWinner();
 
         assertThat(actualMatchWinner).isEqualTo(ONE);
@@ -145,7 +145,7 @@ public class GameManagerShould {
 
         gameManager.changeover();
 
-        GameDataModel gameData = gameManager.getGameData();
+        GameOutputModel gameData = gameManager.getGameData();
         List<TeamOutput> teams = gameData.getTeams();
         assertThat(teams).extracting(TeamOutput::getScore).containsExactly(0, 0);
         assertThat(teams).extracting(TeamOutput::getName).containsExactly("T1", "T2");
@@ -162,7 +162,7 @@ public class GameManagerShould {
 
         gameManager.undoGoal();
 
-        GameDataModel gameData = gameManager.getGameData();
+        GameOutputModel gameData = gameManager.getGameData();
         TeamOutput team = gameData.getTeam(ONE);
         int actual = team.getScore();
         assertThat(actual).isEqualTo(0);
@@ -177,7 +177,7 @@ public class GameManagerShould {
 
         gameManager.redoGoal();
 
-        GameDataModel gameData = gameManager.getGameData();
+        GameOutputModel gameData = gameManager.getGameData();
         TeamOutput team = gameData.getTeam(ONE);
         int actual = team.getScore();
         assertThat(actual).isEqualTo(0);
@@ -219,7 +219,7 @@ public class GameManagerShould {
     private class FakeClientUpdates implements IUpdateClient {
 
         @Override
-        public void updateClientWith(GameDataModel gameData) {
+        public void updateClientWith(GameOutputModel gameData) {
         }
     }
 

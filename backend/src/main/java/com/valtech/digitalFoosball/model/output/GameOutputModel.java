@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GameDataModel {
+public class GameOutputModel {
 
     private List<TeamOutput> teams;
 
@@ -17,13 +17,13 @@ public class GameDataModel {
 
     private Team matchWinner;
 
-    public GameDataModel() {
+    public GameOutputModel() {
         teams = new ArrayList<>();
         winnerOfSet = Team.NO_TEAM;
         matchWinner = Team.NO_TEAM;
     }
 
-    public GameDataModel(Map<Team, TeamDataModel> teams, Team setWinner) {
+    public GameOutputModel(Map<Team, TeamDataModel> teams, Team setWinner) {
         MatchWinVerifier matchWinVerifier = new MatchWinVerifier();
 
         this.teams = Converter.convertMapToTeamOutputs(teams);

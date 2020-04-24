@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.model.output.GameDataModel;
+import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.manager.GameManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +57,7 @@ public class RaspiControllerAPIShould {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
 
         mockMvc.perform(builder);
-        GameDataModel gameData = gameManager.getGameData();
+        GameOutputModel gameData = gameManager.getGameData();
         TeamOutput team = gameData.getTeam(ONE);
         int actual = team.getScore();
         assertThat(actual).isEqualTo(1);

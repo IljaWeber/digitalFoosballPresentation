@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.service.manager;
 
 import com.valtech.digitalFoosball.model.input.InitDataModel;
-import com.valtech.digitalFoosball.model.output.GameDataModel;
+import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 
 import java.util.List;
@@ -21,5 +21,5 @@ public interface IReactToPlayerCommands {
 
     void resetMatch();
 
-    GameDataModel getGameData();
+    GameOutputModel getGameData();
 }
