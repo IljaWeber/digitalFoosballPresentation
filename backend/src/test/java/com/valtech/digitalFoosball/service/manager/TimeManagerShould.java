@@ -47,6 +47,21 @@ public class TimeManagerShould {
         assertThat(teamDataModelOne.getScore()).isEqualTo(10);
     }
 
+    @Test
+    void not_count_goals_if_time_limit_has_been_reached() throws InterruptedException {
+        countGoalForTeam(one, one, one, one);
+        startAndExpireTimer();
+
+        countGoalForTeam(one);
+
+        assertThat(teamDataModelOne.getScore()).isEqualTo(4);
+    }
+
+    private void startAndExpireTimer() throws InterruptedException {
+        timeManager.setTimer(1);
+        Thread.sleep(2);
+    }
+
     private void countGoalForTeam(Team... teams) {
         for (Team team : teams) {
             timeManager.countGoalFor(team);
