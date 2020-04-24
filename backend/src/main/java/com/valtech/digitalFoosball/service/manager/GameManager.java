@@ -37,15 +37,11 @@ public class GameManager implements IReactToGoals, IReactToPlayerCommands {
     @Override
     public void initGame(InitDataModel initDataModel) {
         gameDataModel = teamManager.init(initDataModel);
-
-        scoreManager.resetOldGameValues();
     }
 
     @Override
     public void initAdHocGame() {
         gameDataModel = teamManager.initAdHocGame();
-
-        scoreManager.resetOldGameValues();
     }
 
     @Override
@@ -69,8 +65,7 @@ public class GameManager implements IReactToGoals, IReactToPlayerCommands {
         SortedMap<Team, TeamDataModel> teams = gameDataModel.getTeams();
         teams.forEach((teamConstant, dataModel) -> dataModel.changeover());
 
-        scoreManager.resetOldGameValues();
-        gameDataModel.resetMatch();
+        gameDataModel.changeOver();
     }
 
     @Override
@@ -78,18 +73,11 @@ public class GameManager implements IReactToGoals, IReactToPlayerCommands {
         SortedMap<Team, TeamDataModel> teams = gameDataModel.getTeams();
         teams.forEach((teamConstant, dataModel) -> dataModel.resetValues());
 
-        scoreManager.resetOldGameValues();
-        gameDataModel.resetMatch();
+        gameDataModel.changeOver();
     }
 
     @Override
     public GameOutputModel getGameData() {
-        if (gameDataModel.isEmpty()) {
-            return new GameOutputModel();
-        }
-
-        Team setWinner = scoreManager.getSetWinner();
-
-        return new GameOutputModel(gameDataModel.getTeams(), setWinner);
+        return new GameOutputModel(gameDataModel);
     }
 }

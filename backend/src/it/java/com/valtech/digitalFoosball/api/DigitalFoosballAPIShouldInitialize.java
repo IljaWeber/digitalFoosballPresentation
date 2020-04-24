@@ -2,8 +2,9 @@ package com.valtech.digitalFoosball.api;
 
 import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.constants.Team;
+import com.valtech.digitalFoosball.model.GameDataModel;
+import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
-import com.valtech.digitalFoosball.model.output.TeamOutput;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,9 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import static com.valtech.digitalFoosball.constants.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,24 +36,13 @@ public class DigitalFoosballAPIShouldInitialize {
     @BeforeEach
     void setUp() throws Exception {
         mapper = new ObjectMapper();
-        TeamOutput teamOne = new TeamOutput();
-        TeamOutput teamTwo = new TeamOutput();
-        GameOutputModel expectedValues = new GameOutputModel();
-        List<TeamOutput> teams = new ArrayList<>();
-
-        teamOne.setName("Orange");
-        teamOne.setPlayerOne("Goalie");
-        teamOne.setPlayerTwo("Striker");
-
-        teamTwo.setName("Green");
-        teamTwo.setPlayerOne("Goalie");
-        teamTwo.setPlayerTwo("Striker");
-
-        teams.add(teamOne);
-        teams.add(teamTwo);
-
-        expectedValues.setTeams(teams);
-        expectedValues.setWinnerOfSet(Team.NO_TEAM);
+        GameDataModel gameDataModel = new GameDataModel();
+        TeamDataModel teamOne = new TeamDataModel("Orange", "Goalie", "Striker");
+        TeamDataModel teamTwo = new TeamDataModel("Green", "Goalie", "Striker");
+        gameDataModel.setTeam(ONE, teamOne);
+        gameDataModel.setTeam(TWO, teamTwo);
+        gameDataModel.setSetWinner(NO_TEAM);
+        GameOutputModel expectedValues = new GameOutputModel(gameDataModel);
         expectedValues.setMatchWinner(Team.NO_TEAM);
 
         expectedResponseBody = mapper.writeValueAsString(expectedValues);

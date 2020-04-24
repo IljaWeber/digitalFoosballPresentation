@@ -1,13 +1,13 @@
 package com.valtech.digitalFoosball.model.output;
 
 import com.valtech.digitalFoosball.constants.Team;
+import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.converter.Converter;
 import com.valtech.digitalFoosball.service.verifier.MatchWinVerifier;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.SortedMap;
 
 public class GameOutputModel {
 
@@ -17,20 +17,13 @@ public class GameOutputModel {
 
     private Team matchWinner;
 
-    public GameOutputModel() {
-        teams = new ArrayList<>();
-        winnerOfSet = Team.NO_TEAM;
-        matchWinner = Team.NO_TEAM;
-    }
-
-    public GameOutputModel(Map<Team, TeamDataModel> teams, Team setWinner) {
+    public GameOutputModel(GameDataModel gameDataModel) {
         MatchWinVerifier matchWinVerifier = new MatchWinVerifier();
+        SortedMap<Team, TeamDataModel> teamMap = gameDataModel.getTeams();
 
-        this.teams = Converter.convertMapToTeamOutputs(teams);
-
-        winnerOfSet = setWinner;
-
-        matchWinner = matchWinVerifier.getMatchWinner(teams);
+        this.teams = Converter.convertMapToTeamOutputs(teamMap);
+        winnerOfSet = gameDataModel.getSetWinner();
+        matchWinner = matchWinVerifier.getMatchWinner(teamMap);
     }
 
     public List<TeamOutput> getTeams() {
