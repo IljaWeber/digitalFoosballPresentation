@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TimeManagerShould {
 
+    Team one = Team.ONE;
     private TimeManager timeManager;
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
@@ -37,5 +38,18 @@ public class TimeManagerShould {
         timeManager.countGoalFor(team);
 
         assertThat(teamDataModelOne.getScore()).isEqualTo(1);
+    }
+
+    @Test
+    void not_count_goal_if_score_limit_is_reached() {
+        countGoalForTeam(one, one, one, one, one, one, one, one, one, one, one);
+
+        assertThat(teamDataModelOne.getScore()).isEqualTo(10);
+    }
+
+    private void countGoalForTeam(Team... teams) {
+        for (Team team : teams) {
+            timeManager.countGoalFor(team);
+        }
     }
 }

@@ -6,6 +6,7 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import java.util.SortedMap;
 
 public class TimeManager {
+    private final int GOAL_LIMIT = 10;
     private SortedMap<Team, TeamDataModel> teams;
 
     public void setTeams(SortedMap<Team, TeamDataModel> teams) {
@@ -15,7 +16,9 @@ public class TimeManager {
     public void countGoalFor(Team team) {
         TeamDataModel teamDataModel = teams.get(team);
 
-        teamDataModel.countGoal();
+        if (teamDataModel.getScore() < GOAL_LIMIT) {
+            teamDataModel.countGoal();
+        }
     }
 
 }
