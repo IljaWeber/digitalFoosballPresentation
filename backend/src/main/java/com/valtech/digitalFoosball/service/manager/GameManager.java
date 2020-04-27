@@ -60,14 +60,14 @@ public class GameManager implements IReactToGoals, IReactToPlayerCommands {
 
     @Override
     public void changeover() {
-        gameDataModel.changeOver();
-        scoreManager.changeover();
+        gameDataModel.setScoresToZero();
+        scoreManager.clearHistory();
     }
 
     @Override
     public void resetMatch() {
-        gameDataModel.resetMatch();
-        scoreManager.changeover();
+        gameDataModel.resetMatchValues();
+        scoreManager.clearHistory();
     }
 
     @Override

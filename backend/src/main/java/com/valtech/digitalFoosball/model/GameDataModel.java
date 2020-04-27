@@ -38,12 +38,12 @@ public class GameDataModel {
         return teams.isEmpty();
     }
 
-    public void changeOver() {
+    public void setScoresToZero() {
         teams.forEach((teamConstant, dataModel) -> dataModel.changeover());
         setWinner = NO_TEAM;
     }
 
-    public void resetMatch() {
+    public void resetMatchValues() {
         teams.forEach((teamConstant, dataModel) -> dataModel.resetValues());
         setWinner = NO_TEAM;
     }

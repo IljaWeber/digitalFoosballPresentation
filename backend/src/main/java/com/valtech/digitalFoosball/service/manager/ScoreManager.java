@@ -69,7 +69,7 @@ public class ScoreManager {
         }
     }
 
-    public void changeover() {
+    public void clearHistory() {
         history = new History();
     }
 }
