@@ -3,6 +3,7 @@ package com.valtech.digitalFoosball.service.manager;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import com.valtech.digitalFoosball.service.histories.History;
 import com.valtech.digitalFoosball.service.verifier.SetWinVerifier;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +12,10 @@ import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 @Service
 public class ScoreManager {
     private final SetWinVerifier setWinVerifier;
+    private History history;
 
     public ScoreManager() {
+        history = new History();
         setWinVerifier = new SetWinVerifier();
     }
 
@@ -21,7 +24,7 @@ public class ScoreManager {
 
         if (setHasNoWinner(gameDataModel)) {
             teamDataModel.countGoal();
-            gameDataModel.rememberLastGoalFrom(team);
+            history.rememberLastGoalFrom(team);
 
             if (setWinVerifier.teamWon(gameDataModel.getTeams(), team)) {
                 teamDataModel.increaseWonSets();
@@ -36,8 +39,8 @@ public class ScoreManager {
     }
 
     public void undoGoal(GameDataModel gameDataModel) {
-        if (gameDataModel.thereAreGoals()) {
-            Team team = gameDataModel.getLastScoringTeam();
+        if (history.thereAreGoals()) {
+            Team team = history.getLastScoringTeam();
             TeamDataModel lastScoringTeam = gameDataModel.getTeam(team);
 
             if (gameDataModel.getSetWinner() != NO_TEAM) {
@@ -47,22 +50,26 @@ public class ScoreManager {
 
             lastScoringTeam.decreaseScore();
 
-            gameDataModel.rememberUndoneGoal(team);
+            history.rememberUndoneGoal(team);
         }
     }
 
     public void redoGoal(GameDataModel gameDataModel) {
-        if (gameDataModel.hasUndoneGoals()) {
-            Team team = gameDataModel.getLastUndoneGoal();
+        if (history.hasUndoneGoals()) {
+            Team team = history.getLastUndoneGoal();
             TeamDataModel teamDataModel = gameDataModel.getTeams().get(team);
 
             teamDataModel.countGoal();
-            gameDataModel.rememberLastGoalFrom(team);
+            history.rememberLastGoalFrom(team);
 
             if (setWinVerifier.teamWon(gameDataModel.getTeams(), team)) {
                 teamDataModel.increaseWonSets();
                 gameDataModel.setSetWinner(team);
             }
         }
+    }
+
+    public void changeover() {
+        history = new History();
     }
 }

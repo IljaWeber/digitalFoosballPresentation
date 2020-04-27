@@ -11,11 +11,11 @@ public class UndoHistory {
         historyOfUndo = new Stack<>();
     }
 
-    public Team rememberUndoneGoal(Team team) {
-        return historyOfUndo.push(team);
+    public void rememberUndoneGoal(Team team) {
+        historyOfUndo.push(team);
     }
 
-    public Team removeUndoneGoal() {
+    public Team getLastUndoneGoal() {
         return historyOfUndo.pop();
     }
 

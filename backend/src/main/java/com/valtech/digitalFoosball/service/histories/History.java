@@ -4,12 +4,13 @@ import com.valtech.digitalFoosball.constants.Team;
 
 import java.util.Stack;
 
-public class GoalHistory {
-
+public class History {
     private Stack<Team> historyOfGoals;
+    private Stack<Team> historyOfUndo;
 
-    public GoalHistory() {
+    public History() {
         historyOfGoals = new Stack<>();
+        historyOfUndo = new Stack<>();
     }
 
     public void rememberLastGoalFrom(Team team) {
@@ -22,5 +23,17 @@ public class GoalHistory {
 
     public boolean thereAreGoals() {
         return !historyOfGoals.empty();
+    }
+
+    public void rememberUndoneGoal(Team team) {
+        historyOfUndo.push(team);
+    }
+
+    public Team getLastUndoneGoal() {
+        return historyOfUndo.pop();
+    }
+
+    public boolean hasUndoneGoals() {
+        return !historyOfUndo.empty();
     }
 }

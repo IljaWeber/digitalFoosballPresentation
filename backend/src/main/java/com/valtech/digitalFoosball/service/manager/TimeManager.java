@@ -32,4 +32,8 @@ public class TimeManager {
     public void timeIsOver() {
         timeIsOver = true;
     }
+
+    public void undo() {
+
+    }
 }
