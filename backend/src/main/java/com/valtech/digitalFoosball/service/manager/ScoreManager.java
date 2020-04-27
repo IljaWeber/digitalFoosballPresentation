@@ -4,19 +4,19 @@ import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.histories.History;
-import com.valtech.digitalFoosball.service.verifier.SetWinVerifier;
+import com.valtech.digitalFoosball.service.verifier.RegularGameSetWinVerifier;
 import org.springframework.stereotype.Service;
 
 import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
 @Service
 public class ScoreManager {
-    private final SetWinVerifier setWinVerifier;
+    private final RegularGameSetWinVerifier setWinVerifier;
     private History history;
 
     public ScoreManager() {
         history = new History();
-        setWinVerifier = new SetWinVerifier();
+        setWinVerifier = new RegularGameSetWinVerifier();
     }
 
     public void countGoalFor(Team team, GameDataModel gameDataModel) {
