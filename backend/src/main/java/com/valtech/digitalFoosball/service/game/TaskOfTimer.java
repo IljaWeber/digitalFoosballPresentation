@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.service.manager;
+package com.valtech.digitalFoosball.service.game;
 
 import java.util.TimerTask;
 

@@ -1,9 +1,10 @@
-package com.valtech.digitalFoosball.service.manager;
+package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class TimeManagerShould {
         gameDataModel = new GameDataModel(teams);
     }
 
+    @Disabled
     @Test
     void changeover() {
         assertThat(teamDataModelOne.getScore()).isEqualTo(1);

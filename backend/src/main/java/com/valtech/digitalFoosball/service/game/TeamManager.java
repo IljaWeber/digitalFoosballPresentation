@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.service.manager;
+package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
@@ -16,11 +16,15 @@ import java.util.List;
 @Service
 public class TeamManager {
 
-    private final IObtainTeams teamDataPort;
+    @Autowired
+    private IObtainTeams teamDataPort;
 
     @Autowired
     public TeamManager(IObtainTeams teamDataPort) {
         this.teamDataPort = teamDataPort;
+    }
+
+    public TeamManager() {
     }
 
     public GameDataModel init(InitDataModel initDataModel) {

@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.service.manager;
+package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.api.IUpdateClient;
 import com.valtech.digitalFoosball.constants.Team;
@@ -8,23 +8,31 @@ import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.storage.IObtainTeams;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class GameManager implements IReactToGoals, IReactToPlayerCommands {
-    private final TeamManager teamManager;
+public class AdHocGame implements Game {
+
+    @Autowired
+    private TeamManager teamManager;
+
+    @Autowired
+    private IUpdateClient clientUpdater;
+
     private final ScoreManager scoreManager;
-    private final IUpdateClient clientUpdater;
     private GameDataModel gameDataModel;
 
     @Autowired
-    public GameManager(IObtainTeams IObtainTeams, IUpdateClient clientUpdater) {
+    public AdHocGame(IObtainTeams IObtainTeams, IUpdateClient clientUpdater) {
         gameDataModel = new GameDataModel();
         scoreManager = new ScoreManager();
         this.clientUpdater = clientUpdater;
         teamManager = new TeamManager(IObtainTeams);
+    }
+
+    public AdHocGame() {
+        gameDataModel = new GameDataModel();
+        scoreManager = new ScoreManager();
     }
 
     @Override
@@ -34,11 +42,6 @@ public class GameManager implements IReactToGoals, IReactToPlayerCommands {
 
     @Override
     public void initGame(InitDataModel initDataModel) {
-        gameDataModel = teamManager.init(initDataModel);
-    }
-
-    @Override
-    public void initAdHocGame() {
         gameDataModel = teamManager.initAdHocGame();
     }
 

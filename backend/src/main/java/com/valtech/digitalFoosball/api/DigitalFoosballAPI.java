@@ -4,8 +4,8 @@ import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
-import com.valtech.digitalFoosball.service.manager.IReactToGoals;
-import com.valtech.digitalFoosball.service.manager.IReactToPlayerCommands;
+import com.valtech.digitalFoosball.service.game.IReactToGoals;
+import com.valtech.digitalFoosball.service.game.IReactToPlayerCommands;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,15 @@ import java.util.List;
 @RequestMapping("api")
 public class DigitalFoosballAPI {
 
-    private final IReactToGoals goalPort;
-    private final IReactToPlayerCommands playerCommandPort;
-    private final Logger logger = LogManager.getLogger(DigitalFoosballAPI.class);
+    @Autowired
+    private IReactToGoals goalPort;
 
     @Autowired
-    public DigitalFoosballAPI(IReactToGoals goalPort, IReactToPlayerCommands playerCommandPort) {
-        this.goalPort = goalPort;
-        this.playerCommandPort = playerCommandPort;
+    private IReactToPlayerCommands playerCommandPort;
+
+    private final Logger logger = LogManager.getLogger(DigitalFoosballAPI.class);
+
+    public DigitalFoosballAPI() {
     }
 
     @PostMapping(path = "/init", produces = MediaType.APPLICATION_JSON_VALUE)

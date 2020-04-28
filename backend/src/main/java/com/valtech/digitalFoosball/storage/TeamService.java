@@ -14,14 +14,22 @@ import java.util.Optional;
 
 @Service
 public class TeamService implements IObtainTeams {
-    private final TeamRepository teamRepository;
-    private final PlayerService playerService;
+
+    @Autowired
+    private TeamRepository teamRepository;
+
+    @Autowired
+    private PlayerService playerService;
+
     private final Logger logger = LogManager.getLogger(TeamService.class);
 
     @Autowired
     public TeamService(TeamRepository teamRepository, PlayerService playerService) {
         this.teamRepository = teamRepository;
         this.playerService = playerService;
+    }
+
+    public TeamService() {
     }
 
     @Override

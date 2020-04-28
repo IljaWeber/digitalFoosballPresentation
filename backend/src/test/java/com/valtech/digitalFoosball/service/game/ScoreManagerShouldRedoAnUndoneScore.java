@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.service.manager;
+package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
@@ -13,8 +13,9 @@ import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TimeManagerShouldRedo {
-    public TimeManager timeManager = new TimeManager();
+public class ScoreManagerShouldRedoAnUndoneScore {
+
+    public ScoreManager scoreManager = new ScoreManager();
     private GameDataModel gameDataModel;
 
     @BeforeEach
@@ -33,9 +34,9 @@ public class TimeManagerShouldRedo {
     @Test
     void if_a_score_has_been_undone_recently() {
         raiseScoreOf(ONE);
-        timeManager.undoGoal(gameDataModel);
+        scoreManager.undoGoal(gameDataModel);
 
-        timeManager.redoGoal(gameDataModel);
+        scoreManager.redoGoal(gameDataModel);
 
         int actual = getScoreOfTeam(ONE);
         assertThat(actual).isEqualTo(1);
@@ -48,7 +49,7 @@ public class TimeManagerShouldRedo {
 
     @Test
     void only_when_a_goal_was_undid_otherwise_do_nothing() {
-        timeManager.redoGoal(gameDataModel);
+        scoreManager.redoGoal(gameDataModel);
 
         int actualScoreTeamOne = getScoreOfTeam(ONE);
         int actualScoreTeamTwo = getScoreOfTeam(TWO);
@@ -58,10 +59,10 @@ public class TimeManagerShouldRedo {
 
     @Test
     void and_raise_the_won_sets_if_necessary() {
-        raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE);
-        timeManager.undoGoal(gameDataModel);
+        raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
+        scoreManager.undoGoal(gameDataModel);
 
-        timeManager.redoGoal(gameDataModel);
+        scoreManager.redoGoal(gameDataModel);
 
         int actual = getNumberOfWonSets(ONE);
         assertThat(actual).isEqualTo(1);
@@ -74,7 +75,7 @@ public class TimeManagerShouldRedo {
 
     private void raiseScoreOf(Team... teams) {
         for (Team team : teams) {
-            timeManager.countGoalFor(team, gameDataModel);
+            scoreManager.countGoalFor(team, gameDataModel);
         }
     }
 }

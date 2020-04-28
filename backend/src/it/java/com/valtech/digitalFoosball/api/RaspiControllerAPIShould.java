@@ -6,7 +6,7 @@ import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
-import com.valtech.digitalFoosball.service.manager.GameManager;
+import com.valtech.digitalFoosball.service.game.Game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class RaspiControllerAPIShould {
     private MockMvc mockMvc;
 
     @Autowired
-    private GameManager gameManager;
+    private Game game;
     private MockHttpServletRequestBuilder builder;
 
     private String json;
@@ -57,7 +57,7 @@ public class RaspiControllerAPIShould {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
 
         mockMvc.perform(builder);
-        GameOutputModel gameData = gameManager.getGameData();
+        GameOutputModel gameData = game.getGameData();
         TeamOutput team = gameData.getTeam(ONE);
         int actual = team.getScore();
         assertThat(actual).isEqualTo(1);

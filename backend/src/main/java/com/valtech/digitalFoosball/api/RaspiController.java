@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.api;
 
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.service.manager.IReactToGoals;
+import com.valtech.digitalFoosball.service.game.IReactToGoals;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
