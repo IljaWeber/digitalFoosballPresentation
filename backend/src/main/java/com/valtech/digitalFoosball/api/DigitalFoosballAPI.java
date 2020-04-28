@@ -37,6 +37,15 @@ public class DigitalFoosballAPI {
         return playerCommandPort.getGameData();
     }
 
+    @PostMapping(path = "/initAdHoc", produces = MediaType.APPLICATION_JSON_VALUE)
+    public GameOutputModel initAdHocGame() {
+        logger.info("Ad-Hoc-Game started");
+
+        playerCommandPort.initAdHocGame();
+
+        return playerCommandPort.getGameData();
+    }
+
     @GetMapping(path = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel getGameData() {
         return playerCommandPort.getGameData();
@@ -90,14 +99,5 @@ public class DigitalFoosballAPI {
         playerCommandPort.resetMatch();
 
         return true;
-    }
-
-    @PostMapping(path = "/initAdHoc", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GameOutputModel initAdHocGame() {
-        logger.info("Ad-Hoc-Game started");
-
-        playerCommandPort.initAdHocGame();
-
-        return playerCommandPort.getGameData();
     }
 }

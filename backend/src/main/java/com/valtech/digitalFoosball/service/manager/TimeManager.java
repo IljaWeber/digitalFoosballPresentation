@@ -30,10 +30,12 @@ public class TimeManager {
     public void countGoalFor(Team team, GameDataModel gameDataModel) {
         TeamDataModel teamDataModel = gameDataModel.getTeam(team);
 
-        if (teamDataModel.getScore() < GOAL_LIMIT && !timeIsOver) {
-            history.rememberLastGoalFrom(team);
-            teamDataModel.countGoal();
+        if (timeIsOver || teamDataModel.getScore() >= GOAL_LIMIT) {
+            return;
         }
+
+        history.rememberLastGoalFrom(team);
+        teamDataModel.countGoal();
     }
 
     public void timeIsOver() {

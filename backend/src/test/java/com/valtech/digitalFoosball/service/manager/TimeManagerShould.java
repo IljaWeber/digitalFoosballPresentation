@@ -34,7 +34,6 @@ public class TimeManagerShould {
 
     @Test
     void changeover() {
-
         assertThat(teamDataModelOne.getScore()).isEqualTo(1);
     }
 

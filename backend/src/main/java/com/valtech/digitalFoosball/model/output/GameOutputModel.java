@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.SortedMap;
 
 public class GameOutputModel {
-
     private List<TeamOutput> teams;
 
     private Team winnerOfSet;
