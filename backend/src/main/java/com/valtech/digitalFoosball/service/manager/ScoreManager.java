@@ -20,7 +20,7 @@ public class ScoreManager {
     }
 
     public void countGoalFor(Team team, GameDataModel gameDataModel) {
-        TeamDataModel teamDataModel = gameDataModel.getTeams().get(team);
+        TeamDataModel teamDataModel = gameDataModel.getTeam(team);
 
         if (setHasNoWinner(gameDataModel)) {
             teamDataModel.countGoal();

@@ -1,41 +1,44 @@
 package com.valtech.digitalFoosball.service.manager;
 
 import com.valtech.digitalFoosball.constants.Team;
+import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TimeManagerShould {
 
-    Team one = Team.ONE;
     private TimeManager timeManager;
+    private GameDataModel gameDataModel;
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
-    private final SortedMap<Team, TeamDataModel> teams = new TreeMap<>();
+    private Team one = Team.ONE;
+    private Team two = Team.TWO;
 
     @BeforeEach
     void setUp() {
         timeManager = new TimeManager();
+        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
+        teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
 
-        teamDataModelOne = new TeamDataModel("Orange", "Goalie", "Striker");
-        teamDataModelTwo = new TeamDataModel("Green", "Goalie", "Striker");
+        List<TeamDataModel> teams;
+        teams = new ArrayList<>();
+        teams.add(teamDataModelOne);
+        teams.add(teamDataModelTwo);
 
-        teams.put(Team.ONE, teamDataModelOne);
-        teams.put(Team.TWO, teamDataModelTwo);
-
-        timeManager.setTeams(teams);
+        gameDataModel = new GameDataModel(teams);
     }
 
     @Test
     void count_goal() {
         Team team = Team.ONE;
 
-        timeManager.countGoalFor(team);
+        timeManager.countGoalFor(team, gameDataModel);
 
         assertThat(teamDataModelOne.getScore()).isEqualTo(1);
     }
@@ -50,21 +53,21 @@ public class TimeManagerShould {
     @Test
     void not_count_goals_if_time_limit_has_been_reached() throws InterruptedException {
         countGoalForTeam(one, one, one, one);
-        startAndExpireTimer();
+        startAndAwaitTheEndOfTheTimer();
 
         countGoalForTeam(one);
 
         assertThat(teamDataModelOne.getScore()).isEqualTo(4);
     }
 
-    private void startAndExpireTimer() throws InterruptedException {
+    private void startAndAwaitTheEndOfTheTimer() throws InterruptedException {
         timeManager.setTimer(1);
         Thread.sleep(2);
     }
 
     private void countGoalForTeam(Team... teams) {
         for (Team team : teams) {
-            timeManager.countGoalFor(team);
+            timeManager.countGoalFor(team, gameDataModel);
         }
     }
 }

@@ -1,0 +1,81 @@
+package com.valtech.digitalFoosball.service.manager;
+
+import com.valtech.digitalFoosball.constants.Team;
+import com.valtech.digitalFoosball.model.GameDataModel;
+import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.valtech.digitalFoosball.constants.Team.ONE;
+import static com.valtech.digitalFoosball.constants.Team.TWO;
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class TimeManagerShouldUndo {
+
+    private TimeManager timeManager;
+    private GameDataModel gameDataModel;
+
+    @BeforeEach
+    void setUp() {
+        timeManager = new TimeManager();
+        TeamDataModel teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
+        TeamDataModel teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
+
+        List<TeamDataModel> teams;
+        teams = new ArrayList<>();
+        teams.add(teamDataModelOne);
+        teams.add(teamDataModelTwo);
+
+        gameDataModel = new GameDataModel(teams);
+
+    }
+
+    @Test
+    void in_the_reversed_order_of_scoring() {
+        countGoalForTeam(ONE, TWO, ONE);
+
+        timeManager.undoGoal(gameDataModel);
+
+        int actual = getScoreOfTeam(ONE);
+        assertThat(actual).isEqualTo(1);
+    }
+
+    private int getScoreOfTeam(Team team) {
+        TeamDataModel teamOne = gameDataModel.getTeam(team);
+        return teamOne.getScore();
+    }
+
+    @Test
+    void but_if_no_scores_have_been_made_then_do_nothing() {
+        timeManager.undoGoal(gameDataModel);
+
+        int actualScoreTeamOne = getScoreOfTeam(ONE);
+        int actualScoreTeamTwo = getScoreOfTeam(TWO);
+        assertThat(actualScoreTeamOne).isEqualTo(0);
+        assertThat(actualScoreTeamTwo).isEqualTo(0);
+    }
+
+    @Test
+    void and_decrease_the_number_of_won_sets_when_win_condition_has_been_fulfilled() {
+        countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE);
+
+        timeManager.undoGoal(gameDataModel);
+
+        int actual = getNumberOfWonSets(ONE);
+        assertThat(actual).isEqualTo(0);
+    }
+
+    private void countGoalForTeam(Team... teams) {
+        for (Team team : teams) {
+            timeManager.countGoalFor(team, gameDataModel);
+        }
+    }
+
+    private int getNumberOfWonSets(Team team) {
+        TeamDataModel teamOne = gameDataModel.getTeam(team);
+        return teamOne.getWonSets();
+    }
+}
