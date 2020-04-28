@@ -5,6 +5,12 @@ import com.valtech.digitalFoosball.service.game.Game;
 
 public abstract class AbstractGameFactory {
     public static AbstractGameFactory getFactory(GameMode gameMode) {
+        switch (gameMode) {
+            case AD_HOC:
+                return new AdHocGameFactory();
+            case RANKED:
+                return new RankedGameFactory();
+        }
         return new AdHocGameFactory();
     }
 

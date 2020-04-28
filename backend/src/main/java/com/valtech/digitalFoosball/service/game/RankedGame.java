@@ -14,9 +14,14 @@ import java.util.List;
 
 @Service
 public class RankedGame implements IReactToGoals, IReactToPlayerCommands, Game {
-    private final TeamManager teamManager;
+
+    @Autowired
+    private TeamManager teamManager;
+
+    @Autowired
+    private IUpdateClient clientUpdater;
+
     private final ScoreManager scoreManager;
-    private final IUpdateClient clientUpdater;
     private GameDataModel gameDataModel;
 
     @Autowired
@@ -25,6 +30,11 @@ public class RankedGame implements IReactToGoals, IReactToPlayerCommands, Game {
         scoreManager = new ScoreManager();
         this.clientUpdater = clientUpdater;
         teamManager = new TeamManager(IObtainTeams);
+    }
+
+    public RankedGame() {
+        gameDataModel = new GameDataModel();
+        scoreManager = new ScoreManager();
     }
 
     @Override

@@ -61,7 +61,7 @@ public class TimeManagerShouldCount {
 
     private void startAndAwaitTheEndOfTheTimer() throws InterruptedException {
         timeManager.setTimer(1);
-        Thread.sleep(2);
+        Thread.sleep(5);
     }
 
     private void countGoalForTeam(Team... teams) {
