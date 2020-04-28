@@ -35,7 +35,6 @@ public class TimeGameShouldCount {
 
     @Test
     void goal() {
-
         timeGame.countGoalFor(ONE, gameDataModel);
 
         assertThat(teamDataModelOne.getScore()).isEqualTo(1);
