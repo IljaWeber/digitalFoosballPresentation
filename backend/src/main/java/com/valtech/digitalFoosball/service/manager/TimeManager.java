@@ -6,7 +6,6 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.histories.History;
 import com.valtech.digitalFoosball.service.verifier.TimeGameSetWinVerifier;
 
-import java.util.SortedMap;
 import java.util.Timer;
 
 import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
@@ -21,9 +20,6 @@ public class TimeManager {
     public TimeManager() {
         history = new History();
         timeGameSetWinVerifier = new TimeGameSetWinVerifier();
-    }
-
-    public void setTeams(SortedMap<Team, TeamDataModel> teams) {
     }
 
     public void setTimer(long timeDuration) {

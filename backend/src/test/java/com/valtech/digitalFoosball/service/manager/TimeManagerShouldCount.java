@@ -9,16 +9,15 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TimeManagerShould {
+public class TimeManagerShouldCount {
 
     private TimeManager timeManager;
     private GameDataModel gameDataModel;
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
-    private Team one = Team.ONE;
-    private Team two = Team.TWO;
 
     @BeforeEach
     void setUp() {
@@ -35,8 +34,8 @@ public class TimeManagerShould {
     }
 
     @Test
-    void count_goal() {
-        Team team = Team.ONE;
+    void goal() {
+        Team team = ONE;
 
         timeManager.countGoalFor(team, gameDataModel);
 
@@ -44,18 +43,18 @@ public class TimeManagerShould {
     }
 
     @Test
-    void not_count_goal_if_score_limit_is_reached() {
-        countGoalForTeam(one, one, one, one, one, one, one, one, one, one, one);
+    void no_goal_if_score_limit_is_reached() {
+        countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE);
 
         assertThat(teamDataModelOne.getScore()).isEqualTo(10);
     }
 
     @Test
-    void not_count_goals_if_time_limit_has_been_reached() throws InterruptedException {
-        countGoalForTeam(one, one, one, one);
+    void no_goals_if_time_limit_has_been_reached() throws InterruptedException {
+        countGoalForTeam(ONE, ONE, ONE, ONE);
         startAndAwaitTheEndOfTheTimer();
 
-        countGoalForTeam(one);
+        countGoalForTeam(ONE);
 
         assertThat(teamDataModelOne.getScore()).isEqualTo(4);
     }
