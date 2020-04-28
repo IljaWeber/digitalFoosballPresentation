@@ -4,6 +4,7 @@ import com.valtech.digitalFoosball.constants.GameMode;
 import com.valtech.digitalFoosball.service.game.AdHocGame;
 import com.valtech.digitalFoosball.service.game.Game;
 import com.valtech.digitalFoosball.service.game.RankedGame;
+import com.valtech.digitalFoosball.service.game.TimeGame;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,5 +25,13 @@ public class AbstractGameFactoryShould {
         Game game = factory.createGame();
 
         assertThat(game).isInstanceOf(RankedGame.class);
+    }
+
+    @Test
+    void create_a_time_game() {
+        AbstractGameFactory factory = AbstractGameFactory.getFactory(GameMode.TIME_GAME);
+        Game game = factory.createGame();
+
+        assertThat(game).isInstanceOf(TimeGame.class);
     }
 }

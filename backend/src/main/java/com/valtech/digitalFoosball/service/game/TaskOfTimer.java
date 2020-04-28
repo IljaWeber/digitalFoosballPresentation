@@ -4,14 +4,14 @@ import java.util.TimerTask;
 
 public class TaskOfTimer extends TimerTask {
 
-    private final TimeManager timeManager;
+    private final TimeGame timeGame;
 
-    public TaskOfTimer(TimeManager timeManager) {
-        this.timeManager = timeManager;
+    public TaskOfTimer(TimeGame timeGame) {
+        this.timeGame = timeGame;
     }
 
     @Override
     public void run() {
-        timeManager.timeIsOver();
+        timeGame.timeIsOver();
     }
 }

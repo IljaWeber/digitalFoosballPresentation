@@ -6,12 +6,13 @@ import com.valtech.digitalFoosball.service.game.Game;
 public abstract class AbstractGameFactory {
     public static AbstractGameFactory getFactory(GameMode gameMode) {
         switch (gameMode) {
-            case AD_HOC:
-                return new AdHocGameFactory();
             case RANKED:
                 return new RankedGameFactory();
+            case TIME_GAME:
+                return new TimeGameFactory();
+            default:
+                return new AdHocGameFactory();
         }
-        return new AdHocGameFactory();
     }
 
     public abstract Game createGame();

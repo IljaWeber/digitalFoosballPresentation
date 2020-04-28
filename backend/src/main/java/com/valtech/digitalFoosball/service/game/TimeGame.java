@@ -2,22 +2,26 @@ package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
+import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import com.valtech.digitalFoosball.model.output.GameOutputModel;
+import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.histories.History;
 import com.valtech.digitalFoosball.service.verifier.TimeGameSetWinVerifier;
 
+import java.util.List;
 import java.util.Timer;
 
 import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
-public class TimeManager {
+public class TimeGame implements Game {
     private final int GOAL_LIMIT = 10;
     private boolean timeIsOver = false;
     private Timer timer;
     private final History history;
     private final TimeGameSetWinVerifier timeGameSetWinVerifier;
 
-    public TimeManager() {
+    public TimeGame() {
         history = new History();
         timeGameSetWinVerifier = new TimeGameSetWinVerifier();
     }
@@ -71,5 +75,45 @@ public class TimeManager {
                 gameDataModel.setSetWinner(team);
             }
         }
+    }
+
+    @Override
+    public List<TeamOutput> getAllTeamsFromDatabase() {
+        return null;
+    }
+
+    @Override
+    public void initGame(InitDataModel initDataModel) {
+
+    }
+
+    @Override
+    public void countGoalFor(Team team) {
+
+    }
+
+    @Override
+    public void undoGoal() {
+
+    }
+
+    @Override
+    public void redoGoal() {
+
+    }
+
+    @Override
+    public void changeover() {
+
+    }
+
+    @Override
+    public void resetMatch() {
+
+    }
+
+    @Override
+    public GameOutputModel getGameData() {
+        return null;
     }
 }

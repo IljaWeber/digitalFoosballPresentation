@@ -13,14 +13,14 @@ import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TimeManagerShouldUndo {
+public class TimeGameShouldUndo {
 
-    private TimeManager timeManager;
+    private TimeGame timeGame;
     private GameDataModel gameDataModel;
 
     @BeforeEach
     void setUp() {
-        timeManager = new TimeManager();
+        timeGame = new TimeGame();
         TeamDataModel teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
         TeamDataModel teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
 
@@ -37,7 +37,7 @@ public class TimeManagerShouldUndo {
     void in_the_reversed_order_of_scoring() {
         countGoalForTeam(ONE, TWO, ONE);
 
-        timeManager.undoGoal(gameDataModel);
+        timeGame.undoGoal(gameDataModel);
 
         int actual = getScoreOfTeam(ONE);
         assertThat(actual).isEqualTo(1);
@@ -50,7 +50,7 @@ public class TimeManagerShouldUndo {
 
     @Test
     void but_if_no_scores_have_been_made_then_do_nothing() {
-        timeManager.undoGoal(gameDataModel);
+        timeGame.undoGoal(gameDataModel);
 
         int actualScoreTeamOne = getScoreOfTeam(ONE);
         int actualScoreTeamTwo = getScoreOfTeam(TWO);
@@ -62,7 +62,7 @@ public class TimeManagerShouldUndo {
     void and_decrease_the_number_of_won_sets_when_win_condition_has_been_fulfilled() {
         countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE);
 
-        timeManager.undoGoal(gameDataModel);
+        timeGame.undoGoal(gameDataModel);
 
         int actual = getNumberOfWonSets(ONE);
         assertThat(actual).isEqualTo(0);
@@ -70,7 +70,7 @@ public class TimeManagerShouldUndo {
 
     private void countGoalForTeam(Team... teams) {
         for (Team team : teams) {
-            timeManager.countGoalFor(team, gameDataModel);
+            timeGame.countGoalFor(team, gameDataModel);
         }
     }
 

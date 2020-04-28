@@ -3,7 +3,7 @@ package com.valtech.digitalFoosball.service.verifier;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.service.game.TimeManager;
+import com.valtech.digitalFoosball.service.game.TimeGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,11 +18,11 @@ class TimeGameSetWinVerifierShould {
     private GameDataModel gameDataModel;
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
-    private TimeManager timeManager;
+    private TimeGame timeGame;
 
     @BeforeEach
     void setUp() {
-        timeManager = new TimeManager();
+        timeGame = new TimeGame();
         timeGameSetWinVerifier = new TimeGameSetWinVerifier();
         teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
         teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
@@ -53,7 +53,7 @@ class TimeGameSetWinVerifierShould {
 
     private void countGoalsFor(Team... teams) {
         for (Team team : teams) {
-            timeManager.countGoalFor(team, gameDataModel);
+            timeGame.countGoalFor(team, gameDataModel);
         }
     }
 }

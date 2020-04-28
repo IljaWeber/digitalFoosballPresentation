@@ -12,16 +12,16 @@ import java.util.List;
 import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TimeManagerShouldCount {
+public class TimeGameShouldCount {
 
-    private TimeManager timeManager;
+    private TimeGame timeGame;
     private GameDataModel gameDataModel;
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
 
     @BeforeEach
     void setUp() {
-        timeManager = new TimeManager();
+        timeGame = new TimeGame();
         teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
         teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
 
@@ -35,9 +35,8 @@ public class TimeManagerShouldCount {
 
     @Test
     void goal() {
-        Team team = ONE;
 
-        timeManager.countGoalFor(team, gameDataModel);
+        timeGame.countGoalFor(ONE, gameDataModel);
 
         assertThat(teamDataModelOne.getScore()).isEqualTo(1);
     }
@@ -60,13 +59,13 @@ public class TimeManagerShouldCount {
     }
 
     private void startAndAwaitTheEndOfTheTimer() throws InterruptedException {
-        timeManager.setTimer(1);
+        timeGame.setTimer(1);
         Thread.sleep(5);
     }
 
     private void countGoalForTeam(Team... teams) {
         for (Team team : teams) {
-            timeManager.countGoalFor(team, gameDataModel);
+            timeGame.countGoalFor(team, gameDataModel);
         }
     }
 }

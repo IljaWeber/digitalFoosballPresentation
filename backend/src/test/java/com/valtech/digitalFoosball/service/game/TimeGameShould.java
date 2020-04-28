@@ -12,16 +12,16 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TimeManagerShould {
+public class TimeGameShould {
 
-    private TimeManager timeManager;
+    private TimeGame timeGame;
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
     private GameDataModel gameDataModel;
 
     @BeforeEach
     void setUp() {
-        timeManager = new TimeManager();
+        timeGame = new TimeGame();
         teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
         teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
 
@@ -41,7 +41,7 @@ public class TimeManagerShould {
 
     private void countGoalForTeam(Team... teams) {
         for (Team team : teams) {
-            timeManager.countGoalFor(team, gameDataModel);
+            timeGame.countGoalFor(team, gameDataModel);
         }
     }
 }
