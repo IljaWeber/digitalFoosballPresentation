@@ -5,7 +5,7 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
 import java.util.Map;
 
-public class RegularGameSetWinVerifier implements SetWinVerifier {
+public class RegularGameSetWinVerifier {
 
     private final int neededGoals = 6;
     private final int requiredDifference = 2;

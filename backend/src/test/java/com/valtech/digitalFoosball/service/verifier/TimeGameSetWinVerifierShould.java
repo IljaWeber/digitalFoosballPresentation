@@ -1,54 +1,59 @@
 package com.valtech.digitalFoosball.service.verifier;
 
 import com.valtech.digitalFoosball.constants.Team;
+import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import com.valtech.digitalFoosball.service.manager.TimeManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TimeGameSetWinVerifierShould {
-    private TimeGameSetWinVerifier setWinVerifier;
-    private TeamDataModel teamOne;
-    private TeamDataModel teamTwo;
-    private Map<Team, TeamDataModel> teams;
+    private TimeGameSetWinVerifier timeGameSetWinVerifier;
+    private GameDataModel gameDataModel;
+    private TeamDataModel teamDataModelOne;
+    private TeamDataModel teamDataModelTwo;
+    private TimeManager timeManager;
 
     @BeforeEach
     void setUp() {
-        setWinVerifier = new TimeGameSetWinVerifier();
-        teams = new HashMap<>();
+        timeManager = new TimeManager();
+        timeGameSetWinVerifier = new TimeGameSetWinVerifier();
+        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
+        teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
 
-        teamOne = new TeamDataModel();
-        teamTwo = new TeamDataModel();
+        List<TeamDataModel> teams;
+        teams = new ArrayList<>();
+        teams.add(teamDataModelOne);
+        teams.add(teamDataModelTwo);
 
-        teams.put(ONE, teamOne);
-        teams.put(Team.TWO, teamTwo);
+        gameDataModel = new GameDataModel(teams);
     }
 
     @Test
     public void show_no_winner_when_no_team_scored_ten_goals() {
         countGoalsFor(ONE, ONE);
-        boolean actual = setWinVerifier.teamWon(teams, ONE);
+        Team actual = timeGameSetWinVerifier.getWinner(gameDataModel, false);
 
-        assertThat(actual).isEqualTo(false);
+        assertThat(actual).isEqualTo(Team.NO_TEAM);
     }
 
     @Test
     public void show_winner_when_the_team_scored_ten_goals() {
         countGoalsFor(ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE);
-        boolean actual = setWinVerifier.teamWon(teams, ONE);
+        Team actual = timeGameSetWinVerifier.getWinner(gameDataModel, true);
 
-        assertThat(actual).isEqualTo(true);
+        assertThat(actual).isEqualTo(ONE);
     }
 
     private void countGoalsFor(Team... teams) {
         for (Team team : teams) {
-            TeamDataModel teamDataModel = this.teams.get(team);
-            teamDataModel.countGoal();
+            timeManager.countGoalFor(team, gameDataModel);
         }
     }
 }

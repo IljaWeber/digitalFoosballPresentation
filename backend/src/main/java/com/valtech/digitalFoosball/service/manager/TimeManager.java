@@ -4,6 +4,7 @@ import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.histories.History;
+import com.valtech.digitalFoosball.service.verifier.TimeGameSetWinVerifier;
 
 import java.util.SortedMap;
 import java.util.Timer;
@@ -15,9 +16,11 @@ public class TimeManager {
     private boolean timeIsOver = false;
     private Timer timer;
     private final History history;
+    private final TimeGameSetWinVerifier timeGameSetWinVerifier;
 
     public TimeManager() {
         history = new History();
+        timeGameSetWinVerifier = new TimeGameSetWinVerifier();
     }
 
     public void setTeams(SortedMap<Team, TeamDataModel> teams) {
@@ -54,6 +57,21 @@ public class TimeManager {
             lastScoringTeam.decreaseScore();
 
             history.rememberUndoneGoal(team);
+        }
+    }
+
+    public void redoGoal(GameDataModel gameDataModel) {
+        if (history.hasUndoneGoals()) {
+            Team team = history.getLastUndoneGoal();
+            TeamDataModel teamDataModel = gameDataModel.getTeams().get(team);
+
+            teamDataModel.countGoal();
+            history.rememberLastGoalFrom(team);
+
+            if (timeGameSetWinVerifier.teamWon(gameDataModel.getTeams(), team)) {
+                teamDataModel.increaseWonSets();
+                gameDataModel.setSetWinner(team);
+            }
         }
     }
 }
