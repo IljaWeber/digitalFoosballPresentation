@@ -8,12 +8,14 @@ import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.histories.History;
 import com.valtech.digitalFoosball.service.verifier.TimeGameSetWinVerifier;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Timer;
 
 import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
+@Service
 public class TimeGame implements Game {
     private final int GOAL_LIMIT = 10;
     private boolean timeIsOver = false;

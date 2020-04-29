@@ -5,7 +5,7 @@ import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.service.game.Game;
+import com.valtech.digitalFoosball.service.game.RankedGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class DigitalFoosballAPITest {
     private MockMvc mockMvc;
 
     @Autowired
-    private Game game;
+    private RankedGame game;
     private MockHttpServletRequestBuilder builder;
 
     private String json;

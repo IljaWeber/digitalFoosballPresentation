@@ -1,11 +1,12 @@
 package com.valtech.digitalFoosball.api;
 
+import com.valtech.digitalFoosball.constants.GameMode;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
-import com.valtech.digitalFoosball.service.game.IReactToGoals;
-import com.valtech.digitalFoosball.service.game.IReactToPlayerCommands;
+import com.valtech.digitalFoosball.service.game.Game;
+import com.valtech.digitalFoosball.service.game.factory.GameFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,43 +19,43 @@ import java.util.List;
 @RequestMapping("api")
 public class DigitalFoosballAPI {
 
-    @Autowired
-    private IReactToGoals goalPort;
-
-    @Autowired
-    private IReactToPlayerCommands playerCommandPort;
+    private Game game;
 
     private final Logger logger = LogManager.getLogger(DigitalFoosballAPI.class);
 
-    public DigitalFoosballAPI() {
-    }
+    @Autowired
+    private GameFactory gameFactory;
 
     @PostMapping(path = "/init", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel initGame(@RequestBody InitDataModel initDataModel) {
         logger.info("Sign in: " + initDataModel.toString());
 
-        playerCommandPort.initGame(initDataModel);
+        game = gameFactory.getGame(GameMode.RANKED);
 
-        return playerCommandPort.getGameData();
+        game.initGame(initDataModel);
+
+        return game.getGameData();
     }
 
     @PostMapping(path = "/initAdHoc", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel initAdHocGame() {
         logger.info("Ad-Hoc-Game started");
 
-        playerCommandPort.initAdHocGame();
+        game = gameFactory.getGame(GameMode.AD_HOC);
 
-        return playerCommandPort.getGameData();
+        game.initGame(new InitDataModel());
+
+        return game.getGameData();
     }
 
     @GetMapping(path = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel getGameData() {
-        return playerCommandPort.getGameData();
+        return game.getGameData();
     }
 
     @GetMapping(path = "/allTeams", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TeamOutput> getAllTeamsStartingWith() {
-        return playerCommandPort.getAllTeamsFromDatabase();
+        return game.getAllTeamsFromDatabase();
     }
 
     @PostMapping(path = "/raise", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -63,41 +64,41 @@ public class DigitalFoosballAPI {
 
         Team team = Team.getTeamBy(teamNo);
 
-        goalPort.countGoalFor(team);
+        game.countGoalFor(team);
     }
 
     @PostMapping(path = "/newRound", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel newRound() {
         logger.info("New Round");
 
-        playerCommandPort.changeover();
+        game.changeover();
 
-        return playerCommandPort.getGameData();
+        return game.getGameData();
     }
 
     @PutMapping(path = "/undo", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel undoLastGoal() {
         logger.info("Undo");
 
-        playerCommandPort.undoGoal();
+        game.undoGoal();
 
-        return playerCommandPort.getGameData();
+        return game.getGameData();
     }
 
     @PutMapping(path = "/redo", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel redoLastGoal() {
         logger.info("Redo");
 
-        playerCommandPort.redoGoal();
+        game.redoGoal();
 
-        return playerCommandPort.getGameData();
+        return game.getGameData();
     }
 
     @DeleteMapping(path = "/reset", produces = MediaType.APPLICATION_JSON_VALUE)
     public boolean resetGameValues() {
         logger.info("Reset");
 
-        playerCommandPort.resetMatch();
+        game.resetMatch();
 
         return true;
     }

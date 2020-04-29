@@ -17,14 +17,10 @@ import java.util.List;
 public class TeamManager {
 
     @Autowired
-    private IObtainTeams teamDataPort;
+    private final IObtainTeams teamDataPort;
 
-    @Autowired
     public TeamManager(IObtainTeams teamDataPort) {
         this.teamDataPort = teamDataPort;
-    }
-
-    public TeamManager() {
     }
 
     public GameDataModel init(InitDataModel initDataModel) {

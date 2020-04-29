@@ -1,5 +1,7 @@
 package com.valtech.digitalFoosball.service.game;
 
+import com.valtech.digitalFoosball.Application;
+import com.valtech.digitalFoosball.api.DigitalFoosballAPI;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
@@ -11,6 +13,9 @@ import com.valtech.digitalFoosball.storage.repository.PlayerRepository;
 import com.valtech.digitalFoosball.storage.repository.TeamRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +26,15 @@ import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ContextConfiguration(classes = Application.class)
+@SpringBootTest(classes = DigitalFoosballAPI.class)
 public class TeamManagerShould {
 
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
     private UUID id;
+
+    @Autowired
     private TeamManager teamManager;
 
     @BeforeEach
@@ -35,9 +44,9 @@ public class TeamManagerShould {
         PlayerService playerService = new PlayerService(
                 playerRepository);
         TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
-        IObtainTeams IObtainTeams = new TeamService(teamRepository,
+        IObtainTeams iObtainTeams = new TeamService(teamRepository,
                                                     playerService);
-        teamManager = new TeamManager(IObtainTeams);
+        teamManager = new TeamManager(iObtainTeams);
     }
 
     @Test

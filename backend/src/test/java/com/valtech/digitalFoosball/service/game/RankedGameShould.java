@@ -27,20 +27,19 @@ import static org.assertj.core.groups.Tuple.tuple;
 
 public class RankedGameShould {
     private final UUID id = UUID.randomUUID();
-    public Game game;
+
+    public RankedGame game;
+
     protected InitDataModel initDataModel;
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
-    private final FakeClientUpdates clientUpdater;
 
     public RankedGameShould() {
+        //clean up mess here
+        game = new RankedGame(new TeamManager(new TeamService(new TeamRepositoryFake(id),
+                                                              new PlayerService(new PlayerRepositoryFake()))),
+                              new FakeClientUpdates());
         initDataModel = new InitDataModel();
-        TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
-        PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
-        PlayerService playerService = new PlayerService(playerRepository);
-        IObtainTeams IObtainTeams = new TeamService(teamRepository, playerService);
-        clientUpdater = new FakeClientUpdates();
-        game = new RankedGame(IObtainTeams, clientUpdater);
     }
 
     private void setUpTeams() {
@@ -197,17 +196,20 @@ public class RankedGameShould {
     @Test
     public void load_nothing_when_there_are_no_teams_starting_with_given_letters() {
         setUpTeams();
-        TeamRepositoryFakeTwo teamRepository = new TeamRepositoryFakeTwo(id);
-        PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
-        PlayerService playerService = new PlayerService(playerRepository);
-        IObtainTeams IObtainTeams = new TeamService(teamRepository,
-                                                    playerService);
-        game = new RankedGame(IObtainTeams, clientUpdater);
-        game.initGame(initDataModel);
+        setUpTestDoubles();
 
         List<TeamOutput> actual = game.getAllTeamsFromDatabase();
 
         assertThat(actual).isEmpty();
+    }
+
+    private void setUpTestDoubles() {
+        TeamRepositoryFakeTwo teamRepository = new TeamRepositoryFakeTwo(id);
+        PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
+        PlayerService playerService = new PlayerService(playerRepository);
+        IObtainTeams iObtainTeams = new TeamService(teamRepository, playerService);
+        FakeClientUpdates fakeClientUpdates = new FakeClientUpdates();
+        game = new RankedGame(new TeamManager(iObtainTeams), fakeClientUpdates);
     }
 
     private void raiseScoreOf(Team... teams) {
