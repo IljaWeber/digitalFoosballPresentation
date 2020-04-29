@@ -1,5 +1,25 @@
 package com.valtech.digitalFoosball.constants;
 
 public enum GameMode {
-    AD_HOC, RANKED, TIME_GAME, NO_ACTIVE_GAME
+    AD_HOC(0),
+    RANKED(1),
+    TIME_GAME(2);
+
+    private int gameMode;
+
+    GameMode(int gameMode) {
+        this.gameMode = gameMode;
+    }
+
+    public static GameMode getModeBy(int gameModeId) {
+        if (gameModeId == AD_HOC.gameMode) {
+            return AD_HOC;
+        }
+
+        if (gameModeId == RANKED.gameMode) {
+            return RANKED;
+        }
+
+        return TIME_GAME;
+    }
 }
