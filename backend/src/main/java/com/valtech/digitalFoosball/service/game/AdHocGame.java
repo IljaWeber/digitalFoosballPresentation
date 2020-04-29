@@ -6,6 +6,7 @@ import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.valtech.digitalFoosball.storage.IObtainTeams;
 
 import java.util.List;
 

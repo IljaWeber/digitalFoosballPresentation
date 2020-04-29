@@ -16,9 +16,9 @@ import java.util.List;
 @Service
 public class TeamManager {
 
-    @Autowired
-    private final IObtainTeams teamDataPort;
+    private IObtainTeams teamDataPort;
 
+    @Autowired
     public TeamManager(IObtainTeams teamDataPort) {
         this.teamDataPort = teamDataPort;
     }

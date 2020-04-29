@@ -17,14 +17,16 @@ public class RankedGame implements Game {
 
     private final ScoreManager scoreManager;
 
-    public RankedGame() {
-        scoreManager = new ScoreManager();
-    }
-
+    @Autowired
     public RankedGame(TeamManager teamManager) {
         scoreManager = new ScoreManager();
         this.teamManager = teamManager;
     }
+
+    public RankedGame() {
+        scoreManager = new ScoreManager();
+    }
+
 
     @Override
     public List<TeamOutput> getAllTeamsFromDatabase() {
