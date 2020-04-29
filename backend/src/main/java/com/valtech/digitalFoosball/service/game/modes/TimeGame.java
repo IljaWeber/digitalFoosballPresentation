@@ -1,10 +1,11 @@
-package com.valtech.digitalFoosball.service.game;
+package com.valtech.digitalFoosball.service.game.modes;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
+import com.valtech.digitalFoosball.service.game.TaskOfTimer;
 import com.valtech.digitalFoosball.service.histories.History;
 import com.valtech.digitalFoosball.service.verifier.TimeGameSetWinVerifier;
 import org.springframework.stereotype.Service;

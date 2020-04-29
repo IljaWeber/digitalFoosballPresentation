@@ -3,7 +3,7 @@ package com.valtech.digitalFoosball.service.verifier;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.service.game.TimeGame;
+import com.valtech.digitalFoosball.service.game.modes.TimeGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

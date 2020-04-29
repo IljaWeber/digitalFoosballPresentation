@@ -1,5 +1,7 @@
 package com.valtech.digitalFoosball.service.game;
 
+import com.valtech.digitalFoosball.service.game.modes.TimeGame;
+
 import java.util.TimerTask;
 
 public class TaskOfTimer extends TimerTask {

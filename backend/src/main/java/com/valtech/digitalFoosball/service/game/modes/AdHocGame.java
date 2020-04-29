@@ -1,9 +1,11 @@
-package com.valtech.digitalFoosball.service.game;
+package com.valtech.digitalFoosball.service.game.modes;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
+import com.valtech.digitalFoosball.service.game.ScoreManager;
+import com.valtech.digitalFoosball.service.game.TeamManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.valtech.digitalFoosball.storage.IObtainTeams;
@@ -16,10 +18,6 @@ public class AdHocGame implements Game {
     private TeamManager teamManager;
 
     private final ScoreManager scoreManager;
-
-    public AdHocGame() {
-        scoreManager = new ScoreManager();
-    }
 
     @Autowired
     public AdHocGame(TeamManager teamManager) {
