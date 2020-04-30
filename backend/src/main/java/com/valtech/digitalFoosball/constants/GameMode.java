@@ -3,7 +3,8 @@ package com.valtech.digitalFoosball.constants;
 public enum GameMode {
     AD_HOC(0),
     RANKED(1),
-    TIME_GAME(2);
+    TIME_GAME(2),
+    NO_ACTIVE_GAME;
 
     private int gameMode;
 
