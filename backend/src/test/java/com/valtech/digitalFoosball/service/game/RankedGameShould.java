@@ -1,13 +1,13 @@
 package com.valtech.digitalFoosball.service.game;
 
-import com.valtech.digitalFoosball.api.IUpdateClient;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.exceptions.NameDuplicateException;
+import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
+import com.valtech.digitalFoosball.service.builder.GameBuilder;
 import com.valtech.digitalFoosball.storage.IObtainTeams;
 import com.valtech.digitalFoosball.storage.PlayerService;
 import com.valtech.digitalFoosball.storage.TeamService;
@@ -15,12 +15,10 @@ import com.valtech.digitalFoosball.storage.repository.PlayerRepository;
 import com.valtech.digitalFoosball.storage.repository.TeamRepository;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
-import static com.valtech.digitalFoosball.constants.Team.*;
+import static com.valtech.digitalFoosball.constants.Team.ONE;
+import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.groups.Tuple.tuple;
@@ -33,12 +31,12 @@ public class RankedGameShould {
     protected InitDataModel initDataModel;
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
+    private GameDataModel gameData;
 
     public RankedGameShould() {
-        //clean up mess here
-        game = new RankedGame(new TeamManager(new TeamService(new TeamRepositoryFake(id),
-                                                              new PlayerService(new PlayerRepositoryFake()))),
-                              new FakeClientUpdates());
+        TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
+        PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
+        game = GameBuilder.buildRankedGameWith(teamRepository, playerRepository);
         initDataModel = new InitDataModel();
     }
 
@@ -46,7 +44,7 @@ public class RankedGameShould {
         teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
         teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
         initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
-        game.initGame(initDataModel);
+        gameData = game.initGame(initDataModel);
     }
 
     @Test
@@ -55,37 +53,7 @@ public class RankedGameShould {
         teamDataModelTwo = new TeamDataModel("T2", "P3", "P1");
         initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
 
-        assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> {
-            game.initGame(initDataModel);
-        });
-    }
-
-    @Test
-    public void sum_up_all_relevant_game_data_in_a_gameDataModel() {
-        setUpTeams();
-        raiseScoreOf(ONE, TWO);
-
-        GameOutputModel gameOutputModel = game.getGameData();
-
-        List<TeamOutput> actual = gameOutputModel.getTeams();
-        assertThat(actual).extracting(TeamOutput::getName,
-                                      TeamOutput::getPlayerOne,
-                                      TeamOutput::getPlayerTwo,
-                                      TeamOutput::getScore).containsExactly(
-                tuple("T1", "P1", "P2", 1),
-                tuple("T2", "P3", "P4", 1));
-    }
-
-    @Test
-    public void return_empty_model_when_no_teams_are_set_up() {
-        GameOutputModel actual = game.getGameData();
-
-        List<TeamOutput> teams = actual.getTeams();
-        Team matchWinner = actual.getMatchWinner();
-        Team winnerOfSet = actual.getWinnerOfSet();
-        assertThat(teams).isEmpty();
-        assertThat(matchWinner).isEqualTo(NO_TEAM);
-        assertThat(winnerOfSet).isEqualTo(NO_TEAM);
+        assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> game.initGame(initDataModel));
     }
 
     @Test
@@ -93,16 +61,22 @@ public class RankedGameShould {
         setUpTeams();
         raiseScoreOf(ONE, TWO);
 
-        game.resetMatch();
+        game.resetMatch(gameData);
 
-        GameOutputModel gameData = game.getGameData();
-        List<TeamOutput> actual = gameData.getTeams();
-        assertThat(actual).extracting(TeamOutput::getName,
-                                      TeamOutput::getPlayerOne,
-                                      TeamOutput::getPlayerTwo,
-                                      TeamOutput::getScore).containsExactly(
+        List<TeamDataModel> actual = getTeamDataModels();
+        assertThat(actual).extracting(TeamDataModel::getName,
+                                      TeamDataModel::getNameOfPlayerOne,
+                                      TeamDataModel::getNameOfPlayerTwo,
+                                      TeamDataModel::getScore).containsExactly(
                 tuple("", "", "", 0),
                 tuple("", "", "", 0));
+    }
+
+    private List<TeamDataModel> getTeamDataModels() {
+        SortedMap<Team, TeamDataModel> teams = gameData.getTeams();
+        List<TeamDataModel> actual = new ArrayList<>();
+        teams.forEach((k, v) -> actual.add(v));
+        return actual;
     }
 
     @Test
@@ -110,31 +84,17 @@ public class RankedGameShould {
         setUpTeams();
         raiseScoreOf(ONE);
 
-        game.resetMatch();
+        game.resetMatch(gameData);
 
-        game.undoGoal();
-        GameOutputModel gameData = game.getGameData();
-        assertThatThereAreNoGoalsForTeam(ONE, gameData);
-        assertThatThereAreNoGoalsForTeam(TWO, gameData);
+        game.undoGoal(gameData);
+        assertThatThereAreNoGoalsForTeam(ONE);
+        assertThatThereAreNoGoalsForTeam(TWO);
     }
 
-    private void assertThatThereAreNoGoalsForTeam(Team team, GameOutputModel gameData) {
-        TeamOutput teamOne = gameData.getTeam(team);
+    private void assertThatThereAreNoGoalsForTeam(Team team) {
+        TeamDataModel teamOne = gameData.getTeam(team);
         int actual = teamOne.getScore();
         assertThat(actual).isEqualTo(0);
-    }
-
-    @Test
-    public void set_the_match_winner_when_a_team_won_two_sets() {
-        setUpTeams();
-        raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
-        game.changeover();
-        raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
-
-        GameOutputModel gameData = game.getGameData();
-        Team actualMatchWinner = gameData.getMatchWinner();
-
-        assertThat(actualMatchWinner).isEqualTo(ONE);
     }
 
     @Test
@@ -142,27 +102,25 @@ public class RankedGameShould {
         setUpTeams();
         raiseScoreOf(ONE, TWO);
 
-        game.changeover();
+        game.changeover(gameData);
 
-        GameOutputModel gameData = game.getGameData();
-        List<TeamOutput> teams = gameData.getTeams();
-        assertThat(teams).extracting(TeamOutput::getScore).containsExactly(0, 0);
-        assertThat(teams).extracting(TeamOutput::getName).containsExactly("T1", "T2");
-        assertThat(teams).extracting(TeamOutput::getPlayerOne).containsExactly("P1", "P3");
-        assertThat(teams).extracting(TeamOutput::getPlayerTwo).containsExactly("P2", "P4");
+        List<TeamDataModel> teams = getTeamDataModels();
+        assertThat(teams).extracting(TeamDataModel::getScore).containsExactly(0, 0);
+        assertThat(teams).extracting(TeamDataModel::getName).containsExactly("T1", "T2");
+        assertThat(teams).extracting(TeamDataModel::getNameOfPlayerOne).containsExactly("P1", "P3");
+        assertThat(teams).extracting(TeamDataModel::getNameOfPlayerTwo).containsExactly("P2", "P4");
     }
 
     @Test
     public void forget_about_shot_goals_from_the_past_set() {
         setUpTeams();
         raiseScoreOf(ONE);
-        game.undoGoal();
-        game.changeover();
+        game.undoGoal(gameData);
+        game.changeover(gameData);
 
-        game.undoGoal();
+        game.undoGoal(gameData);
 
-        GameOutputModel gameData = game.getGameData();
-        TeamOutput team = gameData.getTeam(ONE);
+        TeamDataModel team = gameData.getTeam(ONE);
         int actual = team.getScore();
         assertThat(actual).isEqualTo(0);
     }
@@ -171,13 +129,12 @@ public class RankedGameShould {
     public void forget_about_undid_goals_from_the_past_set() {
         setUpTeams();
         raiseScoreOf(ONE);
-        game.undoGoal();
-        game.changeover();
+        game.undoGoal(gameData);
+        game.changeover(gameData);
 
-        game.redoGoal();
+        game.redoGoal(gameData);
 
-        GameOutputModel gameData = game.getGameData();
-        TeamOutput team = gameData.getTeam(ONE);
+        TeamDataModel team = gameData.getTeam(ONE);
         int actual = team.getScore();
         assertThat(actual).isEqualTo(0);
     }
@@ -208,20 +165,12 @@ public class RankedGameShould {
         PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
         PlayerService playerService = new PlayerService(playerRepository);
         IObtainTeams iObtainTeams = new TeamService(teamRepository, playerService);
-        FakeClientUpdates fakeClientUpdates = new FakeClientUpdates();
-        game = new RankedGame(new TeamManager(iObtainTeams), fakeClientUpdates);
+        game = new RankedGame(new TeamManager(iObtainTeams));
     }
 
     private void raiseScoreOf(Team... teams) {
         for (Team team : teams) {
-            game.countGoalFor(team);
-        }
-    }
-
-    private class FakeClientUpdates implements IUpdateClient {
-
-        @Override
-        public void updateClientWith(GameOutputModel gameData) {
+            game.countGoalFor(team, gameData);
         }
     }
 

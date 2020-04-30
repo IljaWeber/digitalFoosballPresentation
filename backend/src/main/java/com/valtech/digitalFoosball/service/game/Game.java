@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.constants.Team;
+import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
-import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 
 import java.util.List;
@@ -10,17 +10,15 @@ import java.util.List;
 public interface Game {
     List<TeamOutput> getAllTeamsFromDatabase();
 
-    void initGame(InitDataModel initDataModel);
+    GameDataModel initGame(InitDataModel initDataModel);
 
-    void countGoalFor(Team team);
+    void countGoalFor(Team team, GameDataModel gameDataModel);
 
-    void undoGoal();
+    void undoGoal(GameDataModel gameDataModel);
 
-    void redoGoal();
+    void redoGoal(GameDataModel gameDataModel);
 
-    void changeover();
+    void changeover(GameDataModel gameDataModel);
 
-    void resetMatch();
-
-    GameOutputModel getGameData();
+    void resetMatch(GameDataModel gameDataModel);
 }

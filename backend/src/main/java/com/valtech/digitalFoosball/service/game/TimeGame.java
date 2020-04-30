@@ -4,7 +4,6 @@ import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.histories.History;
 import com.valtech.digitalFoosball.service.verifier.TimeGameSetWinVerifier;
@@ -31,6 +30,16 @@ public class TimeGame implements Game {
     public void setTimer(long timeDuration) {
         timer = new Timer();
         timer.schedule(new TaskOfTimer(this), timeDuration);
+    }
+
+    @Override
+    public List<TeamOutput> getAllTeamsFromDatabase() {
+        return null;
+    }
+
+    @Override
+    public GameDataModel initGame(InitDataModel initDataModel) {
+        return null;
     }
 
     public void countGoalFor(Team team, GameDataModel gameDataModel) {
@@ -80,42 +89,13 @@ public class TimeGame implements Game {
     }
 
     @Override
-    public List<TeamOutput> getAllTeamsFromDatabase() {
-        return null;
-    }
-
-    @Override
-    public void initGame(InitDataModel initDataModel) {
+    public void changeover(GameDataModel gameDataModel) {
 
     }
 
     @Override
-    public void countGoalFor(Team team) {
+    public void resetMatch(GameDataModel gameDataModel) {
 
     }
 
-    @Override
-    public void undoGoal() {
-
-    }
-
-    @Override
-    public void redoGoal() {
-
-    }
-
-    @Override
-    public void changeover() {
-
-    }
-
-    @Override
-    public void resetMatch() {
-
-    }
-
-    @Override
-    public GameOutputModel getGameData() {
-        return null;
-    }
 }

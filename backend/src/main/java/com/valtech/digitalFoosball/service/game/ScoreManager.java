@@ -12,15 +12,14 @@ import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 @Service
 public class ScoreManager {
     private final RegularGameSetWinVerifier setWinVerifier;
-    private History history;
 
     public ScoreManager() {
-        history = new History();
         setWinVerifier = new RegularGameSetWinVerifier();
     }
 
     public void countGoalFor(Team team, GameDataModel gameDataModel) {
         TeamDataModel teamDataModel = gameDataModel.getTeam(team);
+        History history = gameDataModel.getHistory();
 
         if (setHasNoWinner(gameDataModel)) {
             teamDataModel.countGoal();
@@ -39,6 +38,8 @@ public class ScoreManager {
     }
 
     public void undoGoal(GameDataModel gameDataModel) {
+        History history = gameDataModel.getHistory();
+
         if (history.thereAreGoals()) {
             Team team = history.getLastScoringTeam();
             TeamDataModel lastScoringTeam = gameDataModel.getTeam(team);
@@ -55,6 +56,8 @@ public class ScoreManager {
     }
 
     public void redoGoal(GameDataModel gameDataModel) {
+        History history = gameDataModel.getHistory();
+
         if (history.hasUndoneGoals()) {
             Team team = history.getLastUndoneGoal();
             TeamDataModel teamDataModel = gameDataModel.getTeams().get(team);
@@ -67,9 +70,5 @@ public class ScoreManager {
                 gameDataModel.setSetWinner(team);
             }
         }
-    }
-
-    public void clearHistory() {
-        history = new History();
     }
 }

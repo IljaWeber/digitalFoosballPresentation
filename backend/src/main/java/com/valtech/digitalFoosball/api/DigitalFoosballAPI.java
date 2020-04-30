@@ -5,8 +5,7 @@ import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
-import com.valtech.digitalFoosball.service.game.Game;
-import com.valtech.digitalFoosball.service.game.factory.GameFactory;
+import com.valtech.digitalFoosball.service.game.GameController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +18,20 @@ import java.util.List;
 @RequestMapping("api")
 public class DigitalFoosballAPI {
 
-    private Game game;
-
-    private final Logger logger = LogManager.getLogger(DigitalFoosballAPI.class);
+    private final GameController game;
 
     @Autowired
-    private GameFactory gameFactory;
+    public DigitalFoosballAPI(GameController game) {
+        this.game = game;
+    }
+
+    private final Logger logger = LogManager.getLogger(DigitalFoosballAPI.class);
 
     @PostMapping(path = "/init", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel initGame(@RequestBody InitDataModel initDataModel) {
         logger.info("Sign in: " + initDataModel.toString());
 
-        game = gameFactory.getGame(GameMode.RANKED);
-
-        game.initGame(initDataModel);
+        game.initGame(initDataModel, GameMode.RANKED);
 
         return game.getGameData();
     }
@@ -41,9 +40,7 @@ public class DigitalFoosballAPI {
     public GameOutputModel initAdHocGame() {
         logger.info("Ad-Hoc-Game started");
 
-        game = gameFactory.getGame(GameMode.AD_HOC);
-
-        game.initGame(new InitDataModel());
+        game.initGame(new InitDataModel(), GameMode.AD_HOC);
 
         return game.getGameData();
     }

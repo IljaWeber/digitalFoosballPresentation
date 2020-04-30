@@ -1,10 +1,8 @@
 package com.valtech.digitalFoosball.service.game;
 
-import com.valtech.digitalFoosball.api.IUpdateClient;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
-import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,27 +10,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RankedGame implements IReactToGoals, IReactToPlayerCommands, Game {
+public class RankedGame implements Game {
 
     @Autowired
     private TeamManager teamManager;
 
-    @Autowired
-    private IUpdateClient clientUpdater;
-
     private final ScoreManager scoreManager;
-    private GameDataModel gameDataModel;
 
     public RankedGame() {
-        gameDataModel = new GameDataModel();
         scoreManager = new ScoreManager();
     }
 
-    public RankedGame(TeamManager teamManager, IUpdateClient clientUpdater) {
-        gameDataModel = new GameDataModel();
+    public RankedGame(TeamManager teamManager) {
         scoreManager = new ScoreManager();
         this.teamManager = teamManager;
-        this.clientUpdater = clientUpdater;
     }
 
     @Override
@@ -41,45 +32,32 @@ public class RankedGame implements IReactToGoals, IReactToPlayerCommands, Game {
     }
 
     @Override
-    public void initGame(InitDataModel initDataModel) {
-        gameDataModel = teamManager.init(initDataModel);
+    public GameDataModel initGame(InitDataModel initDataModel) {
+        return teamManager.init(initDataModel);
     }
 
     @Override
-    public void initAdHocGame() {
-        gameDataModel = teamManager.initAdHocGame();
-    }
-
-    @Override
-    public void countGoalFor(Team team) {
+    public void countGoalFor(Team team, GameDataModel gameDataModel) {
         scoreManager.countGoalFor(team, gameDataModel);
-        clientUpdater.updateClientWith(getGameData());
     }
 
     @Override
-    public void undoGoal() {
+    public void undoGoal(GameDataModel gameDataModel) {
         scoreManager.undoGoal(gameDataModel);
     }
 
     @Override
-    public void redoGoal() {
+    public void redoGoal(GameDataModel gameDataModel) {
         scoreManager.redoGoal(gameDataModel);
     }
 
     @Override
-    public void changeover() {
-        gameDataModel.setScoresToZero();
-        scoreManager.clearHistory();
+    public void changeover(GameDataModel gameDataModel) {
+        gameDataModel.changeOver();
     }
 
     @Override
-    public void resetMatch() {
+    public void resetMatch(GameDataModel gameDataModel) {
         gameDataModel.resetMatchValues();
-        scoreManager.clearHistory();
-    }
-
-    @Override
-    public GameOutputModel getGameData() {
-        return new GameOutputModel(gameDataModel);
     }
 }

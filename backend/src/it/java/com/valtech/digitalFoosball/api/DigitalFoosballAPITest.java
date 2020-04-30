@@ -2,7 +2,6 @@ package com.valtech.digitalFoosball.api;
 
 import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.game.RankedGame;
@@ -67,8 +66,8 @@ public class DigitalFoosballAPITest {
     public void undoLastGoal_whenSeveralGoalsWereShotAndTheLastGetsUndid_thenScoreIsSameAsWithoutTheLastGoal() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        game.countGoalFor(Team.ONE);
-        game.countGoalFor(Team.ONE);
+        shootGoalForTeam(1);
+        shootGoalForTeam(1);
         builder = MockMvcRequestBuilders.put("/api/undo");
 
         mockMvc.perform(builder).andExpect(MockMvcResultMatchers.jsonPath("$.teams[0].score").value("1"));
@@ -78,15 +77,14 @@ public class DigitalFoosballAPITest {
     public void redoLastGoal_whenSeveralGoalsWereUndid_thenRedoThem() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        game.countGoalFor(Team.ONE);
-        game.countGoalFor(Team.ONE);
-        game.countGoalFor(Team.TWO);
-        game.undoGoal();
-        game.undoGoal();
-        game.undoGoal();
+        shootGoalForTeam(1);
+        shootGoalForTeam(1);
+        shootGoalForTeam(2);
+        performPutRequestTo("/api/undo");
+        performPutRequestTo("/api/undo");
+        performPutRequestTo("/api/undo");
 
-        builder = MockMvcRequestBuilders.put("/api/redo");
-        mockMvc.perform(builder);
+        performPutRequestTo("/api/redo");
         mockMvc.perform(builder);
 
         mockMvc.perform(builder)
@@ -94,12 +92,23 @@ public class DigitalFoosballAPITest {
                .andExpect(MockMvcResultMatchers.jsonPath("$.teams[1].score").value("1"));
     }
 
+    private void performPutRequestTo(String uri) throws Exception {
+        builder = MockMvcRequestBuilders.put(uri);
+        mockMvc.perform(builder);
+    }
+
+    private void shootGoalForTeam(int teamNo) throws Exception {
+        builder = MockMvcRequestBuilders.post("/api/raise");
+        builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(gson.toJson(teamNo));
+        mockMvc.perform(builder);
+    }
+
     @Test
     public void resetGameValues_whenResetGameValuesIsCalled_thenSetEmptyTeamNamesAndScoreToZero() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        game.countGoalFor(Team.ONE);
-        game.countGoalFor(Team.TWO);
+        shootGoalForTeam(1);
+        shootGoalForTeam(2);
 
         builder = MockMvcRequestBuilders.delete("/api/reset");
 
@@ -125,10 +134,7 @@ public class DigitalFoosballAPITest {
     public void raiseScore_whenScoreForTeamTwoIsRaised_thenScoreOfTeamTwoIsOne() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        builder = MockMvcRequestBuilders.post("/api/raise");
-        builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(gson.toJson(2));
-
-        mockMvc.perform(builder);
+        shootGoalForTeam(2);
 
         builder = MockMvcRequestBuilders.get("/api/game");
         mockMvc.perform(builder).andExpect(MockMvcResultMatchers.jsonPath("$.teams[1].score").value("1"));
@@ -177,9 +183,7 @@ public class DigitalFoosballAPITest {
     public void newRound_whenNewRoundIsStarted_thenNamesAndPlayersAreSameButScoresAreZero() throws Exception {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
-        builder = MockMvcRequestBuilders.post("/api/raise");
-        builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(gson.toJson(1));
-        mockMvc.perform(builder);
+        shootGoalForTeam(1);
 
         builder = MockMvcRequestBuilders.post("/api/newRound");
         mockMvc.perform(builder)

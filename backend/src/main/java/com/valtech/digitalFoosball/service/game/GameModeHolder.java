@@ -1,24 +1,22 @@
-package com.valtech.digitalFoosball.service.game.factory;
+package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.constants.GameMode;
-import com.valtech.digitalFoosball.service.game.AdHocGame;
-import com.valtech.digitalFoosball.service.game.Game;
-import com.valtech.digitalFoosball.service.game.RankedGame;
-import com.valtech.digitalFoosball.service.game.TimeGame;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GameFactory {
+public class GameModeHolder {
+
+    private final RankedGame rankedGame;
+    private final TimeGame timeGame;
+    private final AdHocGame adHocGame;
 
     @Autowired
-    private RankedGame rankedGame;
-
-    @Autowired
-    private TimeGame timeGame;
-
-    @Autowired
-    private AdHocGame adHocGame;
+    public GameModeHolder(RankedGame rankedGame, TimeGame timeGame, AdHocGame adHocGame) {
+        this.rankedGame = rankedGame;
+        this.timeGame = timeGame;
+        this.adHocGame = adHocGame;
+    }
 
     public Game getGame(GameMode gameMode) {
         switch (gameMode) {

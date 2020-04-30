@@ -6,7 +6,7 @@ import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
-import com.valtech.digitalFoosball.service.game.RankedGame;
+import com.valtech.digitalFoosball.service.game.GameController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class RaspiControllerAPIShould {
     private MockMvc mockMvc;
 
     @Autowired
-    private RankedGame game;
+    private GameController game;
 
     private MockHttpServletRequestBuilder builder;
 
