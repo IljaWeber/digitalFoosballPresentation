@@ -44,7 +44,7 @@ public class RaspiControllerAPIShould {
         TeamDataModel teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
         InitDataModel initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
 
-        builder = MockMvcRequestBuilders.post("/api/init");
+        builder = MockMvcRequestBuilders.post("/api/initialize/{gameModeId}", 0);
         json = gson.toJson(initDataModel);
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
 
