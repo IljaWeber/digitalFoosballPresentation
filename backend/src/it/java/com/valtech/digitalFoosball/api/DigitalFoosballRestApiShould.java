@@ -128,9 +128,8 @@ public class DigitalFoosballRestApiShould {
     @Test
     public void reset_game_with_empty_team_and_player_names_and_zero_scores() throws Exception {
         performInitialisationRequestFor(RANKED_GAME);
-        gameDataModel.setTeam(ONE, new TeamDataModel("", "", ""));
-        gameDataModel.setTeam(TWO, new TeamDataModel("", "", ""));
         countGoalForTeam(ONE, TWO);
+        gameDataModel = new GameDataModel();
         builder = MockMvcRequestBuilders.delete("/api/reset");
 
         mockMvc.perform(builder);
