@@ -45,11 +45,15 @@ public class GameController implements IReactToGoals, IReactToPlayerCommands {
     }
 
     public void countGoalFor(Team team) {
-        GameMode gameMode = gameDataModel.getGameMode();
-        Game game = gameModeHolder.getGame(gameMode);
+        Game game = getGame();
         game.countGoalFor(team, gameDataModel);
 
         notifyAboutStateChange();
+    }
+
+    private Game getGame() {
+        GameMode gameMode = gameDataModel.getGameMode();
+        return gameModeHolder.getGame(gameMode);
     }
 
     private void notifyAboutStateChange() {
@@ -58,20 +62,17 @@ public class GameController implements IReactToGoals, IReactToPlayerCommands {
     }
 
     public void undoGoal() {
-        GameMode gameMode = gameDataModel.getGameMode();
-        Game game = gameModeHolder.getGame(gameMode);
+        Game game = getGame();
         game.undoGoal(gameDataModel);
     }
 
     public void redoGoal() {
-        GameMode gameMode = gameDataModel.getGameMode();
-        Game game = gameModeHolder.getGame(gameMode);
+        Game game = getGame();
         game.redoGoal(gameDataModel);
     }
 
     public void changeover() {
-        GameMode gameMode = gameDataModel.getGameMode();
-        Game game = gameModeHolder.getGame(gameMode);
+        Game game = getGame();
         game.changeover(gameDataModel);
     }
 

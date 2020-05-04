@@ -15,12 +15,8 @@ import java.util.Optional;
 @Service
 public class TeamService implements IObtainTeams {
 
-    @Autowired
     private TeamRepository teamRepository;
-
-    @Autowired
     private PlayerService playerService;
-
     private final Logger logger = LogManager.getLogger(TeamService.class);
 
     @Autowired
