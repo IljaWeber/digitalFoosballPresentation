@@ -7,7 +7,7 @@ import com.valtech.digitalFoosball.model.output.TeamOutput;
 
 import java.util.List;
 
-public interface Game {
+public interface GameManipulator {
     List<TeamOutput> getAllTeamsFromDatabase();
 
     GameDataModel initGame(InitDataModel initDataModel);

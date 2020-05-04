@@ -8,7 +8,7 @@ import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.builder.GameBuilder;
-import com.valtech.digitalFoosball.service.game.modes.RankedGame;
+import com.valtech.digitalFoosball.service.game.modes.RankedGameManipulator;
 import com.valtech.digitalFoosball.storage.IObtainTeams;
 import com.valtech.digitalFoosball.storage.PlayerService;
 import com.valtech.digitalFoosball.storage.TeamService;
@@ -23,17 +23,17 @@ import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class RankedGameShould {
+public class RankedGameManipulatorShould {
     private final UUID id = UUID.randomUUID();
 
-    public RankedGame game;
+    public RankedGameManipulator game;
 
     protected InitDataModel initDataModel;
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
     private GameDataModel gameData;
 
-    public RankedGameShould() {
+    public RankedGameManipulatorShould() {
         TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
         PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
         game = GameBuilder.buildRankedGameWith(teamRepository, playerRepository);
@@ -131,7 +131,7 @@ public class RankedGameShould {
         PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
         PlayerService playerService = new PlayerService(playerRepository);
         IObtainTeams iObtainTeams = new TeamService(teamRepository, playerService);
-        game = new RankedGame(new TeamManager(iObtainTeams));
+        game = new RankedGameManipulator(new TeamManager(iObtainTeams));
     }
 
     private void raiseScoreOf(Team... teams) {

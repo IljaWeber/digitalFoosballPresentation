@@ -8,22 +8,26 @@ import com.valtech.digitalFoosball.service.game.ScoreManager;
 import com.valtech.digitalFoosball.service.game.TeamManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.valtech.digitalFoosball.storage.IObtainTeams;
 
 import java.util.List;
 
 @Service
-public class AdHocGame implements Game {
+public class RankedGameManipulator implements GameManipulator {
 
     private TeamManager teamManager;
 
     private final ScoreManager scoreManager;
 
     @Autowired
-    public AdHocGame(TeamManager teamManager) {
+    public RankedGameManipulator(TeamManager teamManager) {
+        scoreManager = new ScoreManager();
         this.teamManager = teamManager;
+    }
+
+    public RankedGameManipulator() {
         scoreManager = new ScoreManager();
     }
+
 
     @Override
     public List<TeamOutput> getAllTeamsFromDatabase() {
@@ -32,7 +36,7 @@ public class AdHocGame implements Game {
 
     @Override
     public GameDataModel initGame(InitDataModel initDataModel) {
-        return teamManager.initAdHocGame();
+        return teamManager.init(initDataModel);
     }
 
     @Override

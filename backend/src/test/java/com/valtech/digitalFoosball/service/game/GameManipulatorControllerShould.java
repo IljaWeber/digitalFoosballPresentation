@@ -11,9 +11,9 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.builder.GameBuilder;
-import com.valtech.digitalFoosball.service.game.modes.AdHocGame;
-import com.valtech.digitalFoosball.service.game.modes.RankedGame;
-import com.valtech.digitalFoosball.service.game.modes.TimeGame;
+import com.valtech.digitalFoosball.service.game.modes.AdHocGameManipulator;
+import com.valtech.digitalFoosball.service.game.modes.RankedGameManipulator;
+import com.valtech.digitalFoosball.service.game.modes.TimeGameManipulator;
 import com.valtech.digitalFoosball.storage.repository.PlayerRepository;
 import com.valtech.digitalFoosball.storage.repository.TeamRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +32,7 @@ import static org.assertj.core.groups.Tuple.tuple;
 
 @ContextConfiguration(classes = Application.class)
 @SpringBootTest(classes = DigitalFoosballAPI.class)
-class GameControllerShould {
+class GameManipulatorControllerShould {
 
     public GameController game;
 
@@ -43,10 +43,13 @@ class GameControllerShould {
 
     @BeforeEach
     void setUp() {
-        RankedGame rankedGame = GameBuilder.buildRankedGameWith(new TeamRepositoryFake(id), new PlayerRepositoryFake());
-        AdHocGame adHocGame = GameBuilder.buildAdHocGameWith(new TeamRepositoryFake(id), new PlayerRepositoryFake());
-        TimeGame timeGame = GameBuilder.buildTimeGame();
-        game = new GameController(new GameModeHolder(rankedGame, timeGame, adHocGame), new FakeClientUpdater());
+        RankedGameManipulator rankedGame = GameBuilder.buildRankedGameWith(new TeamRepositoryFake(id),
+                                                                           new PlayerRepositoryFake());
+        AdHocGameManipulator adHocGame = GameBuilder.buildAdHocGameWith(new TeamRepositoryFake(id),
+                                                                        new PlayerRepositoryFake());
+        TimeGameManipulator timeGame = GameBuilder.buildTimeGame();
+        game = new GameController(new GameManipulatorProvider(rankedGame, timeGame, adHocGame),
+                                  new FakeClientUpdater());
     }
 
     @Test

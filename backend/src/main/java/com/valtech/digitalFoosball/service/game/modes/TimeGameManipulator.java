@@ -16,14 +16,14 @@ import java.util.Timer;
 import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
 @Service
-public class TimeGame implements Game {
+public class TimeGameManipulator implements GameManipulator {
     private final int GOAL_LIMIT = 10;
     private boolean timeIsOver = false;
     private Timer timer;
     private final History history;
     private final TimeGameSetWinVerifier timeGameSetWinVerifier;
 
-    public TimeGame() {
+    public TimeGameManipulator() {
         history = new History();
         timeGameSetWinVerifier = new TimeGameSetWinVerifier();
     }

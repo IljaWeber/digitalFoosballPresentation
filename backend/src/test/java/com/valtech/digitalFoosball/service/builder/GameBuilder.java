@@ -1,30 +1,32 @@
 package com.valtech.digitalFoosball.service.builder;
 
 import com.valtech.digitalFoosball.service.game.TeamManager;
-import com.valtech.digitalFoosball.service.game.modes.AdHocGame;
-import com.valtech.digitalFoosball.service.game.modes.RankedGame;
-import com.valtech.digitalFoosball.service.game.modes.TimeGame;
+import com.valtech.digitalFoosball.service.game.modes.AdHocGameManipulator;
+import com.valtech.digitalFoosball.service.game.modes.RankedGameManipulator;
+import com.valtech.digitalFoosball.service.game.modes.TimeGameManipulator;
 import com.valtech.digitalFoosball.storage.PlayerService;
 import com.valtech.digitalFoosball.storage.TeamService;
 import com.valtech.digitalFoosball.storage.repository.PlayerRepository;
 import com.valtech.digitalFoosball.storage.repository.TeamRepository;
 
 public abstract class GameBuilder {
-    public static RankedGame buildRankedGameWith(TeamRepository teamRepository, PlayerRepository playerRepository) {
+    public static RankedGameManipulator buildRankedGameWith(TeamRepository teamRepository,
+                                                            PlayerRepository playerRepository) {
         PlayerService playerService = new PlayerService(playerRepository);
         TeamService teamService = new TeamService(teamRepository, playerService);
         TeamManager teamManager = new TeamManager(teamService);
-        return new RankedGame(teamManager);
+        return new RankedGameManipulator(teamManager);
     }
 
-    public static AdHocGame buildAdHocGameWith(TeamRepository teamRepository, PlayerRepository playerRepository) {
+    public static AdHocGameManipulator buildAdHocGameWith(TeamRepository teamRepository,
+                                                          PlayerRepository playerRepository) {
         PlayerService playerService = new PlayerService(playerRepository);
         TeamService teamService = new TeamService(teamRepository, playerService);
         TeamManager teamManager = new TeamManager(teamService);
-        return new AdHocGame(teamManager);
+        return new AdHocGameManipulator(teamManager);
     }
 
-    public static TimeGame buildTimeGame() {
-        return new TimeGame();
+    public static TimeGameManipulator buildTimeGame() {
+        return new TimeGameManipulator();
     }
 }

@@ -10,7 +10,6 @@ import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.service.game.GameController;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -175,21 +173,6 @@ public class DigitalFoosballRestApiShould {
         mockMvc.perform(builder);
 
         assertThat(getActualResponseBody()).isEqualTo(getExpectedBody(NO_TEAM));
-    }
-
-    //unnecessary?
-    @Disabled
-    @Test
-    public void getAllTeams_whenAllTeamsWhereAsked_thenReturnTheseAsAList() throws Exception {
-
-        builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
-        mockMvc.perform(builder);
-
-        builder = MockMvcRequestBuilders.get("/api/allTeams");
-        mockMvc.perform(builder)
-               .andExpect(status().isOk())
-               .andExpect(MockMvcResultMatchers.jsonPath("$.[0].name").value("T1"))
-               .andExpect(MockMvcResultMatchers.jsonPath("$.[1].name").value("T2"));
     }
 
     private void prepareTeamsForInitialization(TeamDataModel teamOne, TeamDataModel teamTwo) {

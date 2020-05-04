@@ -3,7 +3,7 @@ package com.valtech.digitalFoosball.service.game;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.service.game.modes.TimeGame;
+import com.valtech.digitalFoosball.service.game.modes.TimeGameManipulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +14,8 @@ import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TimeGameShouldRedo {
-    public TimeGame timeGame = new TimeGame();
+public class TimeGameManipulatorShouldRedo {
+    public TimeGameManipulator timeGame = new TimeGameManipulator();
     private GameDataModel gameDataModel;
 
     @BeforeEach

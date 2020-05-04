@@ -12,23 +12,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RankedGame implements Game {
+public class AdHocGameManipulator implements GameManipulator {
 
-    @Autowired
-    private TeamManager teamManager;
+    private final TeamManager teamManager;
 
     private final ScoreManager scoreManager;
 
     @Autowired
-    public RankedGame(TeamManager teamManager) {
-        scoreManager = new ScoreManager();
+    public AdHocGameManipulator(TeamManager teamManager) {
         this.teamManager = teamManager;
-    }
-
-    public RankedGame() {
         scoreManager = new ScoreManager();
     }
-
 
     @Override
     public List<TeamOutput> getAllTeamsFromDatabase() {
@@ -37,7 +31,7 @@ public class RankedGame implements Game {
 
     @Override
     public GameDataModel initGame(InitDataModel initDataModel) {
-        return teamManager.init(initDataModel);
+        return teamManager.initAdHocGame();
     }
 
     @Override

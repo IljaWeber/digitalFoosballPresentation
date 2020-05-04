@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RegularGameSetWinVerifierShould {
+public class RegularGameManipulatorSetWinVerifierShould {
     private RegularGameSetWinVerifier setWinVerifier;
     private TeamDataModel teamOne;
     private TeamDataModel teamTwo;
