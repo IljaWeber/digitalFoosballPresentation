@@ -8,6 +8,7 @@ import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.builder.GameBuilder;
+import com.valtech.digitalFoosball.service.game.modes.RankedGame;
 import com.valtech.digitalFoosball.storage.IObtainTeams;
 import com.valtech.digitalFoosball.storage.PlayerService;
 import com.valtech.digitalFoosball.storage.TeamService;
@@ -21,7 +22,6 @@ import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.assertj.core.groups.Tuple.tuple;
 
 public class RankedGameShould {
     private final UUID id = UUID.randomUUID();
@@ -56,45 +56,11 @@ public class RankedGameShould {
         assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> game.initGame(initDataModel));
     }
 
-    @Test
-    public void delete_the_names_and_set_scores_to_zero() {
-        setUpTeams();
-        raiseScoreOf(ONE, TWO);
-
-        game.resetMatch(gameData);
-
-        List<TeamDataModel> actual = getTeamDataModels();
-        assertThat(actual).extracting(TeamDataModel::getName,
-                                      TeamDataModel::getNameOfPlayerOne,
-                                      TeamDataModel::getNameOfPlayerTwo,
-                                      TeamDataModel::getScore).containsExactly(
-                tuple("", "", "", 0),
-                tuple("", "", "", 0));
-    }
-
     private List<TeamDataModel> getTeamDataModels() {
         SortedMap<Team, TeamDataModel> teams = gameData.getTeams();
         List<TeamDataModel> actual = new ArrayList<>();
         teams.forEach((k, v) -> actual.add(v));
         return actual;
-    }
-
-    @Test
-    public void forget_about_shot_and_undid_goals_from_the_past_match() {
-        setUpTeams();
-        raiseScoreOf(ONE);
-
-        game.resetMatch(gameData);
-
-        game.undoGoal(gameData);
-        assertThatThereAreNoGoalsForTeam(ONE);
-        assertThatThereAreNoGoalsForTeam(TWO);
-    }
-
-    private void assertThatThereAreNoGoalsForTeam(Team team) {
-        TeamDataModel teamOne = gameData.getTeam(team);
-        int actual = teamOne.getScore();
-        assertThat(actual).isEqualTo(0);
     }
 
     @Test

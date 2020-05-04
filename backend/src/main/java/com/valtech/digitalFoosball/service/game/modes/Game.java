@@ -19,6 +19,4 @@ public interface Game {
     void redoGoal(GameDataModel gameDataModel);
 
     void changeover(GameDataModel gameDataModel);
-
-    void resetMatch(GameDataModel gameDataModel);
 }

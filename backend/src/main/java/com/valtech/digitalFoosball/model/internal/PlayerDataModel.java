@@ -39,10 +39,6 @@ public class PlayerDataModel {
         this.name = name;
     }
 
-    public void resetValues() {
-        name = "";
-    }
-
     @Override
     public String toString() {
         return name;

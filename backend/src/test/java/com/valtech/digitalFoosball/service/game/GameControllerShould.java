@@ -11,6 +11,9 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.builder.GameBuilder;
+import com.valtech.digitalFoosball.service.game.modes.AdHocGame;
+import com.valtech.digitalFoosball.service.game.modes.RankedGame;
+import com.valtech.digitalFoosball.service.game.modes.TimeGame;
 import com.valtech.digitalFoosball.storage.repository.PlayerRepository;
 import com.valtech.digitalFoosball.storage.repository.TeamRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -123,12 +126,6 @@ class GameControllerShould {
         assertThat(teams).extracting(TeamOutput::getName).containsExactly("T1", "T2");
         assertThat(teams).extracting(TeamOutput::getPlayerOne).containsExactly("P1", "P3");
         assertThat(teams).extracting(TeamOutput::getPlayerTwo).containsExactly("P2", "P4");
-    }
-
-    private void assertThatThereAreNoGoalsForTeam(Team team, GameOutputModel gameData) {
-        TeamOutput teamOne = gameData.getTeam(team);
-        int actual = teamOne.getScore();
-        assertThat(actual).isEqualTo(0);
     }
 
     private void raiseScoreOf(Team... teams) {

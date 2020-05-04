@@ -18,41 +18,32 @@ import java.util.List;
 @RequestMapping("api")
 public class DigitalFoosballAPI {
 
-    private final GameController game;
+    private final Logger logger = LogManager.getLogger(DigitalFoosballAPI.class);
+    private final GameController gameController;
 
     @Autowired
-    public DigitalFoosballAPI(GameController game) {
-        this.game = game;
+    public DigitalFoosballAPI(GameController gameController) {
+        this.gameController = gameController;
     }
 
-    private final Logger logger = LogManager.getLogger(DigitalFoosballAPI.class);
+    @PostMapping(path = "/initialize/{gameModeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public GameOutputModel initialize(@RequestBody InitDataModel initDataModel, @PathVariable int gameModeId) {
+        logger.info("Sign in: " + initDataModel.toString() + ", for Game Mode: " + gameModeId);
+        GameMode mode = GameMode.getModeBy(gameModeId);
 
-    @PostMapping(path = "/init", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GameOutputModel initGame(@RequestBody InitDataModel initDataModel) {
-        logger.info("Sign in: " + initDataModel.toString());
+        gameController.initGame(initDataModel, mode);
 
-        game.initGame(initDataModel, GameMode.RANKED);
-
-        return game.getGameData();
-    }
-
-    @PostMapping(path = "/initAdHoc", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GameOutputModel initAdHocGame() {
-        logger.info("Ad-Hoc-Game started");
-
-        game.initGame(new InitDataModel(), GameMode.AD_HOC);
-
-        return game.getGameData();
+        return gameController.getGameData();
     }
 
     @GetMapping(path = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel getGameData() {
-        return game.getGameData();
+        return gameController.getGameData();
     }
 
     @GetMapping(path = "/allTeams", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TeamOutput> getAllTeamsStartingWith() {
-        return game.getAllTeamsFromDatabase();
+        return gameController.getAllTeamsFromDatabase();
     }
 
     @PostMapping(path = "/raise", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,41 +52,41 @@ public class DigitalFoosballAPI {
 
         Team team = Team.getTeamBy(teamNo);
 
-        game.countGoalFor(team);
+        gameController.countGoalFor(team);
     }
 
     @PostMapping(path = "/newRound", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel newRound() {
         logger.info("New Round");
 
-        game.changeover();
+        gameController.changeover();
 
-        return game.getGameData();
+        return gameController.getGameData();
     }
 
     @PutMapping(path = "/undo", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel undoLastGoal() {
         logger.info("Undo");
 
-        game.undoGoal();
+        gameController.undoGoal();
 
-        return game.getGameData();
+        return gameController.getGameData();
     }
 
     @PutMapping(path = "/redo", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel redoLastGoal() {
         logger.info("Redo");
 
-        game.redoGoal();
+        gameController.redoGoal();
 
-        return game.getGameData();
+        return gameController.getGameData();
     }
 
     @DeleteMapping(path = "/reset", produces = MediaType.APPLICATION_JSON_VALUE)
     public boolean resetGameValues() {
         logger.info("Reset");
 
-        game.resetMatch();
+        gameController.resetMatch();
 
         return true;
     }

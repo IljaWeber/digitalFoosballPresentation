@@ -54,9 +54,4 @@ public class AdHocGame implements Game {
     public void changeover(GameDataModel gameDataModel) {
         gameDataModel.changeOver();
     }
-
-    @Override
-    public void resetMatch(GameDataModel gameDataModel) {
-        gameDataModel.resetMatchValues();
-    }
 }

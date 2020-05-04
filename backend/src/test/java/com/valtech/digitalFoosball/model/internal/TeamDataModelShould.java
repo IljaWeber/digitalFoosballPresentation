@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TeamDataModelShould {
 
-    private TeamDataModel teamDataModel;
+    private final TeamDataModel teamDataModel;
 
 
     public TeamDataModelShould() {
@@ -44,17 +44,6 @@ public class TeamDataModelShould {
 
         int actual = teamDataModel.getWonMatches();
         assertThat(actual).isEqualTo(1);
-    }
-
-    @Test
-    public void have_empty_strings_as_names_and_0_as_score_after_resetValues_was_made() {
-        teamDataModel.countGoal();
-
-        teamDataModel.resetValues();
-
-        List<String> actual = convert(teamDataModel);
-        assertThat(actual).containsExactly("", "", "");
-        assertThat(teamDataModel.getScore()).isEqualTo(0);
     }
 
     @Test

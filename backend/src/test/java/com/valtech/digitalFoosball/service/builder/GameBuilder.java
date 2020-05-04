@@ -1,9 +1,9 @@
 package com.valtech.digitalFoosball.service.builder;
 
-import com.valtech.digitalFoosball.service.game.AdHocGame;
-import com.valtech.digitalFoosball.service.game.RankedGame;
 import com.valtech.digitalFoosball.service.game.TeamManager;
-import com.valtech.digitalFoosball.service.game.TimeGame;
+import com.valtech.digitalFoosball.service.game.modes.AdHocGame;
+import com.valtech.digitalFoosball.service.game.modes.RankedGame;
+import com.valtech.digitalFoosball.service.game.modes.TimeGame;
 import com.valtech.digitalFoosball.storage.PlayerService;
 import com.valtech.digitalFoosball.storage.TeamService;
 import com.valtech.digitalFoosball.storage.repository.PlayerRepository;

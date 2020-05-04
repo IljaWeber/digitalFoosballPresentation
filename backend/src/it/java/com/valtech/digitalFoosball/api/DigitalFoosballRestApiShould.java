@@ -7,7 +7,7 @@ import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
-import com.valtech.digitalFoosball.service.game.modes.Game;
+import com.valtech.digitalFoosball.service.game.GameController;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -42,14 +42,14 @@ public class DigitalFoosballRestApiShould {
     private MockMvc mockMvc;
 
     @Autowired
-    private Game game;
+    private GameController game;
 
-    private Gson gson;
+    private final Gson gson;
     private String json;
     private MvcResult result;
-    private ObjectMapper mapper;
-    private TeamDataModel teamOne;
-    private TeamDataModel teamTwo;
+    private final ObjectMapper mapper;
+    private final TeamDataModel teamOne;
+    private final TeamDataModel teamTwo;
     private List<TeamDataModel> teams;
     private GameDataModel gameDataModel;
     private InitDataModel initDataModel;

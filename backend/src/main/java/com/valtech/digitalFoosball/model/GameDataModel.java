@@ -54,12 +54,6 @@ public class GameDataModel {
         history = new History();
     }
 
-    public void resetMatchValues() {
-        teams.forEach((teamConstant, dataModel) -> dataModel.resetValues());
-        setWinner = NO_TEAM;
-        history = new History();
-    }
-
     public Team getSetWinner() {
         return setWinner;
     }

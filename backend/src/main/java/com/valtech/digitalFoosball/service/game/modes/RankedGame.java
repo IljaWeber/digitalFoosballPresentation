@@ -1,9 +1,11 @@
-package com.valtech.digitalFoosball.service.game;
+package com.valtech.digitalFoosball.service.game.modes;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
+import com.valtech.digitalFoosball.service.game.ScoreManager;
+import com.valtech.digitalFoosball.service.game.TeamManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,10 +58,5 @@ public class RankedGame implements Game {
     @Override
     public void changeover(GameDataModel gameDataModel) {
         gameDataModel.changeOver();
-    }
-
-    @Override
-    public void resetMatch(GameDataModel gameDataModel) {
-        gameDataModel.resetMatchValues();
     }
 }

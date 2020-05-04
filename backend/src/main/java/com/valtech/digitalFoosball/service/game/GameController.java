@@ -7,6 +7,7 @@ import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
+import com.valtech.digitalFoosball.service.game.modes.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ public class GameController implements IReactToGoals, IReactToPlayerCommands {
     private final INotifyAboutStateChanges notifier;
     private final GameModeHolder gameModeHolder;
     private GameDataModel gameDataModel = new GameDataModel();
+    private Game game;
 
     @Autowired
     public GameController(GameModeHolder gameModeHolder, INotifyAboutStateChanges notifier) {
@@ -26,7 +28,7 @@ public class GameController implements IReactToGoals, IReactToPlayerCommands {
     }
 
     public List<TeamOutput> getAllTeamsFromDatabase() {
-        Game game = gameModeHolder.getGame(GameMode.RANKED);
+        game = gameModeHolder.getGame(GameMode.RANKED);
         return game.getAllTeamsFromDatabase();
     }
 

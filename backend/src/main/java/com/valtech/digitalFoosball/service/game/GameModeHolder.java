@@ -1,6 +1,10 @@
 package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.constants.GameMode;
+import com.valtech.digitalFoosball.service.game.modes.AdHocGame;
+import com.valtech.digitalFoosball.service.game.modes.Game;
+import com.valtech.digitalFoosball.service.game.modes.RankedGame;
+import com.valtech.digitalFoosball.service.game.modes.TimeGame;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

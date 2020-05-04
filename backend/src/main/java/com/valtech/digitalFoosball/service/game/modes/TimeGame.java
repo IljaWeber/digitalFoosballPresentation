@@ -93,10 +93,4 @@ public class TimeGame implements Game {
     public void changeover(GameDataModel gameDataModel) {
 
     }
-
-    @Override
-    public void resetMatch(GameDataModel gameDataModel) {
-
-    }
-
 }

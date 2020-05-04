@@ -117,14 +117,6 @@ public class TeamDataModel {
         wonSets--;
     }
 
-    public void resetValues() {
-        name = "";
-        score = 0;
-        for (PlayerDataModel player : players) {
-            player.resetValues();
-        }
-    }
-
     @Override
     public String toString() {
         return name + ": " + getNameOfPlayerOne() + ", " + getNameOfPlayerTwo();
