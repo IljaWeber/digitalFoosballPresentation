@@ -15,19 +15,15 @@ public class AdHocGame implements Game {
     private TeamManager teamManager;
 
     private final ScoreManager scoreManager;
-    private GameDataModel gameDataModel;
 
     public AdHocGame() {
         scoreManager = new ScoreManager();
-        gameDataModel = new GameDataModel();
     }
 
     @Autowired
     public AdHocGame(TeamManager teamManager) {
         this.teamManager = teamManager;
         scoreManager = new ScoreManager();
-
-        gameDataModel = new GameDataModel();
     }
 
     @Override
@@ -37,31 +33,31 @@ public class AdHocGame implements Game {
 
     @Override
     public GameDataModel initGame(InitDataModel initDataModel) {
-        return gameDataModel = teamManager.initAdHocGame();
+        return teamManager.initAdHocGame();
     }
 
     @Override
     public void countGoalFor(Team team, GameDataModel gameDataModel) {
-        scoreManager.countGoalFor(team, this.gameDataModel);
+        scoreManager.countGoalFor(team, gameDataModel);
     }
 
     @Override
     public void undoGoal(GameDataModel gameDataModel) {
-        scoreManager.undoGoal(this.gameDataModel);
+        scoreManager.undoGoal(gameDataModel);
     }
 
     @Override
     public void redoGoal(GameDataModel gameDataModel) {
-        scoreManager.redoGoal(this.gameDataModel);
+        scoreManager.redoGoal(gameDataModel);
     }
 
     @Override
     public void changeover(GameDataModel gameDataModel) {
-        this.gameDataModel.changeOver();
+        gameDataModel.changeOver();
     }
 
     @Override
     public void resetMatch(GameDataModel gameDataModel) {
-        this.gameDataModel.resetMatchValues();
+        gameDataModel.resetMatchValues();
     }
 }
