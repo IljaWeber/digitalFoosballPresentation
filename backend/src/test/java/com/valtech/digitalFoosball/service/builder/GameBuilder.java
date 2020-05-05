@@ -1,6 +1,7 @@
 package com.valtech.digitalFoosball.service.builder;
 
-import com.valtech.digitalFoosball.service.game.TeamManager;
+import com.valtech.digitalFoosball.service.game.init.AdHocInitService;
+import com.valtech.digitalFoosball.service.game.init.RankedInitService;
 import com.valtech.digitalFoosball.service.game.modes.AdHocGameManipulator;
 import com.valtech.digitalFoosball.service.game.modes.RankedGameManipulator;
 import com.valtech.digitalFoosball.service.game.modes.TimeGameManipulator;
@@ -14,16 +15,16 @@ public abstract class GameBuilder {
                                                             PlayerRepository playerRepository) {
         PlayerService playerService = new PlayerService(playerRepository);
         TeamService teamService = new TeamService(teamRepository, playerService);
-        TeamManager teamManager = new TeamManager(teamService);
-        return new RankedGameManipulator(teamManager);
+        RankedInitService initService = new RankedInitService(teamService);
+        return new RankedGameManipulator(initService);
     }
 
     public static AdHocGameManipulator buildAdHocGameWith(TeamRepository teamRepository,
                                                           PlayerRepository playerRepository) {
         PlayerService playerService = new PlayerService(playerRepository);
         TeamService teamService = new TeamService(teamRepository, playerService);
-        TeamManager teamManager = new TeamManager(teamService);
-        return new AdHocGameManipulator(teamManager);
+        AdHocInitService initService = new AdHocInitService(teamService);
+        return new AdHocGameManipulator(initService);
     }
 
     public static TimeGameManipulator buildTimeGame() {

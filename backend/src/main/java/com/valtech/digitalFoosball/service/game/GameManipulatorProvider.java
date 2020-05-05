@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.constants.GameMode;
+import com.valtech.digitalFoosball.service.game.modes.AbstractGameManipulator;
 import com.valtech.digitalFoosball.service.game.modes.AdHocGameManipulator;
-import com.valtech.digitalFoosball.service.game.modes.GameManipulator;
 import com.valtech.digitalFoosball.service.game.modes.RankedGameManipulator;
 import com.valtech.digitalFoosball.service.game.modes.TimeGameManipulator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class GameManipulatorProvider {
         this.adHocGame = adHocGame;
     }
 
-    public GameManipulator getGameManipulator(GameMode gameMode) {
+    public AbstractGameManipulator getGameManipulator(GameMode gameMode) {
         switch (gameMode) {
             case RANKED:
                 return rankedGame;

@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.service.game;
+package com.valtech.digitalFoosball.service.game.init;
 
 import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.api.DigitalFoosballAPI;
@@ -28,14 +28,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration(classes = Application.class)
 @SpringBootTest(classes = DigitalFoosballAPI.class)
-public class TeamManagerShould {
+public class RankedInitServiceShould {
 
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
     private UUID id;
 
     @Autowired
-    private TeamManager teamManager;
+    private RankedInitService initService;
 
     @BeforeEach
     void setUp() {
@@ -46,7 +46,7 @@ public class TeamManagerShould {
         TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
         IObtainTeams iObtainTeams = new TeamService(teamRepository,
                                                     playerService);
-        teamManager = new TeamManager(iObtainTeams);
+        initService = new RankedInitService(iObtainTeams);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class TeamManagerShould {
         teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
         InitDataModel initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
 
-        GameDataModel gameDataModel = teamManager.init(initDataModel);
+        GameDataModel gameDataModel = initService.init(initDataModel);
         TeamDataModel teamOne = gameDataModel.getTeam(ONE);
         TeamDataModel teamTwo = gameDataModel.getTeam(TWO);
 

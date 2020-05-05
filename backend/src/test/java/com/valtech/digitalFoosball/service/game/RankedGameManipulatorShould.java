@@ -8,6 +8,7 @@ import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.builder.GameBuilder;
+import com.valtech.digitalFoosball.service.game.init.RankedInitService;
 import com.valtech.digitalFoosball.service.game.modes.RankedGameManipulator;
 import com.valtech.digitalFoosball.storage.IObtainTeams;
 import com.valtech.digitalFoosball.storage.PlayerService;
@@ -131,7 +132,7 @@ public class RankedGameManipulatorShould {
         PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
         PlayerService playerService = new PlayerService(playerRepository);
         IObtainTeams iObtainTeams = new TeamService(teamRepository, playerService);
-        game = new RankedGameManipulator(new TeamManager(iObtainTeams));
+        game = new RankedGameManipulator(new RankedInitService(iObtainTeams));
     }
 
     private void raiseScoreOf(Team... teams) {

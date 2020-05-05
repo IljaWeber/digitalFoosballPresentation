@@ -1,36 +1,26 @@
-package com.valtech.digitalFoosball.service.game;
+package com.valtech.digitalFoosball.service.game.init;
 
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.converter.Converter;
-import com.valtech.digitalFoosball.service.verifier.UniqueNameVerifier;
 import com.valtech.digitalFoosball.storage.IObtainTeams;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class TeamManager {
+public abstract class AbstractInitService {
 
     private final IObtainTeams teamDataPort;
 
-    @Autowired
-    public TeamManager(IObtainTeams teamDataPort) {
+    public AbstractInitService(IObtainTeams teamDataPort) {
         this.teamDataPort = teamDataPort;
     }
 
-    public GameDataModel init(InitDataModel initDataModel) {
-        UniqueNameVerifier uniqueNameVerifier = new UniqueNameVerifier();
-        uniqueNameVerifier.checkForDuplicateNames(initDataModel);
+    public abstract GameDataModel init(InitDataModel initDataModel);
 
-        return prepare(initDataModel);
-    }
-
-    private GameDataModel prepare(InitDataModel initDataModel) {
+    protected GameDataModel prepare(InitDataModel initDataModel) {
         List<TeamDataModel> teamsFromDatabase = new ArrayList<>();
 
         List<TeamDataModel> teamsList = initDataModel.getTeams();
@@ -44,15 +34,6 @@ public class TeamManager {
         gameDataModel.setTeams(teamsFromDatabase);
 
         return gameDataModel;
-    }
-
-    public GameDataModel initAdHocGame() {
-        TeamDataModel teamDataModelOne = new TeamDataModel("Orange", "Goalie", "Striker");
-        TeamDataModel teamDataModelTwo = new TeamDataModel("Green", "Goalie", "Striker");
-
-        InitDataModel initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
-
-        return prepare(initDataModel);
     }
 
     public List<TeamOutput> getAllTeams() {

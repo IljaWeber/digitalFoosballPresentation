@@ -5,24 +5,22 @@ import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.game.ScoreManager;
-import com.valtech.digitalFoosball.service.game.TeamManager;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.valtech.digitalFoosball.service.game.init.AbstractInitService;
 
 import java.util.List;
 
-public abstract class GameManipulator {
+public abstract class AbstractGameManipulator {
 
-    private final TeamManager teamManager;
+    private final AbstractInitService initService;
     private final ScoreManager scoreManager;
 
-    @Autowired
-    public GameManipulator(TeamManager teamManager) {
+    public AbstractGameManipulator(AbstractInitService initService) {
         scoreManager = new ScoreManager();
-        this.teamManager = teamManager;
+        this.initService = initService;
     }
 
     public List<TeamOutput> getAllTeamsFromDatabase() {
-        return teamManager.getAllTeams();
+        return initService.getAllTeams();
     }
 
     public abstract GameDataModel initGame(InitDataModel initDataModel);

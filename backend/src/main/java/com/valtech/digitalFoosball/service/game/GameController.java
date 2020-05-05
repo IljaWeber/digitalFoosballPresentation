@@ -7,7 +7,7 @@ import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
-import com.valtech.digitalFoosball.service.game.modes.GameManipulator;
+import com.valtech.digitalFoosball.service.game.modes.AbstractGameManipulator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class GameController implements IReactToGoals, IReactToPlayerCommands {
     }
 
     public List<TeamOutput> getAllTeamsFromDatabase() {
-        GameManipulator gameManipulator = gameManipulatorProvider.getGameManipulator(GameMode.RANKED);
+        AbstractGameManipulator gameManipulator = gameManipulatorProvider.getGameManipulator(GameMode.RANKED);
         return gameManipulator.getAllTeamsFromDatabase();
     }
 
@@ -40,19 +40,19 @@ public class GameController implements IReactToGoals, IReactToPlayerCommands {
     }
 
     public void initGame(InitDataModel initDataModel, GameMode gameMode) {
-        GameManipulator gameManipulator = gameManipulatorProvider.getGameManipulator(gameMode);
+        AbstractGameManipulator gameManipulator = gameManipulatorProvider.getGameManipulator(gameMode);
         gameDataModel = gameManipulator.initGame(initDataModel);
         gameDataModel.setGameMode(gameMode);
     }
 
     public void countGoalFor(Team team) {
-        GameManipulator gameManipulator = getGameManipulator();
+        AbstractGameManipulator gameManipulator = getGameManipulator();
         gameManipulator.countGoalFor(team, gameDataModel);
 
         notifyAboutStateChange();
     }
 
-    private GameManipulator getGameManipulator() {
+    private AbstractGameManipulator getGameManipulator() {
         GameMode gameMode = gameDataModel.getGameMode();
         return gameManipulatorProvider.getGameManipulator(gameMode);
     }
@@ -63,17 +63,17 @@ public class GameController implements IReactToGoals, IReactToPlayerCommands {
     }
 
     public void undoGoal() {
-        GameManipulator gameManipulator = getGameManipulator();
+        AbstractGameManipulator gameManipulator = getGameManipulator();
         gameManipulator.undoGoal(gameDataModel);
     }
 
     public void redoGoal() {
-        GameManipulator gameManipulator = getGameManipulator();
+        AbstractGameManipulator gameManipulator = getGameManipulator();
         gameManipulator.redoGoal(gameDataModel);
     }
 
     public void changeover() {
-        GameManipulator gameManipulator = getGameManipulator();
+        AbstractGameManipulator gameManipulator = getGameManipulator();
         gameManipulator.changeover(gameDataModel);
     }
 

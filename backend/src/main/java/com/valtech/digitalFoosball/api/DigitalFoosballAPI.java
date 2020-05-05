@@ -26,12 +26,20 @@ public class DigitalFoosballAPI {
         this.gameController = gameController;
     }
 
-    @PostMapping(path = "/initialize/{gameModeId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GameOutputModel initialize(@RequestBody InitDataModel initDataModel, @PathVariable int gameModeId) {
-        logger.info("Sign in: " + initDataModel.toString() + ", for Game Mode: " + gameModeId);
-        GameMode mode = GameMode.getModeBy(gameModeId);
+    @PostMapping(path = "/init/adhoc", produces = MediaType.APPLICATION_JSON_VALUE)
+    public GameOutputModel init() {
+        logger.info("New AdHoc-Game");
 
-        gameController.initGame(initDataModel, mode);
+        gameController.initGame(new InitDataModel(), GameMode.AD_HOC);
+
+        return gameController.getGameData();
+    }
+
+    @PostMapping(path = "/init/ranked", produces = MediaType.APPLICATION_JSON_VALUE)
+    public GameOutputModel init(@RequestBody InitDataModel initDataModel) {
+        logger.info("Sign in: " + initDataModel.toString());
+
+        gameController.initGame(initDataModel, GameMode.RANKED);
 
         return gameController.getGameData();
     }

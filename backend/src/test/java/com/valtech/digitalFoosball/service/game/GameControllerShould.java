@@ -32,7 +32,7 @@ import static org.assertj.core.groups.Tuple.tuple;
 
 @ContextConfiguration(classes = Application.class)
 @SpringBootTest(classes = DigitalFoosballAPI.class)
-class GameManipulatorControllerShould {
+class GameControllerShould {
 
     public GameController game;
 
