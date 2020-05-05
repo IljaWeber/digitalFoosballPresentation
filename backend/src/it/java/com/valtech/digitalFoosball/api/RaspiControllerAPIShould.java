@@ -2,8 +2,6 @@ package com.valtech.digitalFoosball.api;
 
 import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.model.input.InitDataModel;
-import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.game.GameController;
@@ -34,27 +32,20 @@ public class RaspiControllerAPIShould {
 
     private MockHttpServletRequestBuilder builder;
 
-    private String json;
     private Gson gson;
 
     @BeforeEach
     public void setUp() throws Exception {
         gson = new Gson();
-        TeamDataModel teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
-        TeamDataModel teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
-        InitDataModel initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
 
-        builder = MockMvcRequestBuilders.post("/api/initialize/{gameModeId}", 0);
-        json = gson.toJson(initDataModel);
-        builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
-
+        builder = MockMvcRequestBuilders.post("/api/init/adhoc");
         mockMvc.perform(builder);
     }
 
     @Test
     void raise_score() throws Exception {
         builder = MockMvcRequestBuilders.post("/raspi/raise");
-        json = gson.toJson("1");
+        String json = gson.toJson("1");
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
 
         mockMvc.perform(builder);

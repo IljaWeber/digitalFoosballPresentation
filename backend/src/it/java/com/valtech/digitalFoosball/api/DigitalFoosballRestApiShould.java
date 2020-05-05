@@ -2,6 +2,7 @@ package com.valtech.digitalFoosball.api;
 
 import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
+import com.valtech.digitalFoosball.constants.GameMode;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
@@ -34,8 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = DigitalFoosballAPI.class)
 public class DigitalFoosballRestApiShould {
 
-    private final int ADHOC_GAME = 0;
-    private final int RANKED_GAME = 1;
     @Autowired
     private MockMvc mockMvc;
 
@@ -80,7 +79,7 @@ public class DigitalFoosballRestApiShould {
         gameDataModel.setTeam(ONE, new TeamDataModel("Orange", "Goalie", "Striker"));
         gameDataModel.setTeam(TWO, new TeamDataModel("Green", "Goalie", "Striker"));
 
-        performInitialisationRequestFor(ADHOC_GAME);
+        performInitialisationRequestFor(GameMode.AD_HOC);
 
         builder = MockMvcRequestBuilders.get("/api/game");
         result = mockMvc.perform(builder).andExpect(status().isOk()).andReturn();
@@ -89,7 +88,7 @@ public class DigitalFoosballRestApiShould {
 
     @Test
     void initialise_a_ranked_game_with_individual_team_and_player_names() throws Exception {
-        performInitialisationRequestFor(RANKED_GAME);
+        performInitialisationRequestFor(GameMode.RANKED);
         builder = MockMvcRequestBuilders.get("/api/game");
 
         result = mockMvc.perform(builder).andExpect(status().isOk()).andReturn();
@@ -98,7 +97,7 @@ public class DigitalFoosballRestApiShould {
 
     @Test
     public void undo_scored_goal() throws Exception {
-        performInitialisationRequestFor(RANKED_GAME);
+        performInitialisationRequestFor(GameMode.RANKED);
         countGoalForExpectedTeam(ONE);
         countGoalForTeam(ONE, ONE);
 
@@ -110,7 +109,7 @@ public class DigitalFoosballRestApiShould {
 
     @Test
     public void redo_undone_goals() throws Exception {
-        performInitialisationRequestFor(RANKED_GAME);
+        performInitialisationRequestFor(GameMode.RANKED);
         countGoalForExpectedTeam(ONE, TWO, TWO);
         countGoalForTeam(ONE, TWO, TWO);
         game.undoGoal();
@@ -125,7 +124,7 @@ public class DigitalFoosballRestApiShould {
 
     @Test
     public void reset_game_with_empty_team_and_player_names_and_zero_scores() throws Exception {
-        performInitialisationRequestFor(RANKED_GAME);
+        performInitialisationRequestFor(GameMode.RANKED);
         countGoalForTeam(ONE, TWO);
         gameDataModel = new GameDataModel();
         builder = MockMvcRequestBuilders.delete("/api/reset");
@@ -137,7 +136,7 @@ public class DigitalFoosballRestApiShould {
 
     @Test
     public void return_a_won_set() throws Exception {
-        performInitialisationRequestFor(RANKED_GAME);
+        performInitialisationRequestFor(GameMode.RANKED);
         countGoalForExpectedTeam(ONE, ONE, ONE, ONE, ONE, ONE);
         gameDataModel.getTeam(ONE).increaseWonSets();
         gameDataModel.setSetWinner(ONE);
@@ -149,7 +148,7 @@ public class DigitalFoosballRestApiShould {
 
     @Test
     public void return_a_match_winner() throws Exception {
-        performInitialisationRequestFor(RANKED_GAME);
+        performInitialisationRequestFor(GameMode.RANKED);
         countGoalForExpectedTeam(ONE, ONE, ONE, ONE, ONE, ONE);
         gameDataModel.getTeam(ONE).increaseWonSets();
         gameDataModel.getTeam(ONE).increaseWonSets();
@@ -165,7 +164,7 @@ public class DigitalFoosballRestApiShould {
 
     @Test
     public void reset_score_values_but_team_names_are_not_affected() throws Exception {
-        performInitialisationRequestFor(RANKED_GAME);
+        performInitialisationRequestFor(GameMode.RANKED);
         gameDataModel.getTeam(ONE).increaseWonSets();
         countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
 
@@ -198,8 +197,18 @@ public class DigitalFoosballRestApiShould {
         }
     }
 
-    private void performInitialisationRequestFor(int gameMode) throws Exception {
-        builder = MockMvcRequestBuilders.post("/api/initialize/{gameModeId}", gameMode);
+    private void performInitialisationRequestFor(GameMode gameMode) throws Exception {
+        String mode = "";
+
+        switch (gameMode) {
+            case AD_HOC:
+                mode = "adhoc";
+                break;
+            case RANKED:
+                mode = "ranked";
+        }
+
+        builder = MockMvcRequestBuilders.post("/api/init/" + mode);
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
 
         mockMvc.perform(builder);
