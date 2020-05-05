@@ -231,3 +231,4 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+venv/include/
