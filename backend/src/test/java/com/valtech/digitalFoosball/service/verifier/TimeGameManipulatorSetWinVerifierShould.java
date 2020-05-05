@@ -22,7 +22,7 @@ class TimeGameManipulatorSetWinVerifierShould {
 
     @BeforeEach
     void setUp() {
-        timeGame = new TimeGameManipulator();
+        timeGame = new TimeGameManipulator(null);
         timeGameSetWinVerifier = new TimeGameSetWinVerifier();
         teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
         teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");

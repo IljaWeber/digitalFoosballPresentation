@@ -27,6 +27,6 @@ public abstract class GameBuilder {
     }
 
     public static TimeGameManipulator buildTimeGame() {
-        return new TimeGameManipulator();
+        return new TimeGameManipulator(null);
     }
 }

@@ -6,8 +6,10 @@ import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.game.TaskOfTimer;
+import com.valtech.digitalFoosball.service.game.TeamManager;
 import com.valtech.digitalFoosball.service.histories.History;
 import com.valtech.digitalFoosball.service.verifier.TimeGameSetWinVerifier;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,14 +18,16 @@ import java.util.Timer;
 import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
 @Service
-public class TimeGameManipulator implements GameManipulator {
+public class TimeGameManipulator extends GameManipulator {
     private final int GOAL_LIMIT = 10;
     private boolean timeIsOver = false;
     private Timer timer;
     private final History history;
     private final TimeGameSetWinVerifier timeGameSetWinVerifier;
 
-    public TimeGameManipulator() {
+    @Autowired
+    public TimeGameManipulator(TeamManager teamManager) {
+        super(teamManager);
         history = new History();
         timeGameSetWinVerifier = new TimeGameSetWinVerifier();
     }

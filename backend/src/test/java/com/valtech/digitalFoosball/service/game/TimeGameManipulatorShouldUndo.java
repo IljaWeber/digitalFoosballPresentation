@@ -21,7 +21,7 @@ public class TimeGameManipulatorShouldUndo {
 
     @BeforeEach
     void setUp() {
-        timeGame = new TimeGameManipulator();
+        timeGame = new TimeGameManipulator(null);
         TeamDataModel teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
         TeamDataModel teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
 

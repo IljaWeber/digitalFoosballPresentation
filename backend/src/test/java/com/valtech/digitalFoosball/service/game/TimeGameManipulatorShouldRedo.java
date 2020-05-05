@@ -15,7 +15,7 @@ import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TimeGameManipulatorShouldRedo {
-    public TimeGameManipulator timeGame = new TimeGameManipulator();
+    public TimeGameManipulator timeGame = new TimeGameManipulator(null);
     private GameDataModel gameDataModel;
 
     @BeforeEach
