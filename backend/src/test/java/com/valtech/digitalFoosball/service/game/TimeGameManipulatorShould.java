@@ -32,7 +32,7 @@ public class TimeGameManipulatorShould {
         teams.add(teamDataModelTwo);
 
         gameDataModel = new GameDataModel();
-        gameDataModel.setTeamsFromDatabase(teams);
+        gameDataModel.setTeams(teams);
     }
 
     @Disabled

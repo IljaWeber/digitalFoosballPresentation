@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class TeamManager {
 
-    private IObtainTeams teamDataPort;
+    private final IObtainTeams teamDataPort;
 
     @Autowired
     public TeamManager(IObtainTeams teamDataPort) {
@@ -41,7 +41,7 @@ public class TeamManager {
         }
 
         GameDataModel gameDataModel = new GameDataModel();
-        gameDataModel.setTeamsFromDatabase(teamsFromDatabase);
+        gameDataModel.setTeams(teamsFromDatabase);
 
         return gameDataModel;
     }

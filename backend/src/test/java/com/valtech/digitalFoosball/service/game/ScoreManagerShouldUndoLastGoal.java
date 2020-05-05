@@ -28,7 +28,7 @@ public class ScoreManagerShouldUndoLastGoal {
         teams.add(teamDataModelTwo);
 
         gameDataModel = new GameDataModel();
-        gameDataModel.setTeamsFromDatabase(teams);
+        gameDataModel.setTeams(teams);
     }
 
     @Test
