@@ -13,9 +13,7 @@ import java.util.List;
 
 @Service
 public class RankedGameManipulator implements GameManipulator {
-
-    private TeamManager teamManager;
-
+    private final TeamManager teamManager;
     private final ScoreManager scoreManager;
 
     @Autowired
@@ -23,11 +21,6 @@ public class RankedGameManipulator implements GameManipulator {
         scoreManager = new ScoreManager();
         this.teamManager = teamManager;
     }
-
-    public RankedGameManipulator() {
-        scoreManager = new ScoreManager();
-    }
-
 
     @Override
     public List<TeamOutput> getAllTeamsFromDatabase() {

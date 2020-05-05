@@ -32,7 +32,8 @@ class TimeGameManipulatorSetWinVerifierShould {
         teams.add(teamDataModelOne);
         teams.add(teamDataModelTwo);
 
-        gameDataModel = new GameDataModel(teams);
+        gameDataModel = new GameDataModel();
+        gameDataModel.setTeamsFromDatabase(teams);
     }
 
     @Test

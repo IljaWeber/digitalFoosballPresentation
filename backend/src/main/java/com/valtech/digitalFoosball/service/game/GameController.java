@@ -28,7 +28,6 @@ public class GameController implements IReactToGoals, IReactToPlayerCommands {
     }
 
     public List<TeamOutput> getAllTeamsFromDatabase() {
-        gameManipulator = gameManipulatorProvider.getGameManipulator(GameMode.RANKED);
         return gameManipulator.getAllTeamsFromDatabase();
     }
 
@@ -41,21 +40,14 @@ public class GameController implements IReactToGoals, IReactToPlayerCommands {
     }
 
     public void initGame(InitDataModel initDataModel, GameMode gameMode) {
-        GameManipulator gameManipulator = gameManipulatorProvider.getGameManipulator(gameMode);
+        this.gameManipulator = gameManipulatorProvider.getGameManipulator(gameMode);
         gameDataModel = gameManipulator.initGame(initDataModel);
-        gameDataModel.setGameMode(gameMode);
     }
 
     public void countGoalFor(Team team) {
-        GameManipulator gameManipulator = getGameManipulator();
         gameManipulator.countGoalFor(team, gameDataModel);
 
         notifyAboutStateChange();
-    }
-
-    private GameManipulator getGameManipulator() {
-        GameMode gameMode = gameDataModel.getGameMode();
-        return gameManipulatorProvider.getGameManipulator(gameMode);
     }
 
     private void notifyAboutStateChange() {
@@ -64,17 +56,14 @@ public class GameController implements IReactToGoals, IReactToPlayerCommands {
     }
 
     public void undoGoal() {
-        GameManipulator gameManipulator = getGameManipulator();
         gameManipulator.undoGoal(gameDataModel);
     }
 
     public void redoGoal() {
-        GameManipulator gameManipulator = getGameManipulator();
         gameManipulator.redoGoal(gameDataModel);
     }
 
     public void changeover() {
-        GameManipulator gameManipulator = getGameManipulator();
         gameManipulator.changeover(gameDataModel);
     }
 

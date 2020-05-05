@@ -5,19 +5,13 @@ import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.histories.History;
 import com.valtech.digitalFoosball.service.verifier.RegularGameSetWinVerifier;
-import org.springframework.stereotype.Service;
 
 import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
-@Service
 public class ScoreManager {
-    private final RegularGameSetWinVerifier setWinVerifier;
-
-    public ScoreManager() {
-        setWinVerifier = new RegularGameSetWinVerifier();
-    }
 
     public void countGoalFor(Team team, GameDataModel gameDataModel) {
+        RegularGameSetWinVerifier setWinVerifier = new RegularGameSetWinVerifier();
         TeamDataModel teamDataModel = gameDataModel.getTeam(team);
         History history = gameDataModel.getHistory();
 
@@ -56,6 +50,7 @@ public class ScoreManager {
     }
 
     public void redoGoal(GameDataModel gameDataModel) {
+        RegularGameSetWinVerifier setWinVerifier = new RegularGameSetWinVerifier();
         History history = gameDataModel.getHistory();
 
         if (history.hasUndoneGoals()) {

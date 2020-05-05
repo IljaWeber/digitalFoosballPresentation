@@ -7,9 +7,6 @@ import java.util.Map;
 
 public class RegularGameSetWinVerifier {
 
-    private final int neededGoals = 6;
-    private final int requiredDifference = 2;
-
     public boolean teamWon(Map<Team, TeamDataModel> teams, Team scoringTeam) {
         TeamDataModel scoringTeamDataModel = teams.get(scoringTeam);
         TeamDataModel teamOne = teams.get(Team.ONE);
@@ -19,6 +16,7 @@ public class RegularGameSetWinVerifier {
     }
 
     private boolean enoughGoals(TeamDataModel team) {
+        int neededGoals = 6;
         return team.getScore() >= neededGoals;
     }
 
@@ -29,6 +27,7 @@ public class RegularGameSetWinVerifier {
         int currentDifference = scoreTeamOne - scoreTeamTwo;
         int absoluteDifference = Math.abs(currentDifference);
 
+        int requiredDifference = 2;
         return absoluteDifference >= requiredDifference;
     }
 }

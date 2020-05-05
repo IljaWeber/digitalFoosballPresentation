@@ -6,10 +6,7 @@ public enum GameMode {
     TIME_GAME(2),
     NO_ACTIVE_GAME(3);
 
-    private final int gameMode;
-
     GameMode(int gameMode) {
-        this.gameMode = gameMode;
     }
 
     public static GameMode getModeBy(int gameModeId) {

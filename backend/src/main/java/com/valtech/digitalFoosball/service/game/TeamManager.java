@@ -40,7 +40,8 @@ public class TeamManager {
             teamsFromDatabase.add(teamFromDatabase);
         }
 
-        GameDataModel gameDataModel = new GameDataModel(teamsFromDatabase);
+        GameDataModel gameDataModel = new GameDataModel();
+        gameDataModel.setTeamsFromDatabase(teamsFromDatabase);
 
         return gameDataModel;
     }
