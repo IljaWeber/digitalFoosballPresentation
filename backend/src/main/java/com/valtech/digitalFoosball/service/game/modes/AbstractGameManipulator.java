@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class AbstractGameManipulator {
 
-    private final AbstractInitService initService;
+    protected final AbstractInitService initService;
     private final ScoreManager scoreManager;
 
     public AbstractGameManipulator(AbstractInitService initService) {

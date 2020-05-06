@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.valtech.digitalFoosball.constants.GameMode.AD_HOC;
+import static com.valtech.digitalFoosball.constants.GameMode.RANKED;
 import static com.valtech.digitalFoosball.constants.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -63,7 +65,7 @@ public class DigitalFoosballRestApiShould {
     }
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() {
         gameDataModel = new GameDataModel();
         gameDataModel.setTeam(ONE, teamOne);
         gameDataModel.setTeam(TWO, teamTwo);
@@ -79,38 +81,38 @@ public class DigitalFoosballRestApiShould {
         gameDataModel.setTeam(ONE, new TeamDataModel("Orange", "Goalie", "Striker"));
         gameDataModel.setTeam(TWO, new TeamDataModel("Green", "Goalie", "Striker"));
 
-        performInitialisationRequestFor(GameMode.AD_HOC);
+        prepareGameWithMode(AD_HOC);
 
         builder = MockMvcRequestBuilders.get("/api/game");
         result = mockMvc.perform(builder).andExpect(status().isOk()).andReturn();
-        assertThat(getActualResponseBody()).isEqualTo(getExpectedBody(NO_TEAM));
+        assertThat(getGameStatus()).isEqualTo(getSimulatedGameStatus(NO_TEAM));
     }
 
     @Test
     void initialise_a_ranked_game_with_individual_team_and_player_names() throws Exception {
-        performInitialisationRequestFor(GameMode.RANKED);
+        prepareGameWithMode(RANKED);
         builder = MockMvcRequestBuilders.get("/api/game");
 
         result = mockMvc.perform(builder).andExpect(status().isOk()).andReturn();
-        assertThat(getActualResponseBody()).isEqualTo(getExpectedBody(NO_TEAM));
+        assertThat(getGameStatus()).isEqualTo(getSimulatedGameStatus(NO_TEAM));
     }
 
     @Test
     public void undo_scored_goal() throws Exception {
-        performInitialisationRequestFor(GameMode.RANKED);
-        countGoalForExpectedTeam(ONE);
+        prepareGameWithMode(RANKED);
+        prepareScoreForTeam(ONE);
         countGoalForTeam(ONE, ONE);
 
         builder = MockMvcRequestBuilders.put("/api/undo");
         mockMvc.perform(builder);
 
-        assertThat(getActualResponseBody()).isEqualTo(getExpectedBody(NO_TEAM));
+        assertThat(getGameStatus()).isEqualTo(getSimulatedGameStatus(NO_TEAM));
     }
 
     @Test
     public void redo_undone_goals() throws Exception {
-        performInitialisationRequestFor(GameMode.RANKED);
-        countGoalForExpectedTeam(ONE, TWO, TWO);
+        prepareGameWithMode(RANKED);
+        prepareScoreForTeam(ONE, TWO, TWO);
         countGoalForTeam(ONE, TWO, TWO);
         game.undoGoal();
         game.undoGoal();
@@ -119,59 +121,62 @@ public class DigitalFoosballRestApiShould {
         mockMvc.perform(builder);
         mockMvc.perform(builder);
 
-        assertThat(getActualResponseBody()).isEqualTo(getExpectedBody(NO_TEAM));
+        assertThat(getGameStatus()).isEqualTo(getSimulatedGameStatus(NO_TEAM));
     }
 
     @Test
     public void reset_game_with_empty_team_and_player_names_and_zero_scores() throws Exception {
-        performInitialisationRequestFor(GameMode.RANKED);
+        prepareGameWithMode(RANKED);
         countGoalForTeam(ONE, TWO);
         gameDataModel = new GameDataModel();
         builder = MockMvcRequestBuilders.delete("/api/reset");
 
         mockMvc.perform(builder);
 
-        assertThat(getActualResponseBody()).isEqualTo(getExpectedBody(NO_TEAM));
+        assertThat(getGameStatus()).isEqualTo(getSimulatedGameStatus(NO_TEAM));
     }
 
     @Test
     public void return_a_won_set() throws Exception {
-        performInitialisationRequestFor(GameMode.RANKED);
-        countGoalForExpectedTeam(ONE, ONE, ONE, ONE, ONE, ONE);
+        prepareGameWithMode(RANKED);
+        prepareScoreForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
         gameDataModel.getTeam(ONE).increaseWonSets();
         gameDataModel.setSetWinner(ONE);
 
         countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
 
-        assertThat(getActualResponseBody()).isEqualTo(getExpectedBody(NO_TEAM));
+        assertThat(getGameStatus()).isEqualTo(getSimulatedGameStatus(NO_TEAM));
     }
 
     @Test
     public void return_a_match_winner() throws Exception {
-        performInitialisationRequestFor(GameMode.RANKED);
-        countGoalForExpectedTeam(ONE, ONE, ONE, ONE, ONE, ONE);
+        prepareGameWithMode(RANKED);
+        prepareScoreForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
+        //helper methods
         gameDataModel.getTeam(ONE).increaseWonSets();
         gameDataModel.getTeam(ONE).increaseWonSets();
         gameDataModel.getTeam(ONE).increaseWonMatches();
         gameDataModel.setSetWinner(ONE);
-
         countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
         game.changeover();
         countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
 
-        assertThat(getActualResponseBody()).isEqualTo(getExpectedBody(ONE));
+        String actual = getGameStatus();
+
+        String expected = getSimulatedGameStatus(ONE);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void reset_score_values_but_team_names_are_not_affected() throws Exception {
-        performInitialisationRequestFor(GameMode.RANKED);
+        prepareGameWithMode(RANKED);
         gameDataModel.getTeam(ONE).increaseWonSets();
         countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
 
         builder = MockMvcRequestBuilders.post("/api/newRound");
         mockMvc.perform(builder);
 
-        assertThat(getActualResponseBody()).isEqualTo(getExpectedBody(NO_TEAM));
+        assertThat(getGameStatus()).isEqualTo(getSimulatedGameStatus(NO_TEAM));
     }
 
     private void prepareTeamsForInitialization(TeamDataModel teamOne, TeamDataModel teamTwo) {
@@ -184,20 +189,20 @@ public class DigitalFoosballRestApiShould {
         json = gson.toJson(initDataModel);
     }
 
-    private String getExpectedBody(Team matchWinner) throws IOException {
+    private String getSimulatedGameStatus(Team matchWinner) throws IOException {
         GameOutputModel expectedValues = new GameOutputModel(gameDataModel);
         expectedValues.setMatchWinner(matchWinner);
 
         return mapper.writeValueAsString(expectedValues);
     }
 
-    private void countGoalForExpectedTeam(Team... teams) {
+    private void prepareScoreForTeam(Team... teams) {
         for (Team team : teams) {
             gameDataModel.getTeam(team).countGoal();
         }
     }
 
-    private void performInitialisationRequestFor(GameMode gameMode) throws Exception {
+    private void prepareGameWithMode(GameMode gameMode) throws Exception {
         String mode = "";
 
         switch (gameMode) {
@@ -214,7 +219,7 @@ public class DigitalFoosballRestApiShould {
         mockMvc.perform(builder);
     }
 
-    private String getActualResponseBody() throws Exception {
+    private String getGameStatus() throws Exception {
         builder = MockMvcRequestBuilders.get("/api/game");
         result = mockMvc.perform(builder).andExpect(status().isOk()).andReturn();
 

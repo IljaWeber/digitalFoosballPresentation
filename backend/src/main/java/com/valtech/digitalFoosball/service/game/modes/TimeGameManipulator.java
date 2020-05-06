@@ -54,7 +54,7 @@ public class TimeGameManipulator extends AbstractGameManipulator {
             return;
         }
 
-        history.rememberLastGoalFrom(team);
+        history.rememberLastGoalFor(team);
         teamDataModel.countGoal();
     }
 
@@ -84,7 +84,7 @@ public class TimeGameManipulator extends AbstractGameManipulator {
             TeamDataModel teamDataModel = gameDataModel.getTeams().get(team);
 
             teamDataModel.countGoal();
-            history.rememberLastGoalFrom(team);
+            history.rememberLastGoalFor(team);
 
             if (timeGameSetWinVerifier.teamWon(gameDataModel.getTeams(), team)) {
                 teamDataModel.increaseWonSets();

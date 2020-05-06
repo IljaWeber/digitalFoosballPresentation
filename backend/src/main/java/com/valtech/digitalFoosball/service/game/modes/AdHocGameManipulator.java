@@ -10,12 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdHocGameManipulator extends AbstractGameManipulator {
 
-    private final AdHocInitService initService;
-
     @Autowired
     public AdHocGameManipulator(AdHocInitService initService) {
         super(initService);
-        this.initService = initService;
     }
 
     @Override

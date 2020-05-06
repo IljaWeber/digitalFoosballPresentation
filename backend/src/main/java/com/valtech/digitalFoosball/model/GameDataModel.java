@@ -82,4 +82,45 @@ public class GameDataModel {
         this.teams.put(ONE, teams.get(0));
         this.teams.put(TWO, teams.get(1));
     }
+
+    public boolean setHasAWinner() {
+        return setWinner != NO_TEAM;
+    }
+
+    public void countGoalFor(Team scoredTeam) {
+        for (Team team : teams.keySet()) {
+            if (team == scoredTeam) {
+                teams.get(team).countGoal();
+                history.rememberLastGoalFor(team);
+            }
+        }
+    }
+
+    public void increaseWonSetsFor(Team wonSetOfTeam) {
+        for (Team team : teams.keySet()) {
+            if (team == wonSetOfTeam) {
+                teams.get(team).increaseWonSets();
+            }
+        }
+    }
+
+    public boolean checkForExistingGoals() {
+        return history.thereAreGoals();
+    }
+
+    public void decreaseScoreForLastScoredTeam() {
+        history.removeLastScoringTeam(teams);
+    }
+
+    public void decreaseWonSetsForRecentSetWinner() {
+        for (Team team : teams.keySet()) {
+            if (team == setWinner) {
+                teams.get(team).decreaseWonSets();
+            }
+        }
+    }
+
+    public boolean isThereASetWinner() {
+        return setWinner != NO_TEAM;
+    }
 }

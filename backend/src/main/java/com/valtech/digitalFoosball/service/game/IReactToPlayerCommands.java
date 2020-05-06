@@ -8,7 +8,7 @@ import com.valtech.digitalFoosball.model.output.TeamOutput;
 import java.util.List;
 
 public interface IReactToPlayerCommands {
-    List<TeamOutput> getAllTeamsFromDatabase();
+    List<TeamOutput> getAllTeams();
 
     void initGame(InitDataModel initDataModel, GameMode gameMode);
 

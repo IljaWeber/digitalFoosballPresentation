@@ -1,7 +1,9 @@
 package com.valtech.digitalFoosball.service.histories;
 
 import com.valtech.digitalFoosball.constants.Team;
+import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
+import java.util.SortedMap;
 import java.util.Stack;
 
 public class History {
@@ -13,12 +15,16 @@ public class History {
         historyOfUndo = new Stack<>();
     }
 
-    public void rememberLastGoalFrom(Team team) {
+    public void rememberLastGoalFor(Team team) {
         historyOfGoals.push(team);
     }
 
     public Team getLastScoringTeam() {
         return historyOfGoals.pop();
+    }
+
+    private void rememberUndoneGoalFor(Team lastScoredTeam) {
+        historyOfUndo.push(lastScoredTeam);
     }
 
     public boolean thereAreGoals() {
@@ -35,5 +41,17 @@ public class History {
 
     public boolean hasUndoneGoals() {
         return !historyOfUndo.empty();
+    }
+
+    public void removeLastScoringTeam(SortedMap<Team, TeamDataModel> teams) {
+        Team lastScoredTeam = historyOfGoals.pop();
+
+        rememberUndoneGoalFor(lastScoredTeam);
+
+        for (Team team : teams.keySet()) {
+            if (team == lastScoredTeam) {
+                teams.get(team).decreaseScore();
+            }
+        }
     }
 }

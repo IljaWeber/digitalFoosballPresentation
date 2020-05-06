@@ -26,7 +26,7 @@ public class GameController implements IReactToGoals, IReactToPlayerCommands {
         this.notifier = notifier;
     }
 
-    public List<TeamOutput> getAllTeamsFromDatabase() {
+    public List<TeamOutput> getAllTeams() {
         AbstractGameManipulator gameManipulator = gameManipulatorProvider.getGameManipulator(GameMode.RANKED);
         return gameManipulator.getAllTeamsFromDatabase();
     }

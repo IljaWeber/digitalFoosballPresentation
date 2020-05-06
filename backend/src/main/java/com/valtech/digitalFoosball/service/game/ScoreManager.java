@@ -10,17 +10,20 @@ import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
 public class ScoreManager {
 
-    public void countGoalFor(Team team, GameDataModel gameDataModel) {
-        RegularGameSetWinVerifier setWinVerifier = new RegularGameSetWinVerifier();
-        TeamDataModel teamDataModel = gameDataModel.getTeam(team);
-        History history = gameDataModel.getHistory();
+    private final RegularGameSetWinVerifier setWinVerifier;
 
+    public ScoreManager() {
+        setWinVerifier = new RegularGameSetWinVerifier();
+    }
+
+    public void countGoalFor(Team team, GameDataModel gameDataModel) {
+
+        //if setHasWinner == true -> zyklomatische Komplexität reduzieren
         if (setHasNoWinner(gameDataModel)) {
-            teamDataModel.countGoal();
-            history.rememberLastGoalFrom(team);
+            gameDataModel.countGoalFor(team);
 
             if (setWinVerifier.teamWon(gameDataModel.getTeams(), team)) {
-                teamDataModel.increaseWonSets();
+                gameDataModel.increaseWonSetsFor(team);
                 gameDataModel.setSetWinner(team);
             }
         }
@@ -32,25 +35,20 @@ public class ScoreManager {
     }
 
     public void undoGoal(GameDataModel gameDataModel) {
-        History history = gameDataModel.getHistory();
-
-        if (history.thereAreGoals()) {
-            Team team = history.getLastScoringTeam();
-            TeamDataModel lastScoringTeam = gameDataModel.getTeam(team);
-
-            if (gameDataModel.getSetWinner() != NO_TEAM) {
-                lastScoringTeam.decreaseWonSets();
+        if (gameDataModel.checkForExistingGoals()) {
+            gameDataModel.decreaseScoreForLastScoredTeam();
+            // extract to method
+            //feature envy!
+            if (gameDataModel.isThereASetWinner()) {
+                gameDataModel.decreaseWonSetsForRecentSetWinner();
                 gameDataModel.setSetWinner(NO_TEAM);
             }
-
-            lastScoringTeam.decreaseScore();
-
-            history.rememberUndoneGoal(team);
         }
     }
 
+    //substitution of redo and undo
+    //solve feature envy -> operations on gdm and tdm
     public void redoGoal(GameDataModel gameDataModel) {
-        RegularGameSetWinVerifier setWinVerifier = new RegularGameSetWinVerifier();
         History history = gameDataModel.getHistory();
 
         if (history.hasUndoneGoals()) {
@@ -58,7 +56,7 @@ public class ScoreManager {
             TeamDataModel teamDataModel = gameDataModel.getTeams().get(team);
 
             teamDataModel.countGoal();
-            history.rememberLastGoalFrom(team);
+            history.rememberLastGoalFor(team);
 
             if (setWinVerifier.teamWon(gameDataModel.getTeams(), team)) {
                 teamDataModel.increaseWonSets();
