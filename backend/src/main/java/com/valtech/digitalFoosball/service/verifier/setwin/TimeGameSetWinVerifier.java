@@ -6,7 +6,7 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
 import java.util.Map;
 
-public class TimeGameSetWinVerifier {
+public class TimeGameSetWinVerifier implements GameSetVerifier {
 
     public static final int GOAL_LIMIT = 10;
 
@@ -42,5 +42,15 @@ public class TimeGameSetWinVerifier {
 
             return Team.NO_TEAM;
         }
+    }
+
+    @Override
+    public void approveWin(GameDataModel gameDataModel) {
+
+    }
+
+    @Override
+    public Team getWinner(GameDataModel gameDataModel) {
+        return null;
     }
 }

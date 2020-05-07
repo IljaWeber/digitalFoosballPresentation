@@ -2,22 +2,22 @@ package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
-import com.valtech.digitalFoosball.service.verifier.setwin.RankedGameSetWinVerifier;
+import com.valtech.digitalFoosball.service.verifier.setwin.GameSetVerifier;
 
 import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
 public class ScoreManager {
 
-    RankedGameSetWinVerifier rankedGameSetWinVerifier;
+    private final GameSetVerifier gameSetWinVerifier;
 
-    public ScoreManager() {
-        rankedGameSetWinVerifier = new RankedGameSetWinVerifier();
+    public ScoreManager(GameSetVerifier rankedGameSetWinVerifier) {
+        this.gameSetWinVerifier = rankedGameSetWinVerifier;
     }
 
     public void countGoalFor(Team team, GameDataModel gameDataModel) {
         gameDataModel.countGoalFor(team);
 
-        rankedGameSetWinVerifier.approveWin(gameDataModel);
+        gameSetWinVerifier.approveWin(gameDataModel);
     }
 
     public void undoGoal(GameDataModel gameDataModel) {
@@ -37,7 +37,7 @@ public class ScoreManager {
 
             gameDataModel.redoLastUndoneGoal();
 
-            rankedGameSetWinVerifier.approveWin(gameDataModel);
+            gameSetWinVerifier.approveWin(gameDataModel);
         }
     }
 }

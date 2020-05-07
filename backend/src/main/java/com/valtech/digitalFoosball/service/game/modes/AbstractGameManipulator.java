@@ -6,6 +6,7 @@ import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.game.ScoreManager;
 import com.valtech.digitalFoosball.service.game.init.AbstractInitService;
+import com.valtech.digitalFoosball.service.verifier.setwin.GameSetVerifier;
 
 import java.util.List;
 
@@ -13,8 +14,9 @@ public abstract class AbstractGameManipulator {
     protected final AbstractInitService initService;
     private final ScoreManager scoreManager;
 
-    public AbstractGameManipulator(AbstractInitService initService) {
-        scoreManager = new ScoreManager();
+    public AbstractGameManipulator(AbstractInitService initService,
+                                   GameSetVerifier rankedGameSetWinVerifier) {
+        scoreManager = new ScoreManager(rankedGameSetWinVerifier);
         this.initService = initService;
     }
 

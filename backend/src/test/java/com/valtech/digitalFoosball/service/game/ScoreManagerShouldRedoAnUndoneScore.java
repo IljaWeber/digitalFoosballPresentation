@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ScoreManagerShouldRedoAnUndoneScore {
 
-    public ScoreManager scoreManager = new ScoreManager();
+    public ScoreManager scoreManager = new ScoreManager(rankedGameSetWinVerifier);
     private GameDataModel gameDataModel;
 
     @BeforeEach

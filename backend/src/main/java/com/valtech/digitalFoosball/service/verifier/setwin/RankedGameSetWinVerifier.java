@@ -6,7 +6,7 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
 import static com.valtech.digitalFoosball.constants.Team.*;
 
-public class RankedGameSetWinVerifier {
+public class RankedGameSetWinVerifier implements GameSetVerifier {
 
     public void approveWin(GameDataModel gameDataModel) {
         Team winner = getWinner(gameDataModel);
