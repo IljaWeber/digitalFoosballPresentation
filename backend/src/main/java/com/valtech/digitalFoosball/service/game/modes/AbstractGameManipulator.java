@@ -10,7 +10,6 @@ import com.valtech.digitalFoosball.service.game.init.AbstractInitService;
 import java.util.List;
 
 public abstract class AbstractGameManipulator {
-
     protected final AbstractInitService initService;
     private final ScoreManager scoreManager;
 
