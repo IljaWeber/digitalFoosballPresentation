@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.service.verifier.setwin;
+package com.valtech.digitalFoosball.service.verifier;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;

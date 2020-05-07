@@ -6,7 +6,7 @@ import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.game.TaskOfTimer;
 import com.valtech.digitalFoosball.service.game.init.RankedInitService;
 import com.valtech.digitalFoosball.service.histories.History;
-import com.valtech.digitalFoosball.service.verifier.setwin.TimeGameSetWinVerifier;
+import com.valtech.digitalFoosball.service.verifier.TimeGameSetWinVerifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
