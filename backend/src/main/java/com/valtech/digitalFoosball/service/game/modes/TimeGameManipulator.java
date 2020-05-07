@@ -1,9 +1,7 @@
 package com.valtech.digitalFoosball.service.game.modes;
 
-import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
-import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.game.TaskOfTimer;
 import com.valtech.digitalFoosball.service.game.init.RankedInitService;
@@ -14,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Timer;
-
-import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
 @Service
 public class TimeGameManipulator extends AbstractGameManipulator {
@@ -47,50 +43,8 @@ public class TimeGameManipulator extends AbstractGameManipulator {
         return null;
     }
 
-    public void countGoalFor(Team team, GameDataModel gameDataModel) {
-        TeamDataModel teamDataModel = gameDataModel.getTeam(team);
-
-        if (timeIsOver || teamDataModel.getScore() >= GOAL_LIMIT) {
-            return;
-        }
-
-        history.rememberLastGoalFor(team);
-        teamDataModel.countGoal();
-    }
-
     public void timeIsOver() {
         timeIsOver = true;
-    }
-
-    public void undoGoal(GameDataModel gameDataModel) {
-        if (history.thereAreGoals()) {
-            Team team = history.getLastScoringTeam();
-            TeamDataModel lastScoringTeam = gameDataModel.getTeam(team);
-
-            if (gameDataModel.getSetWinner() != NO_TEAM) {
-                lastScoringTeam.decreaseWonSets();
-                gameDataModel.setSetWinner(NO_TEAM);
-            }
-
-            lastScoringTeam.decreaseScore();
-
-            history.rememberUndoneGoal(team);
-        }
-    }
-
-    public void redoGoal(GameDataModel gameDataModel) {
-        if (history.hasUndoneGoals()) {
-            Team team = history.getLastUndoneTeam();
-            TeamDataModel teamDataModel = gameDataModel.getTeams().get(team);
-
-            teamDataModel.countGoal();
-            history.rememberLastGoalFor(team);
-
-            if (timeGameSetWinVerifier.teamWon(gameDataModel.getTeams(), team)) {
-                teamDataModel.increaseWonSets();
-                gameDataModel.setSetWinner(team);
-            }
-        }
     }
 
     @Override

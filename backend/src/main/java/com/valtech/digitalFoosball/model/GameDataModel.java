@@ -4,8 +4,6 @@ import com.valtech.digitalFoosball.constants.GameMode;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.histories.History;
-import com.valtech.digitalFoosball.service.verifier.setwin.SetWinVerifierProvider;
-import com.valtech.digitalFoosball.service.verifier.setwin.WonSetVerifier;
 
 import java.util.List;
 import java.util.SortedMap;
@@ -19,7 +17,6 @@ public class GameDataModel {
     private Team setWinner;
     private GameMode gameMode;
     private History history;
-    private WonSetVerifier wonSetVerifier;
 
     public GameDataModel(List<TeamDataModel> teamsFromDatabase) {
         teams = new TreeMap<>();
@@ -43,6 +40,11 @@ public class GameDataModel {
         return teams;
     }
 
+    public void setTeams(List<TeamDataModel> teams) {
+        this.teams.put(ONE, teams.get(0));
+        this.teams.put(TWO, teams.get(1));
+    }
+
     public TeamDataModel getTeam(Team team) {
         return teams.get(team);
     }
@@ -57,14 +59,6 @@ public class GameDataModel {
         history = new History();
     }
 
-    public Team getSetWinner() {
-        return setWinner;
-    }
-
-    public void setSetWinner(Team setWinner) {
-        this.setWinner = setWinner;
-    }
-
     public void setTeam(Team team, TeamDataModel teamDataModel) {
         teams.put(team, teamDataModel);
     }
@@ -75,66 +69,54 @@ public class GameDataModel {
 
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
-        this.wonSetVerifier = SetWinVerifierProvider.createVerifier(gameMode);
-    }
-
-    public void setTeams(List<TeamDataModel> teams) {
-        this.teams.put(ONE, teams.get(0));
-        this.teams.put(TWO, teams.get(1));
     }
 
     public void countGoalFor(Team scoredTeam) {
-        for (Team team : teams.keySet()) {
-            if (team == scoredTeam) {
-                teams.get(scoredTeam).countGoal();
-                history.rememberLastGoalFor(scoredTeam);
-            }
+        if (setHasAWinner()) {
+            return;
         }
+
+        teams.get(scoredTeam).countGoal();
+        history.rememberLastGoalFor(scoredTeam);
     }
 
-    public void increaseWonSetsFor(Team wonSetOfTeam) {
-        for (Team team : teams.keySet()) {
-            if (team == wonSetOfTeam) {
-                teams.get(team).increaseWonSets();
-            }
-        }
+    public void increaseWonSetsFor(Team team) {
+        teams.get(team).increaseWonSets();
     }
 
-    public boolean checkForExistingGoals() {
+    public boolean thereAreGoals() {
         return history.thereAreGoals();
-    }
-
-    public void decreaseScoreForLastScoredTeam() {
-        history.removeLastScoringTeam(teams);
-    }
-
-    public void decreaseWonSetsForRecentSetWinner() {
-        for (Team team : teams.keySet()) {
-            if (team == setWinner) {
-                teams.get(team).decreaseWonSets();
-            }
-        }
     }
 
     public boolean setHasAWinner() {
         return setWinner != NO_TEAM;
     }
 
-    public boolean checkForUndoneGoals() {
-        return history.hasUndoneGoals();
-
+    public void decreaseWonSetsForRecentSetWinner() {
+        TeamDataModel setWinningTeam = teams.get(setWinner);
+        setWinningTeam.decreaseWonSets();
     }
 
-    public void increaseScoreForLastUndoneTeam() {
-
-        history.increaseScoreForLastUndoneTeam(teams);
+    public Team getSetWinner() {
+        return setWinner;
     }
 
-    public void setWonSetWithRecentUndoneTeam() {
-        setWinner = history.getLastUndoneTeam();
+    public void setSetWinner(Team setWinner) {
+        this.setWinner = setWinner;
     }
 
-    public boolean hasWonSet() {
-        return this.wonSetVerifier.teamWon(this);
+    public void undoLastGoal() {
+        Team undo = history.undo();
+        TeamDataModel teamDataModel = teams.get(undo);
+        teamDataModel.decreaseScore();
+    }
+
+    public void redoLastUndoneGoal() {
+        Team redo = history.getLastUndoingTeam();
+        countGoalFor(redo);
+    }
+
+    public boolean thereAreUndoneGoals() {
+        return history.thereAreUndoneGoals();
     }
 }

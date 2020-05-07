@@ -2,50 +2,42 @@ package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
+import com.valtech.digitalFoosball.service.verifier.setwin.RankedGameSetWinVerifier;
 
 import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
 public class ScoreManager {
 
+    RankedGameSetWinVerifier rankedGameSetWinVerifier;
 
-
-    public void countGoalFor(Team team, GameDataModel gameDataModel) {
-        //if setHasWinner == true -> zyklomatische Komplexität reduzieren
-        if (setHasNoWinner(gameDataModel)) {
-            gameDataModel.countGoalFor(team);
-
-            if (gameDataModel.hasWonSet()) {
-                gameDataModel.increaseWonSetsFor(team);
-                gameDataModel.setSetWinner(team);
-            }
-        }
+    public ScoreManager() {
+        rankedGameSetWinVerifier = new RankedGameSetWinVerifier();
     }
 
-    private boolean setHasNoWinner(GameDataModel gameDataModel) {
-        Team setWinner = gameDataModel.getSetWinner();
-        return setWinner == NO_TEAM;
+    public void countGoalFor(Team team, GameDataModel gameDataModel) {
+        gameDataModel.countGoalFor(team);
+
+        rankedGameSetWinVerifier.approveWin(gameDataModel);
     }
 
     public void undoGoal(GameDataModel gameDataModel) {
-        if (gameDataModel.checkForExistingGoals()) {
-            gameDataModel.decreaseScoreForLastScoredTeam();
-            // extract to method
-            if (gameDataModel.hasWonSet()) {
+        if (gameDataModel.thereAreGoals()) {
+
+            if (gameDataModel.setHasAWinner()) {
                 gameDataModel.decreaseWonSetsForRecentSetWinner();
                 gameDataModel.setSetWinner(NO_TEAM);
             }
+
+            gameDataModel.undoLastGoal();
         }
     }
 
-    //substitution of redo and undo
-    //solve feature envy -> operations on gdm and tdm
     public void redoGoal(GameDataModel gameDataModel) {
-        if (gameDataModel.checkForUndoneGoals()) {
-            gameDataModel.increaseScoreForLastUndoneTeam();
+        if (gameDataModel.thereAreUndoneGoals()) {
 
-            if (gameDataModel.hasWonSet()) {
-                gameDataModel.setWonSetWithRecentUndoneTeam();
-            }
+            gameDataModel.redoLastUndoneGoal();
+
+            rankedGameSetWinVerifier.approveWin(gameDataModel);
         }
     }
 }

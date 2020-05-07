@@ -1,14 +1,12 @@
 package com.valtech.digitalFoosball.service.histories;
 
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
-import java.util.SortedMap;
 import java.util.Stack;
 
 public class History {
-    private Stack<Team> historyOfGoals;
-    private Stack<Team> historyOfUndo;
+    private final Stack<Team> historyOfGoals;
+    private final Stack<Team> historyOfUndo;
 
     public History() {
         historyOfGoals = new Stack<>();
@@ -19,51 +17,21 @@ public class History {
         historyOfGoals.push(team);
     }
 
-    public Team getLastScoringTeam() {
-        return historyOfGoals.pop();
+    public Team undo() {
+        Team teamToUndo = historyOfGoals.pop();
+        historyOfUndo.push(teamToUndo);
+        return teamToUndo;
     }
 
-    private void rememberUndoneGoalFor(Team lastScoredTeam) {
-        historyOfUndo.push(lastScoredTeam);
+    public Team getLastUndoingTeam() {
+        return historyOfUndo.pop();
     }
 
     public boolean thereAreGoals() {
         return !historyOfGoals.empty();
     }
 
-    public void rememberUndoneGoal(Team team) {
-        historyOfUndo.push(team);
-    }
-
-    public Team getLastUndoneTeam() {
-        return historyOfUndo.pop();
-    }
-
-    public boolean hasUndoneGoals() {
+    public boolean thereAreUndoneGoals() {
         return !historyOfUndo.empty();
-    }
-
-    public void removeLastScoringTeam(SortedMap<Team, TeamDataModel> teams) {
-        Team lastScoredTeam = historyOfGoals.pop();
-
-        rememberUndoneGoalFor(lastScoredTeam);
-
-        for (Team team : teams.keySet()) {
-            if (team == lastScoredTeam) {
-                teams.get(team).decreaseScore();
-            }
-        }
-    }
-
-    public void increaseScoreForLastUndoneTeam(SortedMap<Team, TeamDataModel> teams) {
-        Team lastUndoneTeam = historyOfUndo.pop();
-
-        rememberLastGoalFor(lastUndoneTeam);
-
-        for (Team team : teams.keySet()) {
-            if (team == lastUndoneTeam) {
-                teams.get(team).countGoal();
-            }
-        }
     }
 }
