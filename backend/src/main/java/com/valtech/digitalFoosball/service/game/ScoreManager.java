@@ -2,15 +2,12 @@ package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
-import com.valtech.digitalFoosball.service.verifier.setwin.WonSetVerifier;
 
 import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
 public class ScoreManager {
-    private WonSetVerifier verifier;
 
-    public ScoreManager() {
-    }
+
 
     public void countGoalFor(Team team, GameDataModel gameDataModel) {
         //if setHasWinner == true -> zyklomatische Komplexität reduzieren
@@ -33,7 +30,7 @@ public class ScoreManager {
         if (gameDataModel.checkForExistingGoals()) {
             gameDataModel.decreaseScoreForLastScoredTeam();
             // extract to method
-            if (gameDataModel.isThereASetWinner()) {
+            if (gameDataModel.hasWonSet()) {
                 gameDataModel.decreaseWonSetsForRecentSetWinner();
                 gameDataModel.setSetWinner(NO_TEAM);
             }

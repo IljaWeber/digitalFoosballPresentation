@@ -116,7 +116,7 @@ public class GameDataModel {
         }
     }
 
-    public boolean isThereASetWinner() {
+    public boolean setHasAWinner() {
         return setWinner != NO_TEAM;
     }
 
