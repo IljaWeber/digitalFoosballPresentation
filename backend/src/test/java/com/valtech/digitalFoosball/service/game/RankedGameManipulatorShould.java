@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static com.valtech.digitalFoosball.constants.GameMode.RANKED;
 import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,7 +46,6 @@ public class RankedGameManipulatorShould {
         teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
         initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
         gameData = game.initGame(initDataModel);
-        gameData.setGameMode(RANKED);
     }
 
     @Test

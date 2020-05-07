@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.service.verifier.setwin;
+package com.valtech.digitalFoosball.service.verifier;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
@@ -6,7 +6,7 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
 import java.util.Map;
 
-public class TimeGameSetWinVerifier implements WonSetVerifier {
+public class TimeGameSetWinVerifier {
 
     public static final int GOAL_LIMIT = 10;
 
@@ -15,11 +15,6 @@ public class TimeGameSetWinVerifier implements WonSetVerifier {
 
         int score = scoringTeamDataModel.getScore();
         return score >= GOAL_LIMIT;
-    }
-
-    @Override
-    public boolean teamWon(GameDataModel teams) {
-        return false;
     }
 
     public Team getWinner(GameDataModel gameDataModel, boolean timeIsOver) {

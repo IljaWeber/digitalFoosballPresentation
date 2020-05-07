@@ -2,19 +2,27 @@ package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
+import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import com.valtech.digitalFoosball.service.histories.History;
+import com.valtech.digitalFoosball.service.verifier.RegularGameSetWinVerifier;
 
 import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
 public class ScoreManager {
 
+    private final RegularGameSetWinVerifier setWinVerifier;
 
+    public ScoreManager() {
+        setWinVerifier = new RegularGameSetWinVerifier();
+    }
 
     public void countGoalFor(Team team, GameDataModel gameDataModel) {
+
         //if setHasWinner == true -> zyklomatische Komplexität reduzieren
         if (setHasNoWinner(gameDataModel)) {
             gameDataModel.countGoalFor(team);
 
-            if (gameDataModel.hasWonSet()) {
+            if (setWinVerifier.teamWon(gameDataModel.getTeams(), team)) {
                 gameDataModel.increaseWonSetsFor(team);
                 gameDataModel.setSetWinner(team);
             }
@@ -30,7 +38,8 @@ public class ScoreManager {
         if (gameDataModel.checkForExistingGoals()) {
             gameDataModel.decreaseScoreForLastScoredTeam();
             // extract to method
-            if (gameDataModel.hasWonSet()) {
+            //feature envy!
+            if (gameDataModel.setHasAWinner()) {
                 gameDataModel.decreaseWonSetsForRecentSetWinner();
                 gameDataModel.setSetWinner(NO_TEAM);
             }
@@ -40,11 +49,18 @@ public class ScoreManager {
     //substitution of redo and undo
     //solve feature envy -> operations on gdm and tdm
     public void redoGoal(GameDataModel gameDataModel) {
-        if (gameDataModel.checkForUndoneGoals()) {
-            gameDataModel.increaseScoreForLastUndoneTeam();
+        History history = gameDataModel.getHistory();
 
-            if (gameDataModel.hasWonSet()) {
-                gameDataModel.setWonSetWithRecentUndoneTeam();
+        if (history.hasUndoneGoals()) {
+            Team team = history.getLastUndoneGoal();
+            TeamDataModel teamDataModel = gameDataModel.getTeams().get(team);
+
+            teamDataModel.countGoal();
+            history.rememberLastGoalFor(team);
+
+            if (setWinVerifier.teamWon(gameDataModel.getTeams(), team)) {
+                teamDataModel.increaseWonSets();
+                gameDataModel.setSetWinner(team);
             }
         }
     }

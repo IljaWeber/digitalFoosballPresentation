@@ -7,8 +7,8 @@ import java.util.SortedMap;
 import java.util.Stack;
 
 public class History {
-    private Stack<Team> historyOfGoals;
-    private Stack<Team> historyOfUndo;
+    private final Stack<Team> historyOfGoals;
+    private final Stack<Team> historyOfUndo;
 
     public History() {
         historyOfGoals = new Stack<>();
@@ -35,7 +35,7 @@ public class History {
         historyOfUndo.push(team);
     }
 
-    public Team getLastUndoneTeam() {
+    public Team getLastUndoneGoal() {
         return historyOfUndo.pop();
     }
 
@@ -51,18 +51,6 @@ public class History {
         for (Team team : teams.keySet()) {
             if (team == lastScoredTeam) {
                 teams.get(team).decreaseScore();
-            }
-        }
-    }
-
-    public void increaseScoreForLastUndoneTeam(SortedMap<Team, TeamDataModel> teams) {
-        Team lastUndoneTeam = historyOfUndo.pop();
-
-        rememberLastGoalFor(lastUndoneTeam);
-
-        for (Team team : teams.keySet()) {
-            if (team == lastUndoneTeam) {
-                teams.get(team).countGoal();
             }
         }
     }
