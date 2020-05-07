@@ -8,7 +8,7 @@ import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.game.TaskOfTimer;
 import com.valtech.digitalFoosball.service.game.init.RankedInitService;
 import com.valtech.digitalFoosball.service.histories.History;
-import com.valtech.digitalFoosball.service.verifier.TimeGameSetWinVerifier;
+import com.valtech.digitalFoosball.service.verifier.setwin.TimeGameSetWinVerifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,7 +80,7 @@ public class TimeGameManipulator extends AbstractGameManipulator {
 
     public void redoGoal(GameDataModel gameDataModel) {
         if (history.hasUndoneGoals()) {
-            Team team = history.getLastUndoneGoal();
+            Team team = history.getLastUndoneTeam();
             TeamDataModel teamDataModel = gameDataModel.getTeams().get(team);
 
             teamDataModel.countGoal();

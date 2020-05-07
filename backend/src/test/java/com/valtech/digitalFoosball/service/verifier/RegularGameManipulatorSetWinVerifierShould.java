@@ -2,6 +2,7 @@ package com.valtech.digitalFoosball.service.verifier;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import com.valtech.digitalFoosball.service.verifier.setwin.RegularGameSetWinVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

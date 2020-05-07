@@ -35,7 +35,7 @@ public class History {
         historyOfUndo.push(team);
     }
 
-    public Team getLastUndoneGoal() {
+    public Team getLastUndoneTeam() {
         return historyOfUndo.pop();
     }
 
@@ -51,6 +51,18 @@ public class History {
         for (Team team : teams.keySet()) {
             if (team == lastScoredTeam) {
                 teams.get(team).decreaseScore();
+            }
+        }
+    }
+
+    public void increaseScoreForLastUndoneTeam(SortedMap<Team, TeamDataModel> teams) {
+        Team lastUndoneTeam = historyOfUndo.pop();
+
+        rememberLastGoalFor(lastUndoneTeam);
+
+        for (Team team : teams.keySet()) {
+            if (team == lastUndoneTeam) {
+                teams.get(team).countGoal();
             }
         }
     }

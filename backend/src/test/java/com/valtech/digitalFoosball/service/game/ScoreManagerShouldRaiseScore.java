@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.valtech.digitalFoosball.constants.GameMode.RANKED;
 import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,6 +31,7 @@ public class ScoreManagerShouldRaiseScore {
 
         gameDataModel = new GameDataModel();
         gameDataModel.setTeams(teams);
+        gameDataModel.setGameMode(RANKED);
     }
 
     @Test

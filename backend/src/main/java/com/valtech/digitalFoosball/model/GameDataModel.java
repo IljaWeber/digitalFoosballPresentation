@@ -4,6 +4,8 @@ import com.valtech.digitalFoosball.constants.GameMode;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.histories.History;
+import com.valtech.digitalFoosball.service.verifier.setwin.SetWinVerifierProvider;
+import com.valtech.digitalFoosball.service.verifier.setwin.WonSetVerifier;
 
 import java.util.List;
 import java.util.SortedMap;
@@ -17,6 +19,7 @@ public class GameDataModel {
     private Team setWinner;
     private GameMode gameMode;
     private History history;
+    private WonSetVerifier wonSetVerifier;
 
     public GameDataModel(List<TeamDataModel> teamsFromDatabase) {
         teams = new TreeMap<>();
@@ -72,10 +75,7 @@ public class GameDataModel {
 
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
-    }
-
-    public History getHistory() {
-        return history;
+        this.wonSetVerifier = SetWinVerifierProvider.createVerifier(gameMode);
     }
 
     public void setTeams(List<TeamDataModel> teams) {
@@ -83,15 +83,11 @@ public class GameDataModel {
         this.teams.put(TWO, teams.get(1));
     }
 
-    public boolean setHasAWinner() {
-        return setWinner != NO_TEAM;
-    }
-
     public void countGoalFor(Team scoredTeam) {
         for (Team team : teams.keySet()) {
             if (team == scoredTeam) {
-                teams.get(team).countGoal();
-                history.rememberLastGoalFor(team);
+                teams.get(scoredTeam).countGoal();
+                history.rememberLastGoalFor(scoredTeam);
             }
         }
     }
@@ -122,5 +118,23 @@ public class GameDataModel {
 
     public boolean isThereASetWinner() {
         return setWinner != NO_TEAM;
+    }
+
+    public boolean checkForUndoneGoals() {
+        return history.hasUndoneGoals();
+
+    }
+
+    public void increaseScoreForLastUndoneTeam() {
+
+        history.increaseScoreForLastUndoneTeam(teams);
+    }
+
+    public void setWonSetWithRecentUndoneTeam() {
+        setWinner = history.getLastUndoneTeam();
+    }
+
+    public boolean hasWonSet() {
+        return this.wonSetVerifier.teamWon(this);
     }
 }

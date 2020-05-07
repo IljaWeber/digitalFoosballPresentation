@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.valtech.digitalFoosball.constants.GameMode.RANKED;
 import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,11 +31,12 @@ public class ScoreManagerShouldRedoAnUndoneScore {
 
         gameDataModel = new GameDataModel();
         gameDataModel.setTeams(teams);
+        gameDataModel.setGameMode(RANKED);
     }
 
     @Test
     void if_a_score_has_been_undone_recently() {
-        raiseScoreOf(ONE);
+        raiseScoreOfTeam(ONE);
         scoreManager.undoGoal(gameDataModel);
 
         scoreManager.redoGoal(gameDataModel);
@@ -60,7 +62,7 @@ public class ScoreManagerShouldRedoAnUndoneScore {
 
     @Test
     void and_raise_the_won_sets_if_necessary() {
-        raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
+        raiseScoreOfTeam(ONE, ONE, ONE, ONE, ONE, ONE);
         scoreManager.undoGoal(gameDataModel);
 
         scoreManager.redoGoal(gameDataModel);
@@ -74,7 +76,7 @@ public class ScoreManagerShouldRedoAnUndoneScore {
         return teamOne.getWonSets();
     }
 
-    private void raiseScoreOf(Team... teams) {
+    private void raiseScoreOfTeam(Team... teams) {
         for (Team team : teams) {
             scoreManager.countGoalFor(team, gameDataModel);
         }
