@@ -14,7 +14,7 @@ import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ScoreManagerShouldUndoLastGoal {
-    public ScoreManager scoreManager = new ScoreManager(rankedGameSetWinVerifier);
+    public ScoreManager scoreManager = new ScoreManager();
     private GameDataModel gameDataModel;
 
     @BeforeEach

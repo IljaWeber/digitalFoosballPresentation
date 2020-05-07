@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ScoreManagerShouldRaiseScore {
 
-    public ScoreManager scoreManager = new ScoreManager(rankedGameSetWinVerifier);
+    public ScoreManager scoreManager = new ScoreManager();
     private GameDataModel gameDataModel;
 
     @BeforeEach

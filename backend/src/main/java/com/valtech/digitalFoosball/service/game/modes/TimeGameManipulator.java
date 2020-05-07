@@ -23,7 +23,7 @@ public class TimeGameManipulator extends AbstractGameManipulator {
 
     @Autowired
     public TimeGameManipulator(RankedInitService initService) {
-        super(initService, new TimeGameSetWinVerifier());
+        super(initService);
         history = new History();
         timeGameSetWinVerifier = new TimeGameSetWinVerifier();
     }
