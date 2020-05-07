@@ -39,7 +39,7 @@ public class ScoreManager {
             gameDataModel.decreaseScoreForLastScoredTeam();
             // extract to method
             //feature envy!
-            if (gameDataModel.isThereASetWinner()) {
+            if (gameDataModel.setHasAWinner()) {
                 gameDataModel.decreaseWonSetsForRecentSetWinner();
                 gameDataModel.setSetWinner(NO_TEAM);
             }

@@ -83,10 +83,6 @@ public class GameDataModel {
         this.teams.put(TWO, teams.get(1));
     }
 
-    public boolean setHasAWinner() {
-        return setWinner != NO_TEAM;
-    }
-
     public void countGoalFor(Team scoredTeam) {
         for (Team team : teams.keySet()) {
             if (team == scoredTeam) {
@@ -120,7 +116,7 @@ public class GameDataModel {
         }
     }
 
-    public boolean isThereASetWinner() {
+    public boolean setHasAWinner() {
         return setWinner != NO_TEAM;
     }
 }
