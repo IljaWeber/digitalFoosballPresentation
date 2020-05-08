@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.service.game.init;
 
 import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.api.DigitalFoosballAPI;
+import com.valtech.digitalFoosball.api.DigitalFoosballRestAPI;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
@@ -27,7 +27,7 @@ import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration(classes = Application.class)
-@SpringBootTest(classes = DigitalFoosballAPI.class)
+@SpringBootTest(classes = DigitalFoosballRestAPI.class)
 public class RankedInitServiceShould {
 
     private TeamDataModel teamDataModelOne;

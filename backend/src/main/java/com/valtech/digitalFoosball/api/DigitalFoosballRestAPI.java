@@ -16,13 +16,13 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("api")
-public class DigitalFoosballAPI {
+public class DigitalFoosballRestAPI {
 
-    private final Logger logger = LogManager.getLogger(DigitalFoosballAPI.class);
+    private final Logger logger = LogManager.getLogger(DigitalFoosballRestAPI.class);
     private final GameController gameController;
 
     @Autowired
-    public DigitalFoosballAPI(GameController gameController) {
+    public DigitalFoosballRestAPI(GameController gameController) {
         this.gameController = gameController;
     }
 

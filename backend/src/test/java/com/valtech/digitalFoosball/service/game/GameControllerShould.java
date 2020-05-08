@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.api.DigitalFoosballAPI;
+import com.valtech.digitalFoosball.api.DigitalFoosballRestAPI;
 import com.valtech.digitalFoosball.api.INotifyAboutStateChanges;
 import com.valtech.digitalFoosball.constants.GameMode;
 import com.valtech.digitalFoosball.constants.Team;
@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 
 @ContextConfiguration(classes = Application.class)
-@SpringBootTest(classes = DigitalFoosballAPI.class)
+@SpringBootTest(classes = DigitalFoosballRestAPI.class)
 class GameControllerShould {
 
     public GameController game;

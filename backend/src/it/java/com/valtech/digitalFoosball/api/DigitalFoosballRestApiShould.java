@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = Application.class)
-@SpringBootTest(classes = DigitalFoosballAPI.class)
+@SpringBootTest(classes = DigitalFoosballRestAPI.class)
 public class DigitalFoosballRestApiShould {
 
     @Autowired
@@ -43,13 +43,13 @@ public class DigitalFoosballRestApiShould {
     @Autowired
     private GameController game;
 
-    private final Gson gson;
     private String json;
+    private final Gson gson;
     private MvcResult result;
+    private List<TeamDataModel> teams;
     private final ObjectMapper mapper;
     private final TeamDataModel teamOne;
     private final TeamDataModel teamTwo;
-    private List<TeamDataModel> teams;
     private GameDataModel gameDataModel;
     private InitDataModel initDataModel;
     private MockHttpServletRequestBuilder builder;
@@ -58,7 +58,6 @@ public class DigitalFoosballRestApiShould {
         gson = new Gson();
         teams = new ArrayList<>();
         mapper = new ObjectMapper();
-        gameDataModel = new GameDataModel();
         initDataModel = new InitDataModel();
         teamOne = new TeamDataModel("T1", "P1", "P2");
         teamTwo = new TeamDataModel("T2", "P3", "P4");
@@ -77,106 +76,128 @@ public class DigitalFoosballRestApiShould {
     void initialise_an_ad_hoc_match_with_default_values_for_the_teams() throws Exception {
         prepareTeamsForInitialization(new TeamDataModel("Orange", "Goalie", "Striker"),
                                       new TeamDataModel("Green", "Goalie", "Striker"));
-
-        gameDataModel.setTeam(ONE, new TeamDataModel("Orange", "Goalie", "Striker"));
-        gameDataModel.setTeam(TWO, new TeamDataModel("Green", "Goalie", "Striker"));
+        prepareComparableAdHocInitialisation();
+        String expected = prepareComparableValuesWithMatchWinner(NO_TEAM);
 
         prepareGameWithMode(AD_HOC);
 
-        builder = MockMvcRequestBuilders.get("/api/game");
-        result = mockMvc.perform(builder).andExpect(status().isOk()).andReturn();
-        assertThat(getGameStatus()).isEqualTo(getSimulatedGameStatus(NO_TEAM));
+        String actual = getGameStatus();
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private void prepareComparableAdHocInitialisation() {
+        gameDataModel.setTeam(ONE, new TeamDataModel("Orange", "Goalie", "Striker"));
+        gameDataModel.setTeam(TWO, new TeamDataModel("Green", "Goalie", "Striker"));
     }
 
     @Test
     void initialise_a_ranked_game_with_individual_team_and_player_names() throws Exception {
-        prepareGameWithMode(RANKED);
-        builder = MockMvcRequestBuilders.get("/api/game");
+        String expected = prepareComparableValuesWithMatchWinner(NO_TEAM);
 
-        result = mockMvc.perform(builder).andExpect(status().isOk()).andReturn();
-        assertThat(getGameStatus()).isEqualTo(getSimulatedGameStatus(NO_TEAM));
+        prepareGameWithMode(RANKED);
+
+        String actual = getGameStatus();
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void undo_scored_goal() throws Exception {
+        countComparableScoreForTeam(ONE);
+        String expected = prepareComparableValuesWithMatchWinner(NO_TEAM);
+        MockHttpServletRequestBuilder undo = MockMvcRequestBuilders.put("/api/undo");
         prepareGameWithMode(RANKED);
-        prepareScoreForTeam(ONE);
         countGoalForTeam(ONE, ONE);
 
-        builder = MockMvcRequestBuilders.put("/api/undo");
-        mockMvc.perform(builder);
+        prepareGameCommands(undo);
 
-        assertThat(getGameStatus()).isEqualTo(getSimulatedGameStatus(NO_TEAM));
+        String actual = getGameStatus();
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void redo_undone_goals() throws Exception {
+        countComparableScoreForTeam(ONE, TWO, TWO);
+        String expected = prepareComparableValuesWithMatchWinner(NO_TEAM);
+        MockHttpServletRequestBuilder redo = MockMvcRequestBuilders.put("/api/redo");
         prepareGameWithMode(RANKED);
-        prepareScoreForTeam(ONE, TWO, TWO);
         countGoalForTeam(ONE, TWO, TWO);
         game.undoGoal();
         game.undoGoal();
 
-        builder = MockMvcRequestBuilders.put("/api/redo");
-        mockMvc.perform(builder);
-        mockMvc.perform(builder);
+        prepareGameCommands(redo, redo);
 
-        assertThat(getGameStatus()).isEqualTo(getSimulatedGameStatus(NO_TEAM));
+        String actual = getGameStatus();
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void reset_game_with_empty_team_and_player_names_and_zero_scores() throws Exception {
+        gameDataModel = new GameDataModel();
+        String expected = prepareComparableValuesWithMatchWinner(NO_TEAM);
+        MockHttpServletRequestBuilder reset = MockMvcRequestBuilders.delete("/api/reset");
         prepareGameWithMode(RANKED);
         countGoalForTeam(ONE, TWO);
-        gameDataModel = new GameDataModel();
-        builder = MockMvcRequestBuilders.delete("/api/reset");
 
-        mockMvc.perform(builder);
+        prepareGameCommands(reset);
 
-        assertThat(getGameStatus()).isEqualTo(getSimulatedGameStatus(NO_TEAM));
+        String actual = getGameStatus();
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void return_a_won_set() throws Exception {
+        countComparableScoreForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
+        prepareComparableSetWinValues(ONE, ONE);
+        String expected = prepareComparableValuesWithMatchWinner(NO_TEAM);
         prepareGameWithMode(RANKED);
-        prepareScoreForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
-        gameDataModel.getTeam(ONE).increaseWonSets();
-        gameDataModel.setSetWinner(ONE);
-
         countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
 
-        assertThat(getGameStatus()).isEqualTo(getSimulatedGameStatus(NO_TEAM));
+        String actual = getGameStatus();
+
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void return_a_match_winner() throws Exception {
-        prepareGameWithMode(RANKED);
-        prepareScoreForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
-        //helper methods
-        gameDataModel.getTeam(ONE).increaseWonSets();
-        gameDataModel.getTeam(ONE).increaseWonSets();
+        countComparableScoreForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
+        prepareComparableSetWinValues(ONE, ONE, ONE);
         gameDataModel.getTeam(ONE).increaseWonMatches();
-        gameDataModel.setSetWinner(ONE);
+        String expected = prepareComparableValuesWithMatchWinner(ONE);
+        prepareGameWithMode(RANKED);
         countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
         game.changeover();
         countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
 
         String actual = getGameStatus();
 
-        String expected = getSimulatedGameStatus(ONE);
         assertThat(actual).isEqualTo(expected);
+    }
+
+    private void prepareComparableSetWinValues(Team lastSetWinner, Team... increasingSetForTeams) {
+        for (Team increasingSetForTeam : increasingSetForTeams) {
+            gameDataModel.getTeam(increasingSetForTeam).increaseWonSets();
+        }
+        gameDataModel.setSetWinner(lastSetWinner);
     }
 
     @Test
     public void reset_score_values_but_team_names_are_not_affected() throws Exception {
-        prepareGameWithMode(RANKED);
+        MockHttpServletRequestBuilder newRound = MockMvcRequestBuilders.post("/api/newRound");
         gameDataModel.getTeam(ONE).increaseWonSets();
+        String expected = prepareComparableValuesWithMatchWinner(NO_TEAM);
+        prepareGameWithMode(RANKED);
         countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
 
-        builder = MockMvcRequestBuilders.post("/api/newRound");
-        mockMvc.perform(builder);
+        prepareGameCommands(newRound);
 
-        assertThat(getGameStatus()).isEqualTo(getSimulatedGameStatus(NO_TEAM));
+        String actual = getGameStatus();
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private void prepareGameCommands(MockHttpServletRequestBuilder... gameCommands) throws Exception {
+        for (MockHttpServletRequestBuilder gameCommand : gameCommands) {
+            mockMvc.perform(gameCommand);
+        }
     }
 
     private void prepareTeamsForInitialization(TeamDataModel teamOne, TeamDataModel teamTwo) {
@@ -189,14 +210,14 @@ public class DigitalFoosballRestApiShould {
         json = gson.toJson(initDataModel);
     }
 
-    private String getSimulatedGameStatus(Team matchWinner) throws IOException {
+    private String prepareComparableValuesWithMatchWinner(Team matchWinner) throws IOException {
         GameOutputModel expectedValues = new GameOutputModel(gameDataModel);
         expectedValues.setMatchWinner(matchWinner);
 
         return mapper.writeValueAsString(expectedValues);
     }
 
-    private void prepareScoreForTeam(Team... teams) {
+    private void countComparableScoreForTeam(Team... teams) {
         for (Team team : teams) {
             gameDataModel.getTeam(team).countGoal();
         }

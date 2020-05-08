@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = Application.class)
-@SpringBootTest(classes = DigitalFoosballAPI.class)
+@SpringBootTest(classes = DigitalFoosballRestAPI.class)
 public class RaspiControllerAPIShould {
 
     @Autowired
