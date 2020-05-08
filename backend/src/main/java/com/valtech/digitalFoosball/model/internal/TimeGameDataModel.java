@@ -7,4 +7,12 @@ public class TimeGameDataModel extends RegularGameDataModel {
         timeIsOver = false;
     }
 
+    public boolean isTimeOver() {
+        return timeIsOver;
+    }
+
+    public void timeLimitReached() {
+        timeIsOver = true;
+        updateObservers();
+    }
 }

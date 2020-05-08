@@ -3,6 +3,7 @@ package com.valtech.digitalFoosball.model.internal;
 import com.valtech.digitalFoosball.api.Observer;
 import com.valtech.digitalFoosball.constants.GameMode;
 import com.valtech.digitalFoosball.constants.Team;
+import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.service.histories.History;
 
 import java.util.ArrayList;
@@ -145,5 +146,12 @@ public class RegularGameDataModel implements GameDataModel {
     @Override
     public void addObserver(Observer observer) {
         observers.add(observer);
+    }
+
+    protected void updateObservers() {
+        for (Observer observer : observers) {
+            GameOutputModel gameOutputModel = new GameOutputModel(this);
+            observer.update(gameOutputModel);
+        }
     }
 }

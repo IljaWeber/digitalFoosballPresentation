@@ -5,7 +5,7 @@ import com.valtech.digitalFoosball.model.internal.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.game.TaskOfTimer;
 import com.valtech.digitalFoosball.service.game.init.RankedInitService;
-import com.valtech.digitalFoosball.service.verifier.TimeGameSetWinVerifier;
+import com.valtech.digitalFoosball.service.verifier.TimeGameWinApprover;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +15,12 @@ import java.util.Timer;
 @Service
 public class TimeGameManipulator extends AbstractGameManipulator {
     private boolean timeIsOver = false;
-    private final TimeGameSetWinVerifier timeGameSetWinVerifier;
+    private final TimeGameWinApprover timeGameWinApprover;
 
     @Autowired
     public TimeGameManipulator(RankedInitService initService) {
-        super(initService, new TimeGameSetWinVerifier());
-        timeGameSetWinVerifier = new TimeGameSetWinVerifier();
+        super(initService, new TimeGameWinApprover());
+        timeGameWinApprover = new TimeGameWinApprover();
     }
 
     public void setTimer(long timeDuration, GameDataModel dataModel) {
