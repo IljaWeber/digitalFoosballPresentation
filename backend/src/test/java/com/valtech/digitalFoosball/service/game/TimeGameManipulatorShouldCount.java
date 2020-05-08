@@ -3,7 +3,7 @@ package com.valtech.digitalFoosball.service.game;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.service.game.modes.TimeGameManipulator;
+import com.valtech.digitalFoosball.service.game.manipulator.TimeGameManipulator;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -16,10 +16,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TimeGameManipulatorShouldCount {
 
-    private TimeGameManipulator timeGame;
-    private GameDataModel gameDataModel;
-    private TeamDataModel teamDataModelOne;
-    private TeamDataModel teamDataModelTwo;
+    private final TimeGameManipulator timeGame;
+    private final GameDataModel gameDataModel;
+    private final TeamDataModel teamDataModelOne;
+    private final TeamDataModel teamDataModelTwo;
 
     public TimeGameManipulatorShouldCount() {
         timeGame = new TimeGameManipulator(null);

@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.service.game.modes;
+package com.valtech.digitalFoosball.service.game.manipulator;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;

@@ -9,7 +9,7 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.builder.GameBuilder;
 import com.valtech.digitalFoosball.service.game.init.RankedInitService;
-import com.valtech.digitalFoosball.service.game.modes.RankedGameManipulator;
+import com.valtech.digitalFoosball.service.game.manipulator.RankedGameManipulator;
 import com.valtech.digitalFoosball.storage.IObtainTeams;
 import com.valtech.digitalFoosball.storage.PlayerService;
 import com.valtech.digitalFoosball.storage.TeamService;

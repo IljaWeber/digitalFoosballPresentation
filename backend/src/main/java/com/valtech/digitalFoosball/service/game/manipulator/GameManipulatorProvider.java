@@ -1,10 +1,6 @@
-package com.valtech.digitalFoosball.service.game;
+package com.valtech.digitalFoosball.service.game.manipulator;
 
 import com.valtech.digitalFoosball.constants.GameMode;
-import com.valtech.digitalFoosball.service.game.modes.AbstractGameManipulator;
-import com.valtech.digitalFoosball.service.game.modes.AdHocGameManipulator;
-import com.valtech.digitalFoosball.service.game.modes.RankedGameManipulator;
-import com.valtech.digitalFoosball.service.game.modes.TimeGameManipulator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -7,7 +7,8 @@ import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
-import com.valtech.digitalFoosball.service.game.modes.AbstractGameManipulator;
+import com.valtech.digitalFoosball.service.game.manipulator.AbstractGameManipulator;
+import com.valtech.digitalFoosball.service.game.manipulator.GameManipulatorProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package com.valtech.digitalFoosball.service.game;
 
-import com.valtech.digitalFoosball.service.game.modes.TimeGameManipulator;
+import com.valtech.digitalFoosball.service.game.manipulator.TimeGameManipulator;
 
 import java.util.TimerTask;
 

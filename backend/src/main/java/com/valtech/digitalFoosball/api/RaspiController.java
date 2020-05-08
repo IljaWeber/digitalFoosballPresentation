@@ -22,7 +22,7 @@ public class RaspiController {
     @Autowired
     public RaspiController(IReactToGoals goalProcessor) {
         this.goalProcessor = goalProcessor;
-        logger = LogManager.getLogger(DigitalFoosballRestAPI.class);
+        logger = LogManager.getLogger(RaspiController.class);
     }
 
     @PostMapping(path = "/raise", produces = MediaType.APPLICATION_JSON_VALUE)

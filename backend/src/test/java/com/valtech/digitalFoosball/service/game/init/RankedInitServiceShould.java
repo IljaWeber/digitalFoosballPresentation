@@ -1,7 +1,5 @@
 package com.valtech.digitalFoosball.service.game.init;
 
-import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.api.DigitalFoosballRestAPI;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
@@ -13,9 +11,6 @@ import com.valtech.digitalFoosball.storage.repository.PlayerRepository;
 import com.valtech.digitalFoosball.storage.repository.TeamRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +21,12 @@ import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ContextConfiguration(classes = Application.class)
-@SpringBootTest(classes = DigitalFoosballRestAPI.class)
 public class RankedInitServiceShould {
 
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
     private UUID id;
 
-    @Autowired
     private RankedInitService initService;
 
     @BeforeEach
