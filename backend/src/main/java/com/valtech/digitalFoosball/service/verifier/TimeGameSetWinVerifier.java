@@ -5,21 +5,14 @@ import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
+
+import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
 public class TimeGameSetWinVerifier implements SetWinApprover {
 
     public static final int GOAL_LIMIT = 10;
-
-    public boolean teamWon(Map<Team, TeamDataModel> teams, Team scoringTeam) {
-        TeamDataModel scoringTeamDataModel = teams.get(scoringTeam);
-
-        int score = scoringTeamDataModel.getScore();
-        return score >= GOAL_LIMIT;
-    }
-
-    public boolean teamWon(GameDataModel teams) {
-        return false;
-    }
 
     public Team getWinner(GameDataModel gameDataModel, boolean timeIsOver) {
         int scoreOfTeamOne = gameDataModel.getTeam(Team.ONE).getScore();
@@ -40,12 +33,30 @@ public class TimeGameSetWinVerifier implements SetWinApprover {
                 return Team.TWO;
             }
 
-            return Team.NO_TEAM;
+            return NO_TEAM;
         }
     }
 
     @Override
     public void approveWin(GameDataModel gameDataModel) {
+        Team winningTeam = getWinnerOfWinConditionOfGoalLimit(gameDataModel);
 
+        if (winningTeam != NO_TEAM) {
+            gameDataModel.increaseWonSetsFor(winningTeam);
+            gameDataModel.setSetWinner(winningTeam);
+        }
+    }
+
+    private Team getWinnerOfWinConditionOfGoalLimit(GameDataModel gameDataModel) {
+        SortedMap<Team, TeamDataModel> teams = gameDataModel.getTeams();
+        Set<Map.Entry<Team, TeamDataModel>> entries = teams.entrySet();
+
+        for (Map.Entry<Team, TeamDataModel> entry : entries) {
+            if (entry.getValue().getScore() >= GOAL_LIMIT) {
+                return entry.getKey();
+            }
+        }
+
+        return NO_TEAM;
     }
 }
