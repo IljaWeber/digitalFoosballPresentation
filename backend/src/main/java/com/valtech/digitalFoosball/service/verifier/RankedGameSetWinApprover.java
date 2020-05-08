@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.service.verifier.setwin;
+package com.valtech.digitalFoosball.service.verifier;
 
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
@@ -6,7 +6,7 @@ import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
 import static com.valtech.digitalFoosball.constants.Team.*;
 
-public class RankedGameSetWinVerifier {
+public class RankedGameSetWinApprover implements SetWinApprover {
 
     public void approveWin(GameDataModel gameDataModel) {
         Team winner = getWinner(gameDataModel);
@@ -17,7 +17,7 @@ public class RankedGameSetWinVerifier {
         }
     }
 
-    public Team getWinner(GameDataModel gameDataModel) {
+    private Team getWinner(GameDataModel gameDataModel) {
         Team winner = NO_TEAM;
 
         if (thereIsALeadingTeam(gameDataModel)) {

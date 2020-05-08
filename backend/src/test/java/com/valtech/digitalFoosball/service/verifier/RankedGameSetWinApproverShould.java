@@ -3,7 +3,6 @@ package com.valtech.digitalFoosball.service.verifier;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.service.verifier.setwin.RankedGameSetWinVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +13,8 @@ import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RankedGameSetWinVerifierShould {
-    private RankedGameSetWinVerifier setWinVerifier;
+public class RankedGameSetWinApproverShould {
+    private RankedGameSetWinApprover setWinVerifier;
     private TeamDataModel teamOne;
     private TeamDataModel teamTwo;
     private List<TeamDataModel> teams;
@@ -23,7 +22,7 @@ public class RankedGameSetWinVerifierShould {
 
     @BeforeEach
     void setUp() {
-        setWinVerifier = new RankedGameSetWinVerifier();
+        setWinVerifier = new RankedGameSetWinApprover();
         teams = new ArrayList<>();
 
         teamOne = new TeamDataModel();
@@ -37,7 +36,8 @@ public class RankedGameSetWinVerifierShould {
 
     @Test
     public void show_no_winner_when_no_team_scored_six_goals() {
-        Team actual = setWinVerifier.getWinner(gameDataModel);
+        setWinVerifier.approveWin(gameDataModel);
+        Team actual = gameDataModel.getSetWinner();
 
         assertThat(actual).isEqualTo(NO_TEAM);
     }
@@ -47,7 +47,8 @@ public class RankedGameSetWinVerifierShould {
         countGoalsFor(Team.ONE, Team.ONE, Team.ONE, Team.ONE, Team.ONE);
         countGoalsFor(TWO, TWO, TWO, TWO, TWO, TWO);
 
-        Team actual = setWinVerifier.getWinner(gameDataModel);
+        setWinVerifier.approveWin(gameDataModel);
+        Team actual = gameDataModel.getSetWinner();
 
         assertThat(actual).isEqualTo(NO_TEAM);
     }
@@ -56,7 +57,8 @@ public class RankedGameSetWinVerifierShould {
     public void show_that_the_last_scoring_team_won_when_they_scored_at_least_six_goals_with_a_lead_of_two() {
         countGoalsFor(TWO, TWO, TWO, TWO, TWO, TWO);
 
-        Team actual = setWinVerifier.getWinner(gameDataModel);
+        setWinVerifier.approveWin(gameDataModel);
+        Team actual = gameDataModel.getSetWinner();
 
         assertThat(actual).isEqualTo(TWO);
     }

@@ -3,8 +3,11 @@ package com.valtech.digitalFoosball.service.game;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
+import com.valtech.digitalFoosball.service.game.modes.RankedGameManipulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +16,12 @@ import static com.valtech.digitalFoosball.constants.Team.ONE;
 import static com.valtech.digitalFoosball.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ScoreManagerShouldRaiseScore {
+@SpringBootTest
+public class RankedGameManipulatorShouldUndoLastGoal {
 
-    public ScoreManager scoreManager = new ScoreManager();
+    @Autowired
+    public RankedGameManipulator scoreManager;
+
     private GameDataModel gameDataModel;
 
     @BeforeEach
@@ -33,13 +39,13 @@ public class ScoreManagerShouldRaiseScore {
     }
 
     @Test
-    void in_the_order_of_scoring() {
-        raiseScoreOf(ONE, ONE, ONE, TWO);
+    void in_the_reversed_order_of_scoring() {
+        raiseScoreOf(ONE, TWO, ONE);
 
-        int scoreOfTeamOne = getScoreOfTeam(ONE);
-        int scoreOfTeamTwo = getScoreOfTeam(TWO);
-        assertThat(scoreOfTeamOne).isEqualTo(3);
-        assertThat(scoreOfTeamTwo).isEqualTo(1);
+        scoreManager.undoGoal(gameDataModel);
+
+        int actual = getScoreOfTeam(ONE);
+        assertThat(actual).isEqualTo(1);
     }
 
     private int getScoreOfTeam(Team team) {
@@ -48,11 +54,28 @@ public class ScoreManagerShouldRaiseScore {
     }
 
     @Test
-    void only_until_the_win_condition_is_fulfilled() {
-        raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE, ONE);
+    void but_if_no_scores_have_been_made_then_do_nothing() {
+        scoreManager.undoGoal(gameDataModel);
 
-        int actual = getScoreOfTeam(ONE);
-        assertThat(actual).isEqualTo(6);
+        int actualScoreTeamOne = getScoreOfTeam(ONE);
+        int actualScoreTeamTwo = getScoreOfTeam(TWO);
+        assertThat(actualScoreTeamOne).isEqualTo(0);
+        assertThat(actualScoreTeamTwo).isEqualTo(0);
+    }
+
+    @Test
+    void and_decrease_the_number_of_won_sets_when_win_condition_has_been_fulfilled() {
+        raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
+
+        scoreManager.undoGoal(gameDataModel);
+
+        int actual = getNumberOfWonSets(ONE);
+        assertThat(actual).isEqualTo(0);
+    }
+
+    private int getNumberOfWonSets(Team team) {
+        TeamDataModel teamOne = gameDataModel.getTeam(team);
+        return teamOne.getWonSets();
     }
 
     private void raiseScoreOf(Team... teams) {

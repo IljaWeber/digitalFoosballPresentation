@@ -4,18 +4,21 @@ import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
-import com.valtech.digitalFoosball.service.game.ScoreManager;
 import com.valtech.digitalFoosball.service.game.init.AbstractInitService;
+import com.valtech.digitalFoosball.service.verifier.SetWinApprover;
 
 import java.util.List;
 
+import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
+
 public abstract class AbstractGameManipulator {
     protected final AbstractInitService initService;
-    private final ScoreManager scoreManager;
+    private final SetWinApprover setWinApprover;
 
-    public AbstractGameManipulator(AbstractInitService initService) {
-        scoreManager = new ScoreManager();
+    public AbstractGameManipulator(AbstractInitService initService,
+                                   SetWinApprover setWinApprover) {
         this.initService = initService;
+        this.setWinApprover = setWinApprover;
     }
 
     public List<TeamOutput> getAllTeamsFromDatabase() {
@@ -25,15 +28,30 @@ public abstract class AbstractGameManipulator {
     public abstract GameDataModel initGame(InitDataModel initDataModel);
 
     public void countGoalFor(Team team, GameDataModel gameDataModel) {
-        scoreManager.countGoalFor(team, gameDataModel);
+        gameDataModel.countGoalFor(team);
+
+        setWinApprover.approveWin(gameDataModel);
     }
 
     public void undoGoal(GameDataModel gameDataModel) {
-        scoreManager.undoGoal(gameDataModel);
+        if (gameDataModel.thereAreGoals()) {
+
+            if (gameDataModel.setHasAWinner()) {
+                gameDataModel.decreaseWonSetsForRecentSetWinner();
+                gameDataModel.setSetWinner(NO_TEAM);
+            }
+
+            gameDataModel.undoLastGoal();
+        }
     }
 
     public void redoGoal(GameDataModel gameDataModel) {
-        scoreManager.redoGoal(gameDataModel);
+        if (gameDataModel.thereAreUndoneGoals()) {
+
+            gameDataModel.redoLastUndoneGoal();
+
+            setWinApprover.approveWin(gameDataModel);
+        }
     }
 
     public void changeover(GameDataModel gameDataModel) {
