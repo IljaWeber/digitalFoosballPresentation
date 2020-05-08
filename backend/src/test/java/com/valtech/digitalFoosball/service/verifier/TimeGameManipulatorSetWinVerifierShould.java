@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.service.verifier;
 
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.model.GameDataModel;
+import com.valtech.digitalFoosball.model.internal.RegularGameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.game.manipulator.TimeGameManipulator;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class TimeGameManipulatorSetWinVerifierShould {
     private TimeGameSetWinVerifier timeGameSetWinVerifier;
-    private GameDataModel gameDataModel;
+    private RegularGameDataModel gameDataModel;
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
     private TimeGameManipulator timeGame;
@@ -32,14 +32,14 @@ class TimeGameManipulatorSetWinVerifierShould {
         teams.add(teamDataModelOne);
         teams.add(teamDataModelTwo);
 
-        gameDataModel = new GameDataModel();
+        gameDataModel = new RegularGameDataModel();
         gameDataModel.setTeams(teams);
     }
 
     @Test
     public void show_no_winner_when_no_team_scored_ten_goals() {
         countGoalsFor(ONE, ONE);
-        Team actual = timeGameSetWinVerifier.getWinner(gameDataModel, false);
+        Team actual = timeGameSetWinVerifier.getWinner(gameDataModel);
 
         assertThat(actual).isEqualTo(Team.NO_TEAM);
     }
@@ -47,7 +47,7 @@ class TimeGameManipulatorSetWinVerifierShould {
     @Test
     public void show_winner_when_the_team_scored_ten_goals() {
         countGoalsFor(ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE);
-        Team actual = timeGameSetWinVerifier.getWinner(gameDataModel, true);
+        Team actual = timeGameSetWinVerifier.getWinner(gameDataModel);
 
         assertThat(actual).isEqualTo(ONE);
     }

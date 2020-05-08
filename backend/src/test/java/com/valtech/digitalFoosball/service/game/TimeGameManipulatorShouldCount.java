@@ -1,10 +1,9 @@
 package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.model.GameDataModel;
+import com.valtech.digitalFoosball.model.internal.RegularGameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.game.manipulator.TimeGameManipulator;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TimeGameManipulatorShouldCount {
 
     private final TimeGameManipulator timeGame;
-    private final GameDataModel gameDataModel;
+    private final RegularGameDataModel gameDataModel;
     private final TeamDataModel teamDataModelOne;
     private final TeamDataModel teamDataModelTwo;
 
@@ -31,7 +30,7 @@ public class TimeGameManipulatorShouldCount {
         teams.add(teamDataModelOne);
         teams.add(teamDataModelTwo);
 
-        gameDataModel = new GameDataModel();
+        gameDataModel = new RegularGameDataModel();
         gameDataModel.setTeams(teams);
     }
 
@@ -60,20 +59,29 @@ public class TimeGameManipulatorShouldCount {
         assertThat(actualScoreOfTeamTwo).isEqualTo(5);
     }
 
-    @Disabled
     @Test
-    void no_goals_if_time_limit_has_been_reached() throws InterruptedException {
-        countGoalForTeam(ONE, ONE, ONE, ONE);
+    void no_goals_if_time_limit_has_been_reached() {
+        countGoalForTeam(ONE, ONE,
+                         TWO, TWO,
+                         ONE, ONE);
         startAndAwaitTheEndOfTheTimer();
 
         countGoalForTeam(ONE);
 
-        assertThat(teamDataModelOne.getScore()).isEqualTo(4);
+        int actualScoreOfTeamOne = teamDataModelOne.getScore();
+        int actualScoreOfTeamTwo = teamDataModelTwo.getScore();
+        assertThat(actualScoreOfTeamOne).isEqualTo(4);
+        assertThat(actualScoreOfTeamTwo).isEqualTo(2);
     }
 
-    private void startAndAwaitTheEndOfTheTimer() throws InterruptedException {
-        timeGame.setTimer(1);
-        Thread.sleep(5);
+    private void startAndAwaitTheEndOfTheTimer() {
+        long loopExit = 100000;
+        long loopStart = 0;
+        timeGame.setTimer(1, gameDataModel);
+
+        while (timeGame.isTimeOver() && loopStart < loopExit) {
+            loopStart++;
+        }
     }
 
     private void countGoalForTeam(Team... teams) {

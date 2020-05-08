@@ -1,7 +1,8 @@
 package com.valtech.digitalFoosball.service.game.init;
 
-import com.valtech.digitalFoosball.model.GameDataModel;
+import com.valtech.digitalFoosball.constants.GameMode;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
+import com.valtech.digitalFoosball.model.internal.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.converter.Converter;
@@ -21,6 +22,8 @@ public abstract class AbstractInitService {
     public abstract GameDataModel init(InitDataModel initDataModel);
 
     protected GameDataModel prepare(InitDataModel initDataModel) {
+        GameDataModel gameDataModel;
+        GameMode mode = initDataModel.getMode();
         List<TeamDataModel> teamsFromDatabase = new ArrayList<>();
 
         List<TeamDataModel> teamsList = initDataModel.getTeams();
@@ -30,7 +33,8 @@ public abstract class AbstractInitService {
             teamsFromDatabase.add(teamFromDatabase);
         }
 
-        GameDataModel gameDataModel = new GameDataModel();
+        gameDataModel = AbstractGameModelFactory.createGameDataModel(mode);
+
         gameDataModel.setTeams(teamsFromDatabase);
 
         return gameDataModel;

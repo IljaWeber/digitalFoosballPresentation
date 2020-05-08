@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.service.verifier;
 
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.model.GameDataModel;
+import com.valtech.digitalFoosball.model.internal.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
 import static com.valtech.digitalFoosball.constants.Team.*;

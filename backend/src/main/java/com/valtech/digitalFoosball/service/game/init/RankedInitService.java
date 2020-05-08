@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.service.game.init;
 
-import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
+import com.valtech.digitalFoosball.model.internal.GameDataModel;
 import com.valtech.digitalFoosball.service.verifier.UniqueNameVerifier;
 import com.valtech.digitalFoosball.storage.IObtainTeams;
 import org.springframework.beans.factory.annotation.Autowired;

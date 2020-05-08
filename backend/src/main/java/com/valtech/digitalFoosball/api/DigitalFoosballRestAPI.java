@@ -1,6 +1,5 @@
 package com.valtech.digitalFoosball.api;
 
-import com.valtech.digitalFoosball.constants.GameMode;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
@@ -13,6 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.valtech.digitalFoosball.constants.GameMode.AD_HOC;
+import static com.valtech.digitalFoosball.constants.GameMode.RANKED;
 
 @RestController()
 @RequestMapping("api")
@@ -30,7 +32,9 @@ public class DigitalFoosballRestAPI {
     public GameOutputModel init() {
         logger.info("New AdHoc-Game");
 
-        gameController.initGame(new InitDataModel(), GameMode.AD_HOC);
+        InitDataModel initDataModel = new InitDataModel();
+        initDataModel.setMode(AD_HOC);
+        gameController.initGame(initDataModel);
 
         return gameController.getGameData();
     }
@@ -39,7 +43,8 @@ public class DigitalFoosballRestAPI {
     public GameOutputModel init(@RequestBody InitDataModel initDataModel) {
         logger.info("Sign in: " + initDataModel.toString());
 
-        gameController.initGame(initDataModel, GameMode.RANKED);
+        initDataModel.setMode(RANKED);
+        gameController.initGame(initDataModel);
 
         return gameController.getGameData();
     }

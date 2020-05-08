@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.service.verifier;
 
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.model.GameDataModel;
+import com.valtech.digitalFoosball.model.internal.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 
 import java.util.Map;
@@ -11,30 +11,19 @@ import java.util.SortedMap;
 import static com.valtech.digitalFoosball.constants.Team.NO_TEAM;
 
 public class TimeGameSetWinVerifier implements SetWinApprover {
+    public final int GOAL_LIMIT = 10;
 
-    public static final int GOAL_LIMIT = 10;
+    public Team getWinner(GameDataModel gameDataModel) {
 
-    public Team getWinner(GameDataModel gameDataModel, boolean timeIsOver) {
-        int scoreOfTeamOne = gameDataModel.getTeam(Team.ONE).getScore();
-        int scoreOfTeamTwo = gameDataModel.getTeam(Team.TWO).getScore();
+        if (isTimeOver()) {
 
-        if (timeIsOver) {
-            if (scoreOfTeamOne > scoreOfTeamTwo) {
-                return Team.ONE;
-            } else {
-                return Team.TWO;
-            }
-        } else {
-            if (scoreOfTeamOne >= 10) {
-                return Team.ONE;
-            }
-
-            if (scoreOfTeamTwo >= 10) {
-                return Team.TWO;
-            }
-
-            return NO_TEAM;
         }
+        return null;
+    }
+
+    private boolean isTimeOver() {
+
+        return false;
     }
 
     @Override

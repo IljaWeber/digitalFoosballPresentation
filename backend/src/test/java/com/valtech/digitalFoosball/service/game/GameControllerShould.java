@@ -1,7 +1,6 @@
 package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.api.INotifyAboutStateChanges;
-import com.valtech.digitalFoosball.constants.GameMode;
 import com.valtech.digitalFoosball.constants.Team;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
 import com.valtech.digitalFoosball.model.internal.PlayerDataModel;
@@ -23,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.valtech.digitalFoosball.constants.GameMode.RANKED;
 import static com.valtech.digitalFoosball.constants.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
@@ -67,7 +67,8 @@ class GameControllerShould {
         teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
         teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
         initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
-        game.initGame(initDataModel, GameMode.RANKED);
+        initDataModel.setMode(RANKED);
+        game.initGame(initDataModel);
     }
 
     @Test
@@ -274,6 +275,11 @@ class GameControllerShould {
 
         @Override
         public void notifyAboutStateChange(GameOutputModel gameData) {
+        }
+
+        @Override
+        public void update(GameOutputModel gameOutputModel) {
+
         }
     }
 }

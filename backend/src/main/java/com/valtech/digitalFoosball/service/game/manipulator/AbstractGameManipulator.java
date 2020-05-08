@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.service.game.manipulator;
 
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
+import com.valtech.digitalFoosball.model.internal.GameDataModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.game.init.AbstractInitService;
 import com.valtech.digitalFoosball.service.verifier.SetWinApprover;

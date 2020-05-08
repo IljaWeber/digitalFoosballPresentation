@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.constants.GameMode;
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
+import com.valtech.digitalFoosball.model.internal.RegularGameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.service.game.GameController;
@@ -50,7 +50,7 @@ public class DigitalFoosballRestApiShould {
     private final ObjectMapper mapper;
     private final TeamDataModel teamOne;
     private final TeamDataModel teamTwo;
-    private GameDataModel gameDataModel;
+    private RegularGameDataModel gameDataModel;
     private InitDataModel initDataModel;
     private MockHttpServletRequestBuilder builder;
 
@@ -65,7 +65,7 @@ public class DigitalFoosballRestApiShould {
 
     @BeforeEach
     void setUp() {
-        gameDataModel = new GameDataModel();
+        gameDataModel = new RegularGameDataModel();
         gameDataModel.setTeam(ONE, teamOne);
         gameDataModel.setTeam(TWO, teamTwo);
         gameDataModel.setSetWinner(NO_TEAM);
@@ -132,7 +132,7 @@ public class DigitalFoosballRestApiShould {
 
     @Test
     public void reset_game_with_empty_team_and_player_names_and_zero_scores() throws Exception {
-        gameDataModel = new GameDataModel();
+        gameDataModel = new RegularGameDataModel();
         String expected = prepareComparableValuesWithMatchWinner(NO_TEAM);
         MockHttpServletRequestBuilder reset = MockMvcRequestBuilders.delete("/api/reset");
         prepareGameWithMode(RANKED);

@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.service.game;
 
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.model.GameDataModel;
+import com.valtech.digitalFoosball.model.internal.RegularGameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.game.manipulator.RankedGameManipulator;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +21,7 @@ public class RankedGameManipulatorShouldRaiseScore {
 
     @Autowired
     public RankedGameManipulator gameManipulator;
-    private GameDataModel gameDataModel;
+    private RegularGameDataModel gameDataModel;
 
     @BeforeEach
     void setUp() {
@@ -33,7 +33,7 @@ public class RankedGameManipulatorShouldRaiseScore {
         teams.add(teamDataModelOne);
         teams.add(teamDataModelTwo);
 
-        gameDataModel = new GameDataModel();
+        gameDataModel = new RegularGameDataModel();
         gameDataModel.setTeams(teams);
     }
 

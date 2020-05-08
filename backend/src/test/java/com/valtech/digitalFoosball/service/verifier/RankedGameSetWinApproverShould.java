@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.service.verifier;
 
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.model.GameDataModel;
+import com.valtech.digitalFoosball.model.internal.RegularGameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ public class RankedGameSetWinApproverShould {
     private TeamDataModel teamOne;
     private TeamDataModel teamTwo;
     private List<TeamDataModel> teams;
-    private GameDataModel gameDataModel;
+    private RegularGameDataModel gameDataModel;
 
     @BeforeEach
     void setUp() {
@@ -30,7 +30,7 @@ public class RankedGameSetWinApproverShould {
 
         teams.add(teamOne);
         teams.add(teamTwo);
-        gameDataModel = new GameDataModel();
+        gameDataModel = new RegularGameDataModel();
         gameDataModel.setTeams(teams);
     }
 

@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.model.output;
 
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.model.GameDataModel;
+import com.valtech.digitalFoosball.model.internal.GameDataModel;
 import com.valtech.digitalFoosball.model.internal.TeamDataModel;
 import com.valtech.digitalFoosball.service.converter.Converter;
 import com.valtech.digitalFoosball.service.verifier.MatchWinVerifier;

@@ -3,8 +3,9 @@ package com.valtech.digitalFoosball.service.game;
 import com.valtech.digitalFoosball.api.INotifyAboutStateChanges;
 import com.valtech.digitalFoosball.constants.GameMode;
 import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.model.GameDataModel;
 import com.valtech.digitalFoosball.model.input.InitDataModel;
+import com.valtech.digitalFoosball.model.internal.GameDataModel;
+import com.valtech.digitalFoosball.model.internal.RegularGameDataModel;
 import com.valtech.digitalFoosball.model.output.GameOutputModel;
 import com.valtech.digitalFoosball.model.output.TeamOutput;
 import com.valtech.digitalFoosball.service.game.manipulator.AbstractGameManipulator;
@@ -19,7 +20,7 @@ public class GameController implements IReactToGoals, IReactToPlayerCommands {
 
     private final INotifyAboutStateChanges notifier;
     private final GameManipulatorProvider gameManipulatorProvider;
-    private GameDataModel gameDataModel = new GameDataModel();
+    private GameDataModel gameDataModel = new RegularGameDataModel();
 
     @Autowired
     public GameController(GameManipulatorProvider gameManipulatorProvider, INotifyAboutStateChanges notifier) {
@@ -40,10 +41,12 @@ public class GameController implements IReactToGoals, IReactToPlayerCommands {
         return new GameOutputModel(gameDataModel);
     }
 
-    public void initGame(InitDataModel initDataModel, GameMode gameMode) {
-        AbstractGameManipulator gameManipulator = gameManipulatorProvider.getGameManipulator(gameMode);
+    public void initGame(InitDataModel initDataModel) {
+        GameMode mode = initDataModel.getMode();
+        AbstractGameManipulator gameManipulator = gameManipulatorProvider.getGameManipulator(mode);
         gameDataModel = gameManipulator.initGame(initDataModel);
-        gameDataModel.setGameMode(gameMode);
+        gameDataModel.setGameMode(mode);
+        gameDataModel.addObserver(notifier);
     }
 
     public void countGoalFor(Team team) {
@@ -79,6 +82,6 @@ public class GameController implements IReactToGoals, IReactToPlayerCommands {
     }
 
     public void resetMatch() {
-        gameDataModel = new GameDataModel();
+        gameDataModel = new RegularGameDataModel();
     }
 }
