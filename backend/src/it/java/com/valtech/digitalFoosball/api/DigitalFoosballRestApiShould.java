@@ -2,13 +2,14 @@ package com.valtech.digitalFoosball.api;
 
 import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.constants.GameMode;
-import com.valtech.digitalFoosball.constants.Team;
-import com.valtech.digitalFoosball.model.input.InitDataModel;
-import com.valtech.digitalFoosball.model.internal.RegularGameDataModel;
-import com.valtech.digitalFoosball.model.internal.TeamDataModel;
-import com.valtech.digitalFoosball.model.output.GameOutputModel;
-import com.valtech.digitalFoosball.service.game.GameController;
+import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballRestAPI;
+import com.valtech.digitalFoosball.domain.GameController;
+import com.valtech.digitalFoosball.domain.constants.GameMode;
+import com.valtech.digitalFoosball.domain.constants.Team;
+import com.valtech.digitalFoosball.domain.gameModes.models.GameOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RegularGameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,9 +27,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.valtech.digitalFoosball.constants.GameMode.AD_HOC;
-import static com.valtech.digitalFoosball.constants.GameMode.RANKED;
-import static com.valtech.digitalFoosball.constants.Team.*;
+import static com.valtech.digitalFoosball.domain.constants.GameMode.AD_HOC;
+import static com.valtech.digitalFoosball.domain.constants.GameMode.RANKED;
+import static com.valtech.digitalFoosball.domain.constants.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

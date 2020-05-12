@@ -24,25 +24,25 @@ Configuration:
         AppenderRef:
           ref: File_Appender
 
-      - name: com.valtech.digitalFoosball.api.RaspiController
+      - name: com.valtech.digitalFoosball.api.driver.sensorcommands.RaspiController
         level: info
         additivity: false
         AppenderRef:
           ref: File_Appender
 
-      - name: com.valtech.digitalFoosball.storage.PlayerService
+      - name: com.valtech.digitalFoosball.api.driven.storage.PlayerService
         level: info
         additivity: false
         AppenderRef:
           ref: File_Appender
 
-      - name: com.valtech.digitalFoosball.storage.TeamService
+      - name: com.valtech.digitalFoosball.api.driven.storage.TeamService
         level: info
         additivity: false
         AppenderRef:
           ref: File_Appender
 
-      - name: com.valtech.digitalFoosball.exceptions.NameDuplicateException
+      - name: com.valtech.digitalFoosball.domain.exceptions.NameDuplicateException
         level: info
         additivity: false
         AppenderRef:
