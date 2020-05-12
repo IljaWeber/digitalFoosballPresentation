@@ -6,6 +6,7 @@ import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepos
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
 import com.valtech.digitalFoosball.domain.GameController;
 import com.valtech.digitalFoosball.domain.constants.Team;
+import com.valtech.digitalFoosball.domain.gameModes.InitService;
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.GameManipulatorProvider;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
@@ -45,7 +46,7 @@ class GameControllerShould {
                                                                         new PlayerRepositoryFake());
         TimeGameManipulator timeGame = GameBuilder.buildTimeGame();
         game = new GameController(new GameManipulatorProvider(rankedGame, timeGame, adHocGame),
-                                  new FakeClientUpdater());
+                                  new FakeClientUpdater(), new InitService());
     }
 
     @Test

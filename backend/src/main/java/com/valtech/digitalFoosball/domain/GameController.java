@@ -5,6 +5,7 @@ import com.valtech.digitalFoosball.api.driver.sensorcommands.IReactToGoals;
 import com.valtech.digitalFoosball.api.driver.usercommands.IReactToUserCommands;
 import com.valtech.digitalFoosball.domain.constants.GameMode;
 import com.valtech.digitalFoosball.domain.constants.Team;
+import com.valtech.digitalFoosball.domain.gameModes.InitService;
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.AbstractGameManipulator;
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.GameManipulatorProvider;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
@@ -23,11 +24,15 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
     private final INotifyAboutStateChanges notifier;
     private final GameManipulatorProvider gameManipulatorProvider;
     private GameDataModel gameDataModel = new RegularGameDataModel();
+    private InitService initService;
 
     @Autowired
-    public GameController(GameManipulatorProvider gameManipulatorProvider, INotifyAboutStateChanges notifier) {
+    public GameController(GameManipulatorProvider gameManipulatorProvider,
+                          INotifyAboutStateChanges notifier,
+                          InitService initService) {
         this.gameManipulatorProvider = gameManipulatorProvider;
         this.notifier = notifier;
+        this.initService = initService;
     }
 
     public List<TeamOutput> getAllTeams() {
@@ -44,10 +49,7 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
     }
 
     public void initGame(InitDataModel initDataModel) {
-        GameMode mode = initDataModel.getMode();
-        AbstractGameManipulator gameManipulator = gameManipulatorProvider.getGameManipulator(mode);
-        gameDataModel = gameManipulator.initGame(initDataModel);
-        gameDataModel.setGameMode(mode);
+        initService.init(initDataModel);
         gameDataModel.addObserver(notifier);
     }
 

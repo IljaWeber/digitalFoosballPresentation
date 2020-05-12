@@ -1,6 +1,7 @@
 package com.valtech.digitalFoosball.domain.gameModes.manipulators;
 
 import com.valtech.digitalFoosball.api.driven.persistence.IObtainTeams;
+import com.valtech.digitalFoosball.domain.InitialService;
 import com.valtech.digitalFoosball.domain.constants.GameMode;
 import com.valtech.digitalFoosball.domain.converter.Converter;
 import com.valtech.digitalFoosball.domain.gameModes.models.AbstractGameModelFactory;
@@ -12,7 +13,7 @@ import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractInitService {
+public abstract class AbstractInitService implements InitialService {
 
     private final IObtainTeams teamDataPort;
 
