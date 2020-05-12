@@ -5,9 +5,8 @@ import com.valtech.digitalFoosball.api.driver.sensorcommands.IReactToGoals;
 import com.valtech.digitalFoosball.api.driver.usercommands.IReactToUserCommands;
 import com.valtech.digitalFoosball.domain.constants.GameMode;
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.InitService;
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.AbstractGameManipulator;
-import com.valtech.digitalFoosball.domain.gameModes.manipulators.GameManipulatorFactory;
+import com.valtech.digitalFoosball.domain.gameModes.manipulators.GameManipulatorProvider;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
@@ -22,18 +21,18 @@ import java.util.List;
 public class GameController implements IReactToGoals, IReactToUserCommands {
 
     private final INotifyAboutStateChanges notifier;
-    private final InitService initService;
+    private final GameManipulatorProvider gameManipulatorProvider;
     private GameDataModel gameDataModel = new RegularGameDataModel();
 
     @Autowired
-    public GameController(INotifyAboutStateChanges notifier,
-                          InitService initService) {
+    public GameController(GameManipulatorProvider gameManipulatorProvider, INotifyAboutStateChanges notifier) {
+        this.gameManipulatorProvider = gameManipulatorProvider;
         this.notifier = notifier;
-        this.initService = initService;
     }
 
     public List<TeamOutput> getAllTeams() {
-        return initService.getAllTeamsFromDatabase();
+        AbstractGameManipulator gameManipulator = gameManipulatorProvider.getGameManipulator(GameMode.RANKED);
+        return gameManipulator.getAllTeamsFromDatabase();
     }
 
     public GameOutputModel getGameData() {
@@ -45,7 +44,10 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
     }
 
     public void initGame(InitDataModel initDataModel) {
-        gameDataModel = initService.init(initDataModel);
+        GameMode mode = initDataModel.getMode();
+        AbstractGameManipulator gameManipulator = gameManipulatorProvider.getGameManipulator(mode);
+        gameDataModel = gameManipulator.initGame(initDataModel);
+        gameDataModel.setGameMode(mode);
         gameDataModel.addObserver(notifier);
     }
 
@@ -58,7 +60,7 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
 
     private AbstractGameManipulator getGameManipulator() {
         GameMode gameMode = gameDataModel.getGameMode();
-        return GameManipulatorFactory.createManipulatorFor(gameMode);
+        return gameManipulatorProvider.getGameManipulator(gameMode);
     }
 
     private void notifyAboutStateChange() {
