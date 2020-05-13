@@ -5,9 +5,6 @@ import com.valtech.digitalFoosball.domain.gameModes.regular.models.RegularGameDa
 import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameDataModel;
 
 public abstract class AbstractGameModelFactory {
-    public AbstractGameModelFactory() {
-    }
-
     public static GameDataModel createGameDataModel(GameMode mode) {
         GameDataModel gameDataModel;
         if (mode == GameMode.TIME_GAME) {

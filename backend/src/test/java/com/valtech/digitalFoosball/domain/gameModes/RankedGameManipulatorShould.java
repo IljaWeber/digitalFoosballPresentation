@@ -2,7 +2,6 @@ package com.valtech.digitalFoosball.domain.gameModes;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.RegularGameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameManipulator;
@@ -19,13 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RankedGameManipulatorShould {
     public RankedGameManipulator game = new RankedGameManipulator();
 
-    protected InitDataModel initDataModel = new InitDataModel();
     private final GameDataModel gameData = new RegularGameDataModel();
 
     private void setUpTeams() {
         TeamDataModel teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
         TeamDataModel teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
-        initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
         List<TeamDataModel> teams = new ArrayList<>();
         teams.add(teamDataModelOne);
         teams.add(teamDataModelTwo);

@@ -66,6 +66,15 @@ public class RankedInitServiceShould {
     }
 
     @Test
+    public void throw_name_duplicate_exception_when_a_name_is_used_twice() {
+        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
+        teamDataModelTwo = new TeamDataModel("T2", "P3", "P1");
+        initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
+
+        assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> initService.init(initDataModel));
+    }
+
+    @Test
     public void load_all_teams_ignoring_case() {
         List<TeamOutput> actual = initService.getAllTeams();
 
@@ -79,15 +88,6 @@ public class RankedInitServiceShould {
         List<TeamOutput> actual = initService.getAllTeams();
 
         assertThat(actual).isEmpty();
-    }
-
-    @Test
-    public void throw_name_duplicate_exception_when_a_name_is_used_twice() {
-        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
-        teamDataModelTwo = new TeamDataModel("T2", "P3", "P1");
-        initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
-
-        assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> initService.init(initDataModel));
     }
 
     private void useDifferentTestDoubles() {

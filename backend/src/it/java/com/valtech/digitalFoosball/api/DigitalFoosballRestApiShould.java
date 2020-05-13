@@ -38,19 +38,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = DigitalFoosballRestAPI.class)
 public class DigitalFoosballRestApiShould {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private GameController game;
-
-    private String json;
     private final Gson gson;
-    private MvcResult result;
-    private List<TeamDataModel> teams;
     private final ObjectMapper mapper;
     private final TeamDataModel teamOne;
     private final TeamDataModel teamTwo;
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private GameController game;
+    private String json;
+    private MvcResult result;
+    private List<TeamDataModel> teams;
     private RegularGameDataModel gameDataModel;
     private InitDataModel initDataModel;
     private MockHttpServletRequestBuilder builder;
@@ -248,9 +246,12 @@ public class DigitalFoosballRestApiShould {
         return result.getResponse().getContentAsString();
     }
 
-    private void countGoalForTeam(Team... teams) {
+    private void countGoalForTeam(Team... teams) throws Exception {
+        builder = MockMvcRequestBuilders.post("/api/raise");
         for (Team team : teams) {
-            game.countGoalFor(team);
+            int hardwareValueOfTeam = team.hardwareValue();
+            builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(String.valueOf(hardwareValueOfTeam));
+            mockMvc.perform(builder);
         }
     }
 }
