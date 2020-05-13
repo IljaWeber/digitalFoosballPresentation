@@ -9,14 +9,18 @@ import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public abstract class AbstractInitService implements InitialService {
 
     private final IObtainTeams teamDataPort;
 
+    @Autowired
     public AbstractInitService(IObtainTeams teamDataPort) {
         this.teamDataPort = teamDataPort;
     }
@@ -42,6 +46,7 @@ public abstract class AbstractInitService implements InitialService {
         return gameDataModel;
     }
 
+    @Override
     public List<TeamOutput> getAllTeams() {
         List<TeamDataModel> teamDataModels = teamDataPort.getAllTeamsFromDatabase();
 

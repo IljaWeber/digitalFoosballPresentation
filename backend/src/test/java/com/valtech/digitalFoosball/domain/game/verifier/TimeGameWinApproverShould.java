@@ -22,7 +22,7 @@ class TimeGameWinApproverShould {
 
     @BeforeEach
     void setUp() {
-        timeGame = new TimeGameManipulator(null);
+        timeGame = new TimeGameManipulator();
         timeGameWinApprover = new TimeGameWinApprover();
         TeamDataModel teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
         TeamDataModel teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");

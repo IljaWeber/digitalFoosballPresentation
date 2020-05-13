@@ -6,8 +6,6 @@ import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameManipulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +14,9 @@ import static com.valtech.digitalFoosball.domain.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
 public class RankedGameManipulatorShouldUndoLastGoal {
 
-    @Autowired
-    public RankedGameManipulator scoreManager;
+    public RankedGameManipulator gameManipulator = new RankedGameManipulator();
 
     private RegularGameDataModel gameDataModel;
 
@@ -42,7 +38,7 @@ public class RankedGameManipulatorShouldUndoLastGoal {
     void in_the_reversed_order_of_scoring() {
         raiseScoreOf(ONE, TWO, ONE);
 
-        scoreManager.undoGoal(gameDataModel);
+        gameManipulator.undoGoal(gameDataModel);
 
         int actual = getScoreOfTeam(ONE);
         assertThat(actual).isEqualTo(1);
@@ -55,7 +51,7 @@ public class RankedGameManipulatorShouldUndoLastGoal {
 
     @Test
     void but_if_no_scores_have_been_made_then_do_nothing() {
-        scoreManager.undoGoal(gameDataModel);
+        gameManipulator.undoGoal(gameDataModel);
 
         int actualScoreTeamOne = getScoreOfTeam(ONE);
         int actualScoreTeamTwo = getScoreOfTeam(TWO);
@@ -67,7 +63,7 @@ public class RankedGameManipulatorShouldUndoLastGoal {
     void and_decrease_the_number_of_won_sets_when_win_condition_has_been_fulfilled() {
         raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
 
-        scoreManager.undoGoal(gameDataModel);
+        gameManipulator.undoGoal(gameDataModel);
 
         int actual = getNumberOfWonSets(ONE);
         assertThat(actual).isEqualTo(0);
@@ -80,7 +76,7 @@ public class RankedGameManipulatorShouldUndoLastGoal {
 
     private void raiseScoreOf(Team... teams) {
         for (Team team : teams) {
-            scoreManager.countGoalFor(team, gameDataModel);
+            gameManipulator.countGoalFor(team, gameDataModel);
         }
     }
 }

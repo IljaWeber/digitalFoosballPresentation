@@ -5,8 +5,10 @@ import com.valtech.digitalFoosball.api.driven.persistence.PlayerService;
 import com.valtech.digitalFoosball.api.driven.persistence.TeamService;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepository;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
+import com.valtech.digitalFoosball.domain.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedInitService;
@@ -21,25 +23,32 @@ import java.util.UUID;
 import static com.valtech.digitalFoosball.domain.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class RankedInitServiceShould {
 
     private TeamDataModel teamDataModelOne;
     private TeamDataModel teamDataModelTwo;
-    private UUID id;
+    private final UUID id = UUID.randomUUID();
 
     private RankedInitService initService;
+    private InitDataModel initDataModel;
 
     @BeforeEach
     void setUp() {
-        id = UUID.randomUUID();
         PlayerRepository playerRepository = new PlayerRepositoryFake();
         PlayerService playerService = new PlayerService(
                 playerRepository);
-        TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
-        IObtainTeams iObtainTeams = new TeamService(teamRepository,
-                                                    playerService);
+        TeamRepositoryFake teamRepositoryFake = new TeamRepositoryFake(id);
+
+        IObtainTeams iObtainTeams = createTeamServiceWith(playerService, teamRepositoryFake);
         initService = new RankedInitService(iObtainTeams);
+    }
+
+    private IObtainTeams createTeamServiceWith(PlayerService playerService,
+                                               TeamRepository teamRepositoryFake) {
+        return new TeamService(teamRepositoryFake,
+                               playerService);
     }
 
     @Test
@@ -54,6 +63,39 @@ public class RankedInitServiceShould {
 
         assertThat(teamOne).isEqualTo(teamDataModelOne);
         assertThat(teamTwo).isEqualTo(teamDataModelTwo);
+    }
+
+    @Test
+    public void load_all_teams_ignoring_case() {
+        List<TeamOutput> actual = initService.getAllTeams();
+
+        assertThat(actual).extracting(TeamOutput::getName).containsExactly("Roto", "Rototo");
+    }
+
+    @Test
+    public void load_nothing_when_there_are_no_teams_starting_with_given_letters() {
+        useDifferentTestDoubles();
+
+        List<TeamOutput> actual = initService.getAllTeams();
+
+        assertThat(actual).isEmpty();
+    }
+
+    @Test
+    public void throw_name_duplicate_exception_when_a_name_is_used_twice() {
+        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
+        teamDataModelTwo = new TeamDataModel("T2", "P3", "P1");
+        initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
+
+        assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> initService.init(initDataModel));
+    }
+
+    private void useDifferentTestDoubles() {
+        TeamRepositoryFakeTwo teamRepository = new TeamRepositoryFakeTwo(id);
+        PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
+        PlayerService playerService = new PlayerService(playerRepository);
+        IObtainTeams teamService = createTeamServiceWith(playerService, teamRepository);
+        initService = new RankedInitService(teamService);
     }
 
     private class TeamRepositoryFake implements TeamRepository {
@@ -122,8 +164,10 @@ public class RankedInitServiceShould {
         @Override
         public List<TeamDataModel> findAll() {
             List<TeamDataModel> teamDataModels = new ArrayList<>();
-            teamDataModels.add(teamDataModelOne);
-            teamDataModels.add(teamDataModelTwo);
+            TeamDataModel teamOne = new TeamDataModel("Roto", "P1", "P2");
+            teamDataModels.add(teamOne);
+            TeamDataModel teamTwo = new TeamDataModel("Rototo", "P3", "P4");
+            teamDataModels.add(teamTwo);
 
             return teamDataModels;
         }
@@ -263,4 +307,5 @@ public class RankedInitServiceShould {
             return new ArrayList<>();
         }
     }
+
 }

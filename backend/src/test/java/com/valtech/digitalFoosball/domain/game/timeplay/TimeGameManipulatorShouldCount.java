@@ -21,7 +21,7 @@ public class TimeGameManipulatorShouldCount {
     private final TeamDataModel teamDataModelTwo;
 
     public TimeGameManipulatorShouldCount() {
-        timeGame = new TimeGameManipulator(null);
+        timeGame = new TimeGameManipulator();
         teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
         teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
 

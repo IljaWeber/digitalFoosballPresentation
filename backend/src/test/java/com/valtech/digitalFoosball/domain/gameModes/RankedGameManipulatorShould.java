@@ -1,60 +1,35 @@
 package com.valtech.digitalFoosball.domain.gameModes;
 
-import com.valtech.digitalFoosball.GameBuilder;
-import com.valtech.digitalFoosball.api.driven.persistence.IObtainTeams;
-import com.valtech.digitalFoosball.api.driven.persistence.PlayerService;
-import com.valtech.digitalFoosball.api.driven.persistence.TeamService;
-import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepository;
-import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.PlayerDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RegularGameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameManipulator;
-import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedInitService;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.SortedMap;
 
 import static com.valtech.digitalFoosball.domain.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class RankedGameManipulatorShould {
-    private final UUID id = UUID.randomUUID();
+    public RankedGameManipulator game = new RankedGameManipulator();
 
-    public RankedGameManipulator game;
-
-    protected InitDataModel initDataModel;
-    private TeamDataModel teamDataModelOne;
-    private TeamDataModel teamDataModelTwo;
-    private GameDataModel gameData;
-
-    public RankedGameManipulatorShould() {
-        TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
-        PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
-        game = GameBuilder.buildRankedGameWith(teamRepository, playerRepository);
-        initDataModel = new InitDataModel();
-    }
+    protected InitDataModel initDataModel = new InitDataModel();
+    private final GameDataModel gameData = new RegularGameDataModel();
 
     private void setUpTeams() {
-        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
-        teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
+        TeamDataModel teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
+        TeamDataModel teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
         initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
-        gameData = game.initGame(initDataModel);
-    }
-
-    @Test
-    public void throw_name_duplicate_exception_when_a_name_is_used_twice() {
-        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
-        teamDataModelTwo = new TeamDataModel("T2", "P3", "P1");
-        initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
-
-        assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> game.initGame(initDataModel));
+        List<TeamDataModel> teams = new ArrayList<>();
+        teams.add(teamDataModelOne);
+        teams.add(teamDataModelTwo);
+        gameData.setTeams(teams);
     }
 
     private List<TeamDataModel> getTeamDataModels() {
@@ -106,249 +81,9 @@ public class RankedGameManipulatorShould {
         assertThat(actual).isEqualTo(0);
     }
 
-    @Test
-    public void load_all_teams_ignoring_case() {
-        setUpTeams();
-        teamDataModelOne.setName("Roto");
-        teamDataModelTwo.setName("Rototo");
-
-        List<TeamOutput> actual = game.getAllTeamsFromDatabase();
-
-        assertThat(actual).extracting(TeamOutput::getName).containsExactly("Roto", "Rototo");
-    }
-
-    @Test
-    public void load_nothing_when_there_are_no_teams_starting_with_given_letters() {
-        setUpTeams();
-        setUpTestDoubles();
-
-        List<TeamOutput> actual = game.getAllTeamsFromDatabase();
-
-        assertThat(actual).isEmpty();
-    }
-
-    private void setUpTestDoubles() {
-        TeamRepositoryFakeTwo teamRepository = new TeamRepositoryFakeTwo(id);
-        PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
-        PlayerService playerService = new PlayerService(playerRepository);
-        IObtainTeams iObtainTeams = new TeamService(teamRepository, playerService);
-        game = new RankedGameManipulator(new RankedInitService(iObtainTeams));
-    }
-
     private void raiseScoreOf(Team... teams) {
         for (Team team : teams) {
             game.countGoalFor(team, gameData);
         }
     }
-
-    private class TeamRepositoryFake implements TeamRepository {
-        private final UUID id;
-
-        public TeamRepositoryFake(UUID id) {
-            this.id = id;
-        }
-
-        @Override
-        public TeamDataModel save(TeamDataModel teamDataModel) {
-            teamDataModel.setId(id);
-            return teamDataModel;
-        }
-
-        @Override
-        public <S extends TeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
-            return null;
-        }
-
-        @Override
-        public Optional<TeamDataModel> findById(UUID uuid) {
-            return Optional.empty();
-        }
-
-        @Override
-        public boolean existsById(UUID uuid) {
-            return false;
-        }
-
-        @Override
-        public Iterable<TeamDataModel> findAllById(Iterable<UUID> iterable) {
-            return null;
-        }
-
-        @Override
-        public long count() {
-            return 0;
-        }
-
-        @Override
-        public void deleteById(UUID uuid) {
-
-        }
-
-        @Override
-        public void delete(TeamDataModel teamDataModel) {
-
-        }
-
-        @Override
-        public void deleteAll(Iterable<? extends TeamDataModel> iterable) {
-
-        }
-
-        @Override
-        public void deleteAll() {
-
-        }
-
-        @Override
-        public Optional<TeamDataModel> findByNameIgnoreCase(String teamName) {
-            return Optional.empty();
-        }
-
-        @Override
-        public List<TeamDataModel> findAll() {
-            List<TeamDataModel> teamDataModels = new ArrayList<>();
-            teamDataModels.add(teamDataModelOne);
-            teamDataModels.add(teamDataModelTwo);
-
-            return teamDataModels;
-        }
-    }
-
-    private class PlayerRepositoryFake implements PlayerRepository {
-
-        @Override
-        public Optional<PlayerDataModel> findByName(String name) {
-            return Optional.empty();
-        }
-
-        public PlayerDataModel save(PlayerDataModel s) {
-            s.setId(id);
-
-            return s;
-        }
-
-        @Override
-        public <S extends PlayerDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
-            return null;
-        }
-
-        @Override
-        public Optional<PlayerDataModel> findById(UUID uuid) {
-
-            return Optional.empty();
-        }
-
-        @Override
-        public boolean existsById(UUID uuid) {
-            return false;
-        }
-
-        @Override
-        public Iterable<PlayerDataModel> findAll() {
-            return null;
-        }
-
-        @Override
-        public Iterable<PlayerDataModel> findAllById(Iterable<UUID> iterable) {
-            return null;
-        }
-
-        @Override
-        public long count() {
-            return 0;
-        }
-
-        @Override
-        public void deleteById(UUID uuid) {
-
-        }
-
-        @Override
-        public void delete(PlayerDataModel playerDataModel) {
-
-        }
-
-        @Override
-        public void deleteAll(Iterable<? extends PlayerDataModel> iterable) {
-
-        }
-
-        @Override
-        public void deleteAll() {
-
-        }
-    }
-
-    private class TeamRepositoryFakeTwo implements TeamRepository {
-        private final UUID id;
-
-        public TeamRepositoryFakeTwo(UUID id) {
-            this.id = id;
-        }
-
-        @Override
-        public TeamDataModel save(TeamDataModel teamDataModel) {
-            teamDataModel.setId(id);
-            return teamDataModel;
-        }
-
-        @Override
-        public <S extends TeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
-            return null;
-        }
-
-        @Override
-        public Optional<TeamDataModel> findById(UUID uuid) {
-            return Optional.empty();
-        }
-
-        @Override
-        public boolean existsById(UUID uuid) {
-            return false;
-        }
-
-        @Override
-        public Iterable<TeamDataModel> findAllById(Iterable<UUID> iterable) {
-            return null;
-        }
-
-        @Override
-        public long count() {
-            return 0;
-        }
-
-        @Override
-        public void deleteById(UUID uuid) {
-
-        }
-
-        @Override
-        public void delete(TeamDataModel teamDataModel) {
-
-        }
-
-        @Override
-        public void deleteAll(Iterable<? extends TeamDataModel> iterable) {
-
-        }
-
-        @Override
-        public void deleteAll() {
-
-        }
-
-        @Override
-        public Optional<TeamDataModel> findByNameIgnoreCase(String teamName) {
-            return Optional.empty();
-        }
-
-        @Override
-        public List<TeamDataModel> findAll() {
-
-            return new ArrayList<>();
-        }
-    }
 }
-
-
-
