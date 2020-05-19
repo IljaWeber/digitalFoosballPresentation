@@ -1,9 +1,9 @@
 package com.valtech.digitalFoosball.domain.game.verifier;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RegularGameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameSetWinApprover;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedGameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameRules;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,24 +14,24 @@ import static com.valtech.digitalFoosball.domain.constants.Team.NO_TEAM;
 import static com.valtech.digitalFoosball.domain.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RankedGameSetWinApproverShould {
-    private RankedGameSetWinApprover setWinVerifier;
-    private TeamDataModel teamOne;
-    private TeamDataModel teamTwo;
-    private List<TeamDataModel> teams;
-    private RegularGameDataModel gameDataModel;
+public class RankedGameRulesShould {
+    private RankedGameRules setWinVerifier;
+    private RankedTeamDataModel teamOne;
+    private RankedTeamDataModel teamTwo;
+    private List<RankedTeamDataModel> teams;
+    private RankedGameDataModel gameDataModel;
 
     @BeforeEach
     void setUp() {
-        setWinVerifier = new RankedGameSetWinApprover();
+        setWinVerifier = new RankedGameRules();
         teams = new ArrayList<>();
 
-        teamOne = new TeamDataModel();
-        teamTwo = new TeamDataModel();
+        teamOne = new RankedTeamDataModel();
+        teamTwo = new RankedTeamDataModel();
 
         teams.add(teamOne);
         teams.add(teamTwo);
-        gameDataModel = new RegularGameDataModel();
+        gameDataModel = new RankedGameDataModel();
         gameDataModel.setTeams(teams);
     }
 
@@ -66,7 +66,7 @@ public class RankedGameSetWinApproverShould {
 
     private void countGoalsFor(Team... teams) {
         for (Team team : teams) {
-            TeamDataModel teamDataModel = gameDataModel.getTeam(team);
+            RankedTeamDataModel teamDataModel = gameDataModel.getTeam(team);
             teamDataModel.countGoal();
         }
     }

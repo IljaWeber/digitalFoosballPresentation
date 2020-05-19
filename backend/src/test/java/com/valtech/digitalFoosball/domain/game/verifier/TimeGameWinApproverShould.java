@@ -1,9 +1,9 @@
 package com.valtech.digitalFoosball.domain.game.verifier;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGame;
 import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameManipulator;
 import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameWinApprover;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,16 +18,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TimeGameWinApproverShould {
     private TimeGameWinApprover timeGameWinApprover;
     private TimeGameDataModel gameDataModel;
-    private TimeGameManipulator timeGame;
+    private TimeGame timeGame;
 
     @BeforeEach
     void setUp() {
-        timeGame = new TimeGameManipulator(null);
+        timeGame = new TimeGame(null);
         timeGameWinApprover = new TimeGameWinApprover();
-        TeamDataModel teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
-        TeamDataModel teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
+        RankedTeamDataModel teamDataModelOne = new RankedTeamDataModel("T1", "P1", "P2");
+        RankedTeamDataModel teamDataModelTwo = new RankedTeamDataModel("T2", "P3", "P4");
 
-        List<TeamDataModel> teams;
+        List<RankedTeamDataModel> teams;
         teams = new ArrayList<>();
         teams.add(teamDataModelOne);
         teams.add(teamDataModelTwo);

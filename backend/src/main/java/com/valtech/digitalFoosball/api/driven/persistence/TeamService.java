@@ -2,7 +2,7 @@ package com.valtech.digitalFoosball.api.driven.persistence;
 
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.PlayerDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,8 @@ public class TeamService implements IObtainTeams {
     }
 
     @Override
-    public TeamDataModel loadOrSaveIntoDatabase(TeamDataModel teamDataModel) {
-        Optional<TeamDataModel> optionalTeamDataModel = teamRepository.findByNameIgnoreCase(teamDataModel.getName());
+    public RankedTeamDataModel loadOrSaveIntoDatabase(RankedTeamDataModel teamDataModel) {
+        Optional<RankedTeamDataModel> optionalTeamDataModel = teamRepository.findByNameIgnoreCase(teamDataModel.getName());
 
         List<PlayerDataModel> unsetPlayers = teamDataModel.getPlayers();
         List<PlayerDataModel> playersFromDatabase = getPlayersFromDatabase(unsetPlayers);
@@ -40,7 +40,7 @@ public class TeamService implements IObtainTeams {
             return teamRepository.save(teamDataModel);
         }
 
-        TeamDataModel teamFromDatabase = optionalTeamDataModel.get();
+        RankedTeamDataModel teamFromDatabase = optionalTeamDataModel.get();
 
         teamFromDatabase.setPlayers(playersFromDatabase);
 
@@ -61,7 +61,7 @@ public class TeamService implements IObtainTeams {
     }
 
     @Override
-    public List<TeamDataModel> getAllTeamsFromDatabase() {
+    public List<RankedTeamDataModel> getAllTeamsFromDatabase() {
         return teamRepository.findAll();
     }
 }

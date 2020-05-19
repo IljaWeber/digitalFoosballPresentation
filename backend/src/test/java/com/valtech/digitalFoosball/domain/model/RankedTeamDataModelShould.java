@@ -1,6 +1,6 @@
 package com.valtech.digitalFoosball.domain.model;
 
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -8,18 +8,16 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TeamDataModelShould {
+public class RankedTeamDataModelShould {
 
-    private final TeamDataModel teamDataModel;
+    private final RankedTeamDataModel teamDataModel;
 
-
-    public TeamDataModelShould() {
-        this.teamDataModel = new TeamDataModel();
+    public RankedTeamDataModelShould() {
+        this.teamDataModel = new RankedTeamDataModel();
         teamDataModel.setName("T1");
         teamDataModel.setNameOfPlayerOne("P1");
         teamDataModel.setNameOfPlayerTwo("P2");
     }
-
 
     @Test
     public void increase_its_score_by_one() {
@@ -40,14 +38,6 @@ public class TeamDataModelShould {
     }
 
     @Test
-    public void increase_its_won_matches_by_one() {
-        teamDataModel.increaseWonMatches();
-
-        int actual = teamDataModel.getWonMatches();
-        assertThat(actual).isEqualTo(1);
-    }
-
-    @Test
     public void keep_the_names_and_set_the_score_to_zero_after_resetScore_was_made() {
         teamDataModel.countGoal();
 
@@ -58,7 +48,7 @@ public class TeamDataModelShould {
         assertThat(teamDataModel.getScore()).isEqualTo(0);
     }
 
-    private List<String> convert(TeamDataModel teamDataModel) {
+    private List<String> convert(RankedTeamDataModel teamDataModel) {
         List<String> team = new ArrayList<>();
 
         team.add(teamDataModel.getName());

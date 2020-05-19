@@ -5,10 +5,10 @@ import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import java.util.TimerTask;
 
 public class TaskOfTimer extends TimerTask {
-    private final TimeGameManipulator timeGame;
+    private final TimeGame timeGame;
     private TimeGameWinApprover timeGameWinApprover;
 
-    public TaskOfTimer(TimeGameManipulator timeGame, GameDataModel dataModel) {
+    public TaskOfTimer(TimeGame timeGame, GameDataModel dataModel) {
         this.timeGame = timeGame;
     }
 

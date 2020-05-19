@@ -10,11 +10,11 @@ import com.valtech.digitalFoosball.domain.gameModes.manipulators.GameManipulator
 import com.valtech.digitalFoosball.domain.gameModes.models.GameOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
-import com.valtech.digitalFoosball.domain.gameModes.regular.adhoc.AdHocGameManipulator;
+import com.valtech.digitalFoosball.domain.gameModes.regular.adhoc.AdHocGame;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.PlayerDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameManipulator;
-import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameManipulator;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGame;
+import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,17 +33,17 @@ class GameControllerShould {
     public GameController game;
 
     protected InitDataModel initDataModel;
-    private TeamDataModel teamDataModelOne;
-    private TeamDataModel teamDataModelTwo;
+    private RankedTeamDataModel teamDataModelOne;
+    private RankedTeamDataModel teamDataModelTwo;
     private final UUID id = UUID.randomUUID();
 
     @BeforeEach
     void setUp() {
-        RankedGameManipulator rankedGame = GameBuilder.buildRankedGameWith(new TeamRepositoryFake(id),
-                                                                           new PlayerRepositoryFake());
-        AdHocGameManipulator adHocGame = GameBuilder.buildAdHocGameWith(new TeamRepositoryFake(id),
-                                                                        new PlayerRepositoryFake());
-        TimeGameManipulator timeGame = GameBuilder.buildTimeGame();
+        RankedGame rankedGame = GameBuilder.buildRankedGameWith(new TeamRepositoryFake(id),
+                                                                new PlayerRepositoryFake());
+        AdHocGame adHocGame = GameBuilder.buildAdHocGameWith(new TeamRepositoryFake(id),
+                                                             new PlayerRepositoryFake());
+        TimeGame timeGame = GameBuilder.buildTimeGame();
         game = new GameController(new GameManipulatorProvider(rankedGame, timeGame, adHocGame),
                                   new FakeClientUpdater());
     }
@@ -65,8 +65,8 @@ class GameControllerShould {
     }
 
     private void setUpTeams() {
-        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
-        teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
+        teamDataModelOne = new RankedTeamDataModel("T1", "P1", "P2");
+        teamDataModelTwo = new RankedTeamDataModel("T2", "P3", "P4");
         initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
         initDataModel.setMode(RANKED);
         game.initGame(initDataModel);
@@ -142,18 +142,18 @@ class GameControllerShould {
         }
 
         @Override
-        public TeamDataModel save(TeamDataModel teamDataModel) {
+        public RankedTeamDataModel save(RankedTeamDataModel teamDataModel) {
             teamDataModel.setId(id);
             return teamDataModel;
         }
 
         @Override
-        public <S extends TeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
+        public <S extends RankedTeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
             return null;
         }
 
         @Override
-        public Optional<TeamDataModel> findById(UUID uuid) {
+        public Optional<RankedTeamDataModel> findById(UUID uuid) {
             return Optional.empty();
         }
 
@@ -163,7 +163,7 @@ class GameControllerShould {
         }
 
         @Override
-        public Iterable<TeamDataModel> findAllById(Iterable<UUID> iterable) {
+        public Iterable<RankedTeamDataModel> findAllById(Iterable<UUID> iterable) {
             return null;
         }
 
@@ -178,12 +178,12 @@ class GameControllerShould {
         }
 
         @Override
-        public void delete(TeamDataModel teamDataModel) {
+        public void delete(RankedTeamDataModel teamDataModel) {
 
         }
 
         @Override
-        public void deleteAll(Iterable<? extends TeamDataModel> iterable) {
+        public void deleteAll(Iterable<? extends RankedTeamDataModel> iterable) {
 
         }
 
@@ -193,13 +193,13 @@ class GameControllerShould {
         }
 
         @Override
-        public Optional<TeamDataModel> findByNameIgnoreCase(String teamName) {
+        public Optional<RankedTeamDataModel> findByNameIgnoreCase(String teamName) {
             return Optional.empty();
         }
 
         @Override
-        public List<TeamDataModel> findAll() {
-            List<TeamDataModel> teamDataModels = new ArrayList<>();
+        public List<RankedTeamDataModel> findAll() {
+            List<RankedTeamDataModel> teamDataModels = new ArrayList<>();
             teamDataModels.add(teamDataModelOne);
             teamDataModels.add(teamDataModelTwo);
 

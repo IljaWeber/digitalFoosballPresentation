@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.domain.gameModes.timePlay;
 
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RegularGameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedGameDataModel;
 
-public class TimeGameDataModel extends RegularGameDataModel {
+public class TimeGameDataModel extends RankedGameDataModel {
     private boolean timeIsOver;
 
     public TimeGameDataModel() {

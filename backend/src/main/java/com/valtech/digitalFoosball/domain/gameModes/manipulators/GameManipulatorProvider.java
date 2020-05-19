@@ -1,29 +1,29 @@
 package com.valtech.digitalFoosball.domain.gameModes.manipulators;
 
 import com.valtech.digitalFoosball.domain.constants.GameMode;
-import com.valtech.digitalFoosball.domain.gameModes.regular.adhoc.AdHocGameManipulator;
-import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameManipulator;
-import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameManipulator;
+import com.valtech.digitalFoosball.domain.gameModes.regular.adhoc.AdHocGame;
+import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGame;
+import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGame;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GameManipulatorProvider {
 
-    private final RankedGameManipulator rankedGame;
-    private final TimeGameManipulator timeGame;
-    private final AdHocGameManipulator adHocGame;
+    private final RankedGame rankedGame;
+    private final TimeGame timeGame;
+    private final AdHocGame adHocGame;
 
     @Autowired
-    public GameManipulatorProvider(RankedGameManipulator rankedGame,
-                                   TimeGameManipulator timeGame,
-                                   AdHocGameManipulator adHocGame) {
+    public GameManipulatorProvider(RankedGame rankedGame,
+                                   TimeGame timeGame,
+                                   AdHocGame adHocGame) {
         this.rankedGame = rankedGame;
         this.timeGame = timeGame;
         this.adHocGame = adHocGame;
     }
 
-    public AbstractGameManipulator getGameManipulator(GameMode gameMode) {
+    public IPlayAGame getGameManipulator(GameMode gameMode) {
         switch (gameMode) {
             case RANKED:
                 return rankedGame;

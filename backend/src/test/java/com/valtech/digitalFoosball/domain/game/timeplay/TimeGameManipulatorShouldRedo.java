@@ -1,9 +1,9 @@
 package com.valtech.digitalFoosball.domain.game.timeplay;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RegularGameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameManipulator;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedGameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -16,20 +16,20 @@ import static com.valtech.digitalFoosball.domain.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TimeGameManipulatorShouldRedo {
-    public TimeGameManipulator timeGame = new TimeGameManipulator(null);
-    private RegularGameDataModel gameDataModel;
+    public TimeGame timeGame = new TimeGame(null);
+    private RankedGameDataModel gameDataModel;
 
     @BeforeEach
     void setUp() {
-        TeamDataModel teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
-        TeamDataModel teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
+        RankedTeamDataModel teamDataModelOne = new RankedTeamDataModel("T1", "P1", "P2");
+        RankedTeamDataModel teamDataModelTwo = new RankedTeamDataModel("T2", "P3", "P4");
 
-        List<TeamDataModel> teams;
+        List<RankedTeamDataModel> teams;
         teams = new ArrayList<>();
         teams.add(teamDataModelOne);
         teams.add(teamDataModelTwo);
 
-        gameDataModel = new RegularGameDataModel();
+        gameDataModel = new RankedGameDataModel();
         gameDataModel.setTeams(teams);
     }
 
@@ -45,7 +45,7 @@ public class TimeGameManipulatorShouldRedo {
     }
 
     private int getScoreOfTeam(Team team) {
-        TeamDataModel teamOne = gameDataModel.getTeam(team);
+        RankedTeamDataModel teamOne = gameDataModel.getTeam(team);
         return teamOne.getScore();
     }
 
@@ -72,7 +72,7 @@ public class TimeGameManipulatorShouldRedo {
     }
 
     private int getNumberOfWonSets(Team team) {
-        TeamDataModel teamOne = gameDataModel.getTeam(team);
+        RankedTeamDataModel teamOne = gameDataModel.getTeam(team);
         return teamOne.getWonSets();
     }
 

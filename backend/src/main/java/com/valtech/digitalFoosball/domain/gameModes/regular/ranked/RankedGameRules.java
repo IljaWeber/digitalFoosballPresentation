@@ -2,13 +2,14 @@ package com.valtech.digitalFoosball.domain.gameModes.regular.ranked;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.winConditionApprover.AbstractWinApprover;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.winConditionApprover.BaseGameRules;
 
 import static com.valtech.digitalFoosball.domain.constants.Team.*;
 
-public class RankedGameSetWinApprover extends AbstractWinApprover {
+public class RankedGameRules extends BaseGameRules {
 
+    @Override
     public void approveWin(GameDataModel gameDataModel) {
         Team winner = getWinner(gameDataModel);
 
@@ -24,7 +25,7 @@ public class RankedGameSetWinApprover extends AbstractWinApprover {
         if (thereIsALeadingTeam(gameDataModel)) {
 
             Team leadingTeam = getLeadingTeam(gameDataModel);
-            TeamDataModel teamDataModel = gameDataModel.getTeam(leadingTeam);
+            RankedTeamDataModel teamDataModel = gameDataModel.getTeam(leadingTeam);
 
             if (enoughGoals(teamDataModel) && bigEnoughScoreDifference(gameDataModel)) {
                 winner = leadingTeam;
@@ -35,7 +36,7 @@ public class RankedGameSetWinApprover extends AbstractWinApprover {
         return winner;
     }
 
-    private boolean enoughGoals(TeamDataModel team) {
+    private boolean enoughGoals(RankedTeamDataModel team) {
         int neededGoals = 6;
         return team.getScore() >= neededGoals;
     }

@@ -1,11 +1,11 @@
 package com.valtech.digitalFoosball.api.driven.persistence;
 
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
 
 import java.util.List;
 
 public interface IObtainTeams {
-    TeamDataModel loadOrSaveIntoDatabase(TeamDataModel teamDataModel);
+    RankedTeamDataModel loadOrSaveIntoDatabase(RankedTeamDataModel teamDataModel);
 
-    List<TeamDataModel> getAllTeamsFromDatabase();
+    List<RankedTeamDataModel> getAllTeamsFromDatabase();
 }

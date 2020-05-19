@@ -8,8 +8,8 @@ import com.valtech.digitalFoosball.domain.constants.GameMode;
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RegularGameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedGameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,16 +40,16 @@ public class DigitalFoosballRestApiShould {
 
     private final Gson gson;
     private final ObjectMapper mapper;
-    private final TeamDataModel teamOne;
-    private final TeamDataModel teamTwo;
+    private final RankedTeamDataModel teamOne;
+    private final RankedTeamDataModel teamTwo;
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private GameController game;
     private String json;
     private MvcResult result;
-    private List<TeamDataModel> teams;
-    private RegularGameDataModel gameDataModel;
+    private List<RankedTeamDataModel> teams;
+    private RankedGameDataModel gameDataModel;
     private InitDataModel initDataModel;
     private MockHttpServletRequestBuilder builder;
 
@@ -58,13 +58,13 @@ public class DigitalFoosballRestApiShould {
         teams = new ArrayList<>();
         mapper = new ObjectMapper();
         initDataModel = new InitDataModel();
-        teamOne = new TeamDataModel("T1", "P1", "P2");
-        teamTwo = new TeamDataModel("T2", "P3", "P4");
+        teamOne = new RankedTeamDataModel("T1", "P1", "P2");
+        teamTwo = new RankedTeamDataModel("T2", "P3", "P4");
     }
 
     @BeforeEach
     void setUp() {
-        gameDataModel = new RegularGameDataModel();
+        gameDataModel = new RankedGameDataModel();
         gameDataModel.setTeam(ONE, teamOne);
         gameDataModel.setTeam(TWO, teamTwo);
         gameDataModel.setSetWinner(NO_TEAM);
@@ -73,8 +73,8 @@ public class DigitalFoosballRestApiShould {
 
     @Test
     void initialise_an_ad_hoc_match_with_default_values_for_the_teams() throws Exception {
-        prepareTeamsForInitialization(new TeamDataModel("Orange", "Goalie", "Striker"),
-                                      new TeamDataModel("Green", "Goalie", "Striker"));
+        prepareTeamsForInitialization(new RankedTeamDataModel("Orange", "Goalie", "Striker"),
+                                      new RankedTeamDataModel("Green", "Goalie", "Striker"));
         prepareComparableAdHocInitialisation();
         String expected = prepareComparableValuesWithMatchWinner(NO_TEAM);
 
@@ -85,8 +85,8 @@ public class DigitalFoosballRestApiShould {
     }
 
     private void prepareComparableAdHocInitialisation() {
-        gameDataModel.setTeam(ONE, new TeamDataModel("Orange", "Goalie", "Striker"));
-        gameDataModel.setTeam(TWO, new TeamDataModel("Green", "Goalie", "Striker"));
+        gameDataModel.setTeam(ONE, new RankedTeamDataModel("Orange", "Goalie", "Striker"));
+        gameDataModel.setTeam(TWO, new RankedTeamDataModel("Green", "Goalie", "Striker"));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class DigitalFoosballRestApiShould {
 
     @Test
     public void reset_game_with_empty_team_and_player_names_and_zero_scores() throws Exception {
-        gameDataModel = new RegularGameDataModel();
+        gameDataModel = new RankedGameDataModel();
         String expected = prepareComparableValuesWithMatchWinner(NO_TEAM);
         MockHttpServletRequestBuilder reset = MockMvcRequestBuilders.delete("/api/reset");
         prepareGameWithMode(RANKED);
@@ -160,7 +160,6 @@ public class DigitalFoosballRestApiShould {
     public void return_a_match_winner() throws Exception {
         countComparableScoreForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
         prepareComparableSetWinValues(ONE, ONE, ONE);
-        gameDataModel.getTeam(ONE).increaseWonMatches();
         String expected = prepareComparableValuesWithMatchWinner(ONE);
         prepareGameWithMode(RANKED);
         countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
@@ -199,7 +198,7 @@ public class DigitalFoosballRestApiShould {
         }
     }
 
-    private void prepareTeamsForInitialization(TeamDataModel teamOne, TeamDataModel teamTwo) {
+    private void prepareTeamsForInitialization(RankedTeamDataModel teamOne, RankedTeamDataModel teamTwo) {
         this.initDataModel = new InitDataModel();
         this.teams = new ArrayList<>();
         teams.add(teamOne);

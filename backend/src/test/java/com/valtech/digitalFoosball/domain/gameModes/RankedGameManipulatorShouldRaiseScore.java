@@ -1,9 +1,9 @@
 package com.valtech.digitalFoosball.domain.gameModes;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RegularGameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameManipulator;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedGameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +20,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RankedGameManipulatorShouldRaiseScore {
 
     @Autowired
-    public RankedGameManipulator gameManipulator;
-    private RegularGameDataModel gameDataModel;
+    public RankedGame gameManipulator;
+    private RankedGameDataModel gameDataModel;
 
     @BeforeEach
     void setUp() {
-        TeamDataModel teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
-        TeamDataModel teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
+        RankedTeamDataModel teamDataModelOne = new RankedTeamDataModel("T1", "P1", "P2");
+        RankedTeamDataModel teamDataModelTwo = new RankedTeamDataModel("T2", "P3", "P4");
 
-        List<TeamDataModel> teams;
+        List<RankedTeamDataModel> teams;
         teams = new ArrayList<>();
         teams.add(teamDataModelOne);
         teams.add(teamDataModelTwo);
 
-        gameDataModel = new RegularGameDataModel();
+        gameDataModel = new RankedGameDataModel();
         gameDataModel.setTeams(teams);
     }
 
@@ -48,7 +48,7 @@ public class RankedGameManipulatorShouldRaiseScore {
     }
 
     private int getScoreOfTeam(Team team) {
-        TeamDataModel teamOne = gameDataModel.getTeam(team);
+        RankedTeamDataModel teamOne = gameDataModel.getTeam(team);
         return teamOne.getScore();
     }
 

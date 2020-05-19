@@ -2,11 +2,11 @@ package com.valtech.digitalFoosball.domain.gameModes.winConditionApprover;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
 
 import static com.valtech.digitalFoosball.domain.constants.Team.*;
 
-public abstract class AbstractWinApprover implements SetWinApprover {
+public abstract class BaseGameRules implements GameRules {
 
     protected boolean thereIsALeadingTeam(GameDataModel gameDataModel) {
         return getLeadingTeam(gameDataModel) != NO_TEAM;
@@ -30,7 +30,7 @@ public abstract class AbstractWinApprover implements SetWinApprover {
     }
 
     protected int getScoreOfTeam(Team team, GameDataModel gameDataModel) {
-        TeamDataModel teamDataModel = gameDataModel.getTeam(team);
+        RankedTeamDataModel teamDataModel = gameDataModel.getTeam(team);
         return teamDataModel.getScore();
     }
 }

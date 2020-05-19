@@ -3,7 +3,7 @@ package com.valtech.digitalFoosball.domain.gameModes.regular.ranked;
 import com.valtech.digitalFoosball.domain.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.PlayerDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class UniqueNameVerifier {
         processedPlayerNames = new ArrayList<>();
         processedTeamNames = new ArrayList<>();
 
-        for (TeamDataModel team : initDataModel.getTeams()) {
+        for (RankedTeamDataModel team : initDataModel.getTeams()) {
             String teamName = team.getName();
 
             checkName(teamName, processedTeamNames);
@@ -28,7 +28,7 @@ public class UniqueNameVerifier {
         }
     }
 
-    private void checkPlayerNames(TeamDataModel team) {
+    private void checkPlayerNames(RankedTeamDataModel team) {
         for (PlayerDataModel player : team.getPlayers()) {
             String playerName = player.getName();
 

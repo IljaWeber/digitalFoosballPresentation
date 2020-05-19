@@ -15,14 +15,14 @@ import java.util.TreeMap;
 import static com.valtech.digitalFoosball.domain.constants.GameMode.NO_ACTIVE_GAME;
 import static com.valtech.digitalFoosball.domain.constants.Team.*;
 
-public class RegularGameDataModel implements GameDataModel {
-    private final SortedMap<Team, TeamDataModel> teams;
+public class RankedGameDataModel implements GameDataModel {
+    private final SortedMap<Team, RankedTeamDataModel> teams;
     private Team setWinner;
     private GameMode gameMode;
     private History history;
     private final List<Observer> observers;
 
-    public RegularGameDataModel(List<TeamDataModel> teamsFromDatabase) {
+    public RankedGameDataModel(List<RankedTeamDataModel> teamsFromDatabase) {
         teams = new TreeMap<>();
         setWinner = NO_TEAM;
 
@@ -34,7 +34,7 @@ public class RegularGameDataModel implements GameDataModel {
         observers = new ArrayList<>();
     }
 
-    public RegularGameDataModel() {
+    public RankedGameDataModel() {
         teams = new TreeMap<>();
         setWinner = NO_TEAM;
         gameMode = NO_ACTIVE_GAME;
@@ -43,18 +43,18 @@ public class RegularGameDataModel implements GameDataModel {
     }
 
     @Override
-    public SortedMap<Team, TeamDataModel> getTeams() {
+    public SortedMap<Team, RankedTeamDataModel> getTeams() {
         return teams;
     }
 
     @Override
-    public void setTeams(List<TeamDataModel> teams) {
+    public void setTeams(List<RankedTeamDataModel> teams) {
         this.teams.put(ONE, teams.get(0));
         this.teams.put(TWO, teams.get(1));
     }
 
     @Override
-    public TeamDataModel getTeam(Team team) {
+    public RankedTeamDataModel getTeam(Team team) {
         return teams.get(team);
     }
 
@@ -71,7 +71,7 @@ public class RegularGameDataModel implements GameDataModel {
     }
 
     @Override
-    public void setTeam(Team team, TeamDataModel teamDataModel) {
+    public void setTeam(Team team, RankedTeamDataModel teamDataModel) {
         teams.put(team, teamDataModel);
     }
 
@@ -112,7 +112,7 @@ public class RegularGameDataModel implements GameDataModel {
 
     @Override
     public void decreaseWonSetsForRecentSetWinner() {
-        TeamDataModel setWinningTeam = teams.get(setWinner);
+        RankedTeamDataModel setWinningTeam = teams.get(setWinner);
         setWinningTeam.decreaseWonSets();
     }
 
@@ -129,7 +129,7 @@ public class RegularGameDataModel implements GameDataModel {
     @Override
     public void undoLastGoal() {
         Team undo = history.undo();
-        TeamDataModel teamDataModel = teams.get(undo);
+        RankedTeamDataModel teamDataModel = teams.get(undo);
         teamDataModel.decreaseScore();
     }
 

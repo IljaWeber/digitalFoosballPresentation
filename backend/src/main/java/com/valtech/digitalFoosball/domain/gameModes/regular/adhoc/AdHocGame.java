@@ -1,26 +1,26 @@
 package com.valtech.digitalFoosball.domain.gameModes.regular.adhoc;
 
-import com.valtech.digitalFoosball.domain.gameModes.manipulators.AbstractGameManipulator;
+import com.valtech.digitalFoosball.domain.gameModes.manipulators.DigitalFoosballGame;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameSetWinApprover;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameRules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdHocGameManipulator extends AbstractGameManipulator {
+public class AdHocGame extends DigitalFoosballGame {
 
     @Autowired
-    public AdHocGameManipulator(AdHocInitService initService) {
-        super(initService, new RankedGameSetWinApprover());
+    public AdHocGame(AdHocInitService initService) {
+        super(initService, new RankedGameRules());
     }
 
     @Override
     public GameDataModel initGame(InitDataModel initDataModel) {
         initDataModel = new InitDataModel();
-        TeamDataModel teamOne = new TeamDataModel("Orange", "Goalie", "Striker");
-        TeamDataModel teamTwo = new TeamDataModel("Green", "Goalie", "Striker");
+        RankedTeamDataModel teamOne = new RankedTeamDataModel("Orange", "Goalie", "Striker");
+        RankedTeamDataModel teamTwo = new RankedTeamDataModel("Green", "Goalie", "Striker");
 
         initDataModel.setTeamOne(teamOne);
         initDataModel.setTeamTwo(teamTwo);

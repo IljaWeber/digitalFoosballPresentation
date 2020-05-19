@@ -2,11 +2,11 @@ package com.valtech.digitalFoosball.domain.gameModes.timePlay;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.winConditionApprover.AbstractWinApprover;
+import com.valtech.digitalFoosball.domain.gameModes.winConditionApprover.BaseGameRules;
 
 import static com.valtech.digitalFoosball.domain.constants.Team.NO_TEAM;
 
-public class TimeGameWinApprover extends AbstractWinApprover {
+public class TimeGameWinApprover extends BaseGameRules {
     private final int GOAL_LIMIT = 10;
 
     public Team getWinner(TimeGameDataModel gameDataModel) {

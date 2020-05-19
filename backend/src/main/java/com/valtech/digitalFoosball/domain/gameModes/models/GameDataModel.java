@@ -3,23 +3,23 @@ package com.valtech.digitalFoosball.domain.gameModes.models;
 import com.valtech.digitalFoosball.api.driven.notification.Observer;
 import com.valtech.digitalFoosball.domain.constants.GameMode;
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
 
 import java.util.List;
 import java.util.SortedMap;
 
 public interface GameDataModel {
-    SortedMap<Team, TeamDataModel> getTeams();
+    SortedMap<Team, RankedTeamDataModel> getTeams();
 
-    void setTeams(List<TeamDataModel> teams);
+    void setTeams(List<RankedTeamDataModel> teams);
 
-    TeamDataModel getTeam(Team team);
+    RankedTeamDataModel getTeam(Team team);
 
     boolean isEmpty();
 
     void changeOver();
 
-    void setTeam(Team team, TeamDataModel teamDataModel);
+    void setTeam(Team team, RankedTeamDataModel teamDataModel);
 
     GameMode getGameMode();
 

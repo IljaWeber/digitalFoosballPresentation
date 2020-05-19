@@ -2,7 +2,7 @@ package com.valtech.digitalFoosball.domain.gameModes.models;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.converter.Converter;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.MatchWinVerifier;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class GameOutputModel {
 
     public GameOutputModel(GameDataModel gameDataModel) {
         MatchWinVerifier matchWinVerifier = new MatchWinVerifier();
-        SortedMap<Team, TeamDataModel> teamMap = gameDataModel.getTeams();
+        SortedMap<Team, RankedTeamDataModel> teamMap = gameDataModel.getTeams();
 
         this.teams = Converter.convertMapToTeamOutputs(teamMap);
         winnerOfSet = gameDataModel.getSetWinner();

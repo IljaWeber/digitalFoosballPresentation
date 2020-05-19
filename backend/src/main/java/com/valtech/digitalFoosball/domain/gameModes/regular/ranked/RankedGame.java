@@ -1,16 +1,17 @@
 package com.valtech.digitalFoosball.domain.gameModes.regular.ranked;
 
-import com.valtech.digitalFoosball.domain.gameModes.manipulators.AbstractGameManipulator;
+import com.valtech.digitalFoosball.domain.gameModes.manipulators.DigitalFoosballGame;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RankedGameManipulator extends AbstractGameManipulator {
+public class RankedGame extends DigitalFoosballGame {
+
     @Autowired
-    public RankedGameManipulator(RankedInitService initService) {
-        super(initService, new RankedGameSetWinApprover());
+    public RankedGame(RankedInitService initService) {
+        super(initService, new RankedGameRules());
     }
 
     @Override

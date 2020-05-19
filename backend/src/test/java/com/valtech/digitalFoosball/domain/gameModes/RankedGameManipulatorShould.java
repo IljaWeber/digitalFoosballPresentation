@@ -12,8 +12,8 @@ import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.PlayerDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameManipulator;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGame;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedInitService;
 import org.junit.jupiter.api.Test;
 
@@ -27,11 +27,11 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 public class RankedGameManipulatorShould {
     private final UUID id = UUID.randomUUID();
 
-    public RankedGameManipulator game;
+    public RankedGame game;
 
     protected InitDataModel initDataModel;
-    private TeamDataModel teamDataModelOne;
-    private TeamDataModel teamDataModelTwo;
+    private RankedTeamDataModel teamDataModelOne;
+    private RankedTeamDataModel teamDataModelTwo;
     private GameDataModel gameData;
 
     public RankedGameManipulatorShould() {
@@ -42,24 +42,24 @@ public class RankedGameManipulatorShould {
     }
 
     private void setUpTeams() {
-        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
-        teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
+        teamDataModelOne = new RankedTeamDataModel("T1", "P1", "P2");
+        teamDataModelTwo = new RankedTeamDataModel("T2", "P3", "P4");
         initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
         gameData = game.initGame(initDataModel);
     }
 
     @Test
     public void throw_name_duplicate_exception_when_a_name_is_used_twice() {
-        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
-        teamDataModelTwo = new TeamDataModel("T2", "P3", "P1");
+        teamDataModelOne = new RankedTeamDataModel("T1", "P1", "P2");
+        teamDataModelTwo = new RankedTeamDataModel("T2", "P3", "P1");
         initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
 
         assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> game.initGame(initDataModel));
     }
 
-    private List<TeamDataModel> getTeamDataModels() {
-        SortedMap<Team, TeamDataModel> teams = gameData.getTeams();
-        List<TeamDataModel> actual = new ArrayList<>();
+    private List<RankedTeamDataModel> getTeamDataModels() {
+        SortedMap<Team, RankedTeamDataModel> teams = gameData.getTeams();
+        List<RankedTeamDataModel> actual = new ArrayList<>();
         teams.forEach((k, v) -> actual.add(v));
         return actual;
     }
@@ -71,11 +71,11 @@ public class RankedGameManipulatorShould {
 
         game.changeover(gameData);
 
-        List<TeamDataModel> teams = getTeamDataModels();
-        assertThat(teams).extracting(TeamDataModel::getScore).containsExactly(0, 0);
-        assertThat(teams).extracting(TeamDataModel::getName).containsExactly("T1", "T2");
-        assertThat(teams).extracting(TeamDataModel::getNameOfPlayerOne).containsExactly("P1", "P3");
-        assertThat(teams).extracting(TeamDataModel::getNameOfPlayerTwo).containsExactly("P2", "P4");
+        List<RankedTeamDataModel> teams = getTeamDataModels();
+        assertThat(teams).extracting(RankedTeamDataModel::getScore).containsExactly(0, 0);
+        assertThat(teams).extracting(RankedTeamDataModel::getName).containsExactly("T1", "T2");
+        assertThat(teams).extracting(RankedTeamDataModel::getNameOfPlayerOne).containsExactly("P1", "P3");
+        assertThat(teams).extracting(RankedTeamDataModel::getNameOfPlayerTwo).containsExactly("P2", "P4");
     }
 
     @Test
@@ -87,7 +87,7 @@ public class RankedGameManipulatorShould {
 
         game.undoGoal(gameData);
 
-        TeamDataModel team = gameData.getTeam(ONE);
+        RankedTeamDataModel team = gameData.getTeam(ONE);
         int actual = team.getScore();
         assertThat(actual).isEqualTo(0);
     }
@@ -101,7 +101,7 @@ public class RankedGameManipulatorShould {
 
         game.redoGoal(gameData);
 
-        TeamDataModel team = gameData.getTeam(ONE);
+        RankedTeamDataModel team = gameData.getTeam(ONE);
         int actual = team.getScore();
         assertThat(actual).isEqualTo(0);
     }
@@ -132,7 +132,7 @@ public class RankedGameManipulatorShould {
         PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
         PlayerService playerService = new PlayerService(playerRepository);
         IObtainTeams iObtainTeams = new TeamService(teamRepository, playerService);
-        game = new RankedGameManipulator(new RankedInitService(iObtainTeams));
+        game = new RankedGame(new RankedInitService(iObtainTeams));
     }
 
     private void raiseScoreOf(Team... teams) {
@@ -149,18 +149,18 @@ public class RankedGameManipulatorShould {
         }
 
         @Override
-        public TeamDataModel save(TeamDataModel teamDataModel) {
+        public RankedTeamDataModel save(RankedTeamDataModel teamDataModel) {
             teamDataModel.setId(id);
             return teamDataModel;
         }
 
         @Override
-        public <S extends TeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
+        public <S extends RankedTeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
             return null;
         }
 
         @Override
-        public Optional<TeamDataModel> findById(UUID uuid) {
+        public Optional<RankedTeamDataModel> findById(UUID uuid) {
             return Optional.empty();
         }
 
@@ -170,7 +170,7 @@ public class RankedGameManipulatorShould {
         }
 
         @Override
-        public Iterable<TeamDataModel> findAllById(Iterable<UUID> iterable) {
+        public Iterable<RankedTeamDataModel> findAllById(Iterable<UUID> iterable) {
             return null;
         }
 
@@ -185,12 +185,12 @@ public class RankedGameManipulatorShould {
         }
 
         @Override
-        public void delete(TeamDataModel teamDataModel) {
+        public void delete(RankedTeamDataModel teamDataModel) {
 
         }
 
         @Override
-        public void deleteAll(Iterable<? extends TeamDataModel> iterable) {
+        public void deleteAll(Iterable<? extends RankedTeamDataModel> iterable) {
 
         }
 
@@ -200,13 +200,13 @@ public class RankedGameManipulatorShould {
         }
 
         @Override
-        public Optional<TeamDataModel> findByNameIgnoreCase(String teamName) {
+        public Optional<RankedTeamDataModel> findByNameIgnoreCase(String teamName) {
             return Optional.empty();
         }
 
         @Override
-        public List<TeamDataModel> findAll() {
-            List<TeamDataModel> teamDataModels = new ArrayList<>();
+        public List<RankedTeamDataModel> findAll() {
+            List<RankedTeamDataModel> teamDataModels = new ArrayList<>();
             teamDataModels.add(teamDataModelOne);
             teamDataModels.add(teamDataModelTwo);
 
@@ -287,18 +287,18 @@ public class RankedGameManipulatorShould {
         }
 
         @Override
-        public TeamDataModel save(TeamDataModel teamDataModel) {
+        public RankedTeamDataModel save(RankedTeamDataModel teamDataModel) {
             teamDataModel.setId(id);
             return teamDataModel;
         }
 
         @Override
-        public <S extends TeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
+        public <S extends RankedTeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
             return null;
         }
 
         @Override
-        public Optional<TeamDataModel> findById(UUID uuid) {
+        public Optional<RankedTeamDataModel> findById(UUID uuid) {
             return Optional.empty();
         }
 
@@ -308,7 +308,7 @@ public class RankedGameManipulatorShould {
         }
 
         @Override
-        public Iterable<TeamDataModel> findAllById(Iterable<UUID> iterable) {
+        public Iterable<RankedTeamDataModel> findAllById(Iterable<UUID> iterable) {
             return null;
         }
 
@@ -323,12 +323,12 @@ public class RankedGameManipulatorShould {
         }
 
         @Override
-        public void delete(TeamDataModel teamDataModel) {
+        public void delete(RankedTeamDataModel teamDataModel) {
 
         }
 
         @Override
-        public void deleteAll(Iterable<? extends TeamDataModel> iterable) {
+        public void deleteAll(Iterable<? extends RankedTeamDataModel> iterable) {
 
         }
 
@@ -338,12 +338,12 @@ public class RankedGameManipulatorShould {
         }
 
         @Override
-        public Optional<TeamDataModel> findByNameIgnoreCase(String teamName) {
+        public Optional<RankedTeamDataModel> findByNameIgnoreCase(String teamName) {
             return Optional.empty();
         }
 
         @Override
-        public List<TeamDataModel> findAll() {
+        public List<RankedTeamDataModel> findAll() {
 
             return new ArrayList<>();
         }

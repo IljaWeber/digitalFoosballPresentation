@@ -1,6 +1,6 @@
 package com.valtech.digitalFoosball.domain.gameModes.timePlay;
 
-import com.valtech.digitalFoosball.domain.gameModes.manipulators.AbstractGameManipulator;
+import com.valtech.digitalFoosball.domain.gameModes.manipulators.DigitalFoosballGame;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.Timer;
 
 @Service
-public class TimeGameManipulator extends AbstractGameManipulator {
+public class TimeGame extends DigitalFoosballGame {
     private boolean timeIsOver = false;
     private final TimeGameWinApprover timeGameWinApprover;
 
     @Autowired
-    public TimeGameManipulator(RankedInitService initService) {
+    public TimeGame(RankedInitService initService) {
         super(initService, new TimeGameWinApprover());
         timeGameWinApprover = new TimeGameWinApprover();
     }

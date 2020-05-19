@@ -7,7 +7,7 @@ import com.valtech.digitalFoosball.domain.gameModes.models.AbstractGameModelFact
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +25,12 @@ public abstract class AbstractInitService {
     protected GameDataModel prepare(InitDataModel initDataModel) {
         GameDataModel gameDataModel;
         GameMode mode = initDataModel.getMode();
-        List<TeamDataModel> teamsFromDatabase = new ArrayList<>();
+        List<RankedTeamDataModel> teamsFromDatabase = new ArrayList<>();
 
-        List<TeamDataModel> teamsList = initDataModel.getTeams();
+        List<RankedTeamDataModel> teamsList = initDataModel.getTeams();
 
-        for (TeamDataModel team : teamsList) {
-            TeamDataModel teamFromDatabase = teamDataPort.loadOrSaveIntoDatabase(team);
+        for (RankedTeamDataModel team : teamsList) {
+            RankedTeamDataModel teamFromDatabase = teamDataPort.loadOrSaveIntoDatabase(team);
             teamsFromDatabase.add(teamFromDatabase);
         }
 
@@ -42,7 +42,7 @@ public abstract class AbstractInitService {
     }
 
     public List<TeamOutput> getAllTeams() {
-        List<TeamDataModel> teamDataModels = teamDataPort.getAllTeamsFromDatabase();
+        List<RankedTeamDataModel> teamDataModels = teamDataPort.getAllTeamsFromDatabase();
 
         if (teamDataModels.isEmpty()) {
             return new ArrayList<>();
