@@ -1,21 +1,20 @@
 package com.valtech.digitalFoosball.domain.game;
 
+import com.valtech.digitalFoosball.GameBuilder;
 import com.valtech.digitalFoosball.api.driven.notification.INotifyAboutStateChanges;
-import com.valtech.digitalFoosball.api.driven.persistence.PlayerService;
-import com.valtech.digitalFoosball.api.driven.persistence.TeamService;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepository;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
 import com.valtech.digitalFoosball.domain.GameController;
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.InitService;
-import com.valtech.digitalFoosball.domain.gameModes.InitServiceProvider;
+import com.valtech.digitalFoosball.domain.gameModes.manipulators.GameManipulatorProvider;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
-import com.valtech.digitalFoosball.domain.gameModes.regular.adhoc.AdHocInitService;
+import com.valtech.digitalFoosball.domain.gameModes.regular.adhoc.AdHocGameManipulator;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedInitService;
+import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameManipulator;
+import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameManipulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,26 +39,13 @@ class GameControllerShould {
 
     @BeforeEach
     void setUp() {
-        FakeClientUpdater clientUpdater = new FakeClientUpdater();
-        InitService initService = createInitService();
-        game = new GameController(clientUpdater, initService);
-    }
-
-    private InitService createInitService() {
-        TeamService teamDataPort = createTeamServiceWithFakes();
-        AdHocInitService adHocInitService = new AdHocInitService(teamDataPort);
-        RankedInitService rankedInitService = new RankedInitService(teamDataPort);
-        InitServiceProvider provider = new InitServiceProvider(rankedInitService,
-                                                               adHocInitService);
-        return new InitService(provider);
-    }
-
-    private TeamService createTeamServiceWithFakes() {
-        TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
-        PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
-        PlayerService playerService = new PlayerService(playerRepository);
-        return new TeamService(teamRepository,
-                               playerService);
+        RankedGameManipulator rankedGame = GameBuilder.buildRankedGameWith(new TeamRepositoryFake(id),
+                                                                           new PlayerRepositoryFake());
+        AdHocGameManipulator adHocGame = GameBuilder.buildAdHocGameWith(new TeamRepositoryFake(id),
+                                                                        new PlayerRepositoryFake());
+        TimeGameManipulator timeGame = GameBuilder.buildTimeGame();
+        game = new GameController(new GameManipulatorProvider(rankedGame, timeGame, adHocGame),
+                                  new FakeClientUpdater());
     }
 
     @Test

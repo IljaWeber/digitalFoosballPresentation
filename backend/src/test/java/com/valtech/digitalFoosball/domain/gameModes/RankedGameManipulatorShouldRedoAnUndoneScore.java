@@ -6,6 +6,8 @@ import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameManipulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +16,11 @@ import static com.valtech.digitalFoosball.domain.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 public class RankedGameManipulatorShouldRedoAnUndoneScore {
 
-    public RankedGameManipulator gameManipulator = new RankedGameManipulator();
+    @Autowired
+    public RankedGameManipulator gameManipulator;
     private RegularGameDataModel gameDataModel;
 
     @BeforeEach
