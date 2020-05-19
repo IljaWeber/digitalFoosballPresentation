@@ -6,6 +6,8 @@ import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.RegularGameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameManipulator;
+import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedInitService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -17,10 +19,15 @@ import static com.valtech.digitalFoosball.domain.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RankedGameManipulatorShould {
-    public RankedGameManipulator game = new RankedGameManipulator();
+    public RankedGameManipulator game;
 
     protected InitDataModel initDataModel = new InitDataModel();
     private final GameDataModel gameData = new RegularGameDataModel();
+
+    @BeforeEach
+    void setUp() {
+        game = new RankedGameManipulator(new FakeInitService());
+    }
 
     private void setUpTeams() {
         TeamDataModel teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
@@ -84,6 +91,12 @@ public class RankedGameManipulatorShould {
     private void raiseScoreOf(Team... teams) {
         for (Team team : teams) {
             game.countGoalFor(team, gameData);
+        }
+    }
+
+    private class FakeInitService extends RankedInitService {
+        public FakeInitService() {
+            super(null);
         }
     }
 }
