@@ -5,6 +5,7 @@ import com.valtech.digitalFoosball.domain.gameModes.regular.models.RegularGameDa
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.TeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameManipulator;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class TimeGameManipulatorShouldRedo {
         assertThat(actualScoreTeamTwo).isEqualTo(0);
     }
 
+    @Disabled
     @Test
     void and_raise_the_won_sets_if_necessary() {
         raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE);
