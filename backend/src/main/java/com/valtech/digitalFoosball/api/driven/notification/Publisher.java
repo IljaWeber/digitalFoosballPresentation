@@ -1,6 +1,6 @@
 package com.valtech.digitalFoosball.api.driven.notification;
 
-import com.valtech.digitalFoosball.domain.gameModes.models.GameOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.BaseOutputModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -14,12 +14,12 @@ public class Publisher implements INotifyAboutStateChanges {
         this.template = template;
     }
 
-    public void notifyAboutStateChange(GameOutputModel gameData) {
+    public void notifyAboutStateChange(BaseOutputModel gameData) {
         template.convertAndSend("/update/score", gameData);
     }
 
     @Override
-    public void update(GameOutputModel gameOutputModel) {
-        notifyAboutStateChange(gameOutputModel);
+    public void update(BaseOutputModel baseOutputModel) {
+        notifyAboutStateChange(baseOutputModel);
     }
 }

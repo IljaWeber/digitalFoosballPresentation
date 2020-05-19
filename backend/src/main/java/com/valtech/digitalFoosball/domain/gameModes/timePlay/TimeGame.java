@@ -3,7 +3,7 @@ package com.valtech.digitalFoosball.domain.gameModes.timePlay;
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.DigitalFoosballGame;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
+import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedInitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class TimeGame extends DigitalFoosballGame {
     }
 
     @Override
-    public List<TeamOutput> getAllTeamsFromDatabase() {
+    public List<TeamOutputModel> getAllTeamsFromDatabase() {
         return null;
     }
 

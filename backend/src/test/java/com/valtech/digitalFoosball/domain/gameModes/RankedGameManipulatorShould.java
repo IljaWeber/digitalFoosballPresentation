@@ -10,7 +10,7 @@ import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
+import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGame;
@@ -112,9 +112,9 @@ public class RankedGameManipulatorShould {
         teamDataModelOne.setName("Roto");
         teamDataModelTwo.setName("Rototo");
 
-        List<TeamOutput> actual = game.getAllTeamsFromDatabase();
+        List<TeamOutputModel> actual = game.getAllTeamsFromDatabase();
 
-        assertThat(actual).extracting(TeamOutput::getName).containsExactly("Roto", "Rototo");
+        assertThat(actual).extracting(TeamOutputModel::getName).containsExactly("Roto", "Rototo");
     }
 
     @Test
@@ -122,7 +122,7 @@ public class RankedGameManipulatorShould {
         setUpTeams();
         setUpTestDoubles();
 
-        List<TeamOutput> actual = game.getAllTeamsFromDatabase();
+        List<TeamOutputModel> actual = game.getAllTeamsFromDatabase();
 
         assertThat(actual).isEmpty();
     }

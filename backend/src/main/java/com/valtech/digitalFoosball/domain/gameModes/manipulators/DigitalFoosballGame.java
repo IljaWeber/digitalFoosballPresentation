@@ -2,7 +2,7 @@ package com.valtech.digitalFoosball.domain.gameModes.manipulators;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
+import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.winConditionApprover.GameRules;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public abstract class DigitalFoosballGame implements IPlayAGame {
     }
 
     @Override
-    public List<TeamOutput> getAllTeamsFromDatabase() {
+    public List<TeamOutputModel> getAllTeamsFromDatabase() {
         return initService.getAllTeams();
     }
 

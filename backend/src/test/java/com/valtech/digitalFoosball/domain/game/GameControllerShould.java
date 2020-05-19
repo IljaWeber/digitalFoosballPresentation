@@ -7,9 +7,9 @@ import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamReposit
 import com.valtech.digitalFoosball.domain.GameController;
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.GameManipulatorProvider;
-import com.valtech.digitalFoosball.domain.gameModes.models.GameOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.BaseOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
+import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.adhoc.AdHocGame;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
@@ -53,13 +53,13 @@ class GameControllerShould {
         setUpTeams();
         raiseScoreOf(ONE, TWO);
 
-        GameOutputModel gameOutputModel = game.getGameData();
+        BaseOutputModel baseOutputModel = game.getGameData();
 
-        List<TeamOutput> actual = gameOutputModel.getTeams();
-        assertThat(actual).extracting(TeamOutput::getName,
-                                      TeamOutput::getPlayerOne,
-                                      TeamOutput::getPlayerTwo,
-                                      TeamOutput::getScore).containsExactly(
+        List<TeamOutputModel> actual = baseOutputModel.getTeams();
+        assertThat(actual).extracting(TeamOutputModel::getName,
+                                      TeamOutputModel::getPlayerOne,
+                                      TeamOutputModel::getPlayerTwo,
+                                      TeamOutputModel::getScore).containsExactly(
                 tuple("T1", "P1", "P2", 1),
                 tuple("T2", "P3", "P4", 1));
     }
@@ -74,9 +74,9 @@ class GameControllerShould {
 
     @Test
     public void return_empty_model_when_no_teams_are_set_up() {
-        GameOutputModel actual = game.getGameData();
+        BaseOutputModel actual = game.getGameData();
 
-        List<TeamOutput> teams = actual.getTeams();
+        List<TeamOutputModel> teams = actual.getTeams();
         Team matchWinner = actual.getMatchWinner();
         Team winnerOfSet = actual.getWinnerOfSet();
         assertThat(teams).isEmpty();
@@ -91,10 +91,10 @@ class GameControllerShould {
 
         game.resetMatch();
 
-        GameOutputModel gameData = game.getGameData();
+        BaseOutputModel gameData = game.getGameData();
         Team winnerOfSet = gameData.getWinnerOfSet();
         Team matchWinner = gameData.getMatchWinner();
-        List<TeamOutput> teams = gameData.getTeams();
+        List<TeamOutputModel> teams = gameData.getTeams();
         assertThat(winnerOfSet).isEqualTo(NO_TEAM);
         assertThat(matchWinner).isEqualTo(NO_TEAM);
         assertThat(teams).isEmpty();
@@ -107,7 +107,7 @@ class GameControllerShould {
         game.changeover();
         raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
 
-        GameOutputModel gameData = game.getGameData();
+        BaseOutputModel gameData = game.getGameData();
         Team actualMatchWinner = gameData.getMatchWinner();
 
         assertThat(actualMatchWinner).isEqualTo(ONE);
@@ -120,12 +120,12 @@ class GameControllerShould {
 
         game.changeover();
 
-        GameOutputModel gameData = game.getGameData();
-        List<TeamOutput> teams = gameData.getTeams();
-        assertThat(teams).extracting(TeamOutput::getScore).containsExactly(0, 0);
-        assertThat(teams).extracting(TeamOutput::getName).containsExactly("T1", "T2");
-        assertThat(teams).extracting(TeamOutput::getPlayerOne).containsExactly("P1", "P3");
-        assertThat(teams).extracting(TeamOutput::getPlayerTwo).containsExactly("P2", "P4");
+        BaseOutputModel gameData = game.getGameData();
+        List<TeamOutputModel> teams = gameData.getTeams();
+        assertThat(teams).extracting(TeamOutputModel::getScore).containsExactly(0, 0);
+        assertThat(teams).extracting(TeamOutputModel::getName).containsExactly("T1", "T2");
+        assertThat(teams).extracting(TeamOutputModel::getPlayerOne).containsExactly("P1", "P3");
+        assertThat(teams).extracting(TeamOutputModel::getPlayerTwo).containsExactly("P2", "P4");
     }
 
     private void raiseScoreOf(Team... teams) {
@@ -275,11 +275,11 @@ class GameControllerShould {
     private class FakeClientUpdater implements INotifyAboutStateChanges {
 
         @Override
-        public void notifyAboutStateChange(GameOutputModel gameData) {
+        public void notifyAboutStateChange(BaseOutputModel gameData) {
         }
 
         @Override
-        public void update(GameOutputModel gameOutputModel) {
+        public void update(BaseOutputModel baseOutputModel) {
 
         }
     }

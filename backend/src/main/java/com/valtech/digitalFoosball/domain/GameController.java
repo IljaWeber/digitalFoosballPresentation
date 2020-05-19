@@ -7,10 +7,10 @@ import com.valtech.digitalFoosball.domain.constants.GameMode;
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.GameManipulatorProvider;
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.IPlayAGame;
+import com.valtech.digitalFoosball.domain.gameModes.models.BaseOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.GameOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
+import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedGameDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,17 +30,17 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
         this.notifier = notifier;
     }
 
-    public List<TeamOutput> getAllTeams() {
+    public List<TeamOutputModel> getAllTeams() {
         IPlayAGame gameManipulator = gameManipulatorProvider.getGameManipulator(GameMode.RANKED);
         return gameManipulator.getAllTeamsFromDatabase();
     }
 
-    public GameOutputModel getGameData() {
+    public BaseOutputModel getGameData() {
         if (gameDataModel.isEmpty()) {
-            return new GameOutputModel();
+            return new BaseOutputModel();
         }
 
-        return new GameOutputModel(gameDataModel);
+        return new BaseOutputModel(gameDataModel);
     }
 
     public void initGame(InitDataModel initDataModel) {
@@ -64,7 +64,7 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
     }
 
     private void notifyAboutStateChange() {
-        GameOutputModel gameData = getGameData();
+        BaseOutputModel gameData = getGameData();
         notifier.notifyAboutStateChange(gameData);
     }
 

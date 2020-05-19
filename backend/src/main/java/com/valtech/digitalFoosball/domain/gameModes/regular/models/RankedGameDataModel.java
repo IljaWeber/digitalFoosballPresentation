@@ -4,8 +4,8 @@ import com.valtech.digitalFoosball.api.driven.notification.Observer;
 import com.valtech.digitalFoosball.domain.constants.GameMode;
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.histories.History;
+import com.valtech.digitalFoosball.domain.gameModes.models.BaseOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.GameOutputModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,8 +151,8 @@ public class RankedGameDataModel implements GameDataModel {
 
     protected void updateObservers() {
         for (Observer observer : observers) {
-            GameOutputModel gameOutputModel = new GameOutputModel(this);
-            observer.update(gameOutputModel);
+            BaseOutputModel baseOutputModel = new BaseOutputModel(this);
+            observer.update(baseOutputModel);
         }
     }
 }

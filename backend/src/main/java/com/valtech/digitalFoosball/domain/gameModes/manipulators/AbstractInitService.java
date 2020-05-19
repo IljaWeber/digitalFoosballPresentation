@@ -6,7 +6,7 @@ import com.valtech.digitalFoosball.domain.converter.Converter;
 import com.valtech.digitalFoosball.domain.gameModes.models.AbstractGameModelFactory;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
+import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public abstract class AbstractInitService {
         return gameDataModel;
     }
 
-    public List<TeamOutput> getAllTeams() {
+    public List<TeamOutputModel> getAllTeams() {
         List<RankedTeamDataModel> teamDataModels = teamDataPort.getAllTeamsFromDatabase();
 
         if (teamDataModels.isEmpty()) {

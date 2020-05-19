@@ -11,14 +11,14 @@ import java.util.SortedMap;
 
 import static com.valtech.digitalFoosball.domain.constants.Team.NO_TEAM;
 
-public class GameOutputModel {
-    private List<TeamOutput> teams;
+public class BaseOutputModel {
+    private List<TeamOutputModel> teams;
 
     private Team winnerOfSet;
 
     private Team matchWinner;
 
-    public GameOutputModel(GameDataModel gameDataModel) {
+    public BaseOutputModel(GameDataModel gameDataModel) {
         MatchWinVerifier matchWinVerifier = new MatchWinVerifier();
         SortedMap<Team, RankedTeamDataModel> teamMap = gameDataModel.getTeams();
 
@@ -27,17 +27,17 @@ public class GameOutputModel {
         matchWinner = matchWinVerifier.getMatchWinner(teamMap);
     }
 
-    public GameOutputModel() {
+    public BaseOutputModel() {
         teams = new ArrayList<>();
         winnerOfSet = NO_TEAM;
         matchWinner = NO_TEAM;
     }
 
-    public List<TeamOutput> getTeams() {
+    public List<TeamOutputModel> getTeams() {
         return teams;
     }
 
-    public void setTeams(List<TeamOutput> teams) {
+    public void setTeams(List<TeamOutputModel> teams) {
         this.teams = teams;
     }
 
@@ -57,7 +57,7 @@ public class GameOutputModel {
         this.matchWinner = matchWinner;
     }
 
-    public TeamOutput getTeam(Team team) {
+    public TeamOutputModel getTeam(Team team) {
         return teams.get(team.listAssociationNumber());
     }
 }

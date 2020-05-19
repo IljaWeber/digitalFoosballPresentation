@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballRestAPI;
 import com.valtech.digitalFoosball.domain.GameController;
-import com.valtech.digitalFoosball.domain.gameModes.models.GameOutputModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutput;
+import com.valtech.digitalFoosball.domain.gameModes.models.BaseOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutputModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +50,8 @@ public class RaspiControllerAPIShould {
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
 
         mockMvc.perform(builder);
-        GameOutputModel gameData = game.getGameData();
-        TeamOutput team = gameData.getTeam(ONE);
+        BaseOutputModel gameData = game.getGameData();
+        TeamOutputModel team = gameData.getTeam(ONE);
         int actual = team.getScore();
         assertThat(actual).isEqualTo(1);
     }
