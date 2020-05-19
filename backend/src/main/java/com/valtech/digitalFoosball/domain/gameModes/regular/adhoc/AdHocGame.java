@@ -1,9 +1,9 @@
 package com.valtech.digitalFoosball.domain.gameModes.regular.adhoc;
 
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.DigitalFoosballGame;
-import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.GameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameRules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

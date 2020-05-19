@@ -2,7 +2,7 @@ package com.valtech.digitalFoosball.api;
 
 import com.valtech.digitalFoosball.api.driven.persistence.PlayerService;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepository;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.PlayerDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.PlayerDataModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

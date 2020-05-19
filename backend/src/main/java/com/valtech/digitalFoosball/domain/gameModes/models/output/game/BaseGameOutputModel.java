@@ -2,9 +2,9 @@ package com.valtech.digitalFoosball.domain.gameModes.models.output.game;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.converter.Converter;
-import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.GameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.MatchWinVerifier;
 
 import java.util.List;

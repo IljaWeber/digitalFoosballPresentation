@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.domain.gameModes.regular.models;
+package com.valtech.digitalFoosball.domain.gameModes.regular.models.team;
 
 import javax.persistence.Entity;
 import javax.persistence.Transient;

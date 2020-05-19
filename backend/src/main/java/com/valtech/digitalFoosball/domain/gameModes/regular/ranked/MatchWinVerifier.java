@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.domain.gameModes.regular.ranked;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 
 import java.util.Map;
 

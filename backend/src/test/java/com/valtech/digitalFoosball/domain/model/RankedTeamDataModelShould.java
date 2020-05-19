@@ -1,6 +1,6 @@
 package com.valtech.digitalFoosball.domain.model;
 
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

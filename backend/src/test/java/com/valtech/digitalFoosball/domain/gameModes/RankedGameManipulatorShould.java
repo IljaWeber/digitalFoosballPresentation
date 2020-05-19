@@ -8,11 +8,11 @@ import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepos
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.exceptions.NameDuplicateException;
-import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.PlayerDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.GameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.PlayerDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGame;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedInitService;
 import org.junit.jupiter.api.Test;

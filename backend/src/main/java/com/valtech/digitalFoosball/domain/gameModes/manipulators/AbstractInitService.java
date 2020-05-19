@@ -4,10 +4,10 @@ import com.valtech.digitalFoosball.api.driven.persistence.IObtainTeams;
 import com.valtech.digitalFoosball.domain.constants.GameMode;
 import com.valtech.digitalFoosball.domain.converter.Converter;
 import com.valtech.digitalFoosball.domain.gameModes.models.AbstractGameModelFactory;
-import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.GameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.domain.game.verifier;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.models.RankedGameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.BaseGameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGameRules;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ public class RankedGameRulesShould {
     private RankedTeamDataModel teamOne;
     private RankedTeamDataModel teamTwo;
     private List<RankedTeamDataModel> teams;
-    private RankedGameDataModel gameDataModel;
+    private BaseGameDataModel gameDataModel;
 
     @BeforeEach
     void setUp() {
@@ -31,7 +31,7 @@ public class RankedGameRulesShould {
 
         teams.add(teamOne);
         teams.add(teamTwo);
-        gameDataModel = new RankedGameDataModel();
+        gameDataModel = new BaseGameDataModel();
         gameDataModel.setTeams(teams);
     }
 

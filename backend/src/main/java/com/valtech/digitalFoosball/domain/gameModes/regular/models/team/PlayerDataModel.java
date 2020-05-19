@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.domain.gameModes.regular.models;
+package com.valtech.digitalFoosball.domain.gameModes.regular.models.team;
 
 import org.hibernate.annotations.GenericGenerator;
 

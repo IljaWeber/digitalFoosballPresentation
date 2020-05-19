@@ -1,6 +1,6 @@
 package com.valtech.digitalFoosball.domain.gameModes.timePlay;
 
-import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.GameDataModel;
 
 import java.util.TimerTask;
 

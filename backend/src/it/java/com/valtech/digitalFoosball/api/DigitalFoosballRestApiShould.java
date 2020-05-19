@@ -7,10 +7,10 @@ import com.valtech.digitalFoosball.domain.GameController;
 import com.valtech.digitalFoosball.domain.constants.GameMode;
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.game.RegularGameOutputModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.BaseGameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,7 @@ public class DigitalFoosballRestApiShould {
     private String json;
     private MvcResult result;
     private List<RankedTeamDataModel> teams;
-    private RankedGameDataModel gameDataModel;
+    private BaseGameDataModel gameDataModel;
     private InitDataModel initDataModel;
     private MockHttpServletRequestBuilder builder;
 
@@ -65,7 +65,7 @@ public class DigitalFoosballRestApiShould {
 
     @BeforeEach
     void setUp() {
-        gameDataModel = new RankedGameDataModel();
+        gameDataModel = new BaseGameDataModel();
         gameDataModel.setTeam(ONE, teamOne);
         gameDataModel.setTeam(TWO, teamTwo);
         gameDataModel.setSetWinner(NO_TEAM);
@@ -132,7 +132,7 @@ public class DigitalFoosballRestApiShould {
 
     @Test
     public void reset_game_with_empty_team_and_player_names_and_zero_scores() throws Exception {
-        gameDataModel = new RankedGameDataModel();
+        gameDataModel = new BaseGameDataModel();
         String expected = prepareComparableValuesWithMatchWinner(NO_TEAM);
         MockHttpServletRequestBuilder reset = MockMvcRequestBuilders.delete("/api/reset");
         prepareGameWithMode(RANKED);

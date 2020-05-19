@@ -1,6 +1,8 @@
 package com.valtech.digitalFoosball.domain.gameModes.models;
 
 import com.valtech.digitalFoosball.domain.constants.GameMode;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.BaseGameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameDataModel;
 
 public abstract class AbstractGameModelFactory {
@@ -9,7 +11,7 @@ public abstract class AbstractGameModelFactory {
         if (mode == GameMode.TIME_GAME) {
             gameDataModel = new TimeGameDataModel();
         } else {
-            gameDataModel = new RankedGameDataModel();
+            gameDataModel = new BaseGameDataModel();
         }
         return gameDataModel;
     }

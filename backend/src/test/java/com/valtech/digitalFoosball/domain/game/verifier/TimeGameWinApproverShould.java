@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.domain.game.verifier;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGame;
 import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameWinApprover;

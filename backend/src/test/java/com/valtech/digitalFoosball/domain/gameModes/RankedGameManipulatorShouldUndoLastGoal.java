@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.domain.gameModes;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.models.RankedGameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.BaseGameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ public class RankedGameManipulatorShouldUndoLastGoal {
     @Autowired
     public RankedGame scoreManager;
 
-    private RankedGameDataModel gameDataModel;
+    private BaseGameDataModel gameDataModel;
 
     @BeforeEach
     void setUp() {
@@ -34,7 +34,7 @@ public class RankedGameManipulatorShouldUndoLastGoal {
         teams.add(teamDataModelOne);
         teams.add(teamDataModelTwo);
 
-        gameDataModel = new RankedGameDataModel();
+        gameDataModel = new BaseGameDataModel();
         gameDataModel.setTeams(teams);
     }
 

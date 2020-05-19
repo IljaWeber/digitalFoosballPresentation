@@ -2,8 +2,8 @@ package com.valtech.digitalFoosball.domain.gameModes.regular.ranked;
 
 import com.valtech.digitalFoosball.domain.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.PlayerDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.PlayerDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 
 import java.util.ArrayList;
 import java.util.List;

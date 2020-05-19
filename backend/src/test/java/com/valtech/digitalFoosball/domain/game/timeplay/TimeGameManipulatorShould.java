@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.domain.game.timeplay;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.models.RankedGameDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.BaseGameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -18,7 +18,7 @@ public class TimeGameManipulatorShould {
     private TimeGame timeGame;
     private RankedTeamDataModel teamDataModelOne;
     private RankedTeamDataModel teamDataModelTwo;
-    private RankedGameDataModel gameDataModel;
+    private BaseGameDataModel gameDataModel;
 
     @BeforeEach
     void setUp() {
@@ -31,7 +31,7 @@ public class TimeGameManipulatorShould {
         teams.add(teamDataModelOne);
         teams.add(teamDataModelTwo);
 
-        gameDataModel = new RankedGameDataModel();
+        gameDataModel = new BaseGameDataModel();
         gameDataModel.setTeams(teams);
     }
 

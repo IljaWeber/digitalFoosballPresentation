@@ -3,7 +3,7 @@ package com.valtech.digitalFoosball.domain.converter;
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.team.RegularTeamOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.domain.gameModes.manipulators;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.winConditionApprover.GameRules;
 
 import java.util.List;

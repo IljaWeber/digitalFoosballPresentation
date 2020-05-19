@@ -1,9 +1,9 @@
-package com.valtech.digitalFoosball.domain.gameModes.models;
+package com.valtech.digitalFoosball.domain.gameModes.regular.models.game;
 
 import com.valtech.digitalFoosball.api.driven.notification.Observer;
 import com.valtech.digitalFoosball.domain.constants.GameMode;
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 
 import java.util.List;
 import java.util.SortedMap;

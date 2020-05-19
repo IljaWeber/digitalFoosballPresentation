@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.domain.gameModes.models;
+package com.valtech.digitalFoosball.domain.gameModes.regular.models.game;
 
 import com.valtech.digitalFoosball.api.driven.notification.Observer;
 import com.valtech.digitalFoosball.domain.constants.GameMode;
@@ -6,7 +6,7 @@ import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.histories.History;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.game.RegularGameOutputModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +16,14 @@ import java.util.TreeMap;
 import static com.valtech.digitalFoosball.domain.constants.GameMode.NO_ACTIVE_GAME;
 import static com.valtech.digitalFoosball.domain.constants.Team.*;
 
-public class RankedGameDataModel implements GameDataModel {
+public abstract class BaseGameDataModel implements GameDataModel {
     private final SortedMap<Team, RankedTeamDataModel> teams;
     private Team setWinner;
     private GameMode gameMode;
     private History history;
     private final List<Observer> observers;
 
-    public RankedGameDataModel(List<RankedTeamDataModel> teamsFromDatabase) {
+    public BaseGameDataModel(List<RankedTeamDataModel> teamsFromDatabase) {
         teams = new TreeMap<>();
         setWinner = NO_TEAM;
 
@@ -35,7 +35,7 @@ public class RankedGameDataModel implements GameDataModel {
         observers = new ArrayList<>();
     }
 
-    public RankedGameDataModel() {
+    public BaseGameDataModel() {
         teams = new TreeMap<>();
         setWinner = NO_TEAM;
         gameMode = NO_ACTIVE_GAME;
