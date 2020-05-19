@@ -7,10 +7,11 @@ import com.valtech.digitalFoosball.domain.constants.GameMode;
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.GameManipulatorProvider;
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.IPlayAGame;
-import com.valtech.digitalFoosball.domain.gameModes.models.BaseOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.output.game.RegularGameOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedGameDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,12 +36,10 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
         return gameManipulator.getAllTeamsFromDatabase();
     }
 
-    public BaseOutputModel getGameData() {
-        if (gameDataModel.isEmpty()) {
-            return new BaseOutputModel();
-        }
+    public GameOutputModel getGameData() {
+        gameDataModel.isEmpty();
 
-        return new BaseOutputModel(gameDataModel);
+        return new RegularGameOutputModel(gameDataModel);
     }
 
     public void initGame(InitDataModel initDataModel) {
@@ -64,7 +63,7 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
     }
 
     private void notifyAboutStateChange() {
-        BaseOutputModel gameData = getGameData();
+        GameOutputModel gameData = getGameData();
         notifier.notifyAboutStateChange(gameData);
     }
 

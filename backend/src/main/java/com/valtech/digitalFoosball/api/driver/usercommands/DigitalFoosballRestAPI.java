@@ -2,9 +2,9 @@ package com.valtech.digitalFoosball.api.driver.usercommands;
 
 import com.valtech.digitalFoosball.domain.GameController;
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.models.BaseOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class DigitalFoosballRestAPI {
     }
 
     @PostMapping(path = "/init/adhoc", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BaseOutputModel init() {
+    public GameOutputModel init() {
         logger.info("New AdHoc-Game");
 
         InitDataModel initDataModel = new InitDataModel();
@@ -40,7 +40,7 @@ public class DigitalFoosballRestAPI {
     }
 
     @PostMapping(path = "/init/ranked", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BaseOutputModel init(@RequestBody InitDataModel initDataModel) {
+    public GameOutputModel init(@RequestBody InitDataModel initDataModel) {
         logger.info("Sign in: " + initDataModel.toString());
 
         initDataModel.setMode(RANKED);
@@ -50,7 +50,7 @@ public class DigitalFoosballRestAPI {
     }
 
     @GetMapping(path = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BaseOutputModel getGameData() {
+    public GameOutputModel getGameData() {
         return gameController.getGameData();
     }
 
@@ -69,7 +69,7 @@ public class DigitalFoosballRestAPI {
     }
 
     @PostMapping(path = "/newRound", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BaseOutputModel newRound() {
+    public GameOutputModel newRound() {
         logger.info("New Round");
 
         gameController.changeover();
@@ -78,7 +78,7 @@ public class DigitalFoosballRestAPI {
     }
 
     @PutMapping(path = "/undo", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BaseOutputModel undoLastGoal() {
+    public GameOutputModel undoLastGoal() {
         logger.info("Undo");
 
         gameController.undoGoal();
@@ -87,7 +87,7 @@ public class DigitalFoosballRestAPI {
     }
 
     @PutMapping(path = "/redo", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BaseOutputModel redoLastGoal() {
+    public GameOutputModel redoLastGoal() {
         logger.info("Redo");
 
         gameController.redoGoal();

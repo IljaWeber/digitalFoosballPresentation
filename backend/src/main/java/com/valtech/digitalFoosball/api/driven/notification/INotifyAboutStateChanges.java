@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.api.driven.notification;
 
-import com.valtech.digitalFoosball.domain.gameModes.models.BaseOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
 
 public interface INotifyAboutStateChanges extends Observer {
-    void notifyAboutStateChange(BaseOutputModel gameData);
+    void notifyAboutStateChange(GameOutputModel gameData);
 }

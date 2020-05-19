@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.domain.gameModes.models;
+package com.valtech.digitalFoosball.domain.gameModes.models.output.team;
 
 public abstract class BaseTeamOutputModel implements TeamOutputModel {
     private String name;

@@ -10,7 +10,7 @@ import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.domain.gameModes.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGame;

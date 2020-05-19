@@ -6,8 +6,9 @@ import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballRestAP
 import com.valtech.digitalFoosball.domain.GameController;
 import com.valtech.digitalFoosball.domain.constants.GameMode;
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.models.BaseOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.output.game.RegularGameOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -209,7 +210,7 @@ public class DigitalFoosballRestApiShould {
     }
 
     private String prepareComparableValuesWithMatchWinner(Team matchWinner) throws IOException {
-        BaseOutputModel expectedValues = new BaseOutputModel(gameDataModel);
+        GameOutputModel expectedValues = new RegularGameOutputModel(gameDataModel);
         expectedValues.setMatchWinner(matchWinner);
 
         return mapper.writeValueAsString(expectedValues);

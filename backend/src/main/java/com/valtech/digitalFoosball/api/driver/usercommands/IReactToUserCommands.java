@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.api.driver.usercommands;
 
-import com.valtech.digitalFoosball.domain.gameModes.models.BaseOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
 
 import java.util.List;
 
@@ -19,5 +19,5 @@ public interface IReactToUserCommands {
 
     void resetMatch();
 
-    BaseOutputModel getGameData();
+    GameOutputModel getGameData();
 }

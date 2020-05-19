@@ -7,9 +7,9 @@ import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamReposit
 import com.valtech.digitalFoosball.domain.GameController;
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.GameManipulatorProvider;
-import com.valtech.digitalFoosball.domain.gameModes.models.BaseOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.TeamOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.adhoc.AdHocGame;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.RankedTeamDataModel;
@@ -53,9 +53,9 @@ class GameControllerShould {
         setUpTeams();
         raiseScoreOf(ONE, TWO);
 
-        BaseOutputModel baseOutputModel = game.getGameData();
+        GameOutputModel gameOutputModel = game.getGameData();
 
-        List<TeamOutputModel> actual = baseOutputModel.getTeams();
+        List<TeamOutputModel> actual = gameOutputModel.getTeams();
         assertThat(actual).extracting(TeamOutputModel::getName,
                                       TeamOutputModel::getPlayerOne,
                                       TeamOutputModel::getPlayerTwo,
@@ -74,7 +74,7 @@ class GameControllerShould {
 
     @Test
     public void return_empty_model_when_no_teams_are_set_up() {
-        BaseOutputModel actual = game.getGameData();
+        GameOutputModel actual = game.getGameData();
 
         List<TeamOutputModel> teams = actual.getTeams();
         Team matchWinner = actual.getMatchWinner();
@@ -91,7 +91,7 @@ class GameControllerShould {
 
         game.resetMatch();
 
-        BaseOutputModel gameData = game.getGameData();
+        GameOutputModel gameData = game.getGameData();
         Team winnerOfSet = gameData.getWinnerOfSet();
         Team matchWinner = gameData.getMatchWinner();
         List<TeamOutputModel> teams = gameData.getTeams();
@@ -107,7 +107,7 @@ class GameControllerShould {
         game.changeover();
         raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
 
-        BaseOutputModel gameData = game.getGameData();
+        GameOutputModel gameData = game.getGameData();
         Team actualMatchWinner = gameData.getMatchWinner();
 
         assertThat(actualMatchWinner).isEqualTo(ONE);
@@ -120,7 +120,7 @@ class GameControllerShould {
 
         game.changeover();
 
-        BaseOutputModel gameData = game.getGameData();
+        GameOutputModel gameData = game.getGameData();
         List<TeamOutputModel> teams = gameData.getTeams();
         assertThat(teams).extracting(TeamOutputModel::getScore).containsExactly(0, 0);
         assertThat(teams).extracting(TeamOutputModel::getName).containsExactly("T1", "T2");
@@ -275,11 +275,11 @@ class GameControllerShould {
     private class FakeClientUpdater implements INotifyAboutStateChanges {
 
         @Override
-        public void notifyAboutStateChange(BaseOutputModel gameData) {
+        public void notifyAboutStateChange(GameOutputModel gameData) {
         }
 
         @Override
-        public void update(BaseOutputModel baseOutputModel) {
+        public void update(GameOutputModel gameOutputModel) {
 
         }
     }
