@@ -42,6 +42,11 @@ public class TimeGame extends DigitalFoosballGame {
         return dataModel;
     }
 
+    @Override
+    public void undoGoal(GameDataModel gameDataModel) {
+
+    }
+
     public void timeIsOver() {
         timeIsOver = true;
     }

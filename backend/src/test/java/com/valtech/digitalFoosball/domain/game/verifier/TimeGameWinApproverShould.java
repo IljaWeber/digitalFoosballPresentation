@@ -1,9 +1,9 @@
 package com.valtech.digitalFoosball.domain.game.verifier;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.TimeGameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGame;
-import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameWinApprover;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,9 +1,8 @@
-package com.valtech.digitalFoosball.domain.gameModes.regular.ranked;
+package com.valtech.digitalFoosball.domain.gameModes.winConditionApprover;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.GameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.winConditionApprover.BaseGameRules;
 
 import static com.valtech.digitalFoosball.domain.constants.Team.*;
 

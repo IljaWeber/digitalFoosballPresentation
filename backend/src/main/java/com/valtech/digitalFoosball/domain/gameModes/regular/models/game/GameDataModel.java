@@ -28,7 +28,6 @@ public interface GameDataModel {
     void countGoalFor(Team scoredTeam);
 
     void increaseWonSetsFor(Team team);
-
     boolean thereAreGoals();
 
     boolean setHasAWinner();
@@ -46,4 +45,6 @@ public interface GameDataModel {
     boolean thereAreUndoneGoals();
 
     void addObserver(Observer observer);
+
+    void resetMatch();
 }

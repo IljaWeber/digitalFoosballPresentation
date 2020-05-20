@@ -2,6 +2,7 @@ package com.valtech.digitalFoosball.domain.gameModes.timePlay;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.GameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.TimeGameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.winConditionApprover.BaseGameRules;
 
 import static com.valtech.digitalFoosball.domain.constants.Team.NO_TEAM;

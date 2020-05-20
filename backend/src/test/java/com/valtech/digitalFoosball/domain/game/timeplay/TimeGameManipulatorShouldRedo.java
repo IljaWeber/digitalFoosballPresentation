@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.domain.game.timeplay;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.BaseGameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGame;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TimeGameManipulatorShouldRedo {
     public TimeGame timeGame = new TimeGame(null);
-    private BaseGameDataModel gameDataModel;
+    private RankedGameDataModel gameDataModel;
 
     @BeforeEach
     void setUp() {
@@ -29,7 +29,7 @@ public class TimeGameManipulatorShouldRedo {
         teams.add(teamDataModelOne);
         teams.add(teamDataModelTwo);
 
-        gameDataModel = new BaseGameDataModel();
+        gameDataModel = new RankedGameDataModel();
         gameDataModel.setTeams(teams);
     }
 

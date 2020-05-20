@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.domain.game.timeplay;
 
 import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.BaseGameDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGame;
 import org.junit.jupiter.api.Disabled;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TimeGameManipulatorShouldCount {
 
     private final TimeGame timeGame;
-    private final BaseGameDataModel gameDataModel;
+    private final RankedGameDataModel gameDataModel;
     private final RankedTeamDataModel teamDataModelOne;
     private final RankedTeamDataModel teamDataModelTwo;
 
@@ -31,7 +31,7 @@ public class TimeGameManipulatorShouldCount {
         teams.add(teamDataModelOne);
         teams.add(teamDataModelTwo);
 
-        gameDataModel = new BaseGameDataModel();
+        gameDataModel = new RankedGameDataModel();
         gameDataModel.setTeams(teams);
     }
 

@@ -8,6 +8,7 @@ import com.valtech.digitalFoosball.domain.GameController;
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.GameManipulatorProvider;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
+import com.valtech.digitalFoosball.domain.gameModes.models.output.game.EmptyGameOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.adhoc.AdHocGame;
@@ -32,7 +33,7 @@ class GameControllerShould {
 
     public GameController game;
 
-    protected InitDataModel initDataModel;
+    private InitDataModel initDataModel;
     private RankedTeamDataModel teamDataModelOne;
     private RankedTeamDataModel teamDataModelTwo;
     private final UUID id = UUID.randomUUID();
@@ -76,12 +77,7 @@ class GameControllerShould {
     public void return_empty_model_when_no_teams_are_set_up() {
         GameOutputModel actual = game.getGameData();
 
-        List<TeamOutputModel> teams = actual.getTeams();
-        Team matchWinner = actual.getMatchWinner();
-        Team winnerOfSet = actual.getWinnerOfSet();
-        assertThat(teams).isEmpty();
-        assertThat(matchWinner).isEqualTo(NO_TEAM);
-        assertThat(winnerOfSet).isEqualTo(NO_TEAM);
+        assertThat(actual).isInstanceOf(EmptyGameOutputModel.class);
     }
 
     @Test

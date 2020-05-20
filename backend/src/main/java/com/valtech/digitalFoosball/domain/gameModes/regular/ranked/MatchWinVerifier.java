@@ -8,7 +8,6 @@ import java.util.Map;
 import static com.valtech.digitalFoosball.domain.constants.Team.NO_TEAM;
 
 public class MatchWinVerifier {
-
     private Team matchWinner;
     private Map<Team, RankedTeamDataModel> teams;
 
