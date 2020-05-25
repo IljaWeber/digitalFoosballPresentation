@@ -39,10 +39,6 @@ public abstract class BaseGameDataModel implements GameDataModel {
         return teams.get(team);
     }
 
-    public boolean isEmpty() {
-        return teams.isEmpty();
-    }
-
     public void setTeam(Team team, RankedTeamDataModel teamDataModel) {
         teams.put(team, teamDataModel);
     }

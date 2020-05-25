@@ -63,11 +63,6 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
         return gameManipulatorProvider.getGameManipulator(gameMode);
     }
 
-    private void notifyAboutStateChange() {
-        GameOutputModel gameData = getGameData();
-        notifier.notifyAboutStateChange(gameData);
-    }
-
     public void undoGoal() {
         IPlayAGame gameManipulator = getGame();
         gameManipulator.undoGoal(gameDataModel);
@@ -85,5 +80,10 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
 
     public void resetMatch() {
         gameDataModel.resetMatch();
+    }
+
+    private void notifyAboutStateChange() {
+        GameOutputModel gameData = getGameData();
+        notifier.notifyAboutStateChange(gameData);
     }
 }

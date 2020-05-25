@@ -7,7 +7,7 @@ import com.valtech.digitalFoosball.domain.gameModes.winConditionApprover.BaseGam
 
 import static com.valtech.digitalFoosball.domain.constants.Team.NO_TEAM;
 
-public class TimeGameWinApprover extends BaseGameRules {
+public class TimeGameRules extends BaseGameRules {
     private final int GOAL_LIMIT = 10;
 
     public Team getWinner(TimeGameDataModel gameDataModel) {

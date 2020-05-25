@@ -14,12 +14,12 @@ import java.util.Timer;
 @Service
 public class TimeGame extends DigitalFoosballGame {
     private boolean timeIsOver = false;
-    private final TimeGameWinApprover timeGameWinApprover;
+    private final TimeGameRules timeGameRules;
 
     @Autowired
     public TimeGame(RankedInitService initService) {
-        super(initService, new TimeGameWinApprover());
-        timeGameWinApprover = new TimeGameWinApprover();
+        super(initService, new TimeGameRules());
+        timeGameRules = new TimeGameRules();
     }
 
     public void setTimer(long timeDuration, GameDataModel dataModel) {

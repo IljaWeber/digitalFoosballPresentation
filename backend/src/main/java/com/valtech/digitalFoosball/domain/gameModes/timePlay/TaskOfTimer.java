@@ -6,7 +6,7 @@ import java.util.TimerTask;
 
 public class TaskOfTimer extends TimerTask {
     private final TimeGame timeGame;
-    private TimeGameWinApprover timeGameWinApprover;
+    private TimeGameRules timeGameRules;
 
     public TaskOfTimer(TimeGame timeGame, GameDataModel dataModel) {
         this.timeGame = timeGame;

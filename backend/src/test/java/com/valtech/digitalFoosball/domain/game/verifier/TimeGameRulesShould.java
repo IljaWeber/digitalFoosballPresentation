@@ -4,7 +4,7 @@ import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.game.TimeGameDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGame;
-import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameWinApprover;
+import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGameRules;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,15 +15,15 @@ import static com.valtech.digitalFoosball.domain.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class TimeGameWinApproverShould {
-    private TimeGameWinApprover timeGameWinApprover;
+class TimeGameRulesShould {
+    private TimeGameRules timeGameRules;
     private TimeGameDataModel gameDataModel;
     private TimeGame timeGame;
 
     @BeforeEach
     void setUp() {
         timeGame = new TimeGame(null);
-        timeGameWinApprover = new TimeGameWinApprover();
+        timeGameRules = new TimeGameRules();
         RankedTeamDataModel teamDataModelOne = new RankedTeamDataModel("T1", "P1", "P2");
         RankedTeamDataModel teamDataModelTwo = new RankedTeamDataModel("T2", "P3", "P4");
 
@@ -39,7 +39,7 @@ class TimeGameWinApproverShould {
     @Test
     public void show_no_winner_when_no_team_scored_ten_goals() {
         countGoalsFor(ONE, ONE);
-        Team actual = timeGameWinApprover.getWinner(gameDataModel);
+        Team actual = timeGameRules.getWinner(gameDataModel);
 
         assertThat(actual).isEqualTo(Team.NO_TEAM);
     }
@@ -47,7 +47,7 @@ class TimeGameWinApproverShould {
     @Test
     public void show_winner_when_the_team_scored_ten_goals() {
         countGoalsFor(ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE);
-        Team actual = timeGameWinApprover.getWinner(gameDataModel);
+        Team actual = timeGameRules.getWinner(gameDataModel);
 
         assertThat(actual).isEqualTo(ONE);
     }
@@ -56,7 +56,7 @@ class TimeGameWinApproverShould {
     public void show_winner_when_time_limit_is_reached_and_one_team_is_leading() {
         countGoalsFor(ONE, ONE, TWO, TWO, ONE, TWO, ONE, ONE, TWO, TWO, ONE);
         gameDataModel.timeLimitReached();
-        Team actual = timeGameWinApprover.getWinner(gameDataModel);
+        Team actual = timeGameRules.getWinner(gameDataModel);
 
         assertThat(actual).isEqualTo(ONE);
     }
