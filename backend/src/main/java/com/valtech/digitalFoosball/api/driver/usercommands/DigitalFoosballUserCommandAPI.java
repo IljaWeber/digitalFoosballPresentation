@@ -1,17 +1,17 @@
 package com.valtech.digitalFoosball.api.driver.usercommands;
 
-import com.valtech.digitalFoosball.domain.GameController;
-import com.valtech.digitalFoosball.domain.constants.Team;
-import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.common.GameController;
+import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
+import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import static com.valtech.digitalFoosball.domain.constants.GameMode.AD_HOC;
-import static com.valtech.digitalFoosball.domain.constants.GameMode.RANKED;
+import static com.valtech.digitalFoosball.domain.common.constants.GameMode.AD_HOC;
+import static com.valtech.digitalFoosball.domain.common.constants.GameMode.RANKED;
 
 @RestController()
 @RequestMapping("api")

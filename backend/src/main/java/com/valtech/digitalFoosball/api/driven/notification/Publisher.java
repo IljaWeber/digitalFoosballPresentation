@@ -1,6 +1,6 @@
 package com.valtech.digitalFoosball.api.driven.notification;
 
-import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;

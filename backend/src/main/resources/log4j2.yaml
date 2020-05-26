@@ -42,7 +42,7 @@ Configuration:
         AppenderRef:
           ref: File_Appender
 
-      - name: com.valtech.digitalFoosball.domain.exceptions.NameDuplicateException
+      - name: com.valtech.digitalFoosball.domain.common.exceptions.NameDuplicateException
         level: info
         additivity: false
         AppenderRef:

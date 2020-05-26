@@ -4,11 +4,11 @@ import com.valtech.digitalFoosball.api.driven.persistence.PlayerService;
 import com.valtech.digitalFoosball.api.driven.persistence.TeamService;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepository;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
-import com.valtech.digitalFoosball.domain.gameModes.regular.adhoc.AdHocGame;
-import com.valtech.digitalFoosball.domain.gameModes.regular.adhoc.AdHocInitService;
-import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedGame;
-import com.valtech.digitalFoosball.domain.gameModes.regular.ranked.RankedInitService;
-import com.valtech.digitalFoosball.domain.gameModes.timePlay.TimeGame;
+import com.valtech.digitalFoosball.domain.adhoc.AdHocGame;
+import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
+import com.valtech.digitalFoosball.domain.ranked.RankedGame;
+import com.valtech.digitalFoosball.domain.ranked.RankedInitService;
+import com.valtech.digitalFoosball.domain.timePlay.TimeGame;
 
 public abstract class GameBuilder {
     public static RankedGame buildRankedGameWith(TeamRepository teamRepository,

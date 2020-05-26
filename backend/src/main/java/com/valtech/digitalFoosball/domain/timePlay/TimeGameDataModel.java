@@ -1,0 +1,20 @@
+package com.valtech.digitalFoosball.domain.timePlay;
+
+import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
+
+public class TimeGameDataModel extends RankedGameDataModel {
+    private boolean timeIsOver;
+
+    public TimeGameDataModel() {
+        timeIsOver = false;
+    }
+
+    public boolean isTimeOver() {
+        return timeIsOver;
+    }
+
+    public void timeLimitReached() {
+        timeIsOver = true;
+        updateObservers();
+    }
+}

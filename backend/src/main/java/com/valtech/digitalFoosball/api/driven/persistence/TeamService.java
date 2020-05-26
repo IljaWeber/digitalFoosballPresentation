@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.api.driven.persistence;
 
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.PlayerDataModel;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
+import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

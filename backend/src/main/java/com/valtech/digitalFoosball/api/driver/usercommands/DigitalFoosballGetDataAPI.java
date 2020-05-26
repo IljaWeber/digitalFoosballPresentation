@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.api.driver.usercommands;
 
-import com.valtech.digitalFoosball.domain.GameController;
-import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
+import com.valtech.digitalFoosball.domain.common.GameController;
+import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

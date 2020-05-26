@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.api.driven.persistence;
 
 import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepository;
-import com.valtech.digitalFoosball.domain.gameModes.regular.models.team.PlayerDataModel;
+import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.util.Optional;
 public class PlayerService {
 
     private final PlayerRepository playerRepository;
-    private Logger logger = LogManager.getLogger(PlayerService.class);
+    private final Logger logger = LogManager.getLogger(PlayerService.class);
 
 
     @Autowired

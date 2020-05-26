@@ -3,9 +3,9 @@ package com.valtech.digitalFoosball.api;
 import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballUserCommandAPI;
-import com.valtech.digitalFoosball.domain.GameController;
-import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
+import com.valtech.digitalFoosball.domain.common.GameController;
+import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static com.valtech.digitalFoosball.domain.constants.Team.ONE;
+import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @AutoConfigureMockMvc
