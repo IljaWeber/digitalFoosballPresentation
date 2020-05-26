@@ -14,8 +14,4 @@ public class EmptyGameOutputModel extends BaseGameOutputModel {
         return null;
     }
 
-    @Override
-    public void setWinnerOfSet(Team winner) {
-
-    }
 }

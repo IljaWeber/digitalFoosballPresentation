@@ -12,8 +12,6 @@ public interface GameOutputModel {
 
     Team getWinnerOfSet();
 
-    void setWinnerOfSet(Team winner);
-
     Team getMatchWinner();
 
     void setMatchWinner(Team matchWinner);

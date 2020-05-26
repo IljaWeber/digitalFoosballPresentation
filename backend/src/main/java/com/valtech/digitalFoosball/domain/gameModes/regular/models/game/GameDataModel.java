@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.SortedMap;
 
 public interface GameDataModel {
-    // that many getters and setter rly needed?
-    // at some places we are using fewer for similar complexity
+
     SortedMap<Team, RankedTeamDataModel> getTeams();
 
     void setTeams(List<RankedTeamDataModel> teams);

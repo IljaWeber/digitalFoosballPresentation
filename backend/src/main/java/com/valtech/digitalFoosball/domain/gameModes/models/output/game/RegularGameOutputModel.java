@@ -16,8 +16,4 @@ public class RegularGameOutputModel extends BaseGameOutputModel {
         return winnerOfSet;
     }
 
-    @Override
-    public void setWinnerOfSet(Team winner) {
-        this.winnerOfSet = winner;
-    }
 }

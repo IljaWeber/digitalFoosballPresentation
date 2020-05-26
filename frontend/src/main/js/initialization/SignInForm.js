@@ -31,9 +31,9 @@ export default class SignInForm extends React.Component {
         this.setState({teamTwo: team})
     };
 
-    adhoc = async (event) => {
+    submitAdHoc = async (event) => {
         event.preventDefault();
-        const url = properties.url + "initAdHoc";
+        const url = properties.url + "init/adHoc";
 
         const requestOptions = {
             method: 'POST',
@@ -56,7 +56,7 @@ export default class SignInForm extends React.Component {
 
     sendForm = async (event) => {
         event.preventDefault();
-        const url = properties.url + "init";
+        const url = properties.url + "init/ranked";
 
         const requestOptions = {
             method: 'POST',
@@ -103,9 +103,10 @@ export default class SignInForm extends React.Component {
                     </div>
                 </form>
 
-                <form onSubmit={this.adhoc} className="teamSignInAdHoc">
+                <form onSubmit={this.submitAdHoc} className="teamSignInAdHoc">
                     <input type="submit" value="Ad-Hoc" className="button slowDropIn"/>
                 </form>
+
             </div>
         )
     }
