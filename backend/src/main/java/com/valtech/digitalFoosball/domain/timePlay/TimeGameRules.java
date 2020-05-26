@@ -9,7 +9,8 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
 public class TimeGameRules extends BaseGameRules {
     private final int GOAL_LIMIT = 10;
 
-    public Team getWinner(TimeGameDataModel gameDataModel) {
+    @Override
+    public Team getWinner(GameDataModel gameDataModel) {
         Team winner = NO_TEAM;
         Team leadingTeam = getLeadingTeam(gameDataModel);
 

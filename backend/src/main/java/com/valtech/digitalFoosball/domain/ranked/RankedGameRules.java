@@ -18,7 +18,8 @@ public class RankedGameRules extends BaseGameRules {
         }
     }
 
-    private Team getWinner(GameDataModel gameDataModel) {
+    @Override
+    public Team getWinner(GameDataModel gameDataModel) {
         Team winner = NO_TEAM;
 
         if (thereIsALeadingTeam(gameDataModel)) {
