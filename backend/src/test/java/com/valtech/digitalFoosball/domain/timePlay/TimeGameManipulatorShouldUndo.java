@@ -4,7 +4,6 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -35,7 +34,6 @@ public class TimeGameManipulatorShouldUndo {
 
     }
 
-    @Disabled
     @Test
     void in_the_reversed_order_of_scoring() {
         countGoalForTeam(ONE, TWO, ONE);

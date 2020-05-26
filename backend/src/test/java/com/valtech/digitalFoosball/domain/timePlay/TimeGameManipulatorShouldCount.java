@@ -3,7 +3,6 @@ package com.valtech.digitalFoosball.domain.timePlay;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -44,10 +43,8 @@ public class TimeGameManipulatorShouldCount {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @Disabled
     @Test
     void no_goal_if_score_limit_is_reached() {
-
         countGoalForTeam(ONE, ONE, ONE, ONE,
                          TWO, TWO,
                          ONE, ONE, ONE,
@@ -60,7 +57,6 @@ public class TimeGameManipulatorShouldCount {
         assertThat(actualScoreOfTeamTwo).isEqualTo(5);
     }
 
-    @Disabled
     @Test
     void no_goals_if_time_limit_has_been_reached() {
         countGoalForTeam(ONE, ONE,

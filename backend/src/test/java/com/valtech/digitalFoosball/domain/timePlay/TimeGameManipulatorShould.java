@@ -4,7 +4,6 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -34,7 +33,6 @@ public class TimeGameManipulatorShould {
         gameDataModel.setTeams(teams);
     }
 
-    @Disabled
     @Test
     void changeover() {
         assertThat(teamDataModelOne.getScore()).isEqualTo(1);
