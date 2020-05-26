@@ -33,7 +33,7 @@ export default class SignInForm extends React.Component {
 
     submitAdHoc = async (event) => {
         event.preventDefault();
-        const url = properties.url + "init/adHoc";
+        const url = properties.url + "init/adhoc";
 
         const requestOptions = {
             method: 'POST',
