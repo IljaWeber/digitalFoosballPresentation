@@ -24,6 +24,10 @@ public abstract class DigitalFoosballGame implements IPlayAGame {
 
     @Override
     public void countGoalFor(Team team, GameDataModel gameDataModel) {
+        if (gameDataModel.setHasAWinner()) {
+            return;
+        }
+
         gameDataModel.countGoalFor(team);
 
         gameRules.approveWin(gameDataModel);

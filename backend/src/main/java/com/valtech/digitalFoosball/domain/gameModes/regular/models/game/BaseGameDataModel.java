@@ -52,10 +52,6 @@ public abstract class BaseGameDataModel implements GameDataModel {
     }
 
     public void countGoalFor(Team scoredTeam) {
-        if (setHasAWinner()) {
-            return;
-        }
-
         teams.get(scoredTeam).countGoal();
         history.rememberLastGoalFor(scoredTeam);
     }
