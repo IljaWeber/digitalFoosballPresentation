@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.domain.game;
 
 import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballRestAPI;
+import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballUserCommandAPI;
 import com.valtech.digitalFoosball.domain.constants.GameMode;
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.GameManipulatorProvider;
 import com.valtech.digitalFoosball.domain.gameModes.manipulators.IPlayAGame;
@@ -16,7 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration(classes = Application.class)
-@SpringBootTest(classes = DigitalFoosballRestAPI.class)
+@SpringBootTest(classes = DigitalFoosballUserCommandAPI.class)
 public class GameModeHolderShould {
 
     @Autowired

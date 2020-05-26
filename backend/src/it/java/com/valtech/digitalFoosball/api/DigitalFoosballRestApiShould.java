@@ -2,7 +2,7 @@ package com.valtech.digitalFoosball.api;
 
 import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballRestAPI;
+import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballUserCommandAPI;
 import com.valtech.digitalFoosball.domain.GameController;
 import com.valtech.digitalFoosball.domain.constants.GameMode;
 import com.valtech.digitalFoosball.domain.constants.Team;
@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = Application.class)
-@SpringBootTest(classes = DigitalFoosballRestAPI.class)
+@SpringBootTest(classes = DigitalFoosballUserCommandAPI.class)
 public class DigitalFoosballRestApiShould {
 
     private final Gson gson;
@@ -240,7 +240,7 @@ public class DigitalFoosballRestApiShould {
     }
 
     private String getGameStatus() throws Exception {
-        builder = MockMvcRequestBuilders.get("/api/game");
+        builder = MockMvcRequestBuilders.get("/data/game");
         result = mockMvc.perform(builder).andExpect(status().isOk()).andReturn();
 
         return result.getResponse().getContentAsString();

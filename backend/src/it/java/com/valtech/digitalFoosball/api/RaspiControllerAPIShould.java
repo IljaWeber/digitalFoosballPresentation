@@ -2,7 +2,7 @@ package com.valtech.digitalFoosball.api;
 
 import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballRestAPI;
+import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballUserCommandAPI;
 import com.valtech.digitalFoosball.domain.GameController;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = Application.class)
-@SpringBootTest(classes = DigitalFoosballRestAPI.class)
+@SpringBootTest(classes = DigitalFoosballUserCommandAPI.class)
 public class RaspiControllerAPIShould {
 
     @Autowired

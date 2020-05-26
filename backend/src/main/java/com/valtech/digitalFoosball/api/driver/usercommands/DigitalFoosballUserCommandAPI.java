@@ -4,27 +4,24 @@ import com.valtech.digitalFoosball.domain.GameController;
 import com.valtech.digitalFoosball.domain.constants.Team;
 import com.valtech.digitalFoosball.domain.gameModes.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.gameModes.models.output.game.GameOutputModel;
-import com.valtech.digitalFoosball.domain.gameModes.models.output.team.TeamOutputModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 import static com.valtech.digitalFoosball.domain.constants.GameMode.AD_HOC;
 import static com.valtech.digitalFoosball.domain.constants.GameMode.RANKED;
 
 @RestController()
 @RequestMapping("api")
-public class DigitalFoosballRestAPI {
+public class DigitalFoosballUserCommandAPI {
 
-    private final Logger logger = LogManager.getLogger(DigitalFoosballRestAPI.class);
-    private final GameController gameController;
+    private final Logger logger = LogManager.getLogger(DigitalFoosballUserCommandAPI.class);
+    protected final GameController gameController;
 
     @Autowired
-    public DigitalFoosballRestAPI(GameController gameController) {
+    public DigitalFoosballUserCommandAPI(GameController gameController) {
         this.gameController = gameController;
     }
 
@@ -47,16 +44,6 @@ public class DigitalFoosballRestAPI {
         gameController.initGame(initDataModel);
 
         return gameController.getGameData();
-    }
-
-    @GetMapping(path = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GameOutputModel getGameData() {
-        return gameController.getGameData();
-    }
-
-    @GetMapping(path = "/allTeams", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<TeamOutputModel> getAllTeams() {
-        return gameController.getAllTeams();
     }
 
     @PostMapping(path = "/raise", produces = MediaType.APPLICATION_JSON_VALUE)
