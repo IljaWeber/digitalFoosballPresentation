@@ -78,4 +78,6 @@ public abstract class BaseGameDataModel implements GameDataModel {
     public void addObserver(Observer observer) {
         observers.add(observer);
     }
+
+    protected abstract void updateObservers();
 }

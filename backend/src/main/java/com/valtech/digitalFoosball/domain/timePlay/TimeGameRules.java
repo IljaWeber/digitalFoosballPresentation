@@ -24,7 +24,7 @@ public class TimeGameRules extends BaseGameRules {
             winner = leadingTeam;
         }
 
-        if (gameDataModel.isTimeOver()) {
+        if (gameDataModel.winConditionFullFilled()) {
             winner = leadingTeam;
         }
 

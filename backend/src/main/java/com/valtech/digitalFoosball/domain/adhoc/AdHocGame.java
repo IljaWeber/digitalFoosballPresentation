@@ -3,7 +3,6 @@ package com.valtech.digitalFoosball.domain.adhoc;
 import com.valtech.digitalFoosball.domain.common.DigitalFoosballGame;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +32,15 @@ public class AdHocGame extends DigitalFoosballGame {
 
     @Override
     public void undoGoal(GameDataModel gameDataModel) {
-        RankedGameDataModel castedModel = (RankedGameDataModel) gameDataModel;
 
-        if (castedModel.thereAreGoals()) {
+        if (gameDataModel.thereAreGoals()) {
 
-            if (castedModel.setHasAWinner()) {
-                castedModel.decreaseWonSetsForRecentSetWinner();
-                castedModel.setSetWinner(NO_TEAM);
+            if (gameDataModel.winConditionFullFilled()) {
+                gameDataModel.decreaseWonSetsForRecentSetWinner();
+                gameDataModel.setSetWinner(NO_TEAM);
             }
 
-            castedModel.undoLastGoal();
+            gameDataModel.undoLastGoal();
         }
     }
 }

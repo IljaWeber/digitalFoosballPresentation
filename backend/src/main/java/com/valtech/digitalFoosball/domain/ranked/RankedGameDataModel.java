@@ -1,11 +1,8 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
-import com.valtech.digitalFoosball.api.driven.notification.Observer;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.histories.History;
 import com.valtech.digitalFoosball.domain.common.models.BaseGameDataModel;
-import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
-import com.valtech.digitalFoosball.domain.common.models.output.game.RegularGameOutputModel;
 
 import java.util.ArrayList;
 
@@ -22,12 +19,17 @@ public class RankedGameDataModel extends BaseGameDataModel {
     }
 
     @Override
+    protected void updateObservers() {
+        // not implemented yet
+    }
+
+    @Override
     public void increaseWonSetsFor(Team team) {
         teams.get(team).increaseWonSets();
     }
 
     @Override
-    public boolean setHasAWinner() {
+    public boolean winConditionFullFilled() {
         return setWinner != NO_TEAM;
     }
 
@@ -56,16 +58,10 @@ public class RankedGameDataModel extends BaseGameDataModel {
 
     }
 
-    protected void updateObservers() {
-        for (Observer observer : observers) {
-            GameOutputModel gameOutputModel = new RegularGameOutputModel(this);
-            observer.update(gameOutputModel);
-        }
-    }
-
     public void changeOver() {
         teams.forEach((teamConstant, dataModel) -> dataModel.changeover());
         setWinner = NO_TEAM;
         history = new History();
     }
+
 }

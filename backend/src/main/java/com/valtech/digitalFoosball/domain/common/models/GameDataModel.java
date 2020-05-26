@@ -30,7 +30,7 @@ public interface GameDataModel {
 
     boolean thereAreGoals();
 
-    boolean setHasAWinner();
+    boolean winConditionFullFilled();
 
     void decreaseWonSetsForRecentSetWinner();
 

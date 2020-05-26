@@ -27,7 +27,7 @@ public class RankedGame extends DigitalFoosballGame {
 
         if (castedModel.thereAreGoals()) {
 
-            if (castedModel.setHasAWinner()) {
+            if (castedModel.winConditionFullFilled()) {
                 castedModel.decreaseWonSetsForRecentSetWinner();
                 castedModel.setSetWinner(NO_TEAM);
             }

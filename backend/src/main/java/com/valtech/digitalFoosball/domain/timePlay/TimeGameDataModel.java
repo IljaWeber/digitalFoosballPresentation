@@ -1,20 +1,56 @@
 package com.valtech.digitalFoosball.domain.timePlay;
 
-import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
+import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.models.BaseGameDataModel;
 
-public class TimeGameDataModel extends RankedGameDataModel {
+public class TimeGameDataModel extends BaseGameDataModel {
     private boolean timeIsOver;
 
     public TimeGameDataModel() {
         timeIsOver = false;
     }
 
-    public boolean isTimeOver() {
-        return timeIsOver;
+    @Override
+    protected void updateObservers() {
+        //not implemented yet
     }
 
     public void timeLimitReached() {
         timeIsOver = true;
-        updateObservers();
+    }
+
+    @Override
+    public void changeOver() {
+        //not implemented yet
+    }
+
+    @Override
+    public void increaseWonSetsFor(Team team) {
+
+    }
+
+    @Override
+    public boolean winConditionFullFilled() {
+        return timeIsOver;
+    }
+
+    @Override
+    public void decreaseWonSetsForRecentSetWinner() {
+
+    }
+
+    @Override
+    public Team getSetWinner() {
+        return null;
+    }
+
+    @Override
+    public void setSetWinner(Team setWinner) {
+
+    }
+
+    @Override
+    public void resetMatch() {
+
     }
 }
