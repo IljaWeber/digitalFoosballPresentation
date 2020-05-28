@@ -23,16 +23,15 @@ public class RankedGame extends DigitalFoosballGame {
 
     @Override
     public void undoGoal(GameDataModel gameDataModel) {
-        RankedGameDataModel castedModel = (RankedGameDataModel) gameDataModel;
 
-        if (castedModel.thereAreGoals()) {
+        if (gameDataModel.thereAreGoals()) {
 
-            if (castedModel.winConditionFullFilled()) {
-                castedModel.decreaseWonSetsForRecentSetWinner();
-                castedModel.setSetWinner(NO_TEAM);
+            if (gameRules.winConditionsFulfilled(gameDataModel)) {
+                gameDataModel.decreaseWonSetsForRecentSetWinner();
+                gameDataModel.setSetWinner(NO_TEAM);
             }
 
-            castedModel.undoLastGoal();
+            gameDataModel.undoLastGoal();
         }
     }
 }

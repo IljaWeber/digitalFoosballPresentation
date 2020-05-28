@@ -36,7 +36,7 @@ class TimeGameRulesShould {
     @Test
     public void show_no_winner_when_no_team_scored_ten_goals() {
         countGoalsFor(ONE, ONE);
-        Team actual = timeGameRules.getWinner(gameDataModel);
+        Team actual = timeGameRules.getTeamWithLeadOfTwo(gameDataModel);
 
         assertThat(actual).isEqualTo(Team.NO_TEAM);
     }
@@ -44,7 +44,7 @@ class TimeGameRulesShould {
     @Test
     public void show_winner_when_the_team_scored_ten_goals() {
         countGoalsFor(ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE);
-        Team actual = timeGameRules.getWinner(gameDataModel);
+        Team actual = timeGameRules.getTeamWithLeadOfTwo(gameDataModel);
 
         assertThat(actual).isEqualTo(ONE);
     }
@@ -53,7 +53,7 @@ class TimeGameRulesShould {
     public void show_winner_when_time_limit_is_reached_and_one_team_is_leading() {
         countGoalsFor(ONE, ONE, TWO, TWO, ONE, TWO, ONE, ONE, TWO, TWO, ONE);
         gameDataModel.timeLimitReached();
-        Team actual = timeGameRules.getWinner(gameDataModel);
+        Team actual = timeGameRules.getTeamWithLeadOfTwo(gameDataModel);
 
         assertThat(actual).isEqualTo(ONE);
     }

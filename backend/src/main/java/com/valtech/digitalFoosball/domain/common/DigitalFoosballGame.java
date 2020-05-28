@@ -10,7 +10,7 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
 
 public abstract class DigitalFoosballGame implements IPlayAGame {
     protected final AbstractInitService initService;
-    private final GameRules gameRules;
+    protected final GameRules gameRules;
 
     public DigitalFoosballGame(AbstractInitService initService,
                                GameRules gameRules) {
@@ -25,7 +25,7 @@ public abstract class DigitalFoosballGame implements IPlayAGame {
 
     @Override
     public void countGoalFor(Team team, GameDataModel gameDataModel) {
-        Team winner = gameRules.getWinner(gameDataModel);
+        Team winner = gameRules.getTeamWithLeadOfTwo(gameDataModel);
 
         if (winner != NO_TEAM) {
             return;

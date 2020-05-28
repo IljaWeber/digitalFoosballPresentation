@@ -47,4 +47,6 @@ public interface GameDataModel {
     void addObserver(Observer observer);
 
     void resetMatch();
+
+    Team getLeadingTeam();
 }

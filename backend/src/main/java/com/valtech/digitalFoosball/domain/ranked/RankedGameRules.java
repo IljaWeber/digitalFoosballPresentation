@@ -4,13 +4,14 @@ import com.valtech.digitalFoosball.domain.common.BaseGameRules;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 
-import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
+import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
 
 public class RankedGameRules extends BaseGameRules {
+    private Team setWinner = NO_TEAM;
 
     @Override
     public void approveWin(GameDataModel gameDataModel) {
-        Team winner = getWinner(gameDataModel);
+        Team winner = getTeamWithLeadOfTwo(gameDataModel);
 
         if (winner != NO_TEAM) {
             gameDataModel.increaseWonSetsFor(winner);
@@ -19,36 +20,16 @@ public class RankedGameRules extends BaseGameRules {
     }
 
     @Override
-    public Team getWinner(GameDataModel gameDataModel) {
-        Team winner = NO_TEAM;
+    public boolean winConditionsFulfilled(GameDataModel gameDataModel) {
+        Team setWinner = gameDataModel.getSetWinner();
 
-        if (thereIsALeadingTeam(gameDataModel)) {
+        if (setWinner != NO_TEAM) {
+            this.setWinner = setWinner;
 
-            Team leadingTeam = getLeadingTeam(gameDataModel);
-            RankedTeamDataModel teamDataModel = gameDataModel.getTeam(leadingTeam);
-
-            if (enoughGoals(teamDataModel) && bigEnoughScoreDifference(gameDataModel)) {
-                winner = leadingTeam;
-            }
-
+            return true;
         }
 
-        return winner;
+        return false;
     }
 
-    private boolean enoughGoals(RankedTeamDataModel team) {
-        int neededGoals = 6;
-        return team.getScore() >= neededGoals;
-    }
-
-    private boolean bigEnoughScoreDifference(GameDataModel gameDataModel) {
-        int scoreTeamOne = getScoreOfTeam(ONE, gameDataModel);
-        int scoreTeamTwo = getScoreOfTeam(TWO, gameDataModel);
-
-        int currentDifference = scoreTeamOne - scoreTeamTwo;
-        int absoluteDifference = Math.abs(currentDifference);
-
-        int requiredDifference = 2;
-        return absoluteDifference >= requiredDifference;
-    }
 }

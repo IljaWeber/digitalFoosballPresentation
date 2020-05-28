@@ -10,9 +10,9 @@ public class TimeGameRules extends BaseGameRules {
     private final int GOAL_LIMIT = 10;
 
     @Override
-    public Team getWinner(GameDataModel gameDataModel) {
+    public Team getTeamWithLeadOfTwo(GameDataModel gameDataModel) {
         Team winner = NO_TEAM;
-        Team leadingTeam = getLeadingTeam(gameDataModel);
+        Team leadingTeam = gameDataModel.getLeadingTeam();
 
         if (leadingTeam == NO_TEAM) {
             return NO_TEAM;
@@ -29,6 +29,12 @@ public class TimeGameRules extends BaseGameRules {
         }
 
         return winner;
+    }
+
+    @Override
+    public boolean winConditionsFulfilled(GameDataModel gameDataModel) {
+        //not implemented yet
+        return false;
     }
 
     private boolean goalLimitReached(int score) {

@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
-import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
+import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public abstract class BaseGameDataModel implements GameDataModel {
     protected SortedMap<Team, RankedTeamDataModel> teams;
@@ -69,6 +68,24 @@ public abstract class BaseGameDataModel implements GameDataModel {
     public void redoLastUndoneGoal() {
         Team redo = history.getLastUndoingTeam();
         countGoalFor(redo);
+    }
+
+    @Override
+    public Team getLeadingTeam() {
+        Team leadingTeam = NO_TEAM;
+
+        int scoreOne = teams.get(ONE).getScore();
+        int scoreTwo = teams.get(TWO).getScore();
+
+        if (scoreOne > scoreTwo) {
+            leadingTeam = ONE;
+        }
+
+        if (scoreTwo > scoreOne) {
+            leadingTeam = TWO;
+        }
+
+        return leadingTeam;
     }
 
     public boolean thereAreUndoneGoals() {

@@ -6,5 +6,8 @@ import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 public interface GameRules {
     void approveWin(GameDataModel gameDataModel);
 
-    Team getWinner(GameDataModel gameDataModel);
+    Team getTeamWithLeadOfTwo(GameDataModel gameDataModel);
+
+    boolean winConditionsFulfilled(GameDataModel gameDataModel);
+
 }
