@@ -3,6 +3,7 @@ package com.valtech.digitalFoosball.domain.timePlay;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class TimeGameManipulatorShouldCount {
     }
 
     @Test
+    @Disabled
     void goal() {
         int expected = 1;
 
@@ -44,6 +46,7 @@ public class TimeGameManipulatorShouldCount {
     }
 
     @Test
+    @Disabled
     void no_goal_if_score_limit_is_reached() {
         countGoalForTeam(ONE, ONE, ONE, ONE,
                          TWO, TWO,
@@ -58,6 +61,7 @@ public class TimeGameManipulatorShouldCount {
     }
 
     @Test
+    @Disabled
     void no_goals_if_time_limit_has_been_reached() {
         countGoalForTeam(ONE, ONE,
                          TWO, TWO,

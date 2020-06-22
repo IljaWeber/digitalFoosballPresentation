@@ -4,6 +4,7 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class TimeGameManipulatorShouldUndo {
     }
 
     @Test
+    @Disabled
     void in_the_reversed_order_of_scoring() {
         countGoalForTeam(ONE, TWO, ONE);
 
@@ -50,6 +52,7 @@ public class TimeGameManipulatorShouldUndo {
     }
 
     @Test
+    @Disabled
     void but_if_no_scores_have_been_made_then_do_nothing() {
         timeGame.undoGoal(gameDataModel);
 
@@ -60,6 +63,7 @@ public class TimeGameManipulatorShouldUndo {
     }
 
     @Test
+    @Disabled
     void and_decrease_the_number_of_won_sets_when_win_condition_has_been_fulfilled() {
         countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE);
 

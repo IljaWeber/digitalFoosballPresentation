@@ -4,6 +4,7 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class TimeGameManipulatorShouldRedo {
     }
 
     @Test
+    @Disabled
     void if_a_score_has_been_undone_recently() {
         raiseScoreOf(ONE);
         timeGame.undoGoal(gameDataModel);
@@ -48,6 +50,7 @@ public class TimeGameManipulatorShouldRedo {
     }
 
     @Test
+    @Disabled
     void only_when_a_goal_was_undid_otherwise_do_nothing() {
         timeGame.redoGoal(gameDataModel);
 
@@ -58,6 +61,7 @@ public class TimeGameManipulatorShouldRedo {
     }
 
     @Test
+    @Disabled
     void and_raise_the_won_sets_if_necessary() {
         raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE);
         timeGame.undoGoal(gameDataModel);
