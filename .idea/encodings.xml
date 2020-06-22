@@ -5,5 +5,6 @@
     <file url="file://$PROJECT_DIR$/backend" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/raspicontroller" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/raspicontroller/src/main/java" charset="UTF-8" />
   </component>
 </project>
