@@ -232,3 +232,5 @@ typings/
 .dynamodb/
 
 venv/include/
+/.idea/
+backend/src/main/java/com/valtech/digitalFoosball/framework/application/
