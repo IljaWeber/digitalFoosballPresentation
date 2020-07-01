@@ -6,10 +6,10 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RequestSenderTest {
+class RequestSenderShould {
 
     @Test
-    void sendRaise_whenSendingHttpRequest_thenResponseHasStatusOk() throws IOException {
+    void notify_status_of_ok_when_score_has_raised() throws IOException {
         RequestSender requestSender = new RequestSender();
 
         int actual = requestSender.sendRaise(1);

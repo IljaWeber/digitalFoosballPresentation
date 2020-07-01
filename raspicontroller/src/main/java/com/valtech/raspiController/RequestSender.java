@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class RequestSender {
     public int sendRaise(int teamNumber) throws IOException {
-        String url = "https://digital-football.valtech.io/api/raise";
+        String url = "localhost:8888/api/raise";
 
         HttpPost request = new HttpPost(url);
 
