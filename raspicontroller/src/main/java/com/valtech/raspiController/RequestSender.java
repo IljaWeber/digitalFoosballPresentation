@@ -11,13 +11,13 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import java.io.IOException;
 
 public class RequestSender {
-    public int sendRaise(int teamNumber) throws IOException {
-        String url = "localhost:8888/api/raise";
+    public void sendRaise(int teamNumber) throws IOException {
+        String url = "https://digital-football.valtech.io/api/raise";
 
         HttpPost request = new HttpPost(url);
 
         StringEntity myEntity = new StringEntity(String.valueOf(teamNumber),
-                ContentType.create("application/json", "UTF-8"));
+                                                 ContentType.create("application/json", "UTF-8"));
 
         request.setEntity(myEntity);
 
@@ -27,6 +27,6 @@ public class RequestSender {
         HttpClient client = HttpClientBuilder.create().build();
         HttpResponse response = client.execute(request);
 
-        return response.getStatusLine().getStatusCode();
+        response.getStatusLine().getStatusCode();
     }
 }
