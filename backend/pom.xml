@@ -191,8 +191,6 @@
                     <configuration>
                         <archive>
                             <manifest>
-                                <addClasspath>true</addClasspath>
-                                <classpathPrefix>lib/</classpathPrefix>
                                 <mainClass>com.valtech.digitalFoosball.Application</mainClass>
                             </manifest>
                         </archive>
