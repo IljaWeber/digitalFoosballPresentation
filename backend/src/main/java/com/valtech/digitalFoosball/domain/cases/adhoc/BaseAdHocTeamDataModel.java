@@ -1,5 +1,6 @@
 package com.valtech.digitalFoosball.domain.cases.adhoc;
 
+import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ public abstract class BaseAdHocTeamDataModel implements AdHocTeamModel {
     protected String name;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    protected List<AdHocPlayerDataModel> players;
+    protected List<PlayerDataModel> players;
 
     @Transient
     protected int score;
@@ -24,7 +25,7 @@ public abstract class BaseAdHocTeamDataModel implements AdHocTeamModel {
     private UUID id;
 
     public BaseAdHocTeamDataModel() {
-        players = Arrays.asList(new AdHocPlayerDataModel(), new AdHocPlayerDataModel());
+        players = Arrays.asList(new PlayerDataModel(), new PlayerDataModel());
         score = 0;
     }
 
@@ -38,11 +39,11 @@ public abstract class BaseAdHocTeamDataModel implements AdHocTeamModel {
         this.name = name;
     }
 
-    public List<AdHocPlayerDataModel> getPlayers() {
+    public List<PlayerDataModel> getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<AdHocPlayerDataModel> players) {
+    public void setPlayers(List<PlayerDataModel> players) {
         this.players = players;
     }
 
