@@ -1,5 +1,6 @@
 package com.valtech.digitalFoosball.domain.adhoc;
 
+import com.valtech.digitalFoosball.domain.common.ClassicGame;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Service
 public class AdHocGame extends ClassicGame {
+
     private final AdHocInitService initService;
 
     @Autowired

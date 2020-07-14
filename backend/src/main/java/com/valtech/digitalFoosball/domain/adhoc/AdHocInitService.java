@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdHocInitService extends ClassicGameInitService {
+public class AdHocInitService {
+    private final IObtainTeams teamDataPort;
 
     @Autowired
     public AdHocInitService(IObtainTeams teamDataPort) {
-        super(teamDataPort);
+        this.teamDataPort = teamDataPort;
     }
 
     public RankedGameDataModel init(InitDataModel initDataModel) {

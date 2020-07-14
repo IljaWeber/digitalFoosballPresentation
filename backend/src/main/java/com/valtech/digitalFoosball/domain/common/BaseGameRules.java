@@ -32,7 +32,7 @@ public abstract class BaseGameRules implements GameRules {
     }
 
     private boolean thereIsALeadingTeam(GameDataModel gameDataModel) {
-        return gameDataModel.getLeadingTeam() != NO_TEAM;
+        return NO_TEAM != gameDataModel.getLeadingTeam();
     }
 
     private boolean enoughGoals(TeamDataModel team) {
