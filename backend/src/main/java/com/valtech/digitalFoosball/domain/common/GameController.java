@@ -35,11 +35,11 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
     }
 
     public GameOutputModel getGameData() {
-        GameDataModel gameDataModel = game.getGameData();
-
-        if (null == gameDataModel) {
+        if (null == game) {
             return new EmptyGameOutputModel();
         }
+
+        GameDataModel gameDataModel = game.getGameData();
 
         return new RegularGameOutputModel(gameDataModel);
     }
