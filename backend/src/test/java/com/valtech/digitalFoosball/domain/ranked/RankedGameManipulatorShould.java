@@ -12,7 +12,7 @@ import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.initializationFactory.RankedGameInitializer;
+import com.valtech.digitalFoosball.initializationFactory.RankedGameFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +34,7 @@ public class RankedGameManipulatorShould {
 
         TeamRepository teamRepository = new TeamRepositoryFake(id);
         PlayerRepository playerRepository = new PlayerRepositoryFake();
-        RankedGameInitializer rankedGame = new RankedGameInitializer();
+        RankedGameFactory rankedGame = new RankedGameFactory();
         rankedGame.prepareInitData(teamOne, teamTwo);
         game = rankedGame.getGame(teamRepository, playerRepository);
     }
@@ -105,7 +105,7 @@ public class RankedGameManipulatorShould {
         TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
         PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
         teamRepository.insertTeamDataModel(teamOne, teamTwo);
-        RankedGameInitializer rankedGame = new RankedGameInitializer();
+        RankedGameFactory rankedGame = new RankedGameFactory();
         rankedGame.prepareInitData(teamOne, teamTwo);
         game = rankedGame.getGame(teamRepository, playerRepository);
 
@@ -128,7 +128,7 @@ public class RankedGameManipulatorShould {
         PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
         PlayerService playerService = new PlayerService(playerRepository);
         IObtainTeams iObtainTeams = new TeamService(teamRepository, playerService);
-        game = new RankedGame(new RankedInitService(iObtainTeams));
+        game = new com.valtech.digitalFoosball.domain.ranked.RankedGame(new RankedInitService(iObtainTeams));
     }
 
     private void raiseScoreOf(Team... teams) {

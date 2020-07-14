@@ -8,7 +8,7 @@ import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedGame;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 
-public class RankedGameInitializer {
+public class RankedGameFactory {
     private InitDataModel initDataModel;
 
     public void prepareInitData(RankedTeamDataModel teamOne, RankedTeamDataModel teamTwo) {

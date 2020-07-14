@@ -1,18 +1,16 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
-import com.valtech.digitalFoosball.GameBuilder;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepository;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
+import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
+import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
+import com.valtech.digitalFoosball.initializationFactory.RankedGameFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
@@ -20,47 +18,42 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class RankedGameManipulatorShouldRedoAnUndoneScore {
 
-    public RankedGame rankedGame;
-    private RankedTeamDataModel teamDataModelOne;
-    private RankedTeamDataModel teamDataModelTwo;
+    public IPlayAGame game;
     private final UUID id = UUID.randomUUID();
-
-    public RankedGameManipulatorShouldRedoAnUndoneScore() {
-        TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
-        PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
-        rankedGame = GameBuilder.buildRankedGameWith(teamRepository, playerRepository);
-    }
 
     @BeforeEach
     void setUp() {
-        teamDataModelOne = new RankedTeamDataModel("T1", "P1", "P2");
-        teamDataModelTwo = new RankedTeamDataModel("T2", "P3", "P4");
+        RankedTeamDataModel teamOne = new RankedTeamDataModel("T1", "P1", "P2");
+        RankedTeamDataModel teamTwo = new RankedTeamDataModel("T2", "P3", "P4");
 
-        InitDataModel initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
-
-        rankedGame.initGame(initDataModel);
+        TeamRepository teamRepository = new TeamRepositoryFake(id);
+        PlayerRepository playerRepository = new PlayerRepositoryFake();
+        RankedGameFactory rankedGame = new RankedGameFactory();
+        rankedGame.prepareInitData(teamOne, teamTwo);
+        game = rankedGame.getGame(teamRepository, playerRepository);
     }
 
     @Test
     void if_a_score_has_been_undone_recently() {
         raiseScoreOf(ONE);
-        rankedGame.undoGoal();
+        game.undoGoal();
 
-        rankedGame.redoGoal();
+        game.redoGoal();
 
         int actual = getScoreOfTeam(ONE);
         assertThat(actual).isEqualTo(1);
     }
 
     private int getScoreOfTeam(Team team) {
-        RankedGameDataModel gameDataModel = rankedGame.getTeams();
-        RankedTeamDataModel teamOne = gameDataModel.getTeam(team);
-        return teamOne.getScore();
+        GameDataModel gameData = game.getGameData();
+        SortedMap<Team, RankedTeamDataModel> teams = gameData.getTeams();
+        RankedTeamDataModel teamDataModel = teams.get(team);
+        return teamDataModel.getScore();
     }
 
     @Test
     void only_when_a_goal_was_undid_otherwise_do_nothing() {
-        rankedGame.redoGoal();
+        game.redoGoal();
 
         int actualScoreTeamOne = getScoreOfTeam(ONE);
         int actualScoreTeamTwo = getScoreOfTeam(TWO);
@@ -71,23 +64,24 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
     @Test
     void and_raise_the_won_sets_if_necessary() {
         raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
-        rankedGame.undoGoal();
+        game.undoGoal();
 
-        rankedGame.redoGoal();
+        game.redoGoal();
 
         int actual = getNumberOfWonSets(ONE);
         assertThat(actual).isEqualTo(1);
     }
 
     private int getNumberOfWonSets(Team team) {
-        RankedGameDataModel gameDataModel = rankedGame.getTeams();
-        RankedTeamDataModel teamOne = gameDataModel.getTeam(team);
-        return teamOne.getWonSets();
+        GameDataModel gameData = game.getGameData();
+        SortedMap<Team, RankedTeamDataModel> teams = gameData.getTeams();
+        RankedTeamDataModel teamDataModel = teams.get(team);
+        return teamDataModel.getWonSets();
     }
 
     private void raiseScoreOf(Team... teams) {
         for (Team team : teams) {
-            rankedGame.countGoalFor(team);
+            game.countGoalFor(team);
         }
     }
 
@@ -156,11 +150,16 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
 
         @Override
         public List<RankedTeamDataModel> findAll() {
-            List<RankedTeamDataModel> teamDataModels = new ArrayList<>();
-            teamDataModels.add(teamDataModelOne);
-            teamDataModels.add(teamDataModelTwo);
 
             return teamDataModels;
+        }
+
+        private List<RankedTeamDataModel> teamDataModels;
+
+        public void insertTeamDataModel(RankedTeamDataModel teamOne, RankedTeamDataModel teamTwo) {
+            teamDataModels = new ArrayList<>();
+            teamDataModels.add(teamOne);
+            teamDataModels.add(teamTwo);
         }
     }
 
