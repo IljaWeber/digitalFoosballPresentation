@@ -10,7 +10,7 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
 
 public abstract class ClassicGame implements IPlayAGame {
     protected RankedGameDataModel gameDataModel;
-    private RankedGameRules rules;
+    private final RankedGameRules rules;
 
     public ClassicGame() {
         rules = new RankedGameRules();
@@ -26,10 +26,6 @@ public abstract class ClassicGame implements IPlayAGame {
         gameDataModel.countGoalFor(team);
 
         rules.approveWin(gameDataModel);
-    }
-
-    protected void setGameDataModel(RankedGameDataModel gameDataModel) {
-        this.gameDataModel = gameDataModel;
     }
 
     public void undoGoal() {

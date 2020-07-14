@@ -19,7 +19,7 @@ public class AdHocGame extends ClassicGame {
 
     @Override
     public List<TeamOutputModel> getAllTeamsFromDatabase() {
-        return null;
+        return initService.getAllTeams();
     }
 
     @Override

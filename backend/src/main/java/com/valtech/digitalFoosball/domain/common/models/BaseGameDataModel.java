@@ -42,14 +42,6 @@ public abstract class BaseGameDataModel implements GameDataModel {
         teams.put(team, teamDataModel);
     }
 
-    public GameMode getGameMode() {
-        return gameMode;
-    }
-
-    public void setGameMode(GameMode gameMode) {
-        this.gameMode = gameMode;
-    }
-
     public void countGoalFor(Team scoredTeam) {
         teams.get(scoredTeam).countGoal();
         history.rememberLastGoalFor(scoredTeam);
@@ -90,10 +82,6 @@ public abstract class BaseGameDataModel implements GameDataModel {
 
     public boolean thereAreUndoneGoals() {
         return history.thereAreUndoneGoals();
-    }
-
-    public void addObserver(Observer observer) {
-        observers.add(observer);
     }
 
     protected abstract void updateObservers();

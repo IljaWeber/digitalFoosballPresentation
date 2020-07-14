@@ -29,11 +29,6 @@ public class RankedGameDataModel extends BaseGameDataModel {
     }
 
     @Override
-    public boolean winConditionFullFilled() {
-        return setWinner != NO_TEAM;
-    }
-
-    @Override
     public void decreaseWonSetsForRecentSetWinner() {
         RankedTeamDataModel setWinningTeam = teams.get(setWinner);
         setWinningTeam.decreaseWonSets();

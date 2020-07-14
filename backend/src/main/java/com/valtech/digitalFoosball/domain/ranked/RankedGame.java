@@ -23,6 +23,6 @@ public class RankedGame extends ClassicGame {
     }
 
     public void initGame(InitDataModel initDataModel) {
-        gameDataModel = initService.init(initDataModel);
+        super.gameDataModel = initService.init(initDataModel);
     }
 }

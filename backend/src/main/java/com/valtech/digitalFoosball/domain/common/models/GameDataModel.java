@@ -1,7 +1,5 @@
 package com.valtech.digitalFoosball.domain.common.models;
 
-import com.valtech.digitalFoosball.api.driven.notification.Observer;
-import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 
@@ -20,17 +18,11 @@ public interface GameDataModel {
 
     void setTeam(Team team, RankedTeamDataModel teamDataModel);
 
-    GameMode getGameMode();
-
-    void setGameMode(GameMode gameMode);
-
     void countGoalFor(Team scoredTeam);
 
     void increaseWonSetsFor(Team team);
 
     boolean thereAreGoals();
-
-    boolean winConditionFullFilled();
 
     void decreaseWonSetsForRecentSetWinner();
 
@@ -43,8 +35,6 @@ public interface GameDataModel {
     void redoLastUndoneGoal();
 
     boolean thereAreUndoneGoals();
-
-    void addObserver(Observer observer);
 
     void resetMatch();
 
