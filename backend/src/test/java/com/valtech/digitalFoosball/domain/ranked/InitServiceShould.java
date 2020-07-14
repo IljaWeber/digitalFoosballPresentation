@@ -8,6 +8,7 @@ import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamReposit
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
+import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -47,8 +48,8 @@ public class InitServiceShould {
         InitDataModel initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
 
         GameDataModel gameDataModel = initService.init(initDataModel);
-        RankedTeamDataModel teamOne = gameDataModel.getTeam(ONE);
-        RankedTeamDataModel teamTwo = gameDataModel.getTeam(TWO);
+        TeamDataModel teamOne = gameDataModel.getTeam(ONE);
+        TeamDataModel teamTwo = gameDataModel.getTeam(TWO);
 
         assertThat(teamOne).isEqualTo(teamDataModelOne);
         assertThat(teamTwo).isEqualTo(teamDataModelTwo);

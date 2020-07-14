@@ -1,6 +1,7 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -63,7 +64,7 @@ public class RankedGameRulesShould {
 
     private void countGoalsFor(Team... teams) {
         for (Team team : teams) {
-            RankedTeamDataModel teamDataModel = gameDataModel.getTeam(team);
+            TeamDataModel teamDataModel = gameDataModel.getTeam(team);
             teamDataModel.countGoal();
         }
     }

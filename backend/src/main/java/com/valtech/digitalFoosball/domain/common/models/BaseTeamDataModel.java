@@ -46,7 +46,6 @@ public abstract class BaseTeamDataModel implements TeamDataModel {
         this.players = players;
     }
 
-    // enum for players -> tell dont ask?
     public String getNameOfPlayerOne() {
         return players.get(0).getName();
     }

@@ -8,11 +8,11 @@ import java.util.SortedMap;
 
 public interface GameDataModel {
 
-    SortedMap<Team, RankedTeamDataModel> getTeams();
+    SortedMap<Team, TeamDataModel> getTeams();
 
     void setTeams(List<RankedTeamDataModel> teams);
 
-    RankedTeamDataModel getTeam(Team team);
+    TeamDataModel getTeam(Team team);
 
     void changeOver();
 

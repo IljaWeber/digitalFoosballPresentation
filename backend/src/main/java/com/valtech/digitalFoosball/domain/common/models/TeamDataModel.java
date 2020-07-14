@@ -15,4 +15,14 @@ public interface TeamDataModel {
 
     @Override
     String toString();
+
+    String getNameOfPlayerOne();
+
+    String getNameOfPlayerTwo();
+
+    int getWonSets();
+
+    void increaseWonSets();
+
+    void decreaseWonSets();
 }

@@ -3,6 +3,7 @@ package com.valtech.digitalFoosball.domain.ranked;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.histories.History;
 import com.valtech.digitalFoosball.domain.common.models.BaseGameDataModel;
+import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class RankedGameDataModel extends BaseGameDataModel {
 
     @Override
     public void decreaseWonSetsForRecentSetWinner() {
-        RankedTeamDataModel setWinningTeam = teams.get(setWinner);
+        TeamDataModel setWinningTeam = teams.get(setWinner);
         setWinningTeam.decreaseWonSets();
     }
 

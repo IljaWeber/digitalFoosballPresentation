@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 @Entity(name = "team")
-public class RankedTeamDataModel extends BaseTeamDataModel {
+public class RankedTeamDataModel extends BaseTeamDataModel implements IModifySets {
 
     @Transient
     private int wonSets;

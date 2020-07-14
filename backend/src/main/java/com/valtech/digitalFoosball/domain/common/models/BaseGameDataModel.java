@@ -14,7 +14,7 @@ import java.util.TreeMap;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public abstract class BaseGameDataModel implements GameDataModel {
-    protected SortedMap<Team, RankedTeamDataModel> teams;
+    protected SortedMap<Team, TeamDataModel> teams;
     protected List<Observer> observers;
     protected GameMode gameMode;
     protected History history;
@@ -25,7 +25,7 @@ public abstract class BaseGameDataModel implements GameDataModel {
         observers = new ArrayList<>();
     }
 
-    public SortedMap<Team, RankedTeamDataModel> getTeams() {
+    public SortedMap<Team, TeamDataModel> getTeams() {
         return teams;
     }
 
@@ -34,7 +34,7 @@ public abstract class BaseGameDataModel implements GameDataModel {
         this.teams.put(TWO, teams.get(1));
     }
 
-    public RankedTeamDataModel getTeam(Team team) {
+    public TeamDataModel getTeam(Team team) {
         return teams.get(team);
     }
 
@@ -53,7 +53,7 @@ public abstract class BaseGameDataModel implements GameDataModel {
 
     public void undoLastGoal() {
         Team undo = history.undo();
-        RankedTeamDataModel teamDataModel = teams.get(undo);
+        TeamDataModel teamDataModel = teams.get(undo);
         teamDataModel.decreaseScore();
     }
 

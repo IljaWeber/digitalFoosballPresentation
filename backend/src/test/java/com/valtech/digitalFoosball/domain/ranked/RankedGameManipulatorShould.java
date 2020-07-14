@@ -11,6 +11,7 @@ import com.valtech.digitalFoosball.domain.common.exceptions.NameDuplicateExcepti
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
+import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import com.valtech.digitalFoosball.initializationFactory.RankedGameFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,10 +50,10 @@ public class RankedGameManipulatorShould {
         assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> game.initGame(initDataModel));
     }
 
-    private List<RankedTeamDataModel> getTeamDataModels() {
+    private List<TeamDataModel> getTeamDataModels() {
         GameDataModel gameData = game.getGameData();
-        SortedMap<Team, RankedTeamDataModel> teams = gameData.getTeams();
-        List<RankedTeamDataModel> actual = new ArrayList<>();
+        SortedMap<Team, TeamDataModel> teams = gameData.getTeams();
+        List<TeamDataModel> actual = new ArrayList<>();
         teams.forEach((k, v) -> actual.add(v));
         return actual;
     }
@@ -63,11 +64,11 @@ public class RankedGameManipulatorShould {
 
         game.changeover();
 
-        List<RankedTeamDataModel> teams = getTeamDataModels();
-        assertThat(teams).extracting(RankedTeamDataModel::getScore).containsExactly(0, 0);
-        assertThat(teams).extracting(RankedTeamDataModel::getName).containsExactly("T1", "T2");
-        assertThat(teams).extracting(RankedTeamDataModel::getNameOfPlayerOne).containsExactly("P1", "P3");
-        assertThat(teams).extracting(RankedTeamDataModel::getNameOfPlayerTwo).containsExactly("P2", "P4");
+        List<TeamDataModel> teams = getTeamDataModels();
+        assertThat(teams).extracting(TeamDataModel::getScore).containsExactly(0, 0);
+        assertThat(teams).extracting(TeamDataModel::getName).containsExactly("T1", "T2");
+        assertThat(teams).extracting(TeamDataModel::getNameOfPlayerOne).containsExactly("P1", "P3");
+        assertThat(teams).extracting(TeamDataModel::getNameOfPlayerTwo).containsExactly("P2", "P4");
     }
 
     @Test
@@ -79,7 +80,7 @@ public class RankedGameManipulatorShould {
         game.undoGoal();
 
         GameDataModel gameData = game.getGameData();
-        RankedTeamDataModel team = gameData.getTeam(ONE);
+        TeamDataModel team = gameData.getTeam(ONE);
         int actual = team.getScore();
         assertThat(actual).isEqualTo(0);
     }
@@ -93,7 +94,7 @@ public class RankedGameManipulatorShould {
         game.redoGoal();
 
         GameDataModel gameData = game.getGameData();
-        RankedTeamDataModel team = gameData.getTeam(ONE);
+        TeamDataModel team = gameData.getTeam(ONE);
         int actual = team.getScore();
         assertThat(actual).isEqualTo(0);
     }
