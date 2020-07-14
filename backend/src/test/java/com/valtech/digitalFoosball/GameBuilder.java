@@ -8,7 +8,6 @@ import com.valtech.digitalFoosball.domain.adhoc.AdHocGame;
 import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
 import com.valtech.digitalFoosball.domain.ranked.RankedGame;
 import com.valtech.digitalFoosball.domain.ranked.RankedInitService;
-import com.valtech.digitalFoosball.domain.timePlay.TimeGame;
 
 public abstract class GameBuilder {
     public static RankedGame buildRankedGameWith(TeamRepository teamRepository,
@@ -25,9 +24,5 @@ public abstract class GameBuilder {
         TeamService teamService = new TeamService(teamRepository, playerService);
         AdHocInitService initService = new AdHocInitService(teamService);
         return new AdHocGame(initService);
-    }
-
-    public static TimeGame buildTimeGame() {
-        return new TimeGame(null);
     }
 }

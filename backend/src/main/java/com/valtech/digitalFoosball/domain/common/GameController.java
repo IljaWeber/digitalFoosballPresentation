@@ -21,7 +21,7 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
 
     private final INotifyAboutStateChanges notifier;
     private final GameManipulatorProvider gameManipulatorProvider;
-    private GameDataModel gameDataModel;
+    private IPlayAGame game;
 
     @Autowired
     public GameController(GameManipulatorProvider gameManipulatorProvider, INotifyAboutStateChanges notifier) {
@@ -35,49 +35,42 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
     }
 
     public GameOutputModel getGameData() {
+        GameDataModel gameDataModel = game.getGameData();
+
         if (null == gameDataModel) {
             return new EmptyGameOutputModel();
         }
+
         return new RegularGameOutputModel(gameDataModel);
     }
 
     public void initGame(InitDataModel initDataModel) {
         GameMode mode = initDataModel.getMode();
-        IPlayAGame gameManipulator = gameManipulatorProvider.getGameManipulator(mode);
-        gameDataModel = gameManipulator.initGame(initDataModel);
-        gameDataModel.setGameMode(mode);
-        gameDataModel.addObserver(notifier);
+        game = gameManipulatorProvider.getGameManipulator(mode);
+        game.initGame(initDataModel);
     }
 
     public void countGoalFor(Team team) {
-        IPlayAGame gameManipulator = getGame();
-        gameManipulator.countGoalFor(team, gameDataModel);
+        game.countGoalFor(team);
 
         notifyAboutStateChange();
     }
 
-    private IPlayAGame getGame() {
-        GameMode gameMode = gameDataModel.getGameMode();
-        return gameManipulatorProvider.getGameManipulator(gameMode);
-    }
 
     public void undoGoal() {
-        IPlayAGame gameManipulator = getGame();
-        gameManipulator.undoGoal(gameDataModel);
+        game.undoGoal();
     }
 
     public void redoGoal() {
-        IPlayAGame gameManipulator = getGame();
-        gameManipulator.redoGoal(gameDataModel);
+        game.redoGoal();
     }
 
     public void changeover() {
-        IPlayAGame gameManipulator = getGame();
-        gameManipulator.changeover(gameDataModel);
+        game.changeover();
     }
 
     public void resetMatch() {
-        gameDataModel.resetMatch();
+        game.resetMatch();
     }
 
     private void notifyAboutStateChange() {

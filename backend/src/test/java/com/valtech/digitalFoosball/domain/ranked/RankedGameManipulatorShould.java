@@ -1,17 +1,20 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
-import com.valtech.digitalFoosball.GameBuilder;
 import com.valtech.digitalFoosball.api.driven.persistence.IObtainTeams;
 import com.valtech.digitalFoosball.api.driven.persistence.PlayerService;
 import com.valtech.digitalFoosball.api.driven.persistence.TeamService;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepository;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
+import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
+import com.valtech.digitalFoosball.initializationFactory.GameInitializer;
+import com.valtech.digitalFoosball.initializationFactory.RankedGameInitializer;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -23,38 +26,31 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class RankedGameManipulatorShould {
     private final UUID id = UUID.randomUUID();
+    public IPlayAGame game;
 
-    public RankedGame game;
+    @BeforeEach
+    void setUp() {
+        RankedTeamDataModel teamOne = new RankedTeamDataModel("T1", "P1", "P2");
+        RankedTeamDataModel teamTwo = new RankedTeamDataModel("T2", "P3", "P4");
 
-    protected InitDataModel initDataModel;
-    private RankedTeamDataModel teamDataModelOne;
-    private RankedTeamDataModel teamDataModelTwo;
-    private GameDataModel gameData;
-
-    public RankedGameManipulatorShould() {
-        TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
-        PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
-        game = GameBuilder.buildRankedGameWith(teamRepository, playerRepository);
-        initDataModel = new InitDataModel();
-    }
-
-    private void setUpTeams() {
-        teamDataModelOne = new RankedTeamDataModel("T1", "P1", "P2");
-        teamDataModelTwo = new RankedTeamDataModel("T2", "P3", "P4");
-        initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
-        gameData = game.initGame(initDataModel);
+        TeamRepository teamRepository = new TeamRepositoryFake(id);
+        PlayerRepository playerRepository = new PlayerRepositoryFake();
+        GameInitializer rankedGame = new RankedGameInitializer(teamOne, teamTwo);
+        game = rankedGame.initializeGame(teamRepository, playerRepository);
     }
 
     @Test
     public void throw_name_duplicate_exception_when_a_name_is_used_twice() {
-        teamDataModelOne = new RankedTeamDataModel("T1", "P1", "P2");
-        teamDataModelTwo = new RankedTeamDataModel("T2", "P3", "P1");
-        initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
+        RankedTeamDataModel teamDataModelOne = new RankedTeamDataModel("T1", "P1", "P2");
+        RankedTeamDataModel teamDataModelTwo = new RankedTeamDataModel("T2", "P3", "P1");
+
+        InitDataModel initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
 
         assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> game.initGame(initDataModel));
     }
 
     private List<RankedTeamDataModel> getTeamDataModels() {
+        GameDataModel gameData = game.getGameData();
         SortedMap<Team, RankedTeamDataModel> teams = gameData.getTeams();
         List<RankedTeamDataModel> actual = new ArrayList<>();
         teams.forEach((k, v) -> actual.add(v));
@@ -63,10 +59,9 @@ public class RankedGameManipulatorShould {
 
     @Test
     public void reset_the_scores_to_zero_but_keep_the_names_saved() {
-        setUpTeams();
         raiseScoreOf(ONE, TWO);
 
-        game.changeover(gameData);
+        game.changeover();
 
         List<RankedTeamDataModel> teams = getTeamDataModels();
         assertThat(teams).extracting(RankedTeamDataModel::getScore).containsExactly(0, 0);
@@ -77,13 +72,13 @@ public class RankedGameManipulatorShould {
 
     @Test
     public void forget_about_shot_goals_from_the_past_set() {
-        setUpTeams();
         raiseScoreOf(ONE);
-        game.undoGoal(gameData);
-        game.changeover(gameData);
+        game.undoGoal();
+        game.changeover();
 
-        game.undoGoal(gameData);
+        game.undoGoal();
 
+        GameDataModel gameData = game.getGameData();
         RankedTeamDataModel team = gameData.getTeam(ONE);
         int actual = team.getScore();
         assertThat(actual).isEqualTo(0);
@@ -91,13 +86,13 @@ public class RankedGameManipulatorShould {
 
     @Test
     public void forget_about_undid_goals_from_the_past_set() {
-        setUpTeams();
         raiseScoreOf(ONE);
-        game.undoGoal(gameData);
-        game.changeover(gameData);
+        game.undoGoal();
+        game.changeover();
 
-        game.redoGoal(gameData);
+        game.redoGoal();
 
+        GameDataModel gameData = game.getGameData();
         RankedTeamDataModel team = gameData.getTeam(ONE);
         int actual = team.getScore();
         assertThat(actual).isEqualTo(0);
@@ -105,9 +100,13 @@ public class RankedGameManipulatorShould {
 
     @Test
     public void load_all_teams_ignoring_case() {
-        setUpTeams();
-        teamDataModelOne.setName("Roto");
-        teamDataModelTwo.setName("Rototo");
+        RankedTeamDataModel teamOne = new RankedTeamDataModel("Roto", "P1", "P2");
+        RankedTeamDataModel teamTwo = new RankedTeamDataModel("Rototo", "P3", "P4");
+        TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
+        PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
+        teamRepository.insertTeamDataModel(teamOne, teamTwo);
+        GameInitializer rankedGame = new RankedGameInitializer(teamOne, teamTwo);
+        game = rankedGame.initializeGame(teamRepository, playerRepository);
 
         List<TeamOutputModel> actual = game.getAllTeamsFromDatabase();
 
@@ -116,7 +115,6 @@ public class RankedGameManipulatorShould {
 
     @Test
     public void load_nothing_when_there_are_no_teams_starting_with_given_letters() {
-        setUpTeams();
         setUpTestDoubles();
 
         List<TeamOutputModel> actual = game.getAllTeamsFromDatabase();
@@ -134,7 +132,7 @@ public class RankedGameManipulatorShould {
 
     private void raiseScoreOf(Team... teams) {
         for (Team team : teams) {
-            game.countGoalFor(team, gameData);
+            game.countGoalFor(team);
         }
     }
 
@@ -203,11 +201,16 @@ public class RankedGameManipulatorShould {
 
         @Override
         public List<RankedTeamDataModel> findAll() {
-            List<RankedTeamDataModel> teamDataModels = new ArrayList<>();
-            teamDataModels.add(teamDataModelOne);
-            teamDataModels.add(teamDataModelTwo);
 
             return teamDataModels;
+        }
+
+        private List<RankedTeamDataModel> teamDataModels;
+
+        public void insertTeamDataModel(RankedTeamDataModel teamOne, RankedTeamDataModel teamTwo) {
+            teamDataModels = new ArrayList<>();
+            teamDataModels.add(teamOne);
+            teamDataModels.add(teamTwo);
         }
     }
 

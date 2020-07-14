@@ -5,7 +5,6 @@ import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballUserCo
 import com.valtech.digitalFoosball.domain.adhoc.AdHocGame;
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.ranked.RankedGame;
-import com.valtech.digitalFoosball.domain.timePlay.TimeGame;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,12 +31,5 @@ public class GameModeHolderShould {
         IPlayAGame gameManipulator = gameManipulatorProvider.getGameManipulator(GameMode.RANKED);
 
         assertThat(gameManipulator).isInstanceOf(RankedGame.class);
-    }
-
-    @Test
-    void get_the_time_game() {
-        IPlayAGame gameManipulator = gameManipulatorProvider.getGameManipulator(GameMode.TIME_GAME);
-
-        assertThat(gameManipulator).isInstanceOf(TimeGame.class);
     }
 }

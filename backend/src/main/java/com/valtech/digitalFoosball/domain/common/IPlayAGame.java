@@ -10,13 +10,17 @@ import java.util.List;
 public interface IPlayAGame {
     List<TeamOutputModel> getAllTeamsFromDatabase();
 
-    GameDataModel initGame(InitDataModel initDataModel);
+    void initGame(InitDataModel initDataModel);
 
-    void countGoalFor(Team team, GameDataModel gameDataModel);
+    void countGoalFor(Team team);
 
-    void undoGoal(GameDataModel gameDataModel);
+    void undoGoal();
 
-    void redoGoal(GameDataModel gameDataModel);
+    void redoGoal();
 
-    void changeover(GameDataModel gameDataModel);
+    void changeover();
+
+    void resetMatch();
+
+    GameDataModel getGameData();
 }
