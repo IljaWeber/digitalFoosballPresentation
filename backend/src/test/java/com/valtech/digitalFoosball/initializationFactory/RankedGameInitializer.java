@@ -8,17 +8,15 @@ import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedGame;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 
-public class RankedGameInitializer implements GameInitializer {
+public class RankedGameInitializer {
+    private InitDataModel initDataModel;
 
-    private final InitDataModel initDataModel;
-
-    public RankedGameInitializer(RankedTeamDataModel teamOne, RankedTeamDataModel teamTwo) {
-        initDataModel = new InitDataModel(teamOne, teamTwo);
+    public void prepareInitData(RankedTeamDataModel teamOne, RankedTeamDataModel teamTwo) {
+        this.initDataModel = new InitDataModel(teamOne, teamTwo);
     }
 
-    @Override
-    public IPlayAGame initializeGame(TeamRepository teamRepository,
-                                     PlayerRepository playerRepository) {
+    public IPlayAGame getGame(TeamRepository teamRepository,
+                              PlayerRepository playerRepository) {
 
         RankedGame rankedGame = GameBuilder.buildRankedGameWith(teamRepository, playerRepository);
         rankedGame.initGame(initDataModel);

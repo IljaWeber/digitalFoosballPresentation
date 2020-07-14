@@ -12,7 +12,6 @@ import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.initializationFactory.GameInitializer;
 import com.valtech.digitalFoosball.initializationFactory.RankedGameInitializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,8 +34,9 @@ public class RankedGameManipulatorShould {
 
         TeamRepository teamRepository = new TeamRepositoryFake(id);
         PlayerRepository playerRepository = new PlayerRepositoryFake();
-        GameInitializer rankedGame = new RankedGameInitializer(teamOne, teamTwo);
-        game = rankedGame.initializeGame(teamRepository, playerRepository);
+        RankedGameInitializer rankedGame = new RankedGameInitializer();
+        rankedGame.prepareInitData(teamOne, teamTwo);
+        game = rankedGame.getGame(teamRepository, playerRepository);
     }
 
     @Test
@@ -105,8 +105,9 @@ public class RankedGameManipulatorShould {
         TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
         PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
         teamRepository.insertTeamDataModel(teamOne, teamTwo);
-        GameInitializer rankedGame = new RankedGameInitializer(teamOne, teamTwo);
-        game = rankedGame.initializeGame(teamRepository, playerRepository);
+        RankedGameInitializer rankedGame = new RankedGameInitializer();
+        rankedGame.prepareInitData(teamOne, teamTwo);
+        game = rankedGame.getGame(teamRepository, playerRepository);
 
         List<TeamOutputModel> actual = game.getAllTeamsFromDatabase();
 
