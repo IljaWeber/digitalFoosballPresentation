@@ -20,7 +20,7 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RankedInitServiceShould {
+public class InitServiceShould {
 
     private RankedTeamDataModel teamDataModelOne;
     private RankedTeamDataModel teamDataModelTwo;

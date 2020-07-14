@@ -1,6 +1,5 @@
-package com.valtech.digitalFoosball.domain.adhoc;
+package com.valtech.digitalFoosball.domain.common;
 
-import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
@@ -10,7 +9,7 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
 
 public abstract class ClassicGame implements IPlayAGame {
     protected RankedGameDataModel gameDataModel;
-    private RankedGameRules rules;
+    private final RankedGameRules rules;
 
     public ClassicGame() {
         rules = new RankedGameRules();
@@ -26,10 +25,6 @@ public abstract class ClassicGame implements IPlayAGame {
         gameDataModel.countGoalFor(team);
 
         rules.approveWin(gameDataModel);
-    }
-
-    protected void setGameDataModel(RankedGameDataModel gameDataModel) {
-        this.gameDataModel = gameDataModel;
     }
 
     public void undoGoal() {

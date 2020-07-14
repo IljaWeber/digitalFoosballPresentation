@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 public class AdHocInitService {
+
     private final IObtainTeams teamDataPort;
 
     @Autowired
@@ -35,7 +36,6 @@ public class AdHocInitService {
             RankedTeamDataModel teamFromDatabase = teamDataPort.loadOrSaveIntoDatabase(team);
             teamsFromDatabase.add(teamFromDatabase);
         }
-
         gameDataModel.setTeams(teamsFromDatabase);
 
         return gameDataModel;
