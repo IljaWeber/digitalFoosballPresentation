@@ -15,7 +15,10 @@ public class MatchWinVerifier {
         int requiredSetWins = 2;
 
         for (Map.Entry<Team, TeamDataModel> entry : teams.entrySet()) {
-            if (entry.getValue().getWonSets() >= requiredSetWins) {
+            TeamDataModel team = entry.getValue();
+            int actualWonSets = team.getWonSets();
+
+            if (actualWonSets >= requiredSetWins) {
                 matchWinner = entry.getKey();
             }
         }
