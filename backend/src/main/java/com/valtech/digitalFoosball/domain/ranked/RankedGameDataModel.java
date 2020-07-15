@@ -5,8 +5,6 @@ import com.valtech.digitalFoosball.domain.common.histories.History;
 import com.valtech.digitalFoosball.domain.common.models.BaseGameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 
-import java.util.ArrayList;
-
 import static com.valtech.digitalFoosball.domain.common.constants.GameMode.NO_ACTIVE_GAME;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
 
@@ -45,8 +43,6 @@ public class RankedGameDataModel extends BaseGameDataModel {
         teams.clear();
         setWinner = NO_TEAM;
         history = new History();
-        observers = new ArrayList<>();
-
     }
 
     public void changeOver() {

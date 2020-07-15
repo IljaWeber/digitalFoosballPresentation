@@ -1,12 +1,10 @@
 package com.valtech.digitalFoosball.domain.common.models;
 
-import com.valtech.digitalFoosball.api.driven.notification.Observer;
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.histories.History;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -15,14 +13,12 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public abstract class BaseGameDataModel implements GameDataModel {
     protected SortedMap<Team, TeamDataModel> teams;
-    protected List<Observer> observers;
     protected GameMode gameMode;
     protected History history;
 
     public BaseGameDataModel() {
         teams = new TreeMap<>();
         history = new History();
-        observers = new ArrayList<>();
     }
 
     public SortedMap<Team, TeamDataModel> getTeams() {
