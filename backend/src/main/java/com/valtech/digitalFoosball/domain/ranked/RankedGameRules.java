@@ -24,5 +24,4 @@ public class RankedGameRules extends BaseGameRules {
 
         return setWinner != NO_TEAM;
     }
-
 }

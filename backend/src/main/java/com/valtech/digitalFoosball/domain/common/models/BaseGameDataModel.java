@@ -83,6 +83,4 @@ public abstract class BaseGameDataModel implements GameDataModel {
     public boolean thereAreUndoneGoals() {
         return history.thereAreUndoneGoals();
     }
-
-    protected abstract void updateObservers();
 }

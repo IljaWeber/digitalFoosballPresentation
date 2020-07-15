@@ -20,11 +20,6 @@ public class RankedGameDataModel extends BaseGameDataModel {
     }
 
     @Override
-    protected void updateObservers() {
-        // not implemented yet
-    }
-
-    @Override
     public void increaseWonSetsFor(Team team) {
         teams.get(team).increaseWonSets();
     }
