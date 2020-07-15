@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
 import com.valtech.digitalFoosball.api.driven.persistence.IObtainTeams;
-import com.valtech.digitalFoosball.domain.adhoc.ClassicGameInitService;
+import com.valtech.digitalFoosball.domain.common.ClassicGameInitService;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

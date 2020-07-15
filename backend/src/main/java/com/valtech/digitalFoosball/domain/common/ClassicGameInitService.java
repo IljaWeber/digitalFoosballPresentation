@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.domain.adhoc;
+package com.valtech.digitalFoosball.domain.common;
 
 import com.valtech.digitalFoosball.api.driven.persistence.IObtainTeams;
 import com.valtech.digitalFoosball.domain.common.converter.Converter;
