@@ -2,10 +2,10 @@ package com.valtech.digitalFoosball.domain.common.models.output.game;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.converter.Converter;
-import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
-import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.ranked.MatchWinVerifier;
+import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
+import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 
 import java.util.List;
 import java.util.SortedMap;
@@ -16,9 +16,9 @@ public abstract class BaseGameOutputModel implements GameOutputModel {
 
     private Team matchWinner;
 
-    public BaseGameOutputModel(GameDataModel gameDataModel) {
+    public BaseGameOutputModel(RankedGameDataModel gameDataModel) {
         MatchWinVerifier matchWinVerifier = new MatchWinVerifier();
-        SortedMap<Team, TeamDataModel> teamMap = gameDataModel.getTeams();
+        SortedMap<Team, RankedTeamDataModel> teamMap = gameDataModel.getTeams();
 
         this.teams = Converter.convertMapToTeamOutputs(teamMap);
         matchWinner = matchWinVerifier.getMatchWinner(teamMap);

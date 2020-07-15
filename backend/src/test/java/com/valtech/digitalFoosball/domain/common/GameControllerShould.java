@@ -272,10 +272,5 @@ class GameControllerShould {
         @Override
         public void notifyAboutStateChange(GameOutputModel gameData) {
         }
-
-        @Override
-        public void update(GameOutputModel gameOutputModel) {
-
-        }
     }
 }

@@ -4,9 +4,7 @@ import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepos
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
 import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
-import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import com.valtech.digitalFoosball.initializationFactory.RankedGameFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,8 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class RankedGameManipulatorShouldUndoLastGoal {
 
-    public IPlayAGame game;
     private final UUID id = UUID.randomUUID();
+    public IPlayAGame game;
 
     @BeforeEach
     void setUp() {
@@ -34,7 +32,6 @@ public class RankedGameManipulatorShouldUndoLastGoal {
         game = rankedGame.getGame(teamRepository, playerRepository);
     }
 
-
     @Test
     void in_the_reversed_order_of_scoring() {
         raiseScoreOf(ONE, TWO, ONE);
@@ -46,8 +43,8 @@ public class RankedGameManipulatorShouldUndoLastGoal {
     }
 
     private int getScoreOfTeam(Team team) {
-        GameDataModel gameData = game.getGameData();
-        SortedMap<Team, TeamDataModel> teams = gameData.getTeams();
+        RankedGameDataModel gameData = game.getGameData();
+        SortedMap<Team, RankedTeamDataModel> teams = gameData.getTeams();
         return teams.get(team).getScore();
     }
 
@@ -72,8 +69,8 @@ public class RankedGameManipulatorShouldUndoLastGoal {
     }
 
     private int getNumberOfWonSets(Team team) {
-        GameDataModel gameData = game.getGameData();
-        SortedMap<Team, TeamDataModel> teams = gameData.getTeams();
+        RankedGameDataModel gameData = game.getGameData();
+        SortedMap<Team, RankedTeamDataModel> teams = gameData.getTeams();
         return teams.get(team).getWonSets();
     }
 
@@ -85,6 +82,7 @@ public class RankedGameManipulatorShouldUndoLastGoal {
 
     private class TeamRepositoryFake implements TeamRepository {
         private final UUID id;
+        private List<RankedTeamDataModel> teamDataModels;
 
         public TeamRepositoryFake(UUID id) {
             this.id = id;
@@ -151,8 +149,6 @@ public class RankedGameManipulatorShouldUndoLastGoal {
 
             return teamDataModels;
         }
-
-        private List<RankedTeamDataModel> teamDataModels;
 
         public void insertTeamDataModel(RankedTeamDataModel teamOne, RankedTeamDataModel teamTwo) {
             teamDataModels = new ArrayList<>();

@@ -17,9 +17,4 @@ public class Publisher implements INotifyAboutStateChanges {
     public void notifyAboutStateChange(GameOutputModel gameData) {
         template.convertAndSend("/update/score", gameData);
     }
-
-    @Override
-    public void update(GameOutputModel gameOutputModel) {
-        notifyAboutStateChange(gameOutputModel);
-    }
 }

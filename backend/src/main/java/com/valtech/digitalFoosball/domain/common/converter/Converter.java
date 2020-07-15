@@ -1,7 +1,6 @@
 package com.valtech.digitalFoosball.domain.common.converter;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.RegularTeamOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
@@ -10,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
 
+// TODO: 15.07.20 m.huber move
 public class Converter {
-    public static TeamOutputModel convertToTeamOutput(TeamDataModel team) {
+    public static TeamOutputModel convertToTeamOutput(RankedTeamDataModel team) {
         RegularTeamOutputModel teamOutputModel = new RegularTeamOutputModel();
         teamOutputModel.setName(team.getName());
         teamOutputModel.setScore(team.getScore());
@@ -33,7 +33,7 @@ public class Converter {
         return convertedTeams;
     }
 
-    public static List<TeamOutputModel> convertMapToTeamOutputs(SortedMap<Team, TeamDataModel> teams) {
+    public static List<TeamOutputModel> convertMapToTeamOutputs(SortedMap<Team, RankedTeamDataModel> teams) {
         List<TeamOutputModel> convertedTeams = new ArrayList<>();
 
         teams.forEach((k, v) -> convertedTeams.add(convertToTeamOutput(v)));

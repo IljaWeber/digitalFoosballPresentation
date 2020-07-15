@@ -2,14 +2,13 @@ package com.valtech.digitalFoosball.domain.ranked;
 
 import com.valtech.digitalFoosball.domain.common.BaseGameRules;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
 
 public class RankedGameRules extends BaseGameRules {
 
     @Override
-    public void approveWin(GameDataModel gameDataModel) {
+    public void approveWin(RankedGameDataModel gameDataModel) {
         Team winner = getTeamWithLeadOfTwo(gameDataModel);
 
         if (winner != NO_TEAM) {
@@ -19,7 +18,7 @@ public class RankedGameRules extends BaseGameRules {
     }
 
     @Override
-    public boolean winConditionsFulfilled(GameDataModel gameDataModel) {
+    public boolean winConditionsFulfilled(RankedGameDataModel gameDataModel) {
         Team setWinner = gameDataModel.getSetWinner();
 
         return setWinner != NO_TEAM;

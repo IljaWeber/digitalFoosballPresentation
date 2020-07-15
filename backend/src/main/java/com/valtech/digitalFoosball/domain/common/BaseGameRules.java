@@ -1,26 +1,26 @@
 package com.valtech.digitalFoosball.domain.common;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
-import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
+import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public abstract class BaseGameRules implements GameRules {
 
-    protected int getScoreOfTeam(Team team, GameDataModel gameDataModel) {
-        TeamDataModel teamDataModel = gameDataModel.getTeam(team);
+    protected int getScoreOfTeam(Team team, RankedGameDataModel gameDataModel) {
+        RankedTeamDataModel teamDataModel = gameDataModel.getTeam(team);
         return teamDataModel.getScore();
     }
 
     @Override
-    public Team getTeamWithLeadOfTwo(GameDataModel gameDataModel) {
+    public Team getTeamWithLeadOfTwo(RankedGameDataModel gameDataModel) {
         Team winner = NO_TEAM;
 
         if (thereIsALeadingTeam(gameDataModel)) {
 
             Team leadingTeam = gameDataModel.getLeadingTeam();
-            TeamDataModel teamDataModel = gameDataModel.getTeam(leadingTeam);
+            RankedTeamDataModel teamDataModel = gameDataModel.getTeam(leadingTeam);
 
             if (enoughGoals(teamDataModel) && bigEnoughScoreDifference(gameDataModel)) {
                 winner = leadingTeam;
@@ -31,16 +31,16 @@ public abstract class BaseGameRules implements GameRules {
         return winner;
     }
 
-    private boolean thereIsALeadingTeam(GameDataModel gameDataModel) {
+    private boolean thereIsALeadingTeam(RankedGameDataModel gameDataModel) {
         return NO_TEAM != gameDataModel.getLeadingTeam();
     }
 
-    private boolean enoughGoals(TeamDataModel team) {
+    private boolean enoughGoals(RankedTeamDataModel team) {
         int neededGoals = 6;
         return team.getScore() >= neededGoals;
     }
 
-    private boolean bigEnoughScoreDifference(GameDataModel gameDataModel) {
+    private boolean bigEnoughScoreDifference(RankedGameDataModel gameDataModel) {
         int scoreTeamOne = getScoreOfTeam(ONE, gameDataModel);
         int scoreTeamTwo = getScoreOfTeam(TWO, gameDataModel);
 

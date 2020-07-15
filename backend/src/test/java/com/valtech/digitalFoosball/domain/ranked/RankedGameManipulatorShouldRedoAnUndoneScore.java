@@ -4,9 +4,7 @@ import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepos
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
 import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
-import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import com.valtech.digitalFoosball.initializationFactory.RankedGameFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,9 +44,9 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
     }
 
     private int getScoreOfTeam(Team team) {
-        GameDataModel gameData = game.getGameData();
-        SortedMap<Team, TeamDataModel> teams = gameData.getTeams();
-        TeamDataModel teamDataModel = teams.get(team);
+        RankedGameDataModel gameData = game.getGameData();
+        SortedMap<Team, RankedTeamDataModel> teams = gameData.getTeams();
+        RankedTeamDataModel teamDataModel = teams.get(team);
         return teamDataModel.getScore();
     }
 
@@ -74,9 +72,9 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
     }
 
     private int getNumberOfWonSets(Team team) {
-        GameDataModel gameData = game.getGameData();
-        SortedMap<Team, TeamDataModel> teams = gameData.getTeams();
-        TeamDataModel teamDataModel = teams.get(team);
+        RankedGameDataModel gameData = game.getGameData();
+        SortedMap<Team, RankedTeamDataModel> teams = gameData.getTeams();
+        RankedTeamDataModel teamDataModel = teams.get(team);
         return teamDataModel.getWonSets();
     }
 

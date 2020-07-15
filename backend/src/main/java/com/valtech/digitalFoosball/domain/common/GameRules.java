@@ -1,13 +1,13 @@
 package com.valtech.digitalFoosball.domain.common;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
+import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 
 public interface GameRules {
-    void approveWin(GameDataModel gameDataModel);
+    void approveWin(RankedGameDataModel gameDataModel);
 
-    Team getTeamWithLeadOfTwo(GameDataModel gameDataModel);
+    Team getTeamWithLeadOfTwo(RankedGameDataModel gameDataModel);
 
-    boolean winConditionsFulfilled(GameDataModel gameDataModel);
+    boolean winConditionsFulfilled(RankedGameDataModel gameDataModel);
 
 }

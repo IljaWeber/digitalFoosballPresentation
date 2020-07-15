@@ -5,12 +5,12 @@ import com.valtech.digitalFoosball.api.driver.sensorcommands.IReactToGoals;
 import com.valtech.digitalFoosball.api.driver.usercommands.IReactToUserCommands;
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.EmptyGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.RegularGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
+import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +39,7 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
             return new EmptyGameOutputModel();
         }
 
-        GameDataModel gameDataModel = game.getGameData();
+        RankedGameDataModel gameDataModel = game.getGameData();
 
         return new RegularGameOutputModel(gameDataModel);
     }
