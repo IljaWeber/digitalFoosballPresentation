@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GameManipulatorProvider {
+public class GameProvider {
 
     private final RankedGame rankedGame;
     private final AdHocGame adHocGame;
 
     @Autowired
-    public GameManipulatorProvider(RankedGame rankedGame,
-                                   AdHocGame adHocGame) {
+    public GameProvider(RankedGame rankedGame,
+                        AdHocGame adHocGame) {
         this.rankedGame = rankedGame;
         this.adHocGame = adHocGame;
     }

@@ -17,18 +17,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GameModeHolderShould {
 
     @Autowired
-    GameManipulatorProvider gameManipulatorProvider;
+    GameProvider gameProvider;
 
     @Test
     void get_the_ad_hoc_game() {
-        IPlayAGame gameManipulator = gameManipulatorProvider.getGameManipulator(GameMode.AD_HOC);
+        IPlayAGame gameManipulator = gameProvider.getGameManipulator(GameMode.AD_HOC);
 
         assertThat(gameManipulator).isInstanceOf(AdHocGame.class);
     }
 
     @Test
     void get_the_ranked_game() {
-        IPlayAGame gameManipulator = gameManipulatorProvider.getGameManipulator(GameMode.RANKED);
+        IPlayAGame gameManipulator = gameProvider.getGameManipulator(GameMode.RANKED);
 
         assertThat(gameManipulator).isInstanceOf(RankedGame.class);
     }

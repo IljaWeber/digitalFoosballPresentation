@@ -20,17 +20,17 @@ import java.util.List;
 public class GameController implements IReactToGoals, IReactToUserCommands {
 
     private final INotifyAboutStateChanges notifier;
-    private final GameManipulatorProvider gameManipulatorProvider;
+    private final GameProvider gameProvider;
     private IPlayAGame game;
 
     @Autowired
-    public GameController(GameManipulatorProvider gameManipulatorProvider, INotifyAboutStateChanges notifier) {
-        this.gameManipulatorProvider = gameManipulatorProvider;
+    public GameController(GameProvider gameProvider, INotifyAboutStateChanges notifier) {
+        this.gameProvider = gameProvider;
         this.notifier = notifier;
     }
 
     public List<TeamOutputModel> getAllTeams() {
-        IPlayAGame gameManipulator = gameManipulatorProvider.getGameManipulator(GameMode.RANKED);
+        IPlayAGame gameManipulator = gameProvider.getGameManipulator(GameMode.RANKED);
         return gameManipulator.getAllTeamsFromDatabase();
     }
 
@@ -46,7 +46,7 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
 
     public void initGame(InitDataModel initDataModel) {
         GameMode mode = initDataModel.getMode();
-        game = gameManipulatorProvider.getGameManipulator(mode);
+        game = gameProvider.getGameManipulator(mode);
         game.initGame(initDataModel);
     }
 

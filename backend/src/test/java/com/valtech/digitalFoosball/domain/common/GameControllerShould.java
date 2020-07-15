@@ -41,7 +41,7 @@ class GameControllerShould {
                                                                 new PlayerRepositoryFake());
         AdHocGame adHocGame = GameBuilder.buildAdHocGameWith(new TeamRepositoryFake(id),
                                                              new PlayerRepositoryFake());
-        game = new GameController(new GameManipulatorProvider(rankedGame, adHocGame),
+        game = new GameController(new GameProvider(rankedGame, adHocGame),
                                   new FakeClientUpdater());
 
     }
