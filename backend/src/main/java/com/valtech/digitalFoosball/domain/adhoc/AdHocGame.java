@@ -1,6 +1,7 @@
 package com.valtech.digitalFoosball.domain.adhoc;
 
 import com.valtech.digitalFoosball.domain.common.ClassicGame;
+import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AdHocGame extends ClassicGame {
+public class AdHocGame extends ClassicGame implements IPlayAGame {
 
     private final AdHocInitService initService;
 

@@ -3,7 +3,7 @@ package com.valtech.digitalFoosball.domain.common;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 
-public abstract class ClassicGame implements IPlayAGame {
+public abstract class ClassicGame {
     protected IModifyGames rules;
 
     public void countGoalFor(Team team) {
