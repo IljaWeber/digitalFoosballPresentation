@@ -1,6 +1,7 @@
-package com.valtech.digitalFoosball.domain.ranked;
+package com.valtech.digitalFoosball.domain.common;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 
 public interface IModifyGames {
 

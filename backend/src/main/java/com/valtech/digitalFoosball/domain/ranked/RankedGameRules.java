@@ -1,6 +1,7 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
 import com.valtech.digitalFoosball.domain.common.ClassicGameRules;
+import com.valtech.digitalFoosball.domain.common.IModifyGames;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;

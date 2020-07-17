@@ -1,7 +1,6 @@
 package com.valtech.digitalFoosball.domain.common;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.ranked.IModifyGames;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 
 public abstract class ClassicGame implements IPlayAGame {
