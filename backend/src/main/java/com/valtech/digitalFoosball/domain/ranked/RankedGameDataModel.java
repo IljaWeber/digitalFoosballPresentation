@@ -1,6 +1,5 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
-import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.histories.History;
 
@@ -8,12 +7,10 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import static com.valtech.digitalFoosball.domain.common.constants.GameMode.NO_ACTIVE_GAME;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public class RankedGameDataModel {
     protected SortedMap<Team, RankedTeamDataModel> teams;
-    protected GameMode gameMode;
     protected History history;
     private Team setWinner;
 
@@ -21,7 +18,6 @@ public class RankedGameDataModel {
         teams = new TreeMap<>();
         history = new History();
         setWinner = NO_TEAM;
-        gameMode = NO_ACTIVE_GAME;
     }
 
     public SortedMap<Team, RankedTeamDataModel> getTeams() {

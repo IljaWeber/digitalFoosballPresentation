@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.SortedMap;
 
 public abstract class BaseGameOutputModel implements GameOutputModel {
-
     private List<TeamOutputModel> teams;
 
     private Team matchWinner;
