@@ -23,7 +23,6 @@ public class RankedGameRules extends BaseGameRules {
         }
     }
 
-    @Override
     public boolean winConditionsFulfilled(RankedGameDataModel gameDataModel) {
         Team setWinner = gameDataModel.getSetWinner();
 

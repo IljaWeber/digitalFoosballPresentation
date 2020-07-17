@@ -23,13 +23,11 @@ public abstract class ClassicGame implements IPlayAGame {
         rules.changeOver();
     }
 
-    @Override
     public void resetMatch() {
         rules.resetMatch();
 
     }
 
-    @Override
     public RankedGameDataModel getGameData() {
         return rules.getGameData();
     }

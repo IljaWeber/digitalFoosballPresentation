@@ -5,6 +5,4 @@ import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 public interface GameRules {
     void approveWin(RankedGameDataModel gameDataModel);
 
-    boolean winConditionsFulfilled(RankedGameDataModel gameDataModel);
-
 }
