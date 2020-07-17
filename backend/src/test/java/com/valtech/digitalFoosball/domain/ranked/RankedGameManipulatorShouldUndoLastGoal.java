@@ -5,14 +5,17 @@ import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamReposit
 import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
+import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.initializationFactory.RankedGameFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
-import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
+import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RankedGameManipulatorShouldUndoLastGoal {
@@ -43,9 +46,8 @@ public class RankedGameManipulatorShouldUndoLastGoal {
     }
 
     private int getScoreOfTeam(Team team) {
-        RankedGameDataModel gameData = game.getGameData();
-        SortedMap<Team, RankedTeamDataModel> teams = gameData.getTeams();
-        return teams.get(team).getScore();
+        GameOutputModel gameData = game.getGameData();
+        return gameData.getTeam(team).getScore();
     }
 
     @Test
@@ -64,14 +66,13 @@ public class RankedGameManipulatorShouldUndoLastGoal {
 
         game.undoGoal();
 
-        int actual = getNumberOfWonSets(ONE);
-        assertThat(actual).isEqualTo(0);
+        Team actual = getNumberOfWonSets(ONE);
+        assertThat(actual).isEqualTo(NO_TEAM);
     }
 
-    private int getNumberOfWonSets(Team team) {
-        RankedGameDataModel gameData = game.getGameData();
-        SortedMap<Team, RankedTeamDataModel> teams = gameData.getTeams();
-        return teams.get(team).getWonSets();
+    private Team getNumberOfWonSets(Team team) {
+        GameOutputModel gameData = game.getGameData();
+        return gameData.getWinnerOfSet();
     }
 
     private void raiseScoreOf(Team... teams) {

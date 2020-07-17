@@ -2,8 +2,8 @@ package com.valtech.digitalFoosball.domain.common;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
+import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 
 import java.util.List;
 
@@ -22,6 +22,5 @@ public interface IPlayAGame {
 
     void resetMatch();
 
-    // TODO: 15.07.20 m.huber return Output-Model instead
-    RankedGameDataModel getGameData();
+    GameOutputModel getGameData();
 }

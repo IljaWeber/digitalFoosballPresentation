@@ -5,11 +5,15 @@ import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamReposit
 import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
+import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.initializationFactory.RankedGameFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
@@ -44,10 +48,8 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
     }
 
     private int getScoreOfTeam(Team team) {
-        RankedGameDataModel gameData = game.getGameData();
-        SortedMap<Team, RankedTeamDataModel> teams = gameData.getTeams();
-        RankedTeamDataModel teamDataModel = teams.get(team);
-        return teamDataModel.getScore();
+        GameOutputModel gameData = game.getGameData();
+        return gameData.getTeam(team).getScore();
     }
 
     @Test
@@ -67,15 +69,13 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
 
         game.redoGoal();
 
-        int actual = getNumberOfWonSets(ONE);
-        assertThat(actual).isEqualTo(1);
+        Team actual = getNumberOfWonSets(ONE);
+        assertThat(actual).isEqualTo(ONE);
     }
 
-    private int getNumberOfWonSets(Team team) {
-        RankedGameDataModel gameData = game.getGameData();
-        SortedMap<Team, RankedTeamDataModel> teams = gameData.getTeams();
-        RankedTeamDataModel teamDataModel = teams.get(team);
-        return teamDataModel.getWonSets();
+    private Team getNumberOfWonSets(Team team) {
+        GameOutputModel gameData = game.getGameData();
+        return gameData.getWinnerOfSet();
     }
 
     private void raiseScoreOf(Team... teams) {

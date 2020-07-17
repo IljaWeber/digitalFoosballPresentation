@@ -28,7 +28,6 @@ public abstract class BaseGameOutputModel implements GameOutputModel {
         return teams;
     }
 
-    @Override
     public void setTeams(List<TeamOutputModel> teams) {
         this.teams = teams;
     }
