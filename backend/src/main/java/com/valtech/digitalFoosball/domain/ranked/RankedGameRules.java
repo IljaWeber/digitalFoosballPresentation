@@ -5,12 +5,12 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
 
-public class RankedGameRules extends ClassicGameRules {
-
+public class RankedGameRules extends ClassicGameRules implements IModifyGames {
     private final RankedGameDataModel gameDataModel;
 
     public RankedGameRules(RankedGameDataModel gameDataModel) {
         this.gameDataModel = gameDataModel;
+
     }
 
     public void raiseScoreFor(Team team) {

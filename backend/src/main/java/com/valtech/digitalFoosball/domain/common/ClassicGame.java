@@ -1,11 +1,11 @@
 package com.valtech.digitalFoosball.domain.common;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.ranked.IModifyGames;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
 
 public abstract class ClassicGame implements IPlayAGame {
-    protected RankedGameRules rules;
+    protected IModifyGames rules;
 
     public void countGoalFor(Team team) {
         rules.raiseScoreFor(team);
