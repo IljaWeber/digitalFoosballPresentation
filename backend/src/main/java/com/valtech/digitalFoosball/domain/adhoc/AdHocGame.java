@@ -3,6 +3,7 @@ package com.valtech.digitalFoosball.domain.adhoc;
 import com.valtech.digitalFoosball.domain.common.ClassicGame;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
+import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class AdHocGame extends ClassicGame {
 
     @Autowired
     public AdHocGame(AdHocInitService initService) {
+
         this.initService = initService;
     }
 
@@ -33,6 +35,7 @@ public class AdHocGame extends ClassicGame {
         initDataModel.setTeamOne(teamOne);
         initDataModel.setTeamTwo(teamTwo);
 
-        super.gameDataModel = initService.init(initDataModel);
+        gameDataModel = initService.init(initDataModel);
+        super.rules = new RankedGameRules(gameDataModel);
     }
 }

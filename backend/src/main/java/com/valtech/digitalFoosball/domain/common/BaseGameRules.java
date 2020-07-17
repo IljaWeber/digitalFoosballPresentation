@@ -49,4 +49,6 @@ public abstract class BaseGameRules implements GameRules {
         int requiredDifference = 2;
         return absoluteDifference >= requiredDifference;
     }
+
+    public abstract void raiseScoreFor(Team team);
 }

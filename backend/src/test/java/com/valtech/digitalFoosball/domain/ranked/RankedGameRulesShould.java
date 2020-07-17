@@ -20,7 +20,6 @@ public class RankedGameRulesShould {
 
     @BeforeEach
     void setUp() {
-        setWinVerifier = new RankedGameRules();
         teams = new ArrayList<>();
 
         teamOne = new RankedTeamDataModel();
@@ -30,6 +29,8 @@ public class RankedGameRulesShould {
         teams.add(teamTwo);
         gameDataModel = new RankedGameDataModel();
         gameDataModel.setTeams(teams);
+
+        setWinVerifier = new RankedGameRules(gameDataModel);
     }
 
     @Test
