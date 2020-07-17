@@ -12,30 +12,26 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RankedGameRulesShould {
-    private RankedGameRules setWinVerifier;
-    private RankedTeamDataModel teamOne;
-    private RankedTeamDataModel teamTwo;
-    private List<RankedTeamDataModel> teams;
+    private RankedGameRules rules;
     private RankedGameDataModel gameDataModel;
 
     @BeforeEach
     void setUp() {
-        teams = new ArrayList<>();
+        List<RankedTeamDataModel> teams = new ArrayList<>();
 
-        teamOne = new RankedTeamDataModel();
-        teamTwo = new RankedTeamDataModel();
+        RankedTeamDataModel teamOne = new RankedTeamDataModel();
+        RankedTeamDataModel teamTwo = new RankedTeamDataModel();
 
         teams.add(teamOne);
         teams.add(teamTwo);
         gameDataModel = new RankedGameDataModel();
         gameDataModel.setTeams(teams);
 
-        setWinVerifier = new RankedGameRules(gameDataModel);
+        rules = new RankedGameRules(gameDataModel);
     }
 
     @Test
     public void show_no_winner_when_no_team_scored_six_goals() {
-        setWinVerifier.approveWin(gameDataModel);
         Team actual = gameDataModel.getSetWinner();
 
         assertThat(actual).isEqualTo(NO_TEAM);
@@ -46,7 +42,6 @@ public class RankedGameRulesShould {
         countGoalsFor(Team.ONE, Team.ONE, Team.ONE, Team.ONE, Team.ONE);
         countGoalsFor(TWO, TWO, TWO, TWO, TWO, TWO);
 
-        setWinVerifier.approveWin(gameDataModel);
         Team actual = gameDataModel.getSetWinner();
 
         assertThat(actual).isEqualTo(NO_TEAM);
@@ -56,7 +51,6 @@ public class RankedGameRulesShould {
     public void show_that_the_last_scoring_team_won_when_they_scored_at_least_six_goals_with_a_lead_of_two() {
         countGoalsFor(TWO, TWO, TWO, TWO, TWO, TWO);
 
-        setWinVerifier.approveWin(gameDataModel);
         Team actual = gameDataModel.getSetWinner();
 
         assertThat(actual).isEqualTo(TWO);
@@ -64,8 +58,7 @@ public class RankedGameRulesShould {
 
     private void countGoalsFor(Team... teams) {
         for (Team team : teams) {
-            RankedTeamDataModel teamDataModel = gameDataModel.getTeam(team);
-            teamDataModel.countGoal();
+            rules.raiseScoreFor(team);
         }
     }
 }

@@ -6,12 +6,7 @@ import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
-public abstract class BaseGameRules implements GameRules {
-
-    protected int getScoreOfTeam(Team team, RankedGameDataModel gameDataModel) {
-        RankedTeamDataModel teamDataModel = gameDataModel.getTeam(team);
-        return teamDataModel.getScore();
-    }
+public abstract class ClassicGameRules {
 
     protected Team getTeamWithLeadOfTwo(RankedGameDataModel gameDataModel) {
         Team winner = NO_TEAM;
@@ -40,15 +35,13 @@ public abstract class BaseGameRules implements GameRules {
     }
 
     private boolean bigEnoughScoreDifference(RankedGameDataModel gameDataModel) {
-        int scoreTeamOne = getScoreOfTeam(ONE, gameDataModel);
-        int scoreTeamTwo = getScoreOfTeam(TWO, gameDataModel);
+        int scoreOfTeamOne = gameDataModel.getTeam(ONE).getScore();
+        int scoreOfTeamTwo = gameDataModel.getTeam(TWO).getScore();
 
-        int currentDifference = scoreTeamOne - scoreTeamTwo;
+        int currentDifference = scoreOfTeamOne - scoreOfTeamTwo;
         int absoluteDifference = Math.abs(currentDifference);
 
         int requiredDifference = 2;
         return absoluteDifference >= requiredDifference;
     }
-
-    public abstract void raiseScoreFor(Team team);
 }

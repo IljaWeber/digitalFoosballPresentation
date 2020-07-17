@@ -1,11 +1,11 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
-import com.valtech.digitalFoosball.domain.common.BaseGameRules;
+import com.valtech.digitalFoosball.domain.common.ClassicGameRules;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
 
-public class RankedGameRules extends BaseGameRules {
+public class RankedGameRules extends ClassicGameRules {
 
     private final RankedGameDataModel gameDataModel;
 
@@ -13,23 +13,6 @@ public class RankedGameRules extends BaseGameRules {
         this.gameDataModel = gameDataModel;
     }
 
-    @Override
-    public void approveWin(RankedGameDataModel gameDataModel) {
-        Team winner = getTeamWithLeadOfTwo(gameDataModel);
-
-        if (winner != NO_TEAM) {
-            gameDataModel.increaseWonSetsFor(winner);
-            gameDataModel.setSetWinner(winner);
-        }
-    }
-
-    public boolean winConditionsFulfilled(RankedGameDataModel gameDataModel) {
-        Team setWinner = gameDataModel.getSetWinner();
-
-        return setWinner != NO_TEAM;
-    }
-
-    @Override
     public void raiseScoreFor(Team team) {
 
         if (gameDataModel.getSetWinner() == NO_TEAM) {
@@ -37,15 +20,6 @@ public class RankedGameRules extends BaseGameRules {
         }
 
         approveWinOfSet();
-    }
-
-    private void approveWinOfSet() {
-        Team winner = getTeamWithLeadOfTwo(gameDataModel);
-
-        if (winner != NO_TEAM) {
-            gameDataModel.increaseWonSetsFor(winner);
-            gameDataModel.setSetWinner(winner);
-        }
     }
 
     public void undoLastGoal() {
@@ -79,5 +53,20 @@ public class RankedGameRules extends BaseGameRules {
 
     public RankedGameDataModel getGameData() {
         return gameDataModel;
+    }
+
+    private void approveWinOfSet() {
+        Team winner = getTeamWithLeadOfTwo(gameDataModel);
+
+        if (winner != NO_TEAM) {
+            gameDataModel.increaseWonSetsFor(winner);
+            gameDataModel.setSetWinner(winner);
+        }
+    }
+
+    private boolean winConditionsFulfilled(RankedGameDataModel gameDataModel) {
+        Team setWinner = gameDataModel.getSetWinner();
+
+        return setWinner != NO_TEAM;
     }
 }
