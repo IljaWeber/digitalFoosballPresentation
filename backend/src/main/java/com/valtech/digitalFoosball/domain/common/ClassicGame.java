@@ -5,7 +5,6 @@ import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
 
 public abstract class ClassicGame implements IPlayAGame {
-    protected RankedGameDataModel gameDataModel;
     protected RankedGameRules rules;
 
     public void countGoalFor(Team team) {
