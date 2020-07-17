@@ -13,8 +13,7 @@ public abstract class BaseGameRules implements GameRules {
         return teamDataModel.getScore();
     }
 
-    @Override
-    public Team getTeamWithLeadOfTwo(RankedGameDataModel gameDataModel) {
+    protected Team getTeamWithLeadOfTwo(RankedGameDataModel gameDataModel) {
         Team winner = NO_TEAM;
 
         if (thereIsALeadingTeam(gameDataModel)) {
