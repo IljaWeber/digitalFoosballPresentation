@@ -1,32 +1,38 @@
 package com.valtech.digitalFoosball.domain.common;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
+
+import java.util.SortedMap;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public abstract class ClassicGameRules {
 
-    protected Team getTeamWithLeadOfTwo(RankedGameDataModel gameDataModel) {
+    protected Team checkForWin(SortedMap<Team, RankedTeamDataModel> teams) {
+        Team leadingTeam = NO_TEAM;
         Team winner = NO_TEAM;
 
-        if (thereIsALeadingTeam(gameDataModel)) {
+        int scoreOfTeamOne = teams.get(ONE).getScore();
+        int scoreOfTeamTwo = teams.get(TWO).getScore();
 
-            Team leadingTeam = gameDataModel.getLeadingTeam();
-            RankedTeamDataModel teamDataModel = gameDataModel.getTeam(leadingTeam);
+        if (scoreOfTeamOne > scoreOfTeamTwo) {
+            leadingTeam = ONE;
+        }
 
-            if (enoughGoals(teamDataModel) && bigEnoughScoreDifference(gameDataModel)) {
+        if (scoreOfTeamTwo > scoreOfTeamOne) {
+            leadingTeam = TWO;
+        }
+
+        if (leadingTeam != NO_TEAM) {
+            RankedTeamDataModel leading = teams.get(leadingTeam);
+
+            if (enoughGoals(leading) && bigEnoughScoreDifference(scoreOfTeamOne, scoreOfTeamTwo)) {
                 winner = leadingTeam;
             }
-
         }
 
         return winner;
-    }
-
-    private boolean thereIsALeadingTeam(RankedGameDataModel gameDataModel) {
-        return NO_TEAM != gameDataModel.getLeadingTeam();
     }
 
     private boolean enoughGoals(RankedTeamDataModel team) {
@@ -34,10 +40,7 @@ public abstract class ClassicGameRules {
         return team.getScore() >= neededGoals;
     }
 
-    private boolean bigEnoughScoreDifference(RankedGameDataModel gameDataModel) {
-        int scoreOfTeamOne = gameDataModel.getTeam(ONE).getScore();
-        int scoreOfTeamTwo = gameDataModel.getTeam(TWO).getScore();
-
+    private boolean bigEnoughScoreDifference(int scoreOfTeamOne, int scoreOfTeamTwo) {
         int currentDifference = scoreOfTeamOne - scoreOfTeamTwo;
         int absoluteDifference = Math.abs(currentDifference);
 

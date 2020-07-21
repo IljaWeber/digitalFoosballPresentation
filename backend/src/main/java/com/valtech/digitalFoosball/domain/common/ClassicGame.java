@@ -29,7 +29,6 @@ public abstract class ClassicGame {
     }
 
     public GameOutputModel getGameData() {
-        GameOutputModel gameOutputModel = new RegularGameOutputModel(rules.getGameData());
-        return gameOutputModel;
+        return new RegularGameOutputModel(rules.getGameData());
     }
 }

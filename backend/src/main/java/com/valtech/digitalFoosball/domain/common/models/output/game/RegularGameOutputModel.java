@@ -1,14 +1,14 @@
 package com.valtech.digitalFoosball.domain.common.models.output.game;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
+import com.valtech.digitalFoosball.domain.ranked.GameDataModel;
 
 public class RegularGameOutputModel extends BaseGameOutputModel {
     private final Team winnerOfSet;
 
-    public RegularGameOutputModel(RankedGameDataModel gameDataModel) {
+    public RegularGameOutputModel(GameDataModel gameDataModel) {
         super(gameDataModel);
-        this.winnerOfSet = gameDataModel.getSetWinner();
+        this.winnerOfSet = gameDataModel.getWinner();
     }
 
     @Override

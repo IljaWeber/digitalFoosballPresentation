@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.domain.common;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
+import com.valtech.digitalFoosball.domain.ranked.GameDataModel;
 
 public interface IModifyGames {
 
@@ -13,7 +13,7 @@ public interface IModifyGames {
 
     void changeOver();
 
-    RankedGameDataModel getGameData();
+    GameDataModel getGameData();
 
     void resetMatch();
 }

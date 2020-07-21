@@ -68,7 +68,6 @@ public class DigitalFoosballRestApiShould {
         gameDataModel = new RankedGameDataModel();
         gameDataModel.setTeam(ONE, teamOne);
         gameDataModel.setTeam(TWO, teamTwo);
-        gameDataModel.setSetWinner(NO_TEAM);
         prepareTeamsForInitialization(teamOne, teamTwo);
     }
 

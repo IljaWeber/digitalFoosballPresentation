@@ -9,7 +9,7 @@ import java.util.TreeMap;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
-public class RankedGameDataModel {
+public class RankedGameDataModel implements GameDataModel {
     protected SortedMap<Team, RankedTeamDataModel> teams;
     protected History history;
     private Team setWinner;
@@ -22,6 +22,16 @@ public class RankedGameDataModel {
 
     public SortedMap<Team, RankedTeamDataModel> getTeams() {
         return teams;
+    }
+
+    @Override
+    public void setWinnerOfAGame(Team team) {
+        this.setWinner = team;
+
+        if (setWinner != NO_TEAM) {
+
+            teams.get(team).increaseWonSets();
+        }
     }
 
     public void setTeams(List<RankedTeamDataModel> teams) {
@@ -38,53 +48,34 @@ public class RankedGameDataModel {
     }
 
     public void countGoalFor(Team scoredTeam) {
-        teams.get(scoredTeam).countGoal();
-        history.rememberLastGoalFor(scoredTeam);
+        if (setWinner == NO_TEAM) {
+            teams.get(scoredTeam).countGoal();
+            history.rememberLastGoalFor(scoredTeam);
+        }
     }
 
     public boolean thereAreGoals() {
         return history.thereAreGoals();
     }
 
+    @Override
+    public boolean areThereUndoneGoals() {
+        return history.thereAreUndoneGoals();
+    }
+
     public void undoLastGoal() {
+        if (setWinner != NO_TEAM) {
+            teams.get(setWinner).decreaseWonSets();
+            setWinner = NO_TEAM;
+        }
+
         Team undo = history.undo();
-        RankedTeamDataModel teamDataModel = teams.get(undo);
-        teamDataModel.decreaseScore();
+        teams.get(undo).decreaseScore();
     }
 
     public void redoLastUndoneGoal() {
         Team redo = history.getLastUndoingTeam();
         countGoalFor(redo);
-    }
-
-    public Team getLeadingTeam() {
-        Team leadingTeam = NO_TEAM;
-
-        int scoreOne = teams.get(ONE).getScore();
-        int scoreTwo = teams.get(TWO).getScore();
-
-        if (scoreOne > scoreTwo) {
-            leadingTeam = ONE;
-        }
-
-        if (scoreTwo > scoreOne) {
-            leadingTeam = TWO;
-        }
-
-        return leadingTeam;
-    }
-
-    public boolean thereAreUndoneGoals() {
-        return history.thereAreUndoneGoals();
-    }
-
-    public void increaseWonSetsFor(Team team) {
-        teams.get(team).increaseWonSets();
-    }
-
-    public void decreaseWonSetsForRecentSetWinner() {
-        RankedTeamDataModel setWinningTeam = teams.get(setWinner);
-        setWinningTeam.decreaseWonSets();
     }
 
     public Team getSetWinner() {
@@ -99,6 +90,11 @@ public class RankedGameDataModel {
         teams.clear();
         setWinner = NO_TEAM;
         history = new History();
+    }
+
+    @Override
+    public Team getWinner() {
+        return setWinner;
     }
 
     public void changeOver() {
