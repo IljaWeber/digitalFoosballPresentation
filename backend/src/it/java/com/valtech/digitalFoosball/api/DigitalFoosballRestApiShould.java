@@ -49,14 +49,12 @@ public class DigitalFoosballRestApiShould {
     private GameController game;
     private String json;
     private MvcResult result;
-    private List<RankedTeamDataModel> teams;
-    private RankedGameDataModel gameDataModel;
+    private RankedGameDataModel gameDataModel = new RankedGameDataModel();
     private InitDataModel initDataModel;
     private MockHttpServletRequestBuilder builder;
 
     public DigitalFoosballRestApiShould() {
         gson = new Gson();
-        teams = new ArrayList<>();
         mapper = new ObjectMapper();
         initDataModel = new InitDataModel();
         teamOne = new RankedTeamDataModel("T1", "P1", "P2");
@@ -65,9 +63,10 @@ public class DigitalFoosballRestApiShould {
 
     @BeforeEach
     void setUp() {
-        gameDataModel = new RankedGameDataModel();
-        gameDataModel.setTeam(ONE, teamOne);
-        gameDataModel.setTeam(TWO, teamTwo);
+        List<RankedTeamDataModel> teams = new ArrayList<>();
+        teams.add(teamOne);
+        teams.add(teamTwo);
+        gameDataModel.setTeams(teams);
         prepareTeamsForInitialization(teamOne, teamTwo);
     }
 
@@ -85,8 +84,10 @@ public class DigitalFoosballRestApiShould {
     }
 
     private void prepareComparableAdHocInitialisation() {
-        gameDataModel.setTeam(ONE, new RankedTeamDataModel("Orange", "Goalie", "Striker"));
-        gameDataModel.setTeam(TWO, new RankedTeamDataModel("Green", "Goalie", "Striker"));
+        List<RankedTeamDataModel> teams = new ArrayList<>();
+        teams.add(new RankedTeamDataModel("Orange", "Goalie", "Striker"));
+        teams.add(new RankedTeamDataModel("Green", "Goalie", "Striker"));
+        gameDataModel.setTeams(teams);
     }
 
     @Test
@@ -175,7 +176,8 @@ public class DigitalFoosballRestApiShould {
         for (Team increasingSetForTeam : increasingSetForTeams) {
             gameDataModel.getTeam(increasingSetForTeam).increaseWonSets();
         }
-        gameDataModel.setSetWinner(lastSetWinner);
+
+        gameDataModel.setWinnerOfAGame(lastSetWinner);
     }
 
     @Test
@@ -200,7 +202,7 @@ public class DigitalFoosballRestApiShould {
 
     private void prepareTeamsForInitialization(RankedTeamDataModel teamOne, RankedTeamDataModel teamTwo) {
         this.initDataModel = new InitDataModel();
-        this.teams = new ArrayList<>();
+        List<RankedTeamDataModel> teams = new ArrayList<>();
         teams.add(teamOne);
         teams.add(teamTwo);
 

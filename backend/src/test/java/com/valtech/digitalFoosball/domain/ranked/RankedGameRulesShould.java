@@ -32,7 +32,7 @@ public class RankedGameRulesShould {
 
     @Test
     public void show_no_winner_when_no_team_scored_six_goals() {
-        Team actual = gameDataModel.getSetWinner();
+        Team actual = gameDataModel.getWinner();
 
         assertThat(actual).isEqualTo(NO_TEAM);
     }
@@ -42,7 +42,7 @@ public class RankedGameRulesShould {
         countGoalsFor(Team.ONE, Team.ONE, Team.ONE, Team.ONE, Team.ONE);
         countGoalsFor(TWO, TWO, TWO, TWO, TWO, TWO);
 
-        Team actual = gameDataModel.getSetWinner();
+        Team actual = gameDataModel.getWinner();
 
         assertThat(actual).isEqualTo(NO_TEAM);
     }
@@ -51,7 +51,7 @@ public class RankedGameRulesShould {
     public void show_that_the_last_scoring_team_won_when_they_scored_at_least_six_goals_with_a_lead_of_two() {
         countGoalsFor(TWO, TWO, TWO, TWO, TWO, TWO);
 
-        Team actual = gameDataModel.getSetWinner();
+        Team actual = gameDataModel.getWinner();
 
         assertThat(actual).isEqualTo(TWO);
     }

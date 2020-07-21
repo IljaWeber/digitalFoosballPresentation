@@ -12,12 +12,12 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 public class RankedGameDataModel implements GameDataModel {
     protected SortedMap<Team, RankedTeamDataModel> teams;
     protected History history;
-    private Team setWinner;
+    private Team actualWinner;
 
     public RankedGameDataModel() {
         teams = new TreeMap<>();
         history = new History();
-        setWinner = NO_TEAM;
+        actualWinner = NO_TEAM;
     }
 
     public SortedMap<Team, RankedTeamDataModel> getTeams() {
@@ -26,9 +26,9 @@ public class RankedGameDataModel implements GameDataModel {
 
     @Override
     public void setWinnerOfAGame(Team team) {
-        this.setWinner = team;
+        this.actualWinner = team;
 
-        if (setWinner != NO_TEAM) {
+        if (actualWinner != NO_TEAM) {
 
             teams.get(team).increaseWonSets();
         }
@@ -43,12 +43,8 @@ public class RankedGameDataModel implements GameDataModel {
         return teams.get(team);
     }
 
-    public void setTeam(Team team, RankedTeamDataModel teamDataModel) {
-        teams.put(team, teamDataModel);
-    }
-
     public void countGoalFor(Team scoredTeam) {
-        if (setWinner == NO_TEAM) {
+        if (actualWinner == NO_TEAM) {
             teams.get(scoredTeam).countGoal();
             history.rememberLastGoalFor(scoredTeam);
         }
@@ -58,15 +54,14 @@ public class RankedGameDataModel implements GameDataModel {
         return history.thereAreGoals();
     }
 
-    @Override
     public boolean areThereUndoneGoals() {
         return history.thereAreUndoneGoals();
     }
 
     public void undoLastGoal() {
-        if (setWinner != NO_TEAM) {
-            teams.get(setWinner).decreaseWonSets();
-            setWinner = NO_TEAM;
+        if (actualWinner != NO_TEAM) {
+            teams.get(actualWinner).decreaseWonSets();
+            actualWinner = NO_TEAM;
         }
 
         Team undo = history.undo();
@@ -78,28 +73,20 @@ public class RankedGameDataModel implements GameDataModel {
         countGoalFor(redo);
     }
 
-    public Team getSetWinner() {
-        return setWinner;
-    }
-
-    public void setSetWinner(Team setWinner) {
-        this.setWinner = setWinner;
-    }
-
     public void resetMatch() {
         teams.clear();
-        setWinner = NO_TEAM;
+        actualWinner = NO_TEAM;
         history = new History();
     }
 
     @Override
     public Team getWinner() {
-        return setWinner;
+        return actualWinner;
     }
 
     public void changeOver() {
         teams.forEach((teamConstant, dataModel) -> dataModel.changeover());
-        setWinner = NO_TEAM;
+        actualWinner = NO_TEAM;
         history = new History();
     }
 
