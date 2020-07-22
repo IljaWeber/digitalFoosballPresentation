@@ -11,10 +11,8 @@ import java.util.Optional;
 
 @Service
 public class PlayerService {
-
     private final PlayerRepository playerRepository;
     private final Logger logger = LogManager.getLogger(PlayerService.class);
-
 
     @Autowired
     public PlayerService(PlayerRepository playerRepository) {

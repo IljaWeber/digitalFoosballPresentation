@@ -70,7 +70,7 @@ class GameControllerShould {
         game.initGame(initDataModel);
     }
 
-    // todo reconsider this use case
+    // OPTIMIZE: create on 22.07.20 by iljaweber: reconsider next use case
 
     @Test
     public void return_empty_model_when_no_teams_are_set_up() {
