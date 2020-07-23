@@ -18,7 +18,7 @@ Configuration:
 
   Loggers:
     logger:
-      - name: com.valtech.digitalFoosball.api.DigitalFoosballAPI
+      - name: com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballUserCommandAPI
         level: info
         additivity: false
         AppenderRef:

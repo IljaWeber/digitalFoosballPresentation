@@ -38,7 +38,7 @@ public class DigitalFoosballUserCommandAPI {
 
     @PostMapping(path = "/init/ranked", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel init(@RequestBody InitDataModel initDataModel) {
-        logger.info("Sign in: " + initDataModel.toString());
+        logger.warn("Sign in: " + initDataModel.toString());
 
         initDataModel.setMode(RANKED);
         gameController.initGame(initDataModel);

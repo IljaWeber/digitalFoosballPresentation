@@ -5,7 +5,7 @@ import {properties} from "../../resources/properties";
 export default class NextRoundButton extends React.Component {
     handleSubmit = async (event) => {
         event.preventDefault();
-        const url = properties.url + 'newRound';
+        const url = properties.userCommandUrl + 'newRound';
         const requestOptions = {
             method: 'POST',
             Authorization: properties.auth,

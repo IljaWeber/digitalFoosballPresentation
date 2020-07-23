@@ -12,7 +12,7 @@ export default class SignInForm extends React.Component {
     teams;
 
     componentDidMount = async () => {
-        const url = properties.url + "allTeams";
+        const url = properties.fetchUrl + "allTeams";
 
         const requestOptions = {
             method: 'GET',
@@ -33,7 +33,7 @@ export default class SignInForm extends React.Component {
 
     submitAdHoc = async (event) => {
         event.preventDefault();
-        const url = properties.url + "init/adhoc";
+        const url = properties.userCommandUrl + "init/adhoc";
 
         const requestOptions = {
             method: 'POST',
@@ -56,7 +56,7 @@ export default class SignInForm extends React.Component {
 
     sendForm = async (event) => {
         event.preventDefault();
-        const url = properties.url + "init/ranked";
+        const url = properties.userCommandUrl + "init/ranked";
 
         const requestOptions = {
             method: 'POST',
