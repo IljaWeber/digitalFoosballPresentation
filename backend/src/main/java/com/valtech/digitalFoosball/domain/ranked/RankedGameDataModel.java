@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.common.histories.History;
+import com.valtech.digitalFoosball.domain.common.histories.ScoreOverView;
 
 import java.util.List;
 import java.util.SortedMap;
@@ -11,12 +11,12 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public class RankedGameDataModel implements GameDataModel {
     protected SortedMap<Team, RankedTeamDataModel> teams;
-    protected History history;
+    protected ScoreOverView scoreOverView;
     private Team actualWinner;
 
     public RankedGameDataModel() {
         teams = new TreeMap<>();
-        history = new History();
+        scoreOverView = new ScoreOverView();
         actualWinner = NO_TEAM;
     }
 
@@ -46,16 +46,16 @@ public class RankedGameDataModel implements GameDataModel {
     public void countGoalFor(Team scoredTeam) {
         if (actualWinner == NO_TEAM) {
             teams.get(scoredTeam).countGoal();
-            history.rememberLastGoalFor(scoredTeam);
+            scoreOverView.rememberLastGoalFor(scoredTeam);
         }
     }
 
     public boolean thereAreGoals() {
-        return history.thereAreGoals();
+        return scoreOverView.thereAreGoals();
     }
 
     public boolean areThereUndoneGoals() {
-        return history.thereAreUndoneGoals();
+        return scoreOverView.thereAreUndoneGoals();
     }
 
     public void undoLastGoal() {
@@ -64,19 +64,19 @@ public class RankedGameDataModel implements GameDataModel {
             actualWinner = NO_TEAM;
         }
 
-        Team undo = history.undo();
+        Team undo = scoreOverView.undo();
         teams.get(undo).decreaseScore();
     }
 
     public void redoLastUndoneGoal() {
-        Team redo = history.getLastUndoingTeam();
+        Team redo = scoreOverView.getLastUndoingTeam();
         countGoalFor(redo);
     }
 
     public void resetMatch() {
         teams.clear();
         actualWinner = NO_TEAM;
-        history = new History();
+        scoreOverView = new ScoreOverView();
     }
 
     @Override
@@ -84,10 +84,15 @@ public class RankedGameDataModel implements GameDataModel {
         return actualWinner;
     }
 
+    @Override
+    public ScoreOverView getOverView() {
+        return scoreOverView;
+    }
+
     public void changeOver() {
         teams.forEach((teamConstant, dataModel) -> dataModel.changeover());
         actualWinner = NO_TEAM;
-        history = new History();
+        scoreOverView = new ScoreOverView();
     }
 
 }

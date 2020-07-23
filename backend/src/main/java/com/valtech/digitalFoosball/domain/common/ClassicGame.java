@@ -2,7 +2,6 @@ package com.valtech.digitalFoosball.domain.common;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
-import com.valtech.digitalFoosball.domain.common.models.output.game.RegularGameOutputModel;
 
 public abstract class ClassicGame {
     protected IModifyGames rules;
@@ -25,10 +24,9 @@ public abstract class ClassicGame {
 
     public void resetMatch() {
         rules.resetMatch();
-
     }
 
     public GameOutputModel getGameData() {
-        return new RegularGameOutputModel(rules.getGameData());
+        return rules.getPreparedDataForOutput();
     }
 }

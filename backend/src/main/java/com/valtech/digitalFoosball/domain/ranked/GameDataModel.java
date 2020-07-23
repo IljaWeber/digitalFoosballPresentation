@@ -1,6 +1,7 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.histories.ScoreOverView;
 
 import java.util.SortedMap;
 
@@ -24,4 +25,6 @@ public interface GameDataModel {
     void resetMatch();
 
     Team getWinner();
+
+    ScoreOverView getOverView();
 }
