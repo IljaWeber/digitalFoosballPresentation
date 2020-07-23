@@ -3,6 +3,7 @@ package com.valtech.digitalFoosball.domain.ranked;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 
 import java.util.SortedMap;
+import java.util.Stack;
 
 public interface GameDataModel {
     void countGoalFor(Team team);
@@ -24,4 +25,6 @@ public interface GameDataModel {
     void resetMatch();
 
     Team getWinner();
+
+    Stack<Team> getAllWins();
 }

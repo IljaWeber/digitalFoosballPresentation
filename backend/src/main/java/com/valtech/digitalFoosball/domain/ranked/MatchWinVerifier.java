@@ -2,23 +2,37 @@ package com.valtech.digitalFoosball.domain.ranked;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 
-import java.util.Map;
-import java.util.SortedMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
-import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
+import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public class MatchWinVerifier {
 
-    public Team getMatchWinner(SortedMap<Team, RankedTeamDataModel> teams) {
+    public Team getMatchWinner(Stack<Team> allWins) {
+        List<Team> wins = new ArrayList<>(allWins);
         Team matchWinner = NO_TEAM;
-        int requiredSetWins = 2;
+        int winsOfTeamOne = 0;
+        int winsOfTeamTwo = 0;
+        int necessarySetWinsForMatchWin = 2;
 
-        for (Map.Entry<Team, RankedTeamDataModel> entry : teams.entrySet()) {
-            RankedTeamDataModel team = entry.getValue();
-            int actualWonSets = team.getWonSets();
+        for (Team win : wins) {
 
-            if (actualWonSets >= requiredSetWins) {
-                matchWinner = entry.getKey();
+            if (win == ONE) {
+                winsOfTeamOne++;
+
+                if (winsOfTeamOne >= necessarySetWinsForMatchWin) {
+                    matchWinner = ONE;
+                }
+            }
+
+            if (win == TWO) {
+                winsOfTeamTwo++;
+
+                if (winsOfTeamTwo >= necessarySetWinsForMatchWin) {
+                    matchWinner = TWO;
+                }
             }
         }
 

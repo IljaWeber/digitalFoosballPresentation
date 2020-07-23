@@ -5,6 +5,7 @@ import com.valtech.digitalFoosball.domain.common.histories.ScoreOverView;
 
 import java.util.List;
 import java.util.SortedMap;
+import java.util.Stack;
 import java.util.TreeMap;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
@@ -12,12 +13,14 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 public class RankedGameDataModel implements GameDataModel {
     protected SortedMap<Team, RankedTeamDataModel> teams;
     protected ScoreOverView scoreOverView;
+    private final Stack<Team> winOverView;
     private Team actualWinner;
 
     public RankedGameDataModel() {
         teams = new TreeMap<>();
         scoreOverView = new ScoreOverView();
         actualWinner = NO_TEAM;
+        winOverView = new Stack<>();
     }
 
     public SortedMap<Team, RankedTeamDataModel> getTeams() {
@@ -26,10 +29,10 @@ public class RankedGameDataModel implements GameDataModel {
 
     @Override
     public void setWinnerOfAGame(Team team) {
+        winOverView.push(team);
         this.actualWinner = team;
 
         if (actualWinner != NO_TEAM) {
-
             teams.get(team).increaseWonSets();
         }
     }
@@ -88,5 +91,10 @@ public class RankedGameDataModel implements GameDataModel {
         teams.forEach((teamConstant, dataModel) -> dataModel.changeover());
         actualWinner = NO_TEAM;
         scoreOverView = new ScoreOverView();
+    }
+
+    @Override
+    public Stack<Team> getAllWins() {
+        return winOverView;
     }
 }

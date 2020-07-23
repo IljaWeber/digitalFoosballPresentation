@@ -9,6 +9,7 @@ import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 
 import java.util.List;
 import java.util.SortedMap;
+import java.util.Stack;
 
 public abstract class BaseGameOutputModel implements GameOutputModel {
     private List<TeamOutputModel> teams;
@@ -18,9 +19,10 @@ public abstract class BaseGameOutputModel implements GameOutputModel {
     public BaseGameOutputModel(GameDataModel gameDataModel) {
         MatchWinVerifier matchWinVerifier = new MatchWinVerifier();
         SortedMap<Team, RankedTeamDataModel> teamMap = gameDataModel.getTeams();
+        Stack<Team> allSetWins = gameDataModel.getAllWins();
 
+        this.matchWinner = matchWinVerifier.getMatchWinner(allSetWins);
         this.teams = Converter.convertMapToTeamOutputs(teamMap);
-        matchWinner = matchWinVerifier.getMatchWinner(teamMap);
     }
 
     @Override
