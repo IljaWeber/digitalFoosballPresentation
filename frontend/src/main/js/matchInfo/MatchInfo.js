@@ -80,7 +80,7 @@ export default class MatchInfo extends React.Component {
     };
 
     async updateState() {
-        const url = properties.url + 'game';
+        const url = properties.fetchDataUrl + 'game';
 
         const requestOptions = {
             method: 'GET',

@@ -10,7 +10,7 @@ export default class ResetButton extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const url = properties.url + 'reset';
+        const url = properties.userCommandsUrl + 'reset';
         const requestOptions = {
             method: 'DELETE',
             Authorization: properties.auth,

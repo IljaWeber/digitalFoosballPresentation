@@ -3,21 +3,19 @@ import "../../css/styles.scss"
 
 export default class AutoCompletion extends React.Component {
     getSuggestion() {
-        let suggestions = this.props.teams.map((team, index) => {
-                let suggestion = null;
+        return this.props.teams.map((team, index) => {
+            let suggestion = null;
 
-                let teamName = String(team.name).toLowerCase();
-                let userInput = String(this.props.userInput).toLowerCase();
+            let teamName = String(team.name).toLowerCase();
+            let userInput = String(this.props.userInput).toLowerCase();
 
-                if (teamName.startsWith(userInput)) {
-                    suggestion = this.addSuggestion(index, team);
-                }
-
-                return suggestion;
+            if (teamName.startsWith(userInput)) {
+                suggestion = this.addSuggestion(index, team);
             }
-        );
 
-        return suggestions
+            return suggestion;
+            }
+        )
     }
 
     addSuggestion(index, team) {
