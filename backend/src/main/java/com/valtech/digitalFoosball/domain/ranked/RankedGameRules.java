@@ -47,10 +47,6 @@ public class RankedGameRules extends ClassicGameRules implements IModifyGames {
         return new RegularGameOutputModel(model);
     }
 
-    public GameDataModel getGameData() {
-        return model;
-    }
-
     private void approveSetWinner() {
         SortedMap<Team, RankedTeamDataModel> teams = model.getTeams();
 
