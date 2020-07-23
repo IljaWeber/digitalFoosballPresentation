@@ -84,15 +84,9 @@ public class RankedGameDataModel implements GameDataModel {
         return actualWinner;
     }
 
-    @Override
-    public ScoreOverView getOverView() {
-        return scoreOverView;
-    }
-
     public void changeOver() {
         teams.forEach((teamConstant, dataModel) -> dataModel.changeover());
         actualWinner = NO_TEAM;
         scoreOverView = new ScoreOverView();
     }
-
 }
