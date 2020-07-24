@@ -3,7 +3,6 @@ package com.valtech.digitalFoosball.api;
 import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballUserCommandAPI;
-import com.valtech.digitalFoosball.domain.common.GameController;
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
@@ -38,23 +37,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = DigitalFoosballUserCommandAPI.class)
 public class DigitalFoosballRestApiShould {
 
-    private Gson gson;
-    private ObjectMapper mapper;
+    protected Gson gson;
+    protected ObjectMapper mapper;
     @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private GameController game;
-    private String json;
-    private MockHttpServletRequestBuilder builder;
-    private CompareRankedGameOutputModel comparableOutput;
+    protected MockMvc mockMvc;
+    protected String json;
+    protected MockHttpServletRequestBuilder builder;
+    protected CompareRankedGameOutputModel comparableOutput;
+    protected RestEndpointRequestPerformer endpointRequestPerformer;
 
     @BeforeEach
     void setUp() {
         gson = new Gson();
         mapper = new ObjectMapper();
-        comparableOutput = new CompareRankedGameOutputModel();
         List<RankedTeamDataModel> teams = new ArrayList<>();
+        comparableOutput = new CompareRankedGameOutputModel();
         RankedGameDataModel gameDataModel = new RankedGameDataModel();
+        endpointRequestPerformer = new RestEndpointRequestPerformer();
         RankedTeamDataModel teamOne = new RankedTeamDataModel("T1", "P1", "P2");
         RankedTeamDataModel teamTwo = new RankedTeamDataModel("T2", "P3", "P4");
 
@@ -78,7 +77,7 @@ public class DigitalFoosballRestApiShould {
 
         prepareGameWithMode(AD_HOC);
 
-        String actual = getGameValues();
+        String actual = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -88,7 +87,7 @@ public class DigitalFoosballRestApiShould {
 
         prepareGameWithMode(RANKED);
 
-        String actual = getGameValues();
+        String actual = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -96,14 +95,60 @@ public class DigitalFoosballRestApiShould {
     public void undo_scored_goal() throws Exception {
         comparableOutput.prepareScoreOfTeamOne(2);
         String expected = mapper.writeValueAsString(comparableOutput);
-        MockHttpServletRequestBuilder undo = MockMvcRequestBuilders.put("/api/undo");
         prepareGameWithMode(RANKED);
         countGoalForTeam(ONE, ONE,
                          TWO);
 
-        prepareGameCommands(undo);
+        endpointRequestPerformer.undoLastGoal();
 
-        String actual = getGameValues();
+        String actual = endpointRequestPerformer.getGameValues();
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void undo_a_won_set_when_winning_goal_was_undone() throws Exception {
+        comparableOutput.prepareScoreOfTeamOne(5);
+        comparableOutput.prepareScoreOfTeamTwo(3);
+        comparableOutput.setWinnerOfSet(NO_TEAM);
+        String expected = mapper.writeValueAsString(comparableOutput);
+        prepareGameWithMode(RANKED);
+        countGoalForTeam(ONE,
+                         TWO, TWO,
+                         ONE, ONE,
+                         TWO,
+                         ONE, ONE, ONE);
+
+        endpointRequestPerformer.undoLastGoal();
+
+        String actual = endpointRequestPerformer.getGameValues();
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void undo_a_won_match_when_winning_goal_was_undone() throws Exception {
+        comparableOutput.prepareScoreOfTeamOne(5);
+        comparableOutput.prepareScoreOfTeamTwo(3);
+        comparableOutput.setWinnerOfSet(NO_TEAM);
+        comparableOutput.setMatchWinner(NO_TEAM);
+        String expected = mapper.writeValueAsString(comparableOutput);
+
+        prepareGameWithMode(RANKED);
+        countGoalForTeam(TWO, TWO,
+                         ONE, ONE,
+                         TWO,
+                         ONE, ONE, ONE,
+                         TWO,
+                         ONE);
+        endpointRequestPerformer.startANewRound();
+        countGoalForTeam(ONE,
+                         TWO, TWO,
+                         ONE, ONE, ONE, ONE,
+                         TWO,
+                         ONE);
+
+        endpointRequestPerformer.undoLastGoal();
+
+        String actual = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -117,12 +162,12 @@ public class DigitalFoosballRestApiShould {
         countGoalForTeam(ONE,
                          TWO, TWO,
                          ONE);
-        game.undoGoal();
-        game.undoGoal();
+        endpointRequestPerformer.undoLastGoal();
+        endpointRequestPerformer.undoLastGoal();
 
         prepareGameCommands(redo, redo);
 
-        String actual = getGameValues();
+        String actual = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -130,15 +175,14 @@ public class DigitalFoosballRestApiShould {
     public void reset_game_with_empty_team_and_player_names_and_zero_scores() throws Exception {
         comparableOutput = new CompareRankedGameOutputModel();
         String expected = mapper.writeValueAsString(comparableOutput);
-        MockHttpServletRequestBuilder reset = MockMvcRequestBuilders.delete("/api/reset");
         prepareGameWithMode(RANKED);
         countGoalForTeam(ONE,
                          TWO,
                          ONE, ONE, ONE);
 
-        prepareGameCommands(reset);
+        endpointRequestPerformer.resetValues();
 
-        String actual = getGameValues();
+        String actual = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -156,7 +200,7 @@ public class DigitalFoosballRestApiShould {
                          TWO,
                          ONE, ONE, ONE);
 
-        String actual = getGameValues();
+        String actual = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -176,28 +220,26 @@ public class DigitalFoosballRestApiShould {
                          TWO,
                          ONE, ONE,
                          TWO, TWO, TWO);
-        game.changeover();
+
         countGoalForTeam(ONE, ONE, ONE,
                          TWO, TWO,
                          ONE, ONE,
                          TWO,
                          ONE);
-        game.changeover();
+        endpointRequestPerformer.startANewRound();
         countGoalForTeam(TWO, TWO,
                          ONE, ONE, ONE,
                          TWO,
                          ONE,
                          TWO, TWO, TWO);
 
-        String actual = getGameValues();
+        String actual = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
-    public void reset_score_values_but_team_names_are_not_affected() throws Exception {
+    public void start_a_new_round_with_same_names_but_scores_are_zero() throws Exception {
         String expected = mapper.writeValueAsString(comparableOutput);
-
-        MockHttpServletRequestBuilder newRound = MockMvcRequestBuilders.post("/api/newRound");
         prepareGameWithMode(RANKED);
         countGoalForTeam(ONE, ONE, ONE,
                          TWO,
@@ -205,9 +247,9 @@ public class DigitalFoosballRestApiShould {
                          TWO, TWO, TWO,
                          ONE);
 
-        prepareGameCommands(newRound);
+        endpointRequestPerformer.startANewRound();
 
-        String actual = getGameValues();
+        String actual = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -245,13 +287,6 @@ public class DigitalFoosballRestApiShould {
         mockMvc.perform(builder);
     }
 
-    private String getGameValues() throws Exception {
-        builder = MockMvcRequestBuilders.get("/data/game");
-        MvcResult result = mockMvc.perform(builder).andExpect(status().isOk()).andReturn();
-
-        return result.getResponse().getContentAsString();
-    }
-
     private void countGoalForTeam(Team... teams) throws Exception {
         builder = MockMvcRequestBuilders.post("/api/raise");
         for (Team team : teams) {
@@ -261,7 +296,7 @@ public class DigitalFoosballRestApiShould {
         }
     }
 
-    private static class CompareRankedGameOutputModel {
+    protected static class CompareRankedGameOutputModel {
         List<TeamOutputModel> teams;
         Team matchWinner;
         Team winnerOfSet;
@@ -318,4 +353,30 @@ public class DigitalFoosballRestApiShould {
             return winnerOfSet;
         }
     }
+
+    protected class RestEndpointRequestPerformer {
+
+        private void startANewRound() throws Exception {
+            builder = MockMvcRequestBuilders.post("/api/newRound");
+            mockMvc.perform(builder);
+        }
+
+        private void resetValues() throws Exception {
+            builder = MockMvcRequestBuilders.delete("/api/reset");
+            mockMvc.perform(builder);
+        }
+
+        private void undoLastGoal() throws Exception {
+            builder = MockMvcRequestBuilders.put("/api/undo");
+            mockMvc.perform(builder);
+        }
+
+        private String getGameValues() throws Exception {
+            builder = MockMvcRequestBuilders.get("/data/game");
+            MvcResult result = mockMvc.perform(builder).andExpect(status().isOk()).andReturn();
+
+            return result.getResponse().getContentAsString();
+        }
+    }
+
 }
