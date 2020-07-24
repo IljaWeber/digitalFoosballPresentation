@@ -30,9 +30,10 @@ public class RankedGameDataModel implements GameDataModel {
     @Override
     public void setWinnerOfAGame(Team team) {
         winOverView.push(team);
+
         this.actualWinner = team;
 
-        if (actualWinner != NO_TEAM) {
+        if (team != NO_TEAM) {
             teams.get(team).increaseWonSets();
         }
     }
@@ -65,6 +66,7 @@ public class RankedGameDataModel implements GameDataModel {
         if (actualWinner != NO_TEAM) {
             teams.get(actualWinner).decreaseWonSets();
             actualWinner = NO_TEAM;
+            winOverView.pop();
         }
 
         Team undo = scoreOverView.undo();
