@@ -94,11 +94,12 @@ public class DigitalFoosballRestApiShould {
 
     @Test
     public void undo_scored_goal() throws Exception {
-        comparableOutput.prepareScoreOfTeamOne(1);
+        comparableOutput.prepareScoreOfTeamOne(2);
         String expected = mapper.writeValueAsString(comparableOutput);
         MockHttpServletRequestBuilder undo = MockMvcRequestBuilders.put("/api/undo");
         prepareGameWithMode(RANKED);
-        countGoalForTeam(ONE, ONE);
+        countGoalForTeam(ONE, ONE,
+                         TWO);
 
         prepareGameCommands(undo);
 
@@ -108,13 +109,14 @@ public class DigitalFoosballRestApiShould {
 
     @Test
     public void redo_undone_goals() throws Exception {
-        comparableOutput.prepareScoreOfTeamOne(1);
+        comparableOutput.prepareScoreOfTeamOne(2);
         comparableOutput.prepareScoreOfTeamTwo(2);
         String expected = mapper.writeValueAsString(comparableOutput);
-
         MockHttpServletRequestBuilder redo = MockMvcRequestBuilders.put("/api/redo");
         prepareGameWithMode(RANKED);
-        countGoalForTeam(ONE, TWO, TWO);
+        countGoalForTeam(ONE,
+                         TWO, TWO,
+                         ONE);
         game.undoGoal();
         game.undoGoal();
 
@@ -130,7 +132,9 @@ public class DigitalFoosballRestApiShould {
         String expected = mapper.writeValueAsString(comparableOutput);
         MockHttpServletRequestBuilder reset = MockMvcRequestBuilders.delete("/api/reset");
         prepareGameWithMode(RANKED);
-        countGoalForTeam(ONE, TWO);
+        countGoalForTeam(ONE,
+                         TWO,
+                         ONE, ONE, ONE);
 
         prepareGameCommands(reset);
 
@@ -141,33 +145,51 @@ public class DigitalFoosballRestApiShould {
     @Test
     public void return_a_won_set() throws Exception {
         comparableOutput.prepareScoreOfTeamOne(6);
+        comparableOutput.prepareScoreOfTeamTwo(3);
         comparableOutput.setWinnerOfSet(ONE);
         String expected = mapper.writeValueAsString(comparableOutput);
 
         prepareGameWithMode(RANKED);
-        countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
+        countGoalForTeam(ONE,
+                         TWO, TWO,
+                         ONE, ONE,
+                         TWO,
+                         ONE, ONE, ONE);
 
         String actual = getGameValues();
-
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void return_a_match_winner() throws Exception {
-        comparableOutput.prepareScoreOfTeamOne(6);
-        comparableOutput.prepareScoreOfTeamTwo(0);
+        comparableOutput.prepareScoreOfTeamOne(4);
+        comparableOutput.prepareScoreOfTeamTwo(6);
 
-        comparableOutput.setMatchWinner(ONE);
-        comparableOutput.setWinnerOfSet(ONE);
+        comparableOutput.setMatchWinner(TWO);
+        comparableOutput.setWinnerOfSet(TWO);
         String expected = mapper.writeValueAsString(comparableOutput);
 
         prepareGameWithMode(RANKED);
-        countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
+        countGoalForTeam(ONE,
+                         TWO, TWO,
+                         ONE,
+                         TWO,
+                         ONE, ONE,
+                         TWO, TWO, TWO);
         game.changeover();
-        countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
+        countGoalForTeam(ONE, ONE, ONE,
+                         TWO, TWO,
+                         ONE, ONE,
+                         TWO,
+                         ONE);
+        game.changeover();
+        countGoalForTeam(TWO, TWO,
+                         ONE, ONE, ONE,
+                         TWO,
+                         ONE,
+                         TWO, TWO, TWO);
 
         String actual = getGameValues();
-
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -177,7 +199,11 @@ public class DigitalFoosballRestApiShould {
 
         MockHttpServletRequestBuilder newRound = MockMvcRequestBuilders.post("/api/newRound");
         prepareGameWithMode(RANKED);
-        countGoalForTeam(ONE, ONE, ONE, ONE, ONE, ONE);
+        countGoalForTeam(ONE, ONE, ONE,
+                         TWO,
+                         ONE, ONE,
+                         TWO, TWO, TWO,
+                         ONE);
 
         prepareGameCommands(newRound);
 
