@@ -14,10 +14,6 @@ public abstract class BaseGameOutputModel {
         return teams;
     }
 
-    public void setTeams(List<TeamOutputModel> teams) {
-        this.teams = teams;
-    }
-
     public Team getMatchWinner() {
         return matchWinner;
     }
