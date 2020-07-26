@@ -158,6 +158,62 @@ public class DigitalFoosballRestApiShould {
     }
 
     @Test
+    public void redo_an_undone_set_win() throws Exception {
+        comparableOutput.prepareScoreOfTeamOne(3);
+        comparableOutput.prepareScoreOfTeamTwo(6);
+        comparableOutput.setWinnerOfSet(TWO);
+        String expected = mapper.writeValueAsString(comparableOutput);
+        endpointRequestPerformer.initializeGame(RANKED);
+        endpointRequestPerformer.countGoalForTeam(ONE, ONE,
+                                                  TWO,
+                                                  ONE,
+                                                  TWO, TWO, TWO, TWO, TWO);
+        endpointRequestPerformer.undoLastGoal();
+
+        endpointRequestPerformer.redoLastUndoneGoal();
+
+        String actual = endpointRequestPerformer.getGameValues();
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void redo_an_undone_match_win() throws Exception {
+        comparableOutput.prepareScoreOfTeamOne(7);
+        comparableOutput.prepareScoreOfTeamTwo(9);
+        comparableOutput.setWinnerOfSet(TWO);
+        comparableOutput.setMatchWinner(TWO);
+        String expected = mapper.writeValueAsString(comparableOutput);
+        endpointRequestPerformer.initializeGame(RANKED);
+        endpointRequestPerformer.countGoalForTeam(ONE, ONE,
+                                                  TWO,
+                                                  ONE, ONE, ONE,
+                                                  TWO, TWO,
+                                                  ONE);
+        endpointRequestPerformer.startANewRound();
+        endpointRequestPerformer.countGoalForTeam(TWO, TWO, TWO,
+                                                  ONE,
+                                                  TWO, TWO,
+                                                  ONE, ONE,
+                                                  TWO);
+        endpointRequestPerformer.startANewRound();
+        endpointRequestPerformer.countGoalForTeam(TWO,
+                                                  ONE, ONE,
+                                                  TWO, TWO, TWO,
+                                                  ONE, ONE,
+                                                  TWO,
+                                                  ONE, ONE,
+                                                  TWO, TWO,
+                                                  ONE,
+                                                  TWO, TWO);
+        endpointRequestPerformer.undoLastGoal();
+
+        endpointRequestPerformer.redoLastUndoneGoal();
+
+        String actual = endpointRequestPerformer.getGameValues();
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
     public void reset_game_with_empty_team_and_player_names_and_zero_scores() throws Exception {
         comparableOutput = new CompareRankedGameOutputModel();
         String expected = mapper.writeValueAsString(comparableOutput);
