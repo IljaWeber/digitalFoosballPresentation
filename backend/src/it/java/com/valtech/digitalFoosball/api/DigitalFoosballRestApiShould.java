@@ -41,32 +41,42 @@ public class DigitalFoosballRestApiShould {
         List<RankedTeamDataModel> teams = new ArrayList<>();
         comparableOutput = new CompareRankedGameOutputModel();
         RankedGameDataModel gameDataModel = new RankedGameDataModel();
-        RankedTeamDataModel teamOne = new RankedTeamDataModel("T1", "P1", "P2");
-        RankedTeamDataModel teamTwo = new RankedTeamDataModel("T2", "P3", "P4");
+        RankedTeamDataModel teamOne = new RankedTeamDataModel("FC Barcelona",
+                                                              "Marc-Andre ter Stegen", "Lionel Messi");
+        RankedTeamDataModel teamTwo = new RankedTeamDataModel("FC Madrid",
+                                                              "Thibaut Courtois", "Gareth Bale");
 
         teams.add(teamOne);
         teams.add(teamTwo);
         gameDataModel.setTeams(teams);
         endpointRequestPerformer.prepareTeamsForInitialization(teamOne, teamTwo);
 
-        comparableOutput.prepareCompareTeamOneWithValues("T1", "P1", "P2");
-        comparableOutput.prepareCompareTeamTwoWithValues("T2", "P3", "P4");
+        comparableOutput.prepareCompareTeamOneWithValues("FC Barcelona",
+                                                         "Marc-Andre ter Stegen", "Lionel Messi");
+        comparableOutput.prepareCompareTeamTwoWithValues("FC Madrid",
+                                                         "Thibaut Courtois", "Gareth Bale");
     }
 
     @Test
     void initialise_an_ad_hoc_match_with_default_values_for_the_teams() throws Exception {
         endpointRequestPerformer
                 .prepareTeamsForInitialization(
-                        new RankedTeamDataModel("Orange", "Goalie", "Striker"),
-                        new RankedTeamDataModel("Green", "Goalie", "Striker"));
+                        new RankedTeamDataModel("Orange",
+                                                "Goalie", "Striker"),
+                        new RankedTeamDataModel("Green",
+                                                "Goalie", "Striker"));
         comparableOutput = new CompareRankedGameOutputModel();
-        comparableOutput.prepareCompareTeamOneWithValues("Orange", "Goalie", "Striker");
-        comparableOutput.prepareCompareTeamTwoWithValues("Green", "Goalie", "Striker");
-        String expected = mapper.writeValueAsString(comparableOutput);
+        comparableOutput.prepareCompareTeamOneWithValues("Orange",
+                                                         "Goalie", "Striker");
+        comparableOutput.prepareCompareTeamTwoWithValues("Green",
+                                                         "Goalie", "Striker");
+        String expected
+                = mapper.writeValueAsString(comparableOutput);
 
         endpointRequestPerformer.initializeGame(AD_HOC);
 
-        String actual = endpointRequestPerformer.getGameValues();
+        String actual
+                = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -76,31 +86,41 @@ public class DigitalFoosballRestApiShould {
 
         endpointRequestPerformer.initializeGame(RANKED);
 
-        String actual = endpointRequestPerformer.getGameValues();
+        String actual
+                = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void undo_scored_goal() throws Exception {
-        comparableOutput.prepareScoreOfTeamOne(2);
-        String expected = mapper.writeValueAsString(comparableOutput);
-        endpointRequestPerformer.initializeGame(RANKED);
+        comparableOutput
+                .prepareScoreOfTeamOne(2);
+        String expected
+                = mapper.writeValueAsString(comparableOutput);
+        endpointRequestPerformer
+                .initializeGame(RANKED);
         endpointRequestPerformer.countGoalForTeam(ONE, ONE,
                                                   TWO);
 
         endpointRequestPerformer.undoLastGoal();
 
-        String actual = endpointRequestPerformer.getGameValues();
+        String actual
+                = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void undo_a_won_set_when_winning_goal_was_undone() throws Exception {
-        comparableOutput.prepareScoreOfTeamOne(5);
-        comparableOutput.prepareScoreOfTeamTwo(3);
-        comparableOutput.setWinnerOfSet(NO_TEAM);
-        String expected = mapper.writeValueAsString(comparableOutput);
-        endpointRequestPerformer.initializeGame(RANKED);
+        comparableOutput
+                .prepareScoreOfTeamOne(5);
+        comparableOutput
+                .prepareScoreOfTeamTwo(3);
+        comparableOutput
+                .setWinnerOfSet(NO_TEAM);
+        String expected
+                = mapper.writeValueAsString(comparableOutput);
+        endpointRequestPerformer
+                .initializeGame(RANKED);
         endpointRequestPerformer.countGoalForTeam(ONE,
                                                   TWO, TWO,
                                                   ONE, ONE,
@@ -109,25 +129,33 @@ public class DigitalFoosballRestApiShould {
 
         endpointRequestPerformer.undoLastGoal();
 
-        String actual = endpointRequestPerformer.getGameValues();
+        String actual
+                = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     void undo_a_won_match_when_winning_goal_was_undone() throws Exception {
-        comparableOutput.prepareScoreOfTeamOne(5);
-        comparableOutput.prepareScoreOfTeamTwo(3);
-        comparableOutput.setWinnerOfSet(NO_TEAM);
-        comparableOutput.setMatchWinner(NO_TEAM);
-        String expected = mapper.writeValueAsString(comparableOutput);
-        endpointRequestPerformer.initializeGame(RANKED);
+        comparableOutput
+                .prepareScoreOfTeamOne(5);
+        comparableOutput
+                .prepareScoreOfTeamTwo(3);
+        comparableOutput
+                .setWinnerOfSet(NO_TEAM);
+        comparableOutput
+                .setMatchWinner(NO_TEAM);
+        String expected
+                = mapper.writeValueAsString(comparableOutput);
+        endpointRequestPerformer
+                .initializeGame(RANKED);
         endpointRequestPerformer.countGoalForTeam(TWO, TWO,
                                                   ONE, ONE,
                                                   TWO,
                                                   ONE, ONE, ONE,
                                                   TWO,
                                                   ONE);
-        endpointRequestPerformer.startANewRound();
+        endpointRequestPerformer
+                .startANewRound();
         endpointRequestPerformer.countGoalForTeam(ONE,
                                                   TWO, TWO,
                                                   ONE, ONE, ONE, ONE,
@@ -136,16 +164,21 @@ public class DigitalFoosballRestApiShould {
 
         endpointRequestPerformer.undoLastGoal();
 
-        String actual = endpointRequestPerformer.getGameValues();
+        String actual
+                = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void redo_undone_goals() throws Exception {
-        comparableOutput.prepareScoreOfTeamOne(2);
-        comparableOutput.prepareScoreOfTeamTwo(2);
-        String expected = mapper.writeValueAsString(comparableOutput);
-        endpointRequestPerformer.initializeGame(RANKED);
+        comparableOutput
+                .prepareScoreOfTeamOne(2);
+        comparableOutput
+                .prepareScoreOfTeamTwo(2);
+        String expected =
+                mapper.writeValueAsString(comparableOutput);
+        endpointRequestPerformer
+                .initializeGame(RANKED);
         endpointRequestPerformer.countGoalForTeam(ONE,
                                                   TWO, TWO,
                                                   ONE);
@@ -153,17 +186,23 @@ public class DigitalFoosballRestApiShould {
 
         endpointRequestPerformer.redoLastUndoneGoal();
 
-        String actual = endpointRequestPerformer.getGameValues();
+        String actual
+                = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void redo_an_undone_set_win() throws Exception {
-        comparableOutput.prepareScoreOfTeamOne(3);
-        comparableOutput.prepareScoreOfTeamTwo(6);
-        comparableOutput.setWinnerOfSet(TWO);
-        String expected = mapper.writeValueAsString(comparableOutput);
-        endpointRequestPerformer.initializeGame(RANKED);
+        comparableOutput
+                .prepareScoreOfTeamOne(3);
+        comparableOutput
+                .prepareScoreOfTeamTwo(6);
+        comparableOutput
+                .setWinnerOfSet(TWO);
+        String expected
+                = mapper.writeValueAsString(comparableOutput);
+        endpointRequestPerformer
+                .initializeGame(RANKED);
         endpointRequestPerformer.countGoalForTeam(ONE, ONE,
                                                   TWO,
                                                   ONE,
@@ -172,30 +211,39 @@ public class DigitalFoosballRestApiShould {
 
         endpointRequestPerformer.redoLastUndoneGoal();
 
-        String actual = endpointRequestPerformer.getGameValues();
+        String actual
+                = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void redo_an_undone_match_win() throws Exception {
-        comparableOutput.prepareScoreOfTeamOne(7);
-        comparableOutput.prepareScoreOfTeamTwo(9);
-        comparableOutput.setWinnerOfSet(TWO);
-        comparableOutput.setMatchWinner(TWO);
-        String expected = mapper.writeValueAsString(comparableOutput);
-        endpointRequestPerformer.initializeGame(RANKED);
+        comparableOutput
+                .prepareScoreOfTeamOne(7);
+        comparableOutput
+                .prepareScoreOfTeamTwo(9);
+        comparableOutput
+                .setWinnerOfSet(TWO);
+        comparableOutput
+                .setMatchWinner(TWO);
+        String expected
+                = mapper.writeValueAsString(comparableOutput);
+        endpointRequestPerformer
+                .initializeGame(RANKED);
         endpointRequestPerformer.countGoalForTeam(ONE, ONE,
                                                   TWO,
                                                   ONE, ONE, ONE,
                                                   TWO, TWO,
                                                   ONE);
-        endpointRequestPerformer.startANewRound();
+        endpointRequestPerformer
+                .startANewRound();
         endpointRequestPerformer.countGoalForTeam(TWO, TWO, TWO,
                                                   ONE,
                                                   TWO, TWO,
                                                   ONE, ONE,
                                                   TWO);
-        endpointRequestPerformer.startANewRound();
+        endpointRequestPerformer
+                .startANewRound();
         endpointRequestPerformer.countGoalForTeam(TWO,
                                                   ONE, ONE,
                                                   TWO, TWO, TWO,
@@ -209,33 +257,42 @@ public class DigitalFoosballRestApiShould {
 
         endpointRequestPerformer.redoLastUndoneGoal();
 
-        String actual = endpointRequestPerformer.getGameValues();
+        String actual
+                = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void reset_game_with_empty_team_and_player_names_and_zero_scores() throws Exception {
-        comparableOutput = new CompareRankedGameOutputModel();
-        String expected = mapper.writeValueAsString(comparableOutput);
-        endpointRequestPerformer.initializeGame(RANKED);
+        comparableOutput =
+                new CompareRankedGameOutputModel();
+        String expected =
+                mapper.writeValueAsString(comparableOutput);
+        endpointRequestPerformer
+                .initializeGame(RANKED);
         endpointRequestPerformer.countGoalForTeam(ONE,
                                                   TWO,
                                                   ONE, ONE, ONE);
 
         endpointRequestPerformer.resetValues();
 
-        String actual = endpointRequestPerformer.getGameValues();
+        String actual
+                = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void return_a_won_set() throws Exception {
-        comparableOutput.prepareScoreOfTeamOne(6);
-        comparableOutput.prepareScoreOfTeamTwo(3);
-        comparableOutput.setWinnerOfSet(ONE);
-        String expected = mapper.writeValueAsString(comparableOutput);
-
-        endpointRequestPerformer.initializeGame(RANKED);
+        comparableOutput
+                .prepareScoreOfTeamOne(6);
+        comparableOutput
+                .prepareScoreOfTeamTwo(3);
+        comparableOutput
+                .setWinnerOfSet(ONE);
+        String expected
+                = mapper.writeValueAsString(comparableOutput);
+        endpointRequestPerformer
+                .initializeGame(RANKED);
         endpointRequestPerformer.countGoalForTeam(ONE,
                                                   TWO, TWO,
                                                   ONE, ONE,
@@ -243,31 +300,37 @@ public class DigitalFoosballRestApiShould {
                                                   ONE, ONE, ONE);
 
         String actual = endpointRequestPerformer.getGameValues();
+
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void return_a_match_winner() throws Exception {
-        comparableOutput.prepareScoreOfTeamOne(4);
-        comparableOutput.prepareScoreOfTeamTwo(6);
-        comparableOutput.setMatchWinner(TWO);
-        comparableOutput.setWinnerOfSet(TWO);
-        String expected = mapper.writeValueAsString(comparableOutput);
-
-        endpointRequestPerformer.initializeGame(RANKED);
+        comparableOutput
+                .prepareScoreOfTeamOne(4);
+        comparableOutput
+                .prepareScoreOfTeamTwo(6);
+        comparableOutput
+                .setMatchWinner(TWO);
+        comparableOutput
+                .setWinnerOfSet(TWO);
+        String expected =
+                mapper.writeValueAsString(comparableOutput);
+        endpointRequestPerformer
+                .initializeGame(RANKED);
         endpointRequestPerformer.countGoalForTeam(ONE,
                                                   TWO, TWO,
                                                   ONE,
                                                   TWO,
                                                   ONE, ONE,
                                                   TWO, TWO, TWO);
-
         endpointRequestPerformer.countGoalForTeam(ONE, ONE, ONE,
                                                   TWO, TWO,
                                                   ONE, ONE,
                                                   TWO,
                                                   ONE);
-        endpointRequestPerformer.startANewRound();
+        endpointRequestPerformer
+                .startANewRound();
         endpointRequestPerformer.countGoalForTeam(TWO, TWO,
                                                   ONE, ONE, ONE,
                                                   TWO,
@@ -275,22 +338,27 @@ public class DigitalFoosballRestApiShould {
                                                   TWO, TWO, TWO);
 
         String actual = endpointRequestPerformer.getGameValues();
+
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void start_a_new_round_with_same_names_but_scores_are_zero() throws Exception {
-        String expected = mapper.writeValueAsString(comparableOutput);
-        endpointRequestPerformer.initializeGame(RANKED);
-        endpointRequestPerformer.countGoalForTeam(ONE, ONE, ONE,
-                                                  TWO,
-                                                  ONE, ONE,
-                                                  TWO, TWO, TWO,
-                                                  ONE);
+        String expected =
+                mapper.writeValueAsString(comparableOutput);
+        endpointRequestPerformer
+                .initializeGame(RANKED);
+        endpointRequestPerformer
+                .countGoalForTeam(ONE, ONE, ONE,
+                                  TWO,
+                                  ONE, ONE,
+                                  TWO, TWO, TWO,
+                                  ONE);
 
         endpointRequestPerformer.startANewRound();
 
-        String actual = endpointRequestPerformer.getGameValues();
+        String actual
+                = endpointRequestPerformer.getGameValues();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -351,5 +419,4 @@ public class DigitalFoosballRestApiShould {
             return winnerOfSet;
         }
     }
-
 }
