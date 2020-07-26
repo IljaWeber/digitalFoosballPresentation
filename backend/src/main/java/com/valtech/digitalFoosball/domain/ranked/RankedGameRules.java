@@ -8,6 +8,8 @@ import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputMo
 
 import java.util.SortedMap;
 
+import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
+
 public class RankedGameRules extends ClassicGameRules implements IModifyGames {
     private final GameDataModel model;
 
@@ -52,6 +54,8 @@ public class RankedGameRules extends ClassicGameRules implements IModifyGames {
 
         Team winnerTeam = super.checkForWin(teams);
 
-        model.setWinnerOfAGame(winnerTeam);
+        if (model.getWinner() == NO_TEAM) {
+            model.setWinnerOfAGame(winnerTeam);
+        }
     }
 }
