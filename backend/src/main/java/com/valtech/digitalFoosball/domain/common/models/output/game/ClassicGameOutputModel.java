@@ -10,10 +10,10 @@ import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 import java.util.SortedMap;
 import java.util.Stack;
 
-public class RegularGameOutputModel extends BaseGameOutputModel implements GameOutputModel {
+public class ClassicGameOutputModel extends BaseGameOutputModel implements GameOutputModel {
     private Team winnerOfSet;
 
-    public RegularGameOutputModel(GameDataModel gameDataModel) {
+    public ClassicGameOutputModel(GameDataModel gameDataModel) {
         MatchWinVerifier matchWinVerifier = new RankedGameMatchWinVerifier();
         SortedMap<Team, RankedTeamDataModel> teamMap = gameDataModel.getTeams();
         Stack<Team> allSetWins = gameDataModel.getAllWins();

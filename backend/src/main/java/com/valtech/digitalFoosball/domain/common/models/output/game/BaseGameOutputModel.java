@@ -18,10 +18,6 @@ public abstract class BaseGameOutputModel {
         return matchWinner;
     }
 
-    public void setMatchWinner(Team matchWinner) {
-        this.matchWinner = matchWinner;
-    }
-
     public TeamOutputModel getTeam(Team team) {
         return teams.get(team.listAssociationNumber());
     }

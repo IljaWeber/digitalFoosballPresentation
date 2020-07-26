@@ -16,8 +16,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = DigitalFoosballUserCommandAPI.class)
 public class GameModeHolderShould {
 
-    @Autowired
     GameProvider gameProvider;
+
+    @Autowired
+    public GameModeHolderShould(GameProvider gameProvider) {
+        this.gameProvider = gameProvider;
+    }
 
     @Test
     void get_the_ad_hoc_game() {

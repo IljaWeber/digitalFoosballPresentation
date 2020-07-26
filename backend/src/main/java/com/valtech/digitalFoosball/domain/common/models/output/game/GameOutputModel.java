@@ -12,7 +12,5 @@ public interface GameOutputModel {
 
     Team getMatchWinner();
 
-    void setMatchWinner(Team matchWinner);
-
     TeamOutputModel getTeam(Team team);
 }

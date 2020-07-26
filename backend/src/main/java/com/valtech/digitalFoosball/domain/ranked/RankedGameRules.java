@@ -3,8 +3,8 @@ package com.valtech.digitalFoosball.domain.ranked;
 import com.valtech.digitalFoosball.domain.common.ClassicGameRules;
 import com.valtech.digitalFoosball.domain.common.IModifyGames;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.models.output.game.ClassicGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
-import com.valtech.digitalFoosball.domain.common.models.output.game.RegularGameOutputModel;
 
 import java.util.SortedMap;
 
@@ -44,7 +44,7 @@ public class RankedGameRules extends ClassicGameRules implements IModifyGames {
 
     @Override
     public GameOutputModel getPreparedDataForOutput() {
-        return new RegularGameOutputModel(model);
+        return new ClassicGameOutputModel(model);
     }
 
     private void approveSetWinner() {
