@@ -17,9 +17,12 @@ import java.util.List;
 @Service
 public class GameController implements IReactToGoals, IReactToUserCommands {
 
-    private final INotifyAboutStateChanges notifier;
-    private final GameProvider gameProvider;
-    private IPlayAGame game;
+    private final INotifyAboutStateChanges
+            notifier;
+    private final GameProvider
+            gameProvider;
+    private IPlayAGame
+            game;
 
     @Autowired
     public GameController(GameProvider gameProvider, INotifyAboutStateChanges notifier) {
@@ -51,7 +54,6 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
 
         notifyAboutStateChange();
     }
-
 
     public void undoGoal() {
         game.undoGoal();
