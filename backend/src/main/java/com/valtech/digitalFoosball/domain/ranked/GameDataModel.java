@@ -13,8 +13,6 @@ public interface GameDataModel {
 
     void undoLastGoalFor(Team team);
 
-    void redoLastUndoneGoalFor(Team team);
-
     void changeOver();
 
     void resetMatch();

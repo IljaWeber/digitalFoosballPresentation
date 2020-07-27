@@ -9,7 +9,7 @@ import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 import java.util.SortedMap;
 
 public class ClassicGameOutputModel extends BaseGameOutputModel implements GameOutputModel {
-    private Team winnerOfSet;
+    private final Team winnerOfSet;
 
     public ClassicGameOutputModel(GameDataModel gameDataModel) {
         RankedGameMatchWinVerifier matchWinVerifier = new RankedGameMatchWinVerifier();

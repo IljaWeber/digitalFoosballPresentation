@@ -52,11 +52,6 @@ public class RankedGameDataModel implements GameDataModel {
         teams.get(team).decreaseScore();
     }
 
-    @Override
-    public void redoLastUndoneGoalFor(Team team) {
-        countGoalFor(team);
-    }
-
     public void resetMatch() {
         teams.clear();
         actualWinner = NO_TEAM;

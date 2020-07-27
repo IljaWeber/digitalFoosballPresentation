@@ -37,7 +37,8 @@ public class RankedGameRules extends ClassicGameRules implements IModifyGames {
 
     public void redoGoal() {
         if (scoreOverView.thereAreUndoneGoals()) {
-            model.redoLastUndoneGoalFor(scoreOverView.getLastUndoingTeam());
+            Team team = scoreOverView.getLastUndoingTeam();
+            model.countGoalFor(team);
             approveSetWinner();
         }
     }
