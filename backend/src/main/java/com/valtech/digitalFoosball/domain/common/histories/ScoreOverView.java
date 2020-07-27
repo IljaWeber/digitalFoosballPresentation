@@ -17,7 +17,7 @@ public class ScoreOverView {
         goalOverView.push(team);
     }
 
-    public Team undo() {
+    public Team getLastScoredTeam() {
         Team teamToUndo = goalOverView.pop();
         undoOverView.push(teamToUndo);
 

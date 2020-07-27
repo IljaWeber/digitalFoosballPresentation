@@ -15,7 +15,8 @@ import static com.valtech.digitalFoosball.domain.common.constants.GameMode.RANKE
 
 @RestController()
 @RequestMapping("api")
-public class DigitalFoosballUserCommandAPI {
+public class
+DigitalFoosballUserCommandAPI {
 
     private final Logger
             logger;

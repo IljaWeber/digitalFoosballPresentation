@@ -11,13 +11,9 @@ public interface GameDataModel {
 
     void setWinnerOfAGame(Team team);
 
-    void undoLastGoal();
+    void undoLastGoalFor(Team team);
 
-    boolean thereAreGoals();
-
-    boolean areThereUndoneGoals();
-
-    void redoLastUndoneGoal();
+    void redoLastUndoneGoalFor(Team team);
 
     void changeOver();
 
