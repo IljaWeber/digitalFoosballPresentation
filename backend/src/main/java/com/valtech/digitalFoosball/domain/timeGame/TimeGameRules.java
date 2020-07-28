@@ -24,6 +24,14 @@ public class TimeGameRules {
         if (getScoreOfTeam(team) < 10 && gameSequence.isActive()) {
             goalOverView.push(team);
         }
+
+        determineWinner();
+    }
+
+    private void determineWinner() {
+        if (getMatchWinner() != NO_TEAM) {
+            gameSequence = OVER;
+        }
     }
 
     public int getScoreOfTeam(Team team) {
