@@ -61,11 +61,11 @@ public class TimeGameRules {
 
     public Team getMatchWinner() {
         if (gameSequence == OVER) {
-            if (getScoreOfTeam(ONE) > getScoreOfTeam(TWO)) {
+            if (isLeading(ONE)) {
                 return ONE;
             }
 
-            if (getScoreOfTeam(TWO) > getScoreOfTeam(ONE)) {
+            if (isLeading(TWO)) {
                 return TWO;
             }
         }
@@ -77,5 +77,10 @@ public class TimeGameRules {
         }
 
         return NO_TEAM;
+    }
+
+    private boolean isLeading(Team team) {
+        Team opponent = team.getOpponent();
+        return getScoreOfTeam(team) > getScoreOfTeam(opponent);
     }
 }
