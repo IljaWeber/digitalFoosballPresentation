@@ -5,6 +5,7 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 import java.util.Collections;
 import java.util.Stack;
 
+import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
 import static com.valtech.digitalFoosball.domain.timeGame.GameSequence.FIRST_HALF;
 
 public class TimeGameRules {
@@ -55,5 +56,15 @@ public class TimeGameRules {
 
     public GameSequence getGameSequence() {
         return gameSequence;
+    }
+
+    public Team getMatchWinner() {
+        for (Team team : Team.values()) {
+            if (Collections.frequency(goalOverView, team) >= 10) {
+                return team;
+            }
+        }
+
+        return NO_TEAM;
     }
 }
