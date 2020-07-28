@@ -23,9 +23,12 @@ public class TimeGameRulesShouldRedo {
                       TWO,
                       ONE,
                       TWO);
-        timeGameRules.undoLastGoal();
-        timeGameRules.undoLastGoal();
-        timeGameRules.undoLastGoal();
+        timeGameRules
+                .undoLastGoal();
+        timeGameRules
+                .undoLastGoal();
+        timeGameRules
+                .undoLastGoal();
 
         timeGameRules.redoLastGoal();
         timeGameRules.redoLastGoal();
