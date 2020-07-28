@@ -45,6 +45,18 @@ public class TimeGameRulesShouldRaise {
         assertThat(actualScore).isEqualTo(3);
     }
 
+    @Test
+    void when_time_is_not_over() {
+        timeGameRules.raiseScoreFor(ONE);
+        timeGameRules.timeExpired();
+
+        timeGameRules.raiseScoreFor(ONE);
+
+        int actualScore = timeGameRules.getScoreOfTeam(ONE);
+        assertThat(actualScore).isEqualTo(1);
+
+    }
+
     private void raiseScoreFor(Team... teams) {
         for (Team team : teams) {
             timeGameRules.raiseScoreFor(team);

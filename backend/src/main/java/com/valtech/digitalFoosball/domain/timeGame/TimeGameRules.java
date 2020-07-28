@@ -5,17 +5,21 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 import java.util.Collections;
 import java.util.Stack;
 
+import static com.valtech.digitalFoosball.domain.timeGame.GameStatus.FIRST_HALF;
+
 public class TimeGameRules {
     private final Stack<Team> goalOverView;
     private final Stack<Team> undoOverView;
+    private GameStatus gameStatus;
 
     public TimeGameRules() {
         goalOverView = new Stack<>();
         undoOverView = new Stack<>();
+        gameStatus = FIRST_HALF;
     }
 
     public void raiseScoreFor(Team team) {
-        if (getScoreOfTeam(team) < 10) {
+        if (getScoreOfTeam(team) < 10 && gameStatus.isActive()) {
             goalOverView.push(team);
         }
     }
@@ -43,5 +47,9 @@ public class TimeGameRules {
         }
 
         raiseScoreFor(undoOverView.pop());
+    }
+
+    public void timeExpired() {
+        gameStatus = gameStatus.getNext();
     }
 }
