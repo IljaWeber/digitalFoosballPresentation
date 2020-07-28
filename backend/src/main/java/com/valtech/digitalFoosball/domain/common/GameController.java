@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.valtech.digitalFoosball.domain.common.constants.GameMode.RANKED;
+
 @Service
 public class GameController implements IReactToGoals, IReactToUserCommands {
 
@@ -31,7 +33,7 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
     }
 
     public List<TeamOutputModel> getAllTeams() {
-        IPlayAGame gameManipulator = gameProvider.getGameManipulator(GameMode.RANKED);
+        IPlayAGame gameManipulator = gameProvider.getGameManipulator(RANKED);
         return gameManipulator.getAllTeamsFromDatabase();
     }
 
