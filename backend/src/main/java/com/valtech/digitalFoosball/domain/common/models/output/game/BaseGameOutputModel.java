@@ -5,10 +5,12 @@ import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputMo
 
 import java.util.List;
 
+import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
+
 public abstract class BaseGameOutputModel {
     protected List<TeamOutputModel> teams;
 
-    protected Team matchWinner;
+    protected Team matchWinner = NO_TEAM;
 
     public List<TeamOutputModel> getTeams() {
         return teams;

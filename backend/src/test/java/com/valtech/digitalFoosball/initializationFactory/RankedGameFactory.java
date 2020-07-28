@@ -6,12 +6,12 @@ import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamReposit
 import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedGame;
-import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 
 public class RankedGameFactory {
     private InitDataModel initDataModel;
 
-    public void prepareInitData(RankedTeamDataModel teamOne, RankedTeamDataModel teamTwo) {
+    public void prepareInitData(TeamDataModel teamOne, TeamDataModel teamTwo) {
         this.initDataModel = new InitDataModel(teamOne, teamTwo);
     }
 

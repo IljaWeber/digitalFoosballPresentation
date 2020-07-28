@@ -26,8 +26,8 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
 
     @BeforeEach
     void setUp() {
-        RankedTeamDataModel teamOne = new RankedTeamDataModel("T1", "P1", "P2");
-        RankedTeamDataModel teamTwo = new RankedTeamDataModel("T2", "P3", "P4");
+        TeamDataModel teamOne = new TeamDataModel("T1", "P1", "P2");
+        TeamDataModel teamTwo = new TeamDataModel("T2", "P3", "P4");
 
         TeamRepository teamRepository = new TeamRepositoryFake(id);
         PlayerRepository playerRepository = new PlayerRepositoryFake();
@@ -92,18 +92,18 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
         }
 
         @Override
-        public RankedTeamDataModel save(RankedTeamDataModel teamDataModel) {
+        public TeamDataModel save(TeamDataModel teamDataModel) {
             teamDataModel.setId(id);
             return teamDataModel;
         }
 
         @Override
-        public <S extends RankedTeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
+        public <S extends TeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
             return null;
         }
 
         @Override
-        public Optional<RankedTeamDataModel> findById(UUID uuid) {
+        public Optional<TeamDataModel> findById(UUID uuid) {
             return Optional.empty();
         }
 
@@ -113,7 +113,7 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
         }
 
         @Override
-        public Iterable<RankedTeamDataModel> findAllById(Iterable<UUID> iterable) {
+        public Iterable<TeamDataModel> findAllById(Iterable<UUID> iterable) {
             return null;
         }
 
@@ -128,12 +128,12 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
         }
 
         @Override
-        public void delete(RankedTeamDataModel teamDataModel) {
+        public void delete(TeamDataModel teamDataModel) {
 
         }
 
         @Override
-        public void deleteAll(Iterable<? extends RankedTeamDataModel> iterable) {
+        public void deleteAll(Iterable<? extends TeamDataModel> iterable) {
 
         }
 
@@ -143,19 +143,19 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
         }
 
         @Override
-        public Optional<RankedTeamDataModel> findByNameIgnoreCase(String teamName) {
+        public Optional<TeamDataModel> findByNameIgnoreCase(String teamName) {
             return Optional.empty();
         }
 
         @Override
-        public List<RankedTeamDataModel> findAll() {
+        public List<TeamDataModel> findAll() {
 
             return teamDataModels;
         }
 
-        private List<RankedTeamDataModel> teamDataModels;
+        private List<TeamDataModel> teamDataModels;
 
-        public void insertTeamDataModel(RankedTeamDataModel teamOne, RankedTeamDataModel teamTwo) {
+        public void insertTeamDataModel(TeamDataModel teamOne, TeamDataModel teamTwo) {
             teamDataModels = new ArrayList<>();
             teamDataModels.add(teamOne);
             teamDataModels.add(teamTwo);
@@ -235,18 +235,18 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
         }
 
         @Override
-        public RankedTeamDataModel save(RankedTeamDataModel teamDataModel) {
+        public TeamDataModel save(TeamDataModel teamDataModel) {
             teamDataModel.setId(id);
             return teamDataModel;
         }
 
         @Override
-        public <S extends RankedTeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
+        public <S extends TeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
             return null;
         }
 
         @Override
-        public Optional<RankedTeamDataModel> findById(UUID uuid) {
+        public Optional<TeamDataModel> findById(UUID uuid) {
             return Optional.empty();
         }
 
@@ -256,7 +256,7 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
         }
 
         @Override
-        public Iterable<RankedTeamDataModel> findAllById(Iterable<UUID> iterable) {
+        public Iterable<TeamDataModel> findAllById(Iterable<UUID> iterable) {
             return null;
         }
 
@@ -271,12 +271,12 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
         }
 
         @Override
-        public void delete(RankedTeamDataModel teamDataModel) {
+        public void delete(TeamDataModel teamDataModel) {
 
         }
 
         @Override
-        public void deleteAll(Iterable<? extends RankedTeamDataModel> iterable) {
+        public void deleteAll(Iterable<? extends TeamDataModel> iterable) {
 
         }
 
@@ -286,12 +286,12 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
         }
 
         @Override
-        public Optional<RankedTeamDataModel> findByNameIgnoreCase(String teamName) {
+        public Optional<TeamDataModel> findByNameIgnoreCase(String teamName) {
             return Optional.empty();
         }
 
         @Override
-        public List<RankedTeamDataModel> findAll() {
+        public List<TeamDataModel> findAll() {
 
             return new ArrayList<>();
         }

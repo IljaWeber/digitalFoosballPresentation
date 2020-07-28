@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
@@ -86,9 +86,9 @@ public class RestEndpointRequestPerformer {
         return result.getResponse().getContentAsString();
     }
 
-    public void prepareTeamsForInitialization(RankedTeamDataModel teamOne, RankedTeamDataModel teamTwo) {
+    public void prepareTeamsForInitialization(TeamDataModel teamOne, TeamDataModel teamTwo) {
         InitDataModel initDataModel = new InitDataModel();
-        List<RankedTeamDataModel> teams = new ArrayList<>();
+        List<TeamDataModel> teams = new ArrayList<>();
 
         teams.add(teamOne);
         teams.add(teamTwo);

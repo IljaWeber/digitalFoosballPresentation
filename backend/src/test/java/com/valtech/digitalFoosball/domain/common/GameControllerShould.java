@@ -12,7 +12,7 @@ import com.valtech.digitalFoosball.domain.common.models.output.game.EmptyGameOut
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedGame;
-import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,8 +31,8 @@ class GameControllerShould {
     public GameController game;
 
     private InitDataModel initDataModel;
-    private RankedTeamDataModel teamDataModelOne;
-    private RankedTeamDataModel teamDataModelTwo;
+    private TeamDataModel teamDataModelOne;
+    private TeamDataModel teamDataModelTwo;
     private final UUID id = UUID.randomUUID();
 
     @BeforeEach
@@ -63,8 +63,8 @@ class GameControllerShould {
     }
 
     private void setUpTeams() {
-        teamDataModelOne = new RankedTeamDataModel("T1", "P1", "P2");
-        teamDataModelTwo = new RankedTeamDataModel("T2", "P3", "P4");
+        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
+        teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
         initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
         initDataModel.setMode(RANKED);
         game.initGame(initDataModel);
@@ -137,18 +137,18 @@ class GameControllerShould {
         }
 
         @Override
-        public RankedTeamDataModel save(RankedTeamDataModel teamDataModel) {
+        public TeamDataModel save(TeamDataModel teamDataModel) {
             teamDataModel.setId(id);
             return teamDataModel;
         }
 
         @Override
-        public <S extends RankedTeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
+        public <S extends TeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
             return null;
         }
 
         @Override
-        public Optional<RankedTeamDataModel> findById(UUID uuid) {
+        public Optional<TeamDataModel> findById(UUID uuid) {
             return Optional.empty();
         }
 
@@ -158,7 +158,7 @@ class GameControllerShould {
         }
 
         @Override
-        public Iterable<RankedTeamDataModel> findAllById(Iterable<UUID> iterable) {
+        public Iterable<TeamDataModel> findAllById(Iterable<UUID> iterable) {
             return null;
         }
 
@@ -173,12 +173,12 @@ class GameControllerShould {
         }
 
         @Override
-        public void delete(RankedTeamDataModel teamDataModel) {
+        public void delete(TeamDataModel teamDataModel) {
 
         }
 
         @Override
-        public void deleteAll(Iterable<? extends RankedTeamDataModel> iterable) {
+        public void deleteAll(Iterable<? extends TeamDataModel> iterable) {
 
         }
 
@@ -188,13 +188,13 @@ class GameControllerShould {
         }
 
         @Override
-        public Optional<RankedTeamDataModel> findByNameIgnoreCase(String teamName) {
+        public Optional<TeamDataModel> findByNameIgnoreCase(String teamName) {
             return Optional.empty();
         }
 
         @Override
-        public List<RankedTeamDataModel> findAll() {
-            List<RankedTeamDataModel> teamDataModels = new ArrayList<>();
+        public List<TeamDataModel> findAll() {
+            List<TeamDataModel> teamDataModels = new ArrayList<>();
             teamDataModels.add(teamDataModelOne);
             teamDataModels.add(teamDataModelTwo);
 

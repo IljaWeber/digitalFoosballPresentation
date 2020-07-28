@@ -5,7 +5,7 @@ import com.valtech.digitalFoosball.domain.common.converter.Converter;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +19,12 @@ public abstract class ClassicGameInitService {
 
     protected RankedGameDataModel prepare(InitDataModel initDataModel) {
         RankedGameDataModel gameDataModel = new RankedGameDataModel();
-        List<RankedTeamDataModel> teamsFromDatabase = new ArrayList<>();
+        List<TeamDataModel> teamsFromDatabase = new ArrayList<>();
 
-        List<RankedTeamDataModel> teamsList = initDataModel.getTeams();
+        List<TeamDataModel> teamsList = initDataModel.getTeams();
 
-        for (RankedTeamDataModel team : teamsList) {
-            RankedTeamDataModel teamFromDatabase = teamDataPort.loadOrSaveIntoDatabase(team);
+        for (TeamDataModel team : teamsList) {
+            TeamDataModel teamFromDatabase = teamDataPort.loadOrSaveIntoDatabase(team);
             teamsFromDatabase.add(teamFromDatabase);
         }
 
@@ -34,7 +34,7 @@ public abstract class ClassicGameInitService {
     }
 
     public List<TeamOutputModel> getAllTeams() {
-        List<RankedTeamDataModel> teamDataModels = teamDataPort.getAllTeamsFromDatabase();
+        List<TeamDataModel> teamDataModels = teamDataPort.getAllTeamsFromDatabase();
 
         if (teamDataModels.isEmpty()) {
             return new ArrayList<>();

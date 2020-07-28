@@ -16,7 +16,7 @@ public class UniqueNameVerifier {
         processedPlayerNames = new ArrayList<>();
         processedTeamNames = new ArrayList<>();
 
-        for (RankedTeamDataModel team : initDataModel.getTeams()) {
+        for (TeamDataModel team : initDataModel.getTeams()) {
             String teamName = team.getName();
 
             checkName(teamName, processedTeamNames);
@@ -27,7 +27,7 @@ public class UniqueNameVerifier {
         }
     }
 
-    private void checkPlayerNames(RankedTeamDataModel team) {
+    private void checkPlayerNames(TeamDataModel team) {
         for (PlayerDataModel player : team.getPlayers()) {
             String playerName = player.getName();
 

@@ -9,15 +9,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "team")
-public class RankedTeamDataModel {
-
-    protected String name;
+public class TeamDataModel {
+    private String name;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    protected List<PlayerDataModel> players;
-
-    @Transient
-    protected int score;
+    private List<PlayerDataModel> players;
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -25,16 +21,12 @@ public class RankedTeamDataModel {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Transient
-    private int wonSets;
-
-    public RankedTeamDataModel() {
+    public TeamDataModel() {
         players = Arrays.asList(new PlayerDataModel(), new PlayerDataModel());
-        score = 0;
         name = "";
     }
 
-    public RankedTeamDataModel(String teamName, String playerOne, String playerTwo) {
+    public TeamDataModel(String teamName, String playerOne, String playerTwo) {
         this();
         name = teamName;
         setNameOfPlayerOne(playerOne);
@@ -81,35 +73,7 @@ public class RankedTeamDataModel {
         this.id = id;
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public void countGoal() {
-        score++;
-    }
-
-    public void decreaseScore() {
-        score--;
-    }
-
-    public void changeover() {
-        score = 0;
-    }
-
     public String toString() {
         return name + ": " + getNameOfPlayerOne() + ", " + getNameOfPlayerTwo();
-    }
-
-    public int getWonSets() {
-        return wonSets;
-    }
-
-    public void increaseWonSets() {
-        wonSets++;
-    }
-
-    public void decreaseWonSets() {
-        wonSets--;
     }
 }

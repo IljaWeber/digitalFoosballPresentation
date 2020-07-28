@@ -3,7 +3,7 @@ package com.valtech.digitalFoosball.api;
 import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballUserCommandAPI;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,13 +36,13 @@ public class DigitalFoosballUserCommandAPIShouldRedo {
     @BeforeEach
     void setUp() {
         mapper = new ObjectMapper();
-        List<RankedTeamDataModel> teams = new ArrayList<>();
+        List<TeamDataModel> teams = new ArrayList<>();
         comparableOutput = new ComparableOutputModelCreator();
         RankedGameDataModel gameDataModel = new RankedGameDataModel();
-        RankedTeamDataModel teamOne = new RankedTeamDataModel("FC Barcelona",
-                                                              "Marc-Andre ter Stegen", "Lionel Messi");
-        RankedTeamDataModel teamTwo = new RankedTeamDataModel("FC Madrid",
-                                                              "Thibaut Courtois", "Gareth Bale");
+        TeamDataModel teamOne = new TeamDataModel("FC Barcelona",
+                                                  "Marc-Andre ter Stegen", "Lionel Messi");
+        TeamDataModel teamTwo = new TeamDataModel("FC Madrid",
+                                                  "Thibaut Courtois", "Gareth Bale");
 
         teams.add(teamOne);
         teams.add(teamTwo);

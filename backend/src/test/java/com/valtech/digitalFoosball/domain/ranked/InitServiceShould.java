@@ -21,8 +21,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class InitServiceShould {
 
-    private RankedTeamDataModel teamDataModelOne;
-    private RankedTeamDataModel teamDataModelTwo;
+    private TeamDataModel teamDataModelOne;
+    private TeamDataModel teamDataModelTwo;
     private UUID id;
 
     private RankedInitService initService;
@@ -41,13 +41,13 @@ public class InitServiceShould {
 
     @Test
     void init_game_with_the_names_from_the_initDataModel() {
-        teamDataModelOne = new RankedTeamDataModel("T1", "P1", "P2");
-        teamDataModelTwo = new RankedTeamDataModel("T2", "P3", "P4");
+        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
+        teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
         InitDataModel initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
 
         RankedGameDataModel gameDataModel = initService.init(initDataModel);
-        RankedTeamDataModel teamOne = gameDataModel.getTeam(ONE);
-        RankedTeamDataModel teamTwo = gameDataModel.getTeam(TWO);
+        TeamDataModel teamOne = gameDataModel.getTeam(ONE);
+        TeamDataModel teamTwo = gameDataModel.getTeam(TWO);
 
         assertThat(teamOne).isEqualTo(teamDataModelOne);
         assertThat(teamTwo).isEqualTo(teamDataModelTwo);
@@ -61,18 +61,18 @@ public class InitServiceShould {
         }
 
         @Override
-        public RankedTeamDataModel save(RankedTeamDataModel teamDataModel) {
+        public TeamDataModel save(TeamDataModel teamDataModel) {
             teamDataModel.setId(id);
             return teamDataModel;
         }
 
         @Override
-        public <S extends RankedTeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
+        public <S extends TeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
             return null;
         }
 
         @Override
-        public Optional<RankedTeamDataModel> findById(UUID uuid) {
+        public Optional<TeamDataModel> findById(UUID uuid) {
             return Optional.empty();
         }
 
@@ -82,7 +82,7 @@ public class InitServiceShould {
         }
 
         @Override
-        public Iterable<RankedTeamDataModel> findAllById(Iterable<UUID> iterable) {
+        public Iterable<TeamDataModel> findAllById(Iterable<UUID> iterable) {
             return null;
         }
 
@@ -97,12 +97,12 @@ public class InitServiceShould {
         }
 
         @Override
-        public void delete(RankedTeamDataModel teamDataModel) {
+        public void delete(TeamDataModel teamDataModel) {
 
         }
 
         @Override
-        public void deleteAll(Iterable<? extends RankedTeamDataModel> iterable) {
+        public void deleteAll(Iterable<? extends TeamDataModel> iterable) {
 
         }
 
@@ -112,13 +112,13 @@ public class InitServiceShould {
         }
 
         @Override
-        public Optional<RankedTeamDataModel> findByNameIgnoreCase(String teamName) {
+        public Optional<TeamDataModel> findByNameIgnoreCase(String teamName) {
             return Optional.empty();
         }
 
         @Override
-        public List<RankedTeamDataModel> findAll() {
-            List<RankedTeamDataModel> teamDataModels = new ArrayList<>();
+        public List<TeamDataModel> findAll() {
+            List<TeamDataModel> teamDataModels = new ArrayList<>();
             teamDataModels.add(teamDataModelOne);
             teamDataModels.add(teamDataModelTwo);
 
@@ -199,18 +199,18 @@ public class InitServiceShould {
         }
 
         @Override
-        public RankedTeamDataModel save(RankedTeamDataModel teamDataModel) {
+        public TeamDataModel save(TeamDataModel teamDataModel) {
             teamDataModel.setId(id);
             return teamDataModel;
         }
 
         @Override
-        public <S extends RankedTeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
+        public <S extends TeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
             return null;
         }
 
         @Override
-        public Optional<RankedTeamDataModel> findById(UUID uuid) {
+        public Optional<TeamDataModel> findById(UUID uuid) {
             return Optional.empty();
         }
 
@@ -220,7 +220,7 @@ public class InitServiceShould {
         }
 
         @Override
-        public Iterable<RankedTeamDataModel> findAllById(Iterable<UUID> iterable) {
+        public Iterable<TeamDataModel> findAllById(Iterable<UUID> iterable) {
             return null;
         }
 
@@ -235,12 +235,12 @@ public class InitServiceShould {
         }
 
         @Override
-        public void delete(RankedTeamDataModel teamDataModel) {
+        public void delete(TeamDataModel teamDataModel) {
 
         }
 
         @Override
-        public void deleteAll(Iterable<? extends RankedTeamDataModel> iterable) {
+        public void deleteAll(Iterable<? extends TeamDataModel> iterable) {
 
         }
 
@@ -250,12 +250,12 @@ public class InitServiceShould {
         }
 
         @Override
-        public Optional<RankedTeamDataModel> findByNameIgnoreCase(String teamName) {
+        public Optional<TeamDataModel> findByNameIgnoreCase(String teamName) {
             return Optional.empty();
         }
 
         @Override
-        public List<RankedTeamDataModel> findAll() {
+        public List<TeamDataModel> findAll() {
 
             return new ArrayList<>();
         }
