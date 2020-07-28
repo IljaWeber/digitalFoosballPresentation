@@ -20,7 +20,7 @@ DigitalFoosballUserCommandAPI {
 
     private final Logger
             logger;
-    protected final GameController
+    private final GameController
             gameController;
 
     @Autowired

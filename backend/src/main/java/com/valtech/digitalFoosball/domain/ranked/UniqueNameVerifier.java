@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UniqueNameVerifier {
-
     private List<String> processedPlayerNames;
-    private List<String> processedTeamNames;
 
     public void checkForDuplicateNames(InitDataModel initDataModel) {
         processedPlayerNames = new ArrayList<>();
-        processedTeamNames = new ArrayList<>();
+        List<String> processedTeamNames = new ArrayList<>();
 
         for (TeamDataModel team : initDataModel.getTeams()) {
             String teamName = team.getName();

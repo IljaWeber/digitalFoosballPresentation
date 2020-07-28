@@ -9,6 +9,7 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public abstract class ClassicScoreManager {
 
+    // todo: created on 28.07.20 by iljaweber: refactor this
     protected Team checkForWin(Stack<Team> goalOverView) {
         Team winner = NO_TEAM;
         int neededGoals = 6;

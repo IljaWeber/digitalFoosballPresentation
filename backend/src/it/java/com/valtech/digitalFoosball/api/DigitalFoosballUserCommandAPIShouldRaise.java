@@ -82,7 +82,7 @@ DigitalFoosballUserCommandAPIShouldRaise {
     }
 
     @Test
-    public void not_raise_score_when_a_set_was_won() throws Exception {
+    public void only_until_a_set_was_won() throws Exception {
         comparableOutput
                 .prepareScoreOfTeamOne(5);
         comparableOutput

@@ -15,6 +15,7 @@ public class RankedGame extends ClassicGame implements IPlayAGame {
 
     @Autowired
     public RankedGame(RankedInitService initService) {
+        super.rankedGameRules = new RankedGameRules();
         this.initService = initService;
     }
 
@@ -24,8 +25,7 @@ public class RankedGame extends ClassicGame implements IPlayAGame {
     }
 
     public void initGame(InitDataModel initDataModel) {
-        RankedGameDataModel gameDataModel = initService.init(initDataModel);
-
-        super.rules = new RankedGameRules(gameDataModel);
+        super.rankedGameRules = new RankedGameRules();
+        super.model = initService.init(initDataModel);
     }
 }

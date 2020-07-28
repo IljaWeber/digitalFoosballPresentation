@@ -4,7 +4,6 @@ import com.valtech.digitalFoosball.domain.common.ClassicGame;
 import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
 import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ public class AdHocGame extends ClassicGame implements IPlayAGame {
 
     @Autowired
     public AdHocGame(AdHocInitService initService) {
-
+        super.rankedGameRules = new RankedGameRules();
         this.initService = initService;
     }
 
@@ -30,6 +29,7 @@ public class AdHocGame extends ClassicGame implements IPlayAGame {
 
     @Override
     public void initGame(InitDataModel initDataModel) {
+        super.rankedGameRules = new RankedGameRules();
         initDataModel = new InitDataModel();
         TeamDataModel teamOne = new TeamDataModel("Orange", "Goalie", "Striker");
         TeamDataModel teamTwo = new TeamDataModel("Green", "Goalie", "Striker");
@@ -37,7 +37,6 @@ public class AdHocGame extends ClassicGame implements IPlayAGame {
         initDataModel.setTeamOne(teamOne);
         initDataModel.setTeamTwo(teamTwo);
 
-        RankedGameDataModel gameDataModel = initService.init(initDataModel);
-        super.rules = new RankedGameRules(gameDataModel);
+        super.model = initService.init(initDataModel);
     }
 }

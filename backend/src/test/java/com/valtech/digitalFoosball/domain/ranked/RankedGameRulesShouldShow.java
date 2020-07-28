@@ -4,9 +4,6 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,16 +12,7 @@ public class RankedGameRulesShouldShow {
 
     @BeforeEach
     void setUp() {
-        List<TeamDataModel> teams = new ArrayList<>();
-        TeamDataModel teamOne = new TeamDataModel();
-        TeamDataModel teamTwo = new TeamDataModel();
-        RankedGameDataModel gameDataModel = new RankedGameDataModel();
-
-        teams.add(teamOne);
-        teams.add(teamTwo);
-        gameDataModel.setTeams(teams);
-
-        rules = new RankedGameRules(gameDataModel);
+        rules = new RankedGameRules();
     }
 
     @Test
@@ -34,8 +22,7 @@ public class RankedGameRulesShouldShow {
                       TWO,
                       ONE);
 
-        Team actual = rules.getPreparedDataForOutput()
-                           .getWinnerOfSet();
+        Team actual = rules.getActualWinner();
 
         assertThat(actual).isEqualTo(NO_TEAM);
     }
@@ -50,8 +37,7 @@ public class RankedGameRulesShouldShow {
                       ONE,
                       TWO);
 
-        Team actual = rules.getPreparedDataForOutput()
-                           .getWinnerOfSet();
+        Team actual = rules.getActualWinner();
 
         assertThat(actual).isEqualTo(NO_TEAM);
     }
@@ -60,8 +46,7 @@ public class RankedGameRulesShouldShow {
     public void a_set_winner_when_a_team_scored_more_than_six_goals_and_there_is_a_score_difference_of_at_least_two() {
         countGoalsFor(TWO, TWO, TWO, TWO, TWO, TWO);
 
-        Team actual = rules.getPreparedDataForOutput()
-                           .getWinnerOfSet();
+        Team actual = rules.getActualWinner();
 
         assertThat(actual).isEqualTo(TWO);
     }

@@ -1,32 +1,38 @@
 package com.valtech.digitalFoosball.domain.common;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.models.output.game.ClassicGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.ranked.GameDataModel;
+import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
 
 public abstract class ClassicGame {
-    protected IModifyGames rules;
+    protected RankedGameRules rankedGameRules;
+    protected GameDataModel model;
 
     public void countGoalFor(Team team) {
-        rules.raiseScoreFor(team);
+        rankedGameRules.raiseScoreFor(team);
     }
 
     public void undoGoal() {
-        rules.undoLastGoal();
+        rankedGameRules.undoLastGoal();
     }
 
     public void redoGoal() {
-        rules.redoGoal();
+        rankedGameRules.redoLastGoal();
     }
 
     public void changeover() {
-        rules.changeOver();
+        rankedGameRules.changeOver();
     }
 
     public void resetMatch() {
-        rules.resetMatch();
+        model.resetMatch();
+        rankedGameRules = new RankedGameRules();
     }
 
     public GameOutputModel getGameData() {
-        return rules.getPreparedDataForOutput();
+        return new ClassicGameOutputModel(model, rankedGameRules);
     }
+
 }
