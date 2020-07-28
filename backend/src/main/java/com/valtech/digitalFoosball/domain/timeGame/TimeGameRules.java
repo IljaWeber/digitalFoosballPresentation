@@ -7,9 +7,11 @@ import java.util.Stack;
 
 public class TimeGameRules {
     private final Stack<Team> goalOverView;
+    private final Stack<Team> undoOverView;
 
     public TimeGameRules() {
         goalOverView = new Stack<>();
+        undoOverView = new Stack<>();
     }
 
     public void raiseScoreFor(Team team) {
@@ -24,5 +26,14 @@ public class TimeGameRules {
         }
 
         return Collections.frequency(goalOverView, team);
+    }
+
+    public void undoLastGoal() {
+        if (goalOverView.isEmpty()) {
+            return;
+        }
+
+        Team team = goalOverView.pop();
+        undoOverView.push(team);
     }
 }
