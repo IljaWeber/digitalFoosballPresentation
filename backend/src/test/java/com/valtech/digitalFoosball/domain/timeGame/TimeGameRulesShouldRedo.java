@@ -36,6 +36,21 @@ public class TimeGameRulesShouldRedo {
         assertThat(actualScore).isEqualTo(1);
     }
 
+    @Test
+    void just_when_there_are_undone_goals() {
+        raiseScoreFor(ONE, ONE,
+                      TWO,
+                      ONE,
+                      TWO);
+
+        timeGameRules.redoLastGoal();
+
+        int actualScore = timeGameRules.getScoreOfTeam(ONE);
+        assertThat(actualScore).isEqualTo(3);
+        actualScore = timeGameRules.getScoreOfTeam(TWO);
+        assertThat(actualScore).isEqualTo(2);
+    }
+
     private void raiseScoreFor(Team... teams) {
         for (Team team : teams) {
             timeGameRules.raiseScoreFor(team);
