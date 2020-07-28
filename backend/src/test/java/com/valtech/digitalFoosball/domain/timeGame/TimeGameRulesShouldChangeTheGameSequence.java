@@ -3,11 +3,10 @@ package com.valtech.digitalFoosball.domain.timeGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.valtech.digitalFoosball.domain.timeGame.GameStatus.HALFTIME;
-import static com.valtech.digitalFoosball.domain.timeGame.GameStatus.SECOND_HALF;
+import static com.valtech.digitalFoosball.domain.timeGame.GameSequence.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TimeGameRulesShouldChangeTheGameStatus {
+public class TimeGameRulesShouldChangeTheGameSequence {
 
     private TimeGameRules timeGameRules;
 
@@ -20,7 +19,7 @@ public class TimeGameRulesShouldChangeTheGameStatus {
     void from_first_half_to_halftime_when_time_is_expired() {
         timeGameRules.startNextGameSequence();
 
-        assertThat(timeGameRules.getGameStatus()).isEqualTo(HALFTIME);
+        assertThat(timeGameRules.getGameSequence()).isEqualTo(HALFTIME);
     }
 
     @Test
@@ -29,6 +28,16 @@ public class TimeGameRulesShouldChangeTheGameStatus {
 
         timeGameRules.startNextGameSequence();
 
-        assertThat(timeGameRules.getGameStatus()).isEqualTo(SECOND_HALF);
+        assertThat(timeGameRules.getGameSequence()).isEqualTo(SECOND_HALF);
+    }
+
+    @Test
+    void from_second_half_to_over() {
+        timeGameRules.startNextGameSequence();
+        timeGameRules.startNextGameSequence();
+
+        timeGameRules.startNextGameSequence();
+
+        assertThat(timeGameRules.getGameSequence()).isEqualTo(OVER);
     }
 }
