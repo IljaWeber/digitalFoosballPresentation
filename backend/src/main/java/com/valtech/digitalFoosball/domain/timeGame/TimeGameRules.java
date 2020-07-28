@@ -21,17 +21,11 @@ public class TimeGameRules {
     }
 
     public void raiseScoreFor(Team team) {
-        if (getScoreOfTeam(team) < 10 && gameSequence.isActive()) {
+        if (gameSequence.isActive()) {
             goalOverView.push(team);
         }
 
         determineWinner();
-    }
-
-    private void determineWinner() {
-        if (getMatchWinner() != NO_TEAM) {
-            gameSequence = OVER;
-        }
     }
 
     public int getScoreOfTeam(Team team) {
@@ -67,21 +61,29 @@ public class TimeGameRules {
         return gameSequence;
     }
 
-    public Team getMatchWinner() {
-        if (gameSequence == OVER) {
-            if (isLeading(ONE)) {
-                return ONE;
-            }
+    public Team determineWinner() {
+        Team leadingTeam = getLeadingTeam();
+        Team winner = NO_TEAM;
 
-            if (isLeading(TWO)) {
-                return TWO;
-            }
+        if (gameSequence == OVER) {
+            winner = leadingTeam;
         }
 
-        for (Team team : Team.getTeams()) {
-            if (Collections.frequency(goalOverView, team) >= 10) {
-                return team;
-            }
+        if (getScoreOfTeam(leadingTeam) >= 10) {
+            gameSequence = OVER;
+            winner = leadingTeam;
+        }
+
+        return winner;
+    }
+
+    private Team getLeadingTeam() {
+        if (isLeading(ONE)) {
+            return ONE;
+        }
+
+        if (isLeading(TWO)) {
+            return TWO;
         }
 
         return NO_TEAM;

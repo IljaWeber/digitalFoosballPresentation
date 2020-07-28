@@ -24,7 +24,7 @@ public class TimeGameRulesShouldDetermine {
                       TWO,
                       ONE, ONE);
 
-        Team actual = timeGameRules.getMatchWinner();
+        Team actual = timeGameRules.determineWinner();
         assertThat(actual).isEqualTo(ONE);
     }
 
@@ -36,7 +36,7 @@ public class TimeGameRulesShouldDetermine {
         timeGameRules.startNextGameSequence();
         timeGameRules.startNextGameSequence();
 
-        Team actual = timeGameRules.getMatchWinner();
+        Team actual = timeGameRules.determineWinner();
 
         assertThat(actual).isEqualTo(TWO);
     }
@@ -49,7 +49,7 @@ public class TimeGameRulesShouldDetermine {
         timeGameRules.startNextGameSequence();
         timeGameRules.startNextGameSequence();
 
-        Team actual = timeGameRules.getMatchWinner();
+        Team actual = timeGameRules.determineWinner();
 
         assertThat(actual).isEqualTo(NO_TEAM);
     }
