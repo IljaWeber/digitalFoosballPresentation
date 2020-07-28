@@ -13,7 +13,9 @@ public class TimeGameRules {
     }
 
     public void raiseScoreFor(Team team) {
-        goalOverView.push(team);
+        if (getScoreOfTeam(team) < 10) {
+            goalOverView.push(team);
+        }
     }
 
     public int getScoreOfTeam(Team team) {

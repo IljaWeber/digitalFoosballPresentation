@@ -30,10 +30,24 @@ public class TimeGameRulesShouldRaise {
         assertThat(actualScore).isEqualTo(1);
     }
 
+    @Test
+    void until_ten_goals_are_reached() {
+        raiseScoreFor(ONE, ONE, ONE, ONE, ONE,
+                      TWO, TWO,
+                      ONE, ONE, ONE,
+                      TWO,
+                      ONE, ONE, ONE);
+
+        int actualScore = timeGameRules.getScoreOfTeam(ONE);
+        assertThat(actualScore).isEqualTo(10);
+
+        actualScore = timeGameRules.getScoreOfTeam(TWO);
+        assertThat(actualScore).isEqualTo(3);
+    }
+
     private void raiseScoreFor(Team... teams) {
         for (Team team : teams) {
             timeGameRules.raiseScoreFor(team);
         }
     }
-
 }
