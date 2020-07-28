@@ -10,7 +10,7 @@ import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ClassicGameInitService {
+public abstract class ClassicGameInitService implements InitService {
     protected final IObtainTeams teamDataPort;
 
     public ClassicGameInitService(IObtainTeams teamDataPort) {

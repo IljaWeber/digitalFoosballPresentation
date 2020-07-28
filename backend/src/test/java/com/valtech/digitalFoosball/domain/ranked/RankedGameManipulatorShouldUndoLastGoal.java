@@ -1,12 +1,15 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
+import com.valtech.digitalFoosball.api.driven.persistence.PlayerService;
+import com.valtech.digitalFoosball.api.driven.persistence.TeamService;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepository;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
+import com.valtech.digitalFoosball.domain.common.ClassicGame;
 import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
-import com.valtech.digitalFoosball.initializationFactory.RankedGameFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,12 +30,15 @@ public class RankedGameManipulatorShouldUndoLastGoal {
     void setUp() {
         TeamDataModel teamOne = new TeamDataModel("T1", "P1", "P2");
         TeamDataModel teamTwo = new TeamDataModel("T2", "P3", "P4");
+        InitDataModel initDataModel = new InitDataModel(teamOne, teamTwo);
 
         TeamRepository teamRepository = new TeamRepositoryFake(id);
         PlayerRepository playerRepository = new PlayerRepositoryFake();
-        RankedGameFactory rankedGame = new RankedGameFactory();
-        rankedGame.prepareInitData(teamOne, teamTwo);
-        game = rankedGame.getGame(teamRepository, playerRepository);
+
+        game = new ClassicGame(new RankedInitService(new TeamService(teamRepository,
+                                                                     new PlayerService(playerRepository))));
+        game.initGame(initDataModel);
+
     }
 
     @Test

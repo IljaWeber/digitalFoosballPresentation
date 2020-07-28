@@ -1,12 +1,15 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
+import com.valtech.digitalFoosball.api.driven.persistence.PlayerService;
+import com.valtech.digitalFoosball.api.driven.persistence.TeamService;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepository;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
+import com.valtech.digitalFoosball.domain.common.ClassicGame;
 import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
-import com.valtech.digitalFoosball.initializationFactory.RankedGameFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,20 +24,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class RankedGameManipulatorShouldRaiseScore {
 
-    public IPlayAGame game;
     private final UUID id = UUID.randomUUID();
-
+    public IPlayAGame game;
 
     @BeforeEach
     void setUp() {
         TeamDataModel teamOne = new TeamDataModel("T1", "P1", "P2");
         TeamDataModel teamTwo = new TeamDataModel("T2", "P3", "P4");
+        InitDataModel initDataModel = new InitDataModel(teamOne, teamTwo);
 
         TeamRepository teamRepository = new TeamRepositoryFake(id);
         PlayerRepository playerRepository = new PlayerRepositoryFake();
-        RankedGameFactory rankedGame = new RankedGameFactory();
-        rankedGame.prepareInitData(teamOne, teamTwo);
-        game = rankedGame.getGame(teamRepository, playerRepository);
+        game = new ClassicGame(new RankedInitService(new TeamService(teamRepository,
+                                                                     new PlayerService(playerRepository))));
+        game.initGame(initDataModel);
     }
 
     @Test
@@ -69,6 +72,7 @@ public class RankedGameManipulatorShouldRaiseScore {
 
     private class TeamRepositoryFake implements TeamRepository {
         private final UUID id;
+        private List<TeamDataModel> teamDataModels;
 
         public TeamRepositoryFake(UUID id) {
             this.id = id;
@@ -135,8 +139,6 @@ public class RankedGameManipulatorShouldRaiseScore {
 
             return teamDataModels;
         }
-
-        private List<TeamDataModel> teamDataModels;
 
         public void insertTeamDataModel(TeamDataModel teamOne, TeamDataModel teamTwo) {
             teamDataModels = new ArrayList<>();
