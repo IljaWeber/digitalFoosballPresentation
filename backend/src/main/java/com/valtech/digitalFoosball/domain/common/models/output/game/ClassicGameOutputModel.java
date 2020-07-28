@@ -22,6 +22,8 @@ public class ClassicGameOutputModel extends BaseGameOutputModel implements GameO
         if (teams.isEmpty()) {
             return;
         }
+
+        // TODO: 28.07.20 m.huber refactor for more consistency (no empty list exception)
         teams.get(0).setScore(rankedGameRules.getScoreOfTeam(Team.ONE));
         teams.get(1).setScore(rankedGameRules.getScoreOfTeam(Team.TWO));
 

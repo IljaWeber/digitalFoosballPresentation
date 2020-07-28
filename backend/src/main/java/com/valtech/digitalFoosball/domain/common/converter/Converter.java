@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.domain.common.converter;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.common.models.output.team.RegularTeamOutputModel;
+import com.valtech.digitalFoosball.domain.common.models.output.team.ClassicTeamOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 
@@ -12,7 +12,7 @@ import java.util.SortedMap;
 // TODO: 15.07.20 m.huber move
 public class Converter {
     public static TeamOutputModel convertToTeamOutput(TeamDataModel team) {
-        RegularTeamOutputModel teamOutputModel = new RegularTeamOutputModel();
+        ClassicTeamOutputModel teamOutputModel = new ClassicTeamOutputModel();
         teamOutputModel.setName(team.getName());
         teamOutputModel.setPlayerOne(team.getNameOfPlayerOne());
         teamOutputModel.setPlayerTwo(team.getNameOfPlayerTwo());

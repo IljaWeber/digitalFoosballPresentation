@@ -1,18 +1,16 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
-import com.valtech.digitalFoosball.domain.common.ClassicScoreManager;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 
 import java.util.Collections;
 import java.util.Stack;
 
-import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
-import static com.valtech.digitalFoosball.domain.common.constants.Team.values;
+import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
-public class RankedGameRules extends ClassicScoreManager {
-    private Stack<Team> goalOverView;
-    private Stack<Team> undoOverView;
-    private Stack<Team> winOverview;
+public class RankedGameRules {
+    private final Stack<Team> goalOverView;
+    private final Stack<Team> undoOverView;
+    private final Stack<Team> winOverview;
     private Team actualWinner = NO_TEAM;
 
     public RankedGameRules() {
@@ -34,7 +32,8 @@ public class RankedGameRules extends ClassicScoreManager {
         }
 
         goalOverView.push(team);
-        actualWinner = super.checkForWin(goalOverView);
+
+        checkForWin();
 
         if (actualWinner != NO_TEAM) {
             winOverview.push(actualWinner);
@@ -82,8 +81,26 @@ public class RankedGameRules extends ClassicScoreManager {
     }
 
     public void changeOver() {
-        goalOverView = new Stack<>();
-        undoOverView = new Stack<>();
+        goalOverView.clear();
+        undoOverView.clear();
         actualWinner = NO_TEAM;
+    }
+
+    private void checkForWin() {
+        int neededGoals = 6;
+        int scoreOfTeamOne = Collections.frequency(goalOverView, ONE);
+        int scoreOfTeamTwo = Collections.frequency(goalOverView, TWO);
+
+        if (scoreOfTeamOne >= neededGoals) {
+            if (scoreOfTeamOne - scoreOfTeamTwo >= 2) {
+                actualWinner = ONE;
+            }
+        }
+
+        if (scoreOfTeamTwo >= neededGoals) {
+            if (scoreOfTeamTwo - scoreOfTeamOne >= 2) {
+                actualWinner = TWO;
+            }
+        }
     }
 }

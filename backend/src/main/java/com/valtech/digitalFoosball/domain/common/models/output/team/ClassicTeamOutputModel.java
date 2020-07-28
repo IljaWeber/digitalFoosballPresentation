@@ -1,6 +1,6 @@
 package com.valtech.digitalFoosball.domain.common.models.output.team;
 
-public abstract class BaseTeamOutputModel implements TeamOutputModel {
+public class ClassicTeamOutputModel implements TeamOutputModel {
     private String name;
     private String playerOne;
     private String playerTwo;
@@ -47,4 +47,3 @@ public abstract class BaseTeamOutputModel implements TeamOutputModel {
     }
 
 }
-
