@@ -49,7 +49,7 @@ public class TimeGameRules {
         raiseScoreFor(undoOverView.pop());
     }
 
-    public void timeExpired() {
+    public void startNextGameSequence() {
         gameStatus = gameStatus.getNext();
     }
 

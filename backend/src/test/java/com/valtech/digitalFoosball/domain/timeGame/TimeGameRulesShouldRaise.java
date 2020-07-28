@@ -48,7 +48,7 @@ public class TimeGameRulesShouldRaise {
     @Test
     void when_time_is_not_over() {
         timeGameRules.raiseScoreFor(ONE);
-        timeGameRules.timeExpired();
+        timeGameRules.startNextGameSequence();
 
         timeGameRules.raiseScoreFor(ONE);
 
