@@ -15,14 +15,18 @@ import static com.valtech.digitalFoosball.domain.common.constants.GameMode.RANKE
 
 @RestController()
 @RequestMapping("api")
-public class DigitalFoosballUserCommandAPI {
+public class
+DigitalFoosballUserCommandAPI {
 
-    private final Logger logger = LogManager.getLogger(DigitalFoosballUserCommandAPI.class);
-    protected final GameController gameController;
+    private final Logger
+            logger;
+    private final GameController
+            gameController;
 
     @Autowired
     public DigitalFoosballUserCommandAPI(GameController gameController) {
         this.gameController = gameController;
+        logger = LogManager.getLogger(DigitalFoosballUserCommandAPI.class);
     }
 
     @PostMapping(path = "/init/adhoc", produces = MediaType.APPLICATION_JSON_VALUE)

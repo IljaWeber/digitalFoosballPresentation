@@ -7,8 +7,8 @@ export const properties = {
 */
 
 export const properties = {
-    userCommandUrl: "http://localhost:8888/api/",
-    fetchUrl: "http://localhost:8888/data/",
+    userCommandsUrl: "http://localhost:8888/api/",
+    fetchDataUrl: "http://localhost:8888/data/",
     hostAndPort: 'http://localhost:8888/',
     sock_url: "ws://localhost:8888/",
     auth: 'Basic ZGlnaXRhbC5mb290YmFsbDpVUnlnIyM0fSMpSzpcXHIyflErS301KSM/NURXM0cnXiQ9b3I6OyY8K31gJ1dVP01QeA=='

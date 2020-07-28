@@ -5,7 +5,7 @@ import {properties} from "../../resources/properties";
 export default class UndoButton extends React.Component {
     handleSubmit = async(event) => {
         event.preventDefault();
-        const url = properties.userCommandUrl + 'undo';
+        const url = properties.userCommandsUrl + 'undo';
         const requestOptions = {
             method: 'PUT',
             Authorization: properties.auth,

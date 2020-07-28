@@ -1,46 +1,46 @@
 package com.valtech.digitalFoosball.domain.common.models;
 
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
-import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
+import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class InitDataModel {
-    private RankedTeamDataModel teamOne;
-    private RankedTeamDataModel teamTwo;
+    private TeamDataModel teamOne;
+    private TeamDataModel teamTwo;
     private GameMode mode;
 
     public InitDataModel() {
     }
 
-    public InitDataModel(RankedTeamDataModel teamDataModelOne, RankedTeamDataModel teamDataModelTwo) {
+    public InitDataModel(TeamDataModel teamDataModelOne, TeamDataModel teamDataModelTwo) {
         teamOne = teamDataModelOne;
         teamTwo = teamDataModelTwo;
     }
 
-    public List<RankedTeamDataModel> getTeams() {
+    public List<TeamDataModel> getTeams() {
         return Arrays.asList(teamOne, teamTwo);
     }
 
-    public void setTeams(List<RankedTeamDataModel> teams) {
+    public void setTeams(List<TeamDataModel> teams) {
         teamOne = teams.get(0);
         teamTwo = teams.get(1);
     }
 
-    public RankedTeamDataModel getTeamOne() {
+    public TeamDataModel getTeamOne() {
         return teamOne;
     }
 
-    public void setTeamOne(RankedTeamDataModel teamOne) {
+    public void setTeamOne(TeamDataModel teamOne) {
         this.teamOne = teamOne;
     }
 
-    public RankedTeamDataModel getTeamTwo() {
+    public TeamDataModel getTeamTwo() {
         return teamTwo;
     }
 
-    public void setTeamTwo(RankedTeamDataModel teamTwo) {
+    public void setTeamTwo(TeamDataModel teamTwo) {
         this.teamTwo = teamTwo;
     }
 

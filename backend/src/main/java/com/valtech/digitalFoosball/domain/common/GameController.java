@@ -8,20 +8,23 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.EmptyGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
-import com.valtech.digitalFoosball.domain.common.models.output.game.RegularGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.valtech.digitalFoosball.domain.common.constants.GameMode.RANKED;
+
 @Service
 public class GameController implements IReactToGoals, IReactToUserCommands {
 
-    private final INotifyAboutStateChanges notifier;
-    private final GameProvider gameProvider;
-    private IPlayAGame game;
+    private final INotifyAboutStateChanges
+            notifier;
+    private final GameProvider
+            gameProvider;
+    private IPlayAGame
+            game;
 
     @Autowired
     public GameController(GameProvider gameProvider, INotifyAboutStateChanges notifier) {
@@ -30,7 +33,7 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
     }
 
     public List<TeamOutputModel> getAllTeams() {
-        IPlayAGame gameManipulator = gameProvider.getGameManipulator(GameMode.RANKED);
+        IPlayAGame gameManipulator = gameProvider.getGameManipulator(RANKED);
         return gameManipulator.getAllTeamsFromDatabase();
     }
 
@@ -39,9 +42,7 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
             return new EmptyGameOutputModel();
         }
 
-        RankedGameDataModel gameDataModel = game.getGameData();
-
-        return new RegularGameOutputModel(gameDataModel);
+        return game.getGameData();
     }
 
     public void initGame(InitDataModel initDataModel) {
@@ -55,7 +56,6 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
 
         notifyAboutStateChange();
     }
-
 
     public void undoGoal() {
         game.undoGoal();

@@ -3,6 +3,9 @@
     <HTMLCodeStyleSettings>
       <option name="HTML_ALIGN_TEXT" value="true" />
     </HTMLCodeStyleSettings>
+    <JavaCodeStyleSettings>
+      <option name="TEST_NAME_SUFFIX" value="Should" />
+    </JavaCodeStyleSettings>
     <ScalaCodeStyleSettings>
       <option name="MULTILINE_STRING_CLOSING_QUOTES_ON_NEW_LINE" value="true" />
     </ScalaCodeStyleSettings>

@@ -8,15 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UniqueNameVerifier {
-
     private List<String> processedPlayerNames;
-    private List<String> processedTeamNames;
 
     public void checkForDuplicateNames(InitDataModel initDataModel) {
         processedPlayerNames = new ArrayList<>();
-        processedTeamNames = new ArrayList<>();
+        List<String> processedTeamNames = new ArrayList<>();
 
-        for (RankedTeamDataModel team : initDataModel.getTeams()) {
+        for (TeamDataModel team : initDataModel.getTeams()) {
             String teamName = team.getName();
 
             checkName(teamName, processedTeamNames);
@@ -27,7 +25,7 @@ public class UniqueNameVerifier {
         }
     }
 
-    private void checkPlayerNames(RankedTeamDataModel team) {
+    private void checkPlayerNames(TeamDataModel team) {
         for (PlayerDataModel player : team.getPlayers()) {
             String playerName = player.getName();
 

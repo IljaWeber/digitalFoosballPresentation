@@ -1,15 +1,22 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
+import com.valtech.digitalFoosball.api.driven.persistence.PlayerService;
+import com.valtech.digitalFoosball.api.driven.persistence.TeamService;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepository;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
+import com.valtech.digitalFoosball.domain.common.ClassicGame;
 import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
-import com.valtech.digitalFoosball.initializationFactory.RankedGameFactory;
+import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
@@ -17,20 +24,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class RankedGameManipulatorShouldRaiseScore {
 
-    public IPlayAGame game;
     private final UUID id = UUID.randomUUID();
-
+    public IPlayAGame game;
 
     @BeforeEach
     void setUp() {
-        RankedTeamDataModel teamOne = new RankedTeamDataModel("T1", "P1", "P2");
-        RankedTeamDataModel teamTwo = new RankedTeamDataModel("T2", "P3", "P4");
+        TeamDataModel teamOne = new TeamDataModel("T1", "P1", "P2");
+        TeamDataModel teamTwo = new TeamDataModel("T2", "P3", "P4");
+        InitDataModel initDataModel = new InitDataModel(teamOne, teamTwo);
 
         TeamRepository teamRepository = new TeamRepositoryFake(id);
         PlayerRepository playerRepository = new PlayerRepositoryFake();
-        RankedGameFactory rankedGame = new RankedGameFactory();
-        rankedGame.prepareInitData(teamOne, teamTwo);
-        game = rankedGame.getGame(teamRepository, playerRepository);
+        game = new ClassicGame(new RankedInitService(new TeamService(teamRepository,
+                                                                     new PlayerService(playerRepository))));
+        game.initGame(initDataModel);
     }
 
     @Test
@@ -44,10 +51,9 @@ public class RankedGameManipulatorShouldRaiseScore {
     }
 
     private int getScoreOfTeam(Team team) {
-        RankedGameDataModel gameData = game.getGameData();
-        SortedMap<Team, RankedTeamDataModel> teams = gameData.getTeams();
+        GameOutputModel gameData = game.getGameData();
 
-        return teams.get(team).getScore();
+        return gameData.getTeam(team).getScore();
     }
 
     @Test
@@ -66,24 +72,25 @@ public class RankedGameManipulatorShouldRaiseScore {
 
     private class TeamRepositoryFake implements TeamRepository {
         private final UUID id;
+        private List<TeamDataModel> teamDataModels;
 
         public TeamRepositoryFake(UUID id) {
             this.id = id;
         }
 
         @Override
-        public RankedTeamDataModel save(RankedTeamDataModel teamDataModel) {
+        public TeamDataModel save(TeamDataModel teamDataModel) {
             teamDataModel.setId(id);
             return teamDataModel;
         }
 
         @Override
-        public <S extends RankedTeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
+        public <S extends TeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
             return null;
         }
 
         @Override
-        public Optional<RankedTeamDataModel> findById(UUID uuid) {
+        public Optional<TeamDataModel> findById(UUID uuid) {
             return Optional.empty();
         }
 
@@ -93,7 +100,7 @@ public class RankedGameManipulatorShouldRaiseScore {
         }
 
         @Override
-        public Iterable<RankedTeamDataModel> findAllById(Iterable<UUID> iterable) {
+        public Iterable<TeamDataModel> findAllById(Iterable<UUID> iterable) {
             return null;
         }
 
@@ -108,12 +115,12 @@ public class RankedGameManipulatorShouldRaiseScore {
         }
 
         @Override
-        public void delete(RankedTeamDataModel teamDataModel) {
+        public void delete(TeamDataModel teamDataModel) {
 
         }
 
         @Override
-        public void deleteAll(Iterable<? extends RankedTeamDataModel> iterable) {
+        public void deleteAll(Iterable<? extends TeamDataModel> iterable) {
 
         }
 
@@ -123,19 +130,17 @@ public class RankedGameManipulatorShouldRaiseScore {
         }
 
         @Override
-        public Optional<RankedTeamDataModel> findByNameIgnoreCase(String teamName) {
+        public Optional<TeamDataModel> findByNameIgnoreCase(String teamName) {
             return Optional.empty();
         }
 
         @Override
-        public List<RankedTeamDataModel> findAll() {
+        public List<TeamDataModel> findAll() {
 
             return teamDataModels;
         }
 
-        private List<RankedTeamDataModel> teamDataModels;
-
-        public void insertTeamDataModel(RankedTeamDataModel teamOne, RankedTeamDataModel teamTwo) {
+        public void insertTeamDataModel(TeamDataModel teamOne, TeamDataModel teamTwo) {
             teamDataModels = new ArrayList<>();
             teamDataModels.add(teamOne);
             teamDataModels.add(teamTwo);

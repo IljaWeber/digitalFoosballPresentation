@@ -1,50 +1,25 @@
 package com.valtech.digitalFoosball.domain.common.models.output.game;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.common.converter.Converter;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.domain.ranked.MatchWinVerifier;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedTeamDataModel;
 
 import java.util.List;
-import java.util.SortedMap;
 
-public abstract class BaseGameOutputModel implements GameOutputModel {
+import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
 
-    private List<TeamOutputModel> teams;
+public abstract class BaseGameOutputModel {
+    protected List<TeamOutputModel> teams;
 
-    private Team matchWinner;
+    protected Team matchWinner = NO_TEAM;
 
-    public BaseGameOutputModel(RankedGameDataModel gameDataModel) {
-        MatchWinVerifier matchWinVerifier = new MatchWinVerifier();
-        SortedMap<Team, RankedTeamDataModel> teamMap = gameDataModel.getTeams();
-
-        this.teams = Converter.convertMapToTeamOutputs(teamMap);
-        matchWinner = matchWinVerifier.getMatchWinner(teamMap);
-    }
-
-    @Override
     public List<TeamOutputModel> getTeams() {
         return teams;
     }
 
-    @Override
-    public void setTeams(List<TeamOutputModel> teams) {
-        this.teams = teams;
-    }
-
-    @Override
     public Team getMatchWinner() {
         return matchWinner;
     }
 
-    @Override
-    public void setMatchWinner(Team matchWinner) {
-        this.matchWinner = matchWinner;
-    }
-
-    @Override
     public TeamOutputModel getTeam(Team team) {
         return teams.get(team.listAssociationNumber());
     }

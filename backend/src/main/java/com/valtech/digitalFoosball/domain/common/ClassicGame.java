@@ -1,63 +1,62 @@
 package com.valtech.digitalFoosball.domain.common;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
+import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
+import com.valtech.digitalFoosball.domain.common.models.output.game.ClassicGameOutputModel;
+import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
+import com.valtech.digitalFoosball.domain.ranked.GameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
+import java.util.List;
 
-public abstract class ClassicGame implements IPlayAGame {
-    protected RankedGameDataModel gameDataModel;
-    private final RankedGameRules rules;
+@Service
+public class ClassicGame implements IPlayAGame {
+    protected RankedGameRules rankedGameRules;
+    protected GameDataModel model;
+    protected InitService initService;
 
-    public ClassicGame() {
-        rules = new RankedGameRules();
+    @Autowired
+    public ClassicGame(InitService initService) {
+        this.initService = initService;
+        rankedGameRules = new RankedGameRules();
+    }
+
+    public List<TeamOutputModel> getAllTeamsFromDatabase() {
+        return initService.getAllTeams();
+    }
+
+    public void initGame(InitDataModel initDataModel) {
+        rankedGameRules = new RankedGameRules();
+
+        model = initService.init(initDataModel);
     }
 
     public void countGoalFor(Team team) {
-        Team winner = rules.getTeamWithLeadOfTwo(gameDataModel);
-
-        if (winner != NO_TEAM) {
-            return;
-        }
-
-        gameDataModel.countGoalFor(team);
-
-        rules.approveWin(gameDataModel);
+        rankedGameRules.raiseScoreFor(team);
     }
 
     public void undoGoal() {
-        if (gameDataModel.thereAreGoals()) {
-
-            if (rules.winConditionsFulfilled(gameDataModel)) {
-                gameDataModel.decreaseWonSetsForRecentSetWinner();
-                gameDataModel.setSetWinner(NO_TEAM);
-            }
-
-            gameDataModel.undoLastGoal();
-        }
+        rankedGameRules.undoLastGoal();
     }
 
     public void redoGoal() {
-        if (gameDataModel.thereAreUndoneGoals()) {
-
-            gameDataModel.redoLastUndoneGoal();
-
-            rules.approveWin(gameDataModel);
-        }
+        rankedGameRules.redoLastGoal();
     }
 
     public void changeover() {
-        gameDataModel.changeOver();
+        rankedGameRules.changeOver();
     }
 
-    @Override
     public void resetMatch() {
-        gameDataModel.resetMatch();
+        model.resetMatch();
+        rankedGameRules = new RankedGameRules();
     }
 
-    @Override
-    public RankedGameDataModel getGameData() {
-        return gameDataModel;
+    public GameOutputModel getGameData() {
+        return new ClassicGameOutputModel(model, rankedGameRules);
     }
+
 }
