@@ -15,9 +15,9 @@ import java.util.List;
 
 @Service
 public class ClassicGame implements IPlayAGame {
-    protected ClassicGameRules classicGameRules;
-    protected GameDataModel model;
-    protected InitService initService;
+    private ClassicGameRules classicGameRules;
+    private GameDataModel model;
+    private final InitService initService;
 
     @Autowired
     public ClassicGame(InitService initService) {

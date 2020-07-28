@@ -8,6 +8,7 @@ import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputMo
 import java.util.List;
 
 public interface IPlayAGame {
+    // TODO: 28.07.20 m.huber remove this method
     List<TeamOutputModel> getAllTeamsFromDatabase();
 
     void initGame(InitDataModel initDataModel);

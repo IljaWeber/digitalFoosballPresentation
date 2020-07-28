@@ -19,12 +19,9 @@ import static com.valtech.digitalFoosball.domain.common.constants.GameMode.RANKE
 @Service
 public class GameController implements IReactToGoals, IReactToUserCommands {
 
-    private final INotifyAboutStateChanges
-            notifier;
-    private final GameProvider
-            gameProvider;
-    private IPlayAGame
-            game;
+    private final INotifyAboutStateChanges notifier;
+    private final GameProvider gameProvider;
+    private IPlayAGame game;
 
     @Autowired
     public GameController(GameProvider gameProvider, INotifyAboutStateChanges notifier) {

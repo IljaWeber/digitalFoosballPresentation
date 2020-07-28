@@ -4,20 +4,29 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 
 import java.util.Collections;
 import java.util.Stack;
+import java.util.Timer;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 import static com.valtech.digitalFoosball.domain.timeGame.GameState.FIRST_HALF;
 import static com.valtech.digitalFoosball.domain.timeGame.GameState.OVER;
 
 public class TimeGameRules {
+    public static final int halftimeInMillis = 420000;
     private final Stack<Team> goalOverView;
     private final Stack<Team> undoOverView;
     private GameState gameState;
+    private final Timer timer;
 
     public TimeGameRules() {
         goalOverView = new Stack<>();
         undoOverView = new Stack<>();
         gameState = FIRST_HALF;
+        timer = new Timer();
+    }
+
+    // TODO: 28.07.20 m.huber think of a way to mock the timer to test this method
+    public void startTimer() {
+        timer.schedule(new HalftimeTimerTask(this), halftimeInMillis);
     }
 
     public void raiseScoreFor(Team team) {
@@ -45,7 +54,7 @@ public class TimeGameRules {
         raiseScoreFor(undoOverView.pop());
     }
 
-    public void startNextGameSequence() {
+    public void changeOver() {
         gameState = gameState.getNext();
     }
 
@@ -92,5 +101,9 @@ public class TimeGameRules {
         }
 
         return Collections.frequency(goalOverView, team);
+    }
+
+    public void timeRanDown() {
+        gameState = gameState.getNext();
     }
 }

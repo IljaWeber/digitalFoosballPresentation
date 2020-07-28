@@ -21,7 +21,7 @@ public class HalftimeTimerTaskShould {
         boolean informed = false;
 
         @Override
-        public void startNextGameSequence() {
+        public void timeRanDown() {
             informed = true;
         }
     }

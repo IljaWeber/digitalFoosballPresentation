@@ -18,27 +18,27 @@ public class TimeGameRulesShouldChangeTheGameState {
     }
 
     @Test
-    void from_first_half_to_halftime_when_time_is_expired() {
-        timeGameRules.startNextGameSequence();
+    void from_first_half_to_halftime_when_time_ran_down() {
+        timeGameRules.timeRanDown();
 
         assertThat(timeGameRules.getGameState()).isEqualTo(HALFTIME);
     }
 
     @Test
     void from_halftime_to_second_half() {
-        timeGameRules.startNextGameSequence();
+        timeGameRules.timeRanDown();
 
-        timeGameRules.startNextGameSequence();
+        timeGameRules.changeOver();
 
         assertThat(timeGameRules.getGameState()).isEqualTo(SECOND_HALF);
     }
 
     @Test
     void from_second_half_to_over() {
-        timeGameRules.startNextGameSequence();
-        timeGameRules.startNextGameSequence();
+        timeGameRules.timeRanDown();
+        timeGameRules.changeOver();
 
-        timeGameRules.startNextGameSequence();
+        timeGameRules.timeRanDown();
 
         GameState actual = timeGameRules.getGameState();
         assertThat(actual).isEqualTo(OVER);

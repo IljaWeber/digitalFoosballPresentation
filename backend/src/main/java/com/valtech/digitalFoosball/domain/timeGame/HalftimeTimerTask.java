@@ -12,6 +12,6 @@ public class HalftimeTimerTask extends TimerTask {
 
     @Override
     public void run() {
-        timeGame.startNextGameSequence();
+        timeGame.timeRanDown();
     }
 }

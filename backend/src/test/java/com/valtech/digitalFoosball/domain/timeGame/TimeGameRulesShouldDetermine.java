@@ -32,9 +32,9 @@ public class TimeGameRulesShouldDetermine {
     void winner_when_the_time_is_over_and_one_team_is_leading() {
         raiseScoreFor(ONE,
                       TWO, TWO);
-        timeGameRules.startNextGameSequence();
-        timeGameRules.startNextGameSequence();
-        timeGameRules.startNextGameSequence();
+        timeGameRules.timeRanDown();
+        timeGameRules.changeOver();
+        timeGameRules.timeRanDown();
 
         Team actual = timeGameRules.determineWinner();
 
@@ -45,9 +45,9 @@ public class TimeGameRulesShouldDetermine {
     void no_winner_when_no_team_is_leading_after_the_time_ran_down() {
         raiseScoreFor(ONE,
                       TWO);
-        timeGameRules.startNextGameSequence();
-        timeGameRules.startNextGameSequence();
-        timeGameRules.startNextGameSequence();
+        timeGameRules.timeRanDown();
+        timeGameRules.changeOver();
+        timeGameRules.timeRanDown();
 
         Team actual = timeGameRules.determineWinner();
 
