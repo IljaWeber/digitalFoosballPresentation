@@ -18,11 +18,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
-import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
+import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RankedGameManipulatorShouldRedoAnUndoneScore {
+public class ClassicGameRulesShouldUndoLastGoal {
 
     private final UUID id = UUID.randomUUID();
     public IPlayAGame game;
@@ -39,14 +38,14 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
         game = new ClassicGame(new RankedInitService(new TeamService(teamRepository,
                                                                      new PlayerService(playerRepository))));
         game.initGame(initDataModel);
+
     }
 
     @Test
-    void if_a_score_has_been_undone_recently() {
-        raiseScoreOf(ONE);
-        game.undoGoal();
+    void in_the_reversed_order_of_scoring() {
+        raiseScoreOf(ONE, TWO, ONE);
 
-        game.redoGoal();
+        game.undoGoal();
 
         int actual = getScoreOfTeam(ONE);
         assertThat(actual).isEqualTo(1);
@@ -58,8 +57,8 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
     }
 
     @Test
-    void only_when_a_goal_was_undid_otherwise_do_nothing() {
-        game.redoGoal();
+    void but_if_no_scores_have_been_made_then_do_nothing() {
+        game.undoGoal();
 
         int actualScoreTeamOne = getScoreOfTeam(ONE);
         int actualScoreTeamTwo = getScoreOfTeam(TWO);
@@ -68,19 +67,13 @@ public class RankedGameManipulatorShouldRedoAnUndoneScore {
     }
 
     @Test
-    void and_raise_the_won_sets_if_necessary() {
+    void and_decrease_the_number_of_won_sets_when_win_condition_has_been_fulfilled() {
         raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
+
         game.undoGoal();
 
-        game.redoGoal();
-
-        Team actual = getNumberOfWonSets(ONE);
-        assertThat(actual).isEqualTo(ONE);
-    }
-
-    private Team getNumberOfWonSets(Team team) {
-        GameOutputModel gameData = game.getGameData();
-        return gameData.getWinnerOfSet();
+        Team actual = game.getGameData().getWinnerOfSet();
+        assertThat(actual).isEqualTo(NO_TEAM);
     }
 
     private void raiseScoreOf(Team... teams) {

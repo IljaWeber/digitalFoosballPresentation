@@ -26,7 +26,7 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class RankedGameManipulatorShould {
+public class ClassicGameRulesShould {
     private final UUID id = UUID.randomUUID();
     public IPlayAGame game;
 
