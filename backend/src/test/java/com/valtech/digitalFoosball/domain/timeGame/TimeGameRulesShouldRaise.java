@@ -54,7 +54,6 @@ public class TimeGameRulesShouldRaise {
 
         int actualScore = timeGameRules.getScoreOfTeam(ONE);
         assertThat(actualScore).isEqualTo(1);
-
     }
 
     private void raiseScoreFor(Team... teams) {

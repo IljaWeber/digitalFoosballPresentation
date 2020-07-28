@@ -52,4 +52,8 @@ public class TimeGameRules {
     public void timeExpired() {
         gameStatus = gameStatus.getNext();
     }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
 }
