@@ -1,5 +1,8 @@
 package com.valtech.digitalFoosball.domain.common.constants;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Team {
     ONE(1, 0),
     TWO(2, 1),
@@ -35,5 +38,9 @@ public enum Team {
         } else {
             return ONE;
         }
+    }
+
+    public static List<Team> getTeams() {
+        return Arrays.asList(ONE, TWO);
     }
 }

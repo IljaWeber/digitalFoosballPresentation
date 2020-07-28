@@ -49,7 +49,7 @@ public class ClassicGameRules {
     }
 
     public Team getMatchWinner() {
-        for (Team team : Team.values()) {
+        for (Team team : Team.getTeams()) {
             if (Collections.frequency(winOverview, team) >= 2) {
                 return team;
             }

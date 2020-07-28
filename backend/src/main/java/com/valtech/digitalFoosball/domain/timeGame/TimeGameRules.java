@@ -70,7 +70,7 @@ public class TimeGameRules {
             }
         }
 
-        for (Team team : Team.values()) {
+        for (Team team : Team.getTeams()) {
             if (Collections.frequency(goalOverView, team) >= 10) {
                 return team;
             }
