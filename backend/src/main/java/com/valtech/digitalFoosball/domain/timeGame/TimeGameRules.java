@@ -36,4 +36,12 @@ public class TimeGameRules {
         Team team = goalOverView.pop();
         undoOverView.push(team);
     }
+
+    public void redoLastGoal() {
+        if (undoOverView.isEmpty()) {
+            return;
+        }
+
+        raiseScoreFor(undoOverView.pop());
+    }
 }
