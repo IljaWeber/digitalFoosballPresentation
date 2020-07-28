@@ -11,7 +11,7 @@ public class ClassicGameRules {
     private final Stack<Team> goalOverView;
     private final Stack<Team> undoOverView;
     private final Stack<Team> winOverview;
-    private Team actualWinner = NO_TEAM;
+    private Team currentSetWinner = NO_TEAM;
 
     public ClassicGameRules() {
         goalOverView = new Stack<>();
@@ -19,15 +19,15 @@ public class ClassicGameRules {
         winOverview = new Stack<>();
     }
 
-    public Team getActualWinner() {
-        return actualWinner;
+    public Team getCurrentSetWinner() {
+        return currentSetWinner;
     }
 
     // OPTIMIZE: created on 28.07.20 by iljaweber: reconsider implementation of raiseScoreFor
 
     public void raiseScoreFor(Team team) {
 
-        if (actualWinner != NO_TEAM) {
+        if (currentSetWinner != NO_TEAM) {
             return;
         }
 
@@ -35,8 +35,8 @@ public class ClassicGameRules {
 
         checkForWin();
 
-        if (actualWinner != NO_TEAM) {
-            winOverview.push(actualWinner);
+        if (currentSetWinner != NO_TEAM) {
+            winOverview.push(currentSetWinner);
         }
     }
 
@@ -63,9 +63,9 @@ public class ClassicGameRules {
             return;
         }
 
-        if (actualWinner != NO_TEAM) {
+        if (currentSetWinner != NO_TEAM) {
             winOverview.pop();
-            actualWinner = NO_TEAM;
+            currentSetWinner = NO_TEAM;
         }
 
         Team team = goalOverView.pop();
@@ -83,7 +83,7 @@ public class ClassicGameRules {
     public void changeOver() {
         goalOverView.clear();
         undoOverView.clear();
-        actualWinner = NO_TEAM;
+        currentSetWinner = NO_TEAM;
     }
 
     private void checkForWin() {
@@ -93,13 +93,13 @@ public class ClassicGameRules {
 
         if (scoreOfTeamOne >= neededGoals) {
             if (scoreOfTeamOne - scoreOfTeamTwo >= 2) {
-                actualWinner = ONE;
+                currentSetWinner = ONE;
             }
         }
 
         if (scoreOfTeamTwo >= neededGoals) {
             if (scoreOfTeamTwo - scoreOfTeamOne >= 2) {
-                actualWinner = TWO;
+                currentSetWinner = TWO;
             }
         }
     }

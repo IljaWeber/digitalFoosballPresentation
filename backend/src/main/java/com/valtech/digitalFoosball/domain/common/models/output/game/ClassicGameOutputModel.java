@@ -16,7 +16,7 @@ public class ClassicGameOutputModel extends BaseGameOutputModel implements GameO
         SortedMap<Team, TeamDataModel> teamMap = gameDataModel.getTeams();
 
         super.matchWinner = classicGameRules.getMatchWinner();
-        this.winnerOfSet = classicGameRules.getActualWinner();
+        this.winnerOfSet = classicGameRules.getCurrentSetWinner();
         teams = Converter.convertMapToTeamOutputs(teamMap);
 
         if (teams.isEmpty()) {

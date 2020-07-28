@@ -22,7 +22,7 @@ public class ClassicGameRulesShouldShow {
                       TWO,
                       ONE);
 
-        Team actual = rules.getActualWinner();
+        Team actual = rules.getCurrentSetWinner();
 
         assertThat(actual).isEqualTo(NO_TEAM);
     }
@@ -37,7 +37,7 @@ public class ClassicGameRulesShouldShow {
                       ONE,
                       TWO);
 
-        Team actual = rules.getActualWinner();
+        Team actual = rules.getCurrentSetWinner();
 
         assertThat(actual).isEqualTo(NO_TEAM);
     }
@@ -46,7 +46,7 @@ public class ClassicGameRulesShouldShow {
     public void a_set_winner_when_a_team_scored_more_than_six_goals_and_there_is_a_score_difference_of_at_least_two() {
         countGoalsFor(TWO, TWO, TWO, TWO, TWO, TWO);
 
-        Team actual = rules.getActualWinner();
+        Team actual = rules.getCurrentSetWinner();
 
         assertThat(actual).isEqualTo(TWO);
     }
