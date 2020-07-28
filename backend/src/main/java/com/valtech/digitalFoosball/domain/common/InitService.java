@@ -8,5 +8,6 @@ import java.util.List;
 public interface InitService {
     GameDataModel init(InitDataModel initDataModel);
 
+    // TODO: 28.07.20 m.huber remove this method and move in separate class
     List<TeamOutputModel> getAllTeams();
 }

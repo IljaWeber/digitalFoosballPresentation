@@ -1,18 +1,15 @@
 package com.valtech.digitalFoosball.domain.adhoc;
 
-import com.valtech.digitalFoosball.domain.common.ClassicGameInitService;
 import com.valtech.digitalFoosball.domain.common.GameDataModel;
+import com.valtech.digitalFoosball.domain.common.InitService;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
+import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class AdHocInitService extends ClassicGameInitService {
-
-    public AdHocInitService() {
-        super(null);
-    }
+public class AdHocInitService implements InitService {
 
     @Override
     public GameDataModel init(InitDataModel initDataModel) {
@@ -24,5 +21,10 @@ public class AdHocInitService extends ClassicGameInitService {
         gameDataModel.setTeams(teamDataModels);
 
         return gameDataModel;
+    }
+
+    @Override
+    public List<TeamOutputModel> getAllTeams() {
+        return null;
     }
 }

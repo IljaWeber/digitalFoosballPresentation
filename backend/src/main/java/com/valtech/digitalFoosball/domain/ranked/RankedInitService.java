@@ -1,18 +1,25 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
 import com.valtech.digitalFoosball.api.driven.persistence.IObtainTeams;
-import com.valtech.digitalFoosball.domain.common.ClassicGameInitService;
 import com.valtech.digitalFoosball.domain.common.GameDataModel;
+import com.valtech.digitalFoosball.domain.common.InitService;
+import com.valtech.digitalFoosball.domain.common.converter.Converter;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
+import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
-public class RankedInitService extends ClassicGameInitService {
+public class RankedInitService implements InitService {
+
+    private final IObtainTeams teamDataPort;
 
     @Autowired
     public RankedInitService(IObtainTeams teamDataPort) {
-        super(teamDataPort);
+        this.teamDataPort = teamDataPort;
     }
 
     public GameDataModel init(InitDataModel initDataModel) {
@@ -22,8 +29,29 @@ public class RankedInitService extends ClassicGameInitService {
         return prepare(initDataModel);
     }
 
-    protected GameDataModel prepare(InitDataModel initDataModel) {
+    private GameDataModel prepare(InitDataModel initDataModel) {
+        GameDataModel gameDataModel = new GameDataModel();
+        List<TeamDataModel> teamsFromDatabase = new ArrayList<>();
 
-        return super.prepare(initDataModel);
+        List<TeamDataModel> teamsList = initDataModel.getTeams();
+
+        for (TeamDataModel team : teamsList) {
+            TeamDataModel teamFromDatabase = teamDataPort.loadOrSaveIntoDatabase(team);
+            teamsFromDatabase.add(teamFromDatabase);
+        }
+
+        gameDataModel.setTeams(teamsFromDatabase);
+
+        return gameDataModel;
+    }
+
+    public List<TeamOutputModel> getAllTeams() {
+        List<TeamDataModel> teamDataModels = teamDataPort.getAllTeamsFromDatabase();
+
+        if (teamDataModels.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return Converter.convertListToTeamOutputs(teamDataModels);
     }
 }
