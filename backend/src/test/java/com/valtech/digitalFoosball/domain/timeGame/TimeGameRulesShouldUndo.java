@@ -28,7 +28,6 @@ public class TimeGameRulesShouldUndo {
 
         int actualScore = timeGameRules.getScoreOfTeam(ONE);
         assertThat(actualScore).isEqualTo(2);
-
         actualScore = timeGameRules.getScoreOfTeam(TWO);
         assertThat(actualScore).isEqualTo(1);
     }
@@ -36,12 +35,12 @@ public class TimeGameRulesShouldUndo {
     @Test
     void just_when_there_are_goals() {
         timeGameRules.raiseScoreFor(ONE);
+
         timeGameRules.undoLastGoal();
         timeGameRules.undoLastGoal();
 
         int actualScore = timeGameRules.getScoreOfTeam(ONE);
         assertThat(actualScore).isEqualTo(0);
-
         actualScore = timeGameRules.getScoreOfTeam(TWO);
         assertThat(actualScore).isEqualTo(0);
     }
