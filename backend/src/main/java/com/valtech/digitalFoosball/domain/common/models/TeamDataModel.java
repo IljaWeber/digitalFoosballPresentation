@@ -1,6 +1,5 @@
-package com.valtech.digitalFoosball.domain.ranked;
+package com.valtech.digitalFoosball.domain.common.models;
 
-import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

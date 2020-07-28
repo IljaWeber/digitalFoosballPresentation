@@ -1,6 +1,6 @@
 package com.valtech.digitalFoosball.domain.common;
 
-import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
+import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

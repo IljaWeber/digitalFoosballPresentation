@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RankedGameRulesShouldShow {
-    private RankedGameRules rules;
+public class ClassicGameRulesShouldShow {
+    private ClassicGameRules rules;
 
     @BeforeEach
     void setUp() {
-        rules = new RankedGameRules();
+        rules = new ClassicGameRules();
     }
 
     @Test

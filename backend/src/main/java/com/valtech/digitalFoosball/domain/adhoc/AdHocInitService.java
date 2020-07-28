@@ -1,10 +1,10 @@
 package com.valtech.digitalFoosball.domain.adhoc;
 
-import com.valtech.digitalFoosball.domain.common.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.InitService;
+import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
+import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 
 import java.util.Arrays;
 import java.util.List;

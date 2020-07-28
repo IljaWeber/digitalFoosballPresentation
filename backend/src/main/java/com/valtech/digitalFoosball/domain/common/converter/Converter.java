@@ -1,9 +1,9 @@
 package com.valtech.digitalFoosball.domain.common.converter;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.ClassicTeamOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 
 import java.util.ArrayList;
 import java.util.List;

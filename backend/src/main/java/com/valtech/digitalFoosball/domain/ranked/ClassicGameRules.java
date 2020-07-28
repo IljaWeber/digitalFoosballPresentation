@@ -7,13 +7,13 @@ import java.util.Stack;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
-public class RankedGameRules {
+public class ClassicGameRules {
     private final Stack<Team> goalOverView;
     private final Stack<Team> undoOverView;
     private final Stack<Team> winOverview;
     private Team actualWinner = NO_TEAM;
 
-    public RankedGameRules() {
+    public ClassicGameRules() {
         goalOverView = new Stack<>();
         undoOverView = new Stack<>();
         winOverview = new Stack<>();

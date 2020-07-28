@@ -1,6 +1,6 @@
 package com.valtech.digitalFoosball.api.driven.persistence.repository;
 
-import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
+import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

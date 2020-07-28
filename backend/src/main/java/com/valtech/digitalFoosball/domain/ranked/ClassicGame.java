@@ -1,11 +1,13 @@
-package com.valtech.digitalFoosball.domain.common;
+package com.valtech.digitalFoosball.domain.ranked;
 
+import com.valtech.digitalFoosball.domain.common.IPlayAGame;
+import com.valtech.digitalFoosball.domain.common.InitService;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.ClassicGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +15,14 @@ import java.util.List;
 
 @Service
 public class ClassicGame implements IPlayAGame {
-    protected RankedGameRules rankedGameRules;
+    protected ClassicGameRules classicGameRules;
     protected GameDataModel model;
     protected InitService initService;
 
     @Autowired
     public ClassicGame(InitService initService) {
         this.initService = initService;
-        rankedGameRules = new RankedGameRules();
+        classicGameRules = new ClassicGameRules();
     }
 
     public List<TeamOutputModel> getAllTeamsFromDatabase() {
@@ -28,34 +30,34 @@ public class ClassicGame implements IPlayAGame {
     }
 
     public void initGame(InitDataModel initDataModel) {
-        rankedGameRules = new RankedGameRules();
+        classicGameRules = new ClassicGameRules();
 
         model = initService.init(initDataModel);
     }
 
     public void countGoalFor(Team team) {
-        rankedGameRules.raiseScoreFor(team);
+        classicGameRules.raiseScoreFor(team);
     }
 
     public void undoGoal() {
-        rankedGameRules.undoLastGoal();
+        classicGameRules.undoLastGoal();
     }
 
     public void redoGoal() {
-        rankedGameRules.redoLastGoal();
+        classicGameRules.redoLastGoal();
     }
 
     public void changeover() {
-        rankedGameRules.changeOver();
+        classicGameRules.changeOver();
     }
 
     public void resetMatch() {
         model.resetMatch();
-        rankedGameRules = new RankedGameRules();
+        classicGameRules = new ClassicGameRules();
     }
 
     public GameOutputModel getGameData() {
-        return new ClassicGameOutputModel(model, rankedGameRules);
+        return new ClassicGameOutputModel(model, classicGameRules);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.valtech.digitalFoosball.api.driven.persistence;
 
-import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
+import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 
 import java.util.List;
 

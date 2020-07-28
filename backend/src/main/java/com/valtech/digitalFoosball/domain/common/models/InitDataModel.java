@@ -1,7 +1,6 @@
 package com.valtech.digitalFoosball.domain.common.models;
 
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
-import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 
 import java.util.Arrays;
 import java.util.List;

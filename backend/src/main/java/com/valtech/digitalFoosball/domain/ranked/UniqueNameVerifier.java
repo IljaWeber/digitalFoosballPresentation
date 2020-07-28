@@ -3,6 +3,7 @@ package com.valtech.digitalFoosball.domain.ranked;
 import com.valtech.digitalFoosball.domain.common.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
+import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
