@@ -1,12 +1,12 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
-public enum GameSequence {
+public enum GameState {
     FIRST_HALF,
     HALFTIME,
     SECOND_HALF,
     OVER;
 
-    public GameSequence getNext() {
+    public GameState getNext() {
         switch (this) {
             case FIRST_HALF:
                 return HALFTIME;

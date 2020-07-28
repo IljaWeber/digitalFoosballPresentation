@@ -5,10 +5,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
-import static com.valtech.digitalFoosball.domain.timeGame.GameSequence.*;
+import static com.valtech.digitalFoosball.domain.timeGame.GameState.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TimeGameRulesShouldChangeTheGameSequence {
+public class TimeGameRulesShouldChangeTheGameState {
 
     private TimeGameRules timeGameRules;
 
@@ -21,7 +21,7 @@ public class TimeGameRulesShouldChangeTheGameSequence {
     void from_first_half_to_halftime_when_time_is_expired() {
         timeGameRules.startNextGameSequence();
 
-        assertThat(timeGameRules.getGameSequence()).isEqualTo(HALFTIME);
+        assertThat(timeGameRules.getGameState()).isEqualTo(HALFTIME);
     }
 
     @Test
@@ -30,7 +30,7 @@ public class TimeGameRulesShouldChangeTheGameSequence {
 
         timeGameRules.startNextGameSequence();
 
-        assertThat(timeGameRules.getGameSequence()).isEqualTo(SECOND_HALF);
+        assertThat(timeGameRules.getGameState()).isEqualTo(SECOND_HALF);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class TimeGameRulesShouldChangeTheGameSequence {
 
         timeGameRules.startNextGameSequence();
 
-        GameSequence actual = timeGameRules.getGameSequence();
+        GameState actual = timeGameRules.getGameState();
         assertThat(actual).isEqualTo(OVER);
     }
 
@@ -48,7 +48,7 @@ public class TimeGameRulesShouldChangeTheGameSequence {
     void to_over_when_a_team_reached_ten_goals() {
         raiseScoreFor(ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE);
 
-        GameSequence actual = timeGameRules.getGameSequence();
+        GameState actual = timeGameRules.getGameState();
         assertThat(actual).isEqualTo(OVER);
     }
 

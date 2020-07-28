@@ -6,34 +6,26 @@ import java.util.Collections;
 import java.util.Stack;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
-import static com.valtech.digitalFoosball.domain.timeGame.GameSequence.FIRST_HALF;
-import static com.valtech.digitalFoosball.domain.timeGame.GameSequence.OVER;
+import static com.valtech.digitalFoosball.domain.timeGame.GameState.FIRST_HALF;
+import static com.valtech.digitalFoosball.domain.timeGame.GameState.OVER;
 
 public class TimeGameRules {
     private final Stack<Team> goalOverView;
     private final Stack<Team> undoOverView;
-    private GameSequence gameSequence;
+    private GameState gameState;
 
     public TimeGameRules() {
         goalOverView = new Stack<>();
         undoOverView = new Stack<>();
-        gameSequence = FIRST_HALF;
+        gameState = FIRST_HALF;
     }
 
     public void raiseScoreFor(Team team) {
-        if (gameSequence.isActive()) {
+        if (gameState.isActive()) {
             goalOverView.push(team);
         }
 
         determineWinner();
-    }
-
-    public int getScoreOfTeam(Team team) {
-        if (goalOverView.isEmpty()) {
-            return 0;
-        }
-
-        return Collections.frequency(goalOverView, team);
     }
 
     public void undoLastGoal() {
@@ -54,23 +46,23 @@ public class TimeGameRules {
     }
 
     public void startNextGameSequence() {
-        gameSequence = gameSequence.getNext();
+        gameState = gameState.getNext();
     }
 
-    public GameSequence getGameSequence() {
-        return gameSequence;
+    public GameState getGameState() {
+        return gameState;
     }
 
     public Team determineWinner() {
         Team leadingTeam = getLeadingTeam();
         Team winner = NO_TEAM;
 
-        if (gameSequence == OVER) {
+        if (gameState == OVER) {
             winner = leadingTeam;
         }
 
         if (getScoreOfTeam(leadingTeam) >= 10) {
-            gameSequence = OVER;
+            gameState = OVER;
             winner = leadingTeam;
         }
 
@@ -92,5 +84,13 @@ public class TimeGameRules {
     private boolean isLeading(Team team) {
         Team opponent = team.getOpponent();
         return getScoreOfTeam(team) > getScoreOfTeam(opponent);
+    }
+
+    public int getScoreOfTeam(Team team) {
+        if (goalOverView.isEmpty()) {
+            return 0;
+        }
+
+        return Collections.frequency(goalOverView, team);
     }
 }
