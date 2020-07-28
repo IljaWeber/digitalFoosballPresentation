@@ -33,6 +33,19 @@ public class TimeGameRulesShouldUndo {
         assertThat(actualScore).isEqualTo(1);
     }
 
+    @Test
+    void just_when_there_are_goals() {
+        timeGameRules.raiseScoreFor(ONE);
+        timeGameRules.undoLastGoal();
+        timeGameRules.undoLastGoal();
+
+        int actualScore = timeGameRules.getScoreOfTeam(ONE);
+        assertThat(actualScore).isEqualTo(0);
+
+        actualScore = timeGameRules.getScoreOfTeam(TWO);
+        assertThat(actualScore).isEqualTo(0);
+    }
+
     private void raiseScoreFor(Team... teams) {
         for (Team team : teams) {
             timeGameRules.raiseScoreFor(team);
