@@ -29,6 +29,19 @@ public class TimeGameRulesShouldDetermineWinner {
         assertThat(actual).isEqualTo(ONE);
     }
 
+    @Test
+    void when_the_time_is_over_and_one_team_is_leading() {
+        raiseScoreFor(ONE,
+                      TWO, TWO);
+        timeGameRules.startNextGameSequence();
+        timeGameRules.startNextGameSequence();
+        timeGameRules.startNextGameSequence();
+
+        Team actual = timeGameRules.getMatchWinner();
+
+        assertThat(actual).isEqualTo(TWO);
+    }
+
     private void raiseScoreFor(Team... teams) {
         for (Team team : teams) {
             timeGameRules.raiseScoreFor(team);
