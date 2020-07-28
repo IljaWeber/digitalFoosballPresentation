@@ -4,7 +4,6 @@ import com.valtech.digitalFoosball.api.driven.persistence.IObtainTeams;
 import com.valtech.digitalFoosball.domain.common.converter.Converter;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 
 import java.util.ArrayList;
@@ -17,8 +16,8 @@ public abstract class ClassicGameInitService implements InitService {
         this.teamDataPort = teamDataPort;
     }
 
-    protected RankedGameDataModel prepare(InitDataModel initDataModel) {
-        RankedGameDataModel gameDataModel = new RankedGameDataModel();
+    protected GameDataModel prepare(InitDataModel initDataModel) {
+        GameDataModel gameDataModel = new GameDataModel();
         List<TeamDataModel> teamsFromDatabase = new ArrayList<>();
 
         List<TeamDataModel> teamsList = initDataModel.getTeams();

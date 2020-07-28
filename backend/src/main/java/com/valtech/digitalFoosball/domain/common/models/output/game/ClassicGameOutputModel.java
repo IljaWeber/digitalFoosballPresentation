@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.domain.common.models.output.game;
 
+import com.valtech.digitalFoosball.domain.common.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.converter.Converter;
-import com.valtech.digitalFoosball.domain.ranked.GameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
 import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 

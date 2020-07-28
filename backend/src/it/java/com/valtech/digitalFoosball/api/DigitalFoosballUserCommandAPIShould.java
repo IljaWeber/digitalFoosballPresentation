@@ -2,7 +2,7 @@ package com.valtech.digitalFoosball.api;
 
 import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballUserCommandAPI;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
+import com.valtech.digitalFoosball.domain.common.GameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +42,7 @@ DigitalFoosballUserCommandAPIShould {
         mapper = new ObjectMapper();
         List<TeamDataModel> teams = new ArrayList<>();
         comparableOutput = new ComparableOutputModelCreator();
-        RankedGameDataModel gameDataModel = new RankedGameDataModel();
+        GameDataModel gameDataModel = new GameDataModel();
         TeamDataModel teamOne = new TeamDataModel("FC Barcelona",
                                                   "Marc-Andre ter Stegen", "Lionel Messi");
         TeamDataModel teamTwo = new TeamDataModel("FC Madrid",

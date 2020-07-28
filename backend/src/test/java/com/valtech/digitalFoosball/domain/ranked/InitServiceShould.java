@@ -5,6 +5,7 @@ import com.valtech.digitalFoosball.api.driven.persistence.PlayerService;
 import com.valtech.digitalFoosball.api.driven.persistence.TeamService;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepository;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.TeamRepository;
+import com.valtech.digitalFoosball.domain.common.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +46,7 @@ public class InitServiceShould {
         teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
         InitDataModel initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
 
-        RankedGameDataModel gameDataModel = initService.init(initDataModel);
+        GameDataModel gameDataModel = initService.init(initDataModel);
         TeamDataModel teamOne = gameDataModel.getTeam(ONE);
         TeamDataModel teamTwo = gameDataModel.getTeam(TWO);
 

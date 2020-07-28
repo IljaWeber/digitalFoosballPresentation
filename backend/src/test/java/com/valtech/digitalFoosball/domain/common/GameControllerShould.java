@@ -6,7 +6,6 @@ import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.EmptyGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedInitService;
 import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 import org.junit.jupiter.api.BeforeEach;
@@ -141,11 +140,11 @@ class GameControllerShould {
         }
 
         @Override
-        public RankedGameDataModel init(InitDataModel initDataModel) {
+        public GameDataModel init(InitDataModel initDataModel) {
             List<TeamDataModel> teams = initDataModel.getTeams();
-            RankedGameDataModel rankedGameDataModel = new RankedGameDataModel();
-            rankedGameDataModel.setTeams(teams);
-            return rankedGameDataModel;
+            GameDataModel gameDataModel = new GameDataModel();
+            gameDataModel.setTeams(teams);
+            return gameDataModel;
         }
     }
 

@@ -1,6 +1,7 @@
-package com.valtech.digitalFoosball.domain.ranked;
+package com.valtech.digitalFoosball.domain.common;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.ranked.TeamDataModel;
 
 import java.util.List;
 import java.util.SortedMap;
@@ -9,10 +10,10 @@ import java.util.TreeMap;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 
-public class RankedGameDataModel implements GameDataModel {
-    protected SortedMap<Team, TeamDataModel> teams;
+public class GameDataModel {
+    private final SortedMap<Team, TeamDataModel> teams;
 
-    public RankedGameDataModel() {
+    public GameDataModel() {
         teams = new TreeMap<>();
     }
 
