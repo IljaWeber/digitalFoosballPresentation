@@ -21,7 +21,6 @@ class FirstHalfShould {
 
     @Test
     public void raise_score() {
-
         raiseScoreForTeam(ONE,
                           TWO, TWO,
                           ONE);
@@ -32,6 +31,29 @@ class FirstHalfShould {
 
         Integer actualScoreOfPlayerTwo = gameData.get(TWO);
         assertThat(actualScoreOfPlayerTwo).isEqualTo(2);
+    }
+
+    @Test
+    public void not_raise_score_when_a_team_has_a_score_of_at_least_ten() {
+        raiseScoreForTeam(ONE, ONE, ONE,
+                          TWO, TWO,
+                          ONE,
+                          TWO, TWO, TWO,
+                          ONE, ONE, ONE,
+                          TWO,
+                          ONE,
+                          TWO,
+                          ONE, ONE,
+                          TWO,
+                          ONE);
+
+        Map<Team, Integer> gameData = firstHalf.getScoresOfTeams();
+        Integer actualScoreOfTeamOne = gameData.get(ONE);
+        assertThat(actualScoreOfTeamOne).isEqualTo(10);
+
+        Integer actualScoreOfPlayerTwo = gameData.get(TWO);
+        assertThat(actualScoreOfPlayerTwo).isEqualTo(8);
+
     }
 
     @Test
