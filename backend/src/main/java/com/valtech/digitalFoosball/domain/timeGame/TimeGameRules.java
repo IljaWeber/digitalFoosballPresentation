@@ -121,4 +121,8 @@ public class TimeGameRules {
     public IPlayATimeGame getActualGameSequence() {
         return actualGameSequence;
     }
+
+    public void undo() {
+        actualGameSequence.undoLastGoal();
+    }
 }

@@ -7,13 +7,15 @@ import java.util.Stack;
 
 public class EndByScoreLimit implements IPlayATimeGame {
     private final IPlayATimeGame previousTimeGameSequence;
-    private final TimeGameRules rules;
     private final Stack<Team> goalOverview;
+    private final TimeGameRules rules;
 
-    public EndByScoreLimit(IPlayATimeGame previous, TimeGameRules rules, Stack<Team> goalOverView) {
+    public EndByScoreLimit(IPlayATimeGame previous,
+                           TimeGameRules rules,
+                           Stack<Team> goalOverView) {
         this.previousTimeGameSequence = previous;
-        this.rules = rules;
         this.goalOverview = goalOverView;
+        this.rules = rules;
     }
 
     @Override
@@ -23,7 +25,8 @@ public class EndByScoreLimit implements IPlayATimeGame {
 
     @Override
     public void undoLastGoal() {
-
+        previousTimeGameSequence.undoLastGoal();
+        rules.setActualTimeGameSequence(previousTimeGameSequence);
     }
 
     @Override

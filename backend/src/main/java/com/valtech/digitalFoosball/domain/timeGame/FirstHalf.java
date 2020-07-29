@@ -72,6 +72,10 @@ public class FirstHalf implements IPlayATimeGame {
         return scores;
     }
 
+    public void changeTimeGameSequence(IPlayATimeGame sequence) {
+        rules.setActualTimeGameSequence(sequence);
+    }
+
     private void endGame() {
         IPlayATimeGame endByScoreLimit = new EndByScoreLimit(this, rules, goalOverView);
         rules.setActualTimeGameSequence(endByScoreLimit);
