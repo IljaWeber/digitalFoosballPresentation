@@ -5,7 +5,6 @@ import com.valtech.digitalFoosball.domain.common.InitService;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 
 public class TimeGame implements IPlayAGame {
     private final InitService initService;
@@ -43,7 +42,7 @@ public class TimeGame implements IPlayAGame {
         timeGameRules = new TimeGameRules();
     }
 
-    public GameOutputModel getGameData() {
+    public TimeGameOutputModel getGameData() {
         return new TimeGameOutputModel(model, timeGameRules);
     }
 

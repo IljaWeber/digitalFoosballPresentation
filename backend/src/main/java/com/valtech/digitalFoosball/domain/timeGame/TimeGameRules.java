@@ -17,11 +17,14 @@ public class TimeGameRules {
     private GameState gameState;
     private final Timer timer;
 
+    private IPlayATimeGame actualGameSequence;
+
     public TimeGameRules() {
         goalOverView = new Stack<>();
         undoOverView = new Stack<>();
         gameState = FIRST_HALF;
         timer = new Timer();
+        actualGameSequence = new FirstHalf(this);
     }
 
     // TODO: 28.07.20 m.huber think of a way to mock the timer to test this method
@@ -105,5 +108,9 @@ public class TimeGameRules {
 
     public void timeRanDown() {
         gameState = gameState.getNext();
+    }
+
+    public void setActualTimeGameSequence(IPlayATimeGame gameSequence) {
+        actualGameSequence = gameSequence;
     }
 }

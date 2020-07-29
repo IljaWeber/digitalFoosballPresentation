@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,6 +28,6 @@ class TimeGameShould {
         assertThat(actual).extracting(TeamOutputModel::getPlayerOne).containsExactly("Goalie", "Goalie");
         assertThat(actual).extracting(TeamOutputModel::getPlayerTwo).containsExactly("Striker", "Striker");
         assertThat(actual).extracting(TeamOutputModel::getScore).containsExactly(1, 0);
+        assertThat(outputModel.getMatchWinner()).isEqualTo(NO_TEAM);
     }
-
 }
