@@ -49,6 +49,22 @@ class FirstHalfShould {
         assertThat(scoreOfTeamTwo).isEqualTo(2);
     }
 
+    @Test
+    public void redo_last_undone_goals() {
+        raiseScoreForTeam(TWO,
+                          ONE, ONE, ONE,
+                          TWO);
+        firstHalf.undoLastGoal();
+
+        firstHalf.redoLastGoal();
+
+        Map<Team, Integer> scoresOfTeams = firstHalf.getScoresOfTeams();
+        Integer scoreOfTeamOne = scoresOfTeams.get(ONE);
+        Integer scoreOfTeamTwo = scoresOfTeams.get(TWO);
+        assertThat(scoreOfTeamOne).isEqualTo(3);
+        assertThat(scoreOfTeamTwo).isEqualTo(2);
+    }
+
     private void raiseScoreForTeam(Team... teams) {
         for (Team team : teams) {
             firstHalf.raiseScoreFor(team);

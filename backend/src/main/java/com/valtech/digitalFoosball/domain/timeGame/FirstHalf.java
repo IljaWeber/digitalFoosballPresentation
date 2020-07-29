@@ -40,7 +40,11 @@ public class FirstHalf implements IPlayATimeGame {
 
     @Override
     public void redoLastGoal() {
+        if (undoOverView.isEmpty()) {
+            return;
+        }
 
+        raiseScoreFor(undoOverView.pop());
     }
 
     @Override
