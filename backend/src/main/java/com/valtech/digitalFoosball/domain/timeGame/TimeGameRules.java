@@ -110,7 +110,15 @@ public class TimeGameRules {
         gameState = gameState.getNext();
     }
 
+    public void raise(Team team) {
+        actualGameSequence.raiseScoreFor(team);
+    }
+
     public void setActualTimeGameSequence(IPlayATimeGame gameSequence) {
         actualGameSequence = gameSequence;
+    }
+
+    public IPlayATimeGame getActualGameSequence() {
+        return actualGameSequence;
     }
 }

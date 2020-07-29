@@ -11,12 +11,12 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FirstHalfShould {
-
     private IPlayATimeGame firstHalf;
 
     @BeforeEach
     void setUp() {
-        firstHalf = new FirstHalf(new TimeGameRules());
+        TimeGameRules timeGameRules = new TimeGameRules();
+        firstHalf = new FirstHalf(timeGameRules);
     }
 
     @Test
@@ -53,7 +53,6 @@ class FirstHalfShould {
 
         Integer actualScoreOfPlayerTwo = gameData.get(TWO);
         assertThat(actualScoreOfPlayerTwo).isEqualTo(8);
-
     }
 
     @Test

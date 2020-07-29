@@ -11,8 +11,6 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 
 public class FirstHalf implements IPlayATimeGame {
-    private IPlayATimeGame endByScoreLimit;
-    private IPlayATimeGame halftime;
     private final TimeGameRules rules;
     private final Stack<Team> goalOverView;
     private final Stack<Team> undoOverView;
@@ -25,11 +23,15 @@ public class FirstHalf implements IPlayATimeGame {
 
     @Override
     public void raiseScoreFor(Team team) {
-        if (Collections.frequency(goalOverView, team) >= 10) {
-            return;
+
+        if (Collections.frequency(goalOverView, team) < 10) {
+            goalOverView.push(team);
         }
 
-        goalOverView.push(team);
+        if (Collections.frequency(goalOverView, team) >= 10) {
+            endGame();
+        }
+
     }
 
     @Override
@@ -70,7 +72,8 @@ public class FirstHalf implements IPlayATimeGame {
         return scores;
     }
 
-    private void next() {
-        rules.setActualTimeGameSequence(halftime);
+    private void endGame() {
+        IPlayATimeGame endByScoreLimit = new EndByScoreLimit(this, rules, goalOverView);
+        rules.setActualTimeGameSequence(endByScoreLimit);
     }
 }
