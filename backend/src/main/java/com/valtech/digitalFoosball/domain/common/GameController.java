@@ -8,13 +8,8 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.EmptyGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
-import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-import static com.valtech.digitalFoosball.domain.common.constants.GameMode.RANKED;
 
 @Service
 public class GameController implements IReactToGoals, IReactToUserCommands {
@@ -27,11 +22,6 @@ public class GameController implements IReactToGoals, IReactToUserCommands {
     public GameController(GameProvider gameProvider, INotifyAboutStateChanges notifier) {
         this.gameProvider = gameProvider;
         this.notifier = notifier;
-    }
-
-    public List<TeamOutputModel> getAllTeams() {
-        IPlayAGame gameManipulator = gameProvider.getGameManipulator(RANKED);
-        return gameManipulator.getAllTeamsFromDatabase();
     }
 
     public GameOutputModel getGameData() {

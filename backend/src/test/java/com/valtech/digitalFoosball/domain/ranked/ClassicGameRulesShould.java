@@ -1,6 +1,5 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
-import com.valtech.digitalFoosball.api.driven.persistence.IObtainTeams;
 import com.valtech.digitalFoosball.api.driven.persistence.PlayerService;
 import com.valtech.digitalFoosball.api.driven.persistence.TeamService;
 import com.valtech.digitalFoosball.api.driven.persistence.repository.PlayerRepository;
@@ -96,38 +95,6 @@ public class ClassicGameRulesShould {
         GameOutputModel gameData = game.getGameData();
         int actual = gameData.getTeam(ONE).getScore();
         assertThat(actual).isEqualTo(0);
-    }
-
-    @Test
-    public void load_all_teams_ignoring_case() {
-        TeamDataModel teamOne = new TeamDataModel("Roto", "P1", "P2");
-        TeamDataModel teamTwo = new TeamDataModel("Rototo", "P3", "P4");
-        TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
-        PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
-        teamRepository.insertTeamDataModel(teamOne, teamTwo);
-        game = new ClassicGame(new RankedInitService(new TeamService(teamRepository,
-                                                                     new PlayerService(playerRepository))));
-
-        List<TeamOutputModel> actual = game.getAllTeamsFromDatabase();
-
-        assertThat(actual).extracting(TeamOutputModel::getName).containsExactly("Roto", "Rototo");
-    }
-
-    @Test
-    public void load_nothing_when_there_are_no_teams_starting_with_given_letters() {
-        setUpTestDoubles();
-
-        List<TeamOutputModel> actual = game.getAllTeamsFromDatabase();
-
-        assertThat(actual).isEmpty();
-    }
-
-    private void setUpTestDoubles() {
-        TeamRepositoryFakeTwo teamRepository = new TeamRepositoryFakeTwo(id);
-        PlayerRepositoryFake playerRepository = new PlayerRepositoryFake();
-        PlayerService playerService = new PlayerService(playerRepository);
-        IObtainTeams iObtainTeams = new TeamService(teamRepository, playerService);
-        game = new ClassicGame(new RankedInitService(iObtainTeams));
     }
 
     private void raiseScoreOf(Team... teams) {
