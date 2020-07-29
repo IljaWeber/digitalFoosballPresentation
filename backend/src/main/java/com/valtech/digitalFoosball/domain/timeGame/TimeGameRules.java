@@ -125,4 +125,8 @@ public class TimeGameRules {
     public void undo() {
         actualGameSequence.undoLastGoal();
     }
+
+    public void redo() {
+        actualGameSequence.redoLastGoal();
+    }
 }

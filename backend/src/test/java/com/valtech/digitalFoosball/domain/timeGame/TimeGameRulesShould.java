@@ -51,6 +51,23 @@ public class TimeGameRulesShould {
         assertThat(actual).isInstanceOf(FirstHalf.class);
     }
 
+    @Test
+    public void end_a_match_when_a_winning_goal_has_undone_and_redone() {
+        raiseScoreForTeam(ONE, ONE,
+                          TWO, TWO, TWO,
+                          ONE,
+                          TWO, TWO,
+                          ONE, ONE, ONE, ONE,
+                          TWO,
+                          ONE, ONE, ONE);
+        rules.undo();
+
+        rules.redo();
+
+        IPlayATimeGame actual = rules.getActualGameSequence();
+        assertThat(actual).isInstanceOf(EndByScoreLimit.class);
+    }
+
     private void raiseScoreForTeam(Team... teams) {
         for (Team team : teams) {
             rules.raise(team);
