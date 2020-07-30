@@ -38,6 +38,28 @@ public class TimeGameRulesShould {
     }
 
     @Test
+    public void not_raise_score_when_a_game_was_end_by_reaching_score_limit() {
+        raiseScoreForTeam(ONE, ONE, ONE,
+                          TWO, TWO,
+                          ONE,
+                          TWO, TWO, TWO,
+                          ONE, ONE, ONE,
+                          TWO,
+                          ONE,
+                          TWO,
+                          ONE, ONE,
+                          TWO,
+                          ONE);
+
+        Map<Team, Integer> gameData = rules.getActualGameSequence().getScoreOfTeams();
+        Integer actualScoreOfTeamOne = gameData.get(ONE);
+        assertThat(actualScoreOfTeamOne).isEqualTo(10);
+
+        Integer actualScoreOfPlayerTwo = gameData.get(TWO);
+        assertThat(actualScoreOfPlayerTwo).isEqualTo(7);
+    }
+
+    @Test
     public void undo_a_match_win_by_score_when_winning_goal_was_undone() {
         raiseScoreForTeam(ONE, ONE,
                           TWO, TWO, TWO,

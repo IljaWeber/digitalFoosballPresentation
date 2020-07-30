@@ -34,9 +34,8 @@ class FirstHalfShould {
         assertThat(actualScoreOfPlayerTwo).isEqualTo(2);
     }
 
-
     @Test
-    public void not_raise_score_when_a_team_has_a_score_of_at_least_ten() {
+    public void end_game_when_a_team_reaches_the_score_limit() {
         raiseScoreForTeam(ONE, ONE, ONE,
                           TWO, TWO,
                           ONE,
@@ -45,16 +44,9 @@ class FirstHalfShould {
                           TWO,
                           ONE,
                           TWO,
-                          ONE, ONE,
-                          TWO,
-                          ONE);
+                          ONE, ONE);
 
-        Map<Team, Integer> gameData = firstHalf.getScoreOfTeams();
-        Integer actualScoreOfTeamOne = gameData.get(ONE);
-        assertThat(actualScoreOfTeamOne).isEqualTo(10);
-
-        Integer actualScoreOfPlayerTwo = gameData.get(TWO);
-        assertThat(actualScoreOfPlayerTwo).isEqualTo(8);
+        assertThat(timeGameRules.game).isInstanceOf(EndByScoreLimit.class);
     }
 
     @Test
