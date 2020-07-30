@@ -75,14 +75,16 @@ public class TimeGameRulesShould {
     }
 
     @Test
-    public void end_first_half_when_time_is_over() {
+    public void not_count_goals_when_time_is_over_and_score_limit_is_not_reached() {
         FirstHalfFake firstHalfFake = new FirstHalfFake(rules);
-        raiseScoreForTeam(ONE, ONE, ONE);
-
         firstHalfFake.nextSequenceByTime();
 
-        actual = rules.getActualGameSequence();
-        assertThat(actual).isInstanceOf(HalfTime.class);
+        raiseScoreForTeam(ONE);
+
+        IPlayATimeGame gameSequence = rules.getActualGameSequence();
+        Map<Team, Integer> scoreOfTeams = gameSequence.getScoreOfTeams();
+        Integer actualScore = scoreOfTeams.get(ONE);
+        assertThat(actualScore).isEqualTo(0);
     }
 
     private void raiseScoreForTeam(Team... teams) {
