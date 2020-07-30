@@ -19,10 +19,6 @@ public class FirstHalf implements IPlayATimeGame {
         undoOverView = new Stack<>();
         timer = new Timer();
         timer.schedule(new TimeGameTimerTask(this), 420000);
-        timer.cancel();
-    }
-
-    public FirstHalf() {
     }
 
     @Override
@@ -81,7 +77,7 @@ public class FirstHalf implements IPlayATimeGame {
     }
 
     public void nextSequenceByTime() {
-        IPlayATimeGame halfTime = new HalfTime();
+        IPlayATimeGame halfTime = new HalfTime(goalOverView);
 
         rules.setActualTimeGameSequence(halfTime);
     }
