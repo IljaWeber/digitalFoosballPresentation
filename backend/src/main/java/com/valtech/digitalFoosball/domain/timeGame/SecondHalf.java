@@ -56,7 +56,7 @@ public class SecondHalf implements IPlayATimeGame {
 
     @Override
     public void resetGame() {
-
+        goalOverview.clear();
     }
 
     @Override
