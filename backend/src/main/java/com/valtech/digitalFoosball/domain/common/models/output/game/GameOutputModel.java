@@ -8,8 +8,6 @@ import java.util.List;
 public interface GameOutputModel {
     List<TeamOutputModel> getTeams();
 
-    Team getWinnerOfSet();
-
     Team getMatchWinner();
 
     TeamOutputModel getTeam(Team team);

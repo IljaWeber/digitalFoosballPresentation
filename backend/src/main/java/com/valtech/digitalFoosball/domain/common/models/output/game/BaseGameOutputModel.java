@@ -7,7 +7,7 @@ import java.util.List;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
 
-public abstract class BaseGameOutputModel {
+public abstract class BaseGameOutputModel implements GameOutputModel {
     protected List<TeamOutputModel> teams;
 
     protected Team matchWinner = NO_TEAM;

@@ -9,6 +9,7 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.common.models.output.game.ClassicGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -72,7 +73,8 @@ public class ClassicGameRulesShouldUndoLastGoal {
 
         game.undoGoal();
 
-        Team actual = game.getGameData().getWinnerOfSet();
+        ClassicGameOutputModel gameData = (ClassicGameOutputModel) game.getGameData();
+        Team actual = gameData.getWinnerOfSet();
         assertThat(actual).isEqualTo(NO_TEAM);
     }
 
