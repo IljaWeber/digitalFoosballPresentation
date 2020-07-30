@@ -31,7 +31,6 @@ public class FirstHalf implements IPlayATimeGame {
         if (Collections.frequency(goalOverView, team) >= 10) {
             endGame();
         }
-
     }
 
     @Override
@@ -77,7 +76,7 @@ public class FirstHalf implements IPlayATimeGame {
     }
 
     private void endGame() {
-        IPlayATimeGame endByScoreLimit = new EndByScoreLimit(this, rules, goalOverView);
+        IPlayATimeGame endByScoreLimit = new EndByScoreLimit(this, rules);
         rules.setActualTimeGameSequence(endByScoreLimit);
     }
 }
