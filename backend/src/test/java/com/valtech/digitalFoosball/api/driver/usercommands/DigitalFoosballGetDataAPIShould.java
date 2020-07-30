@@ -15,7 +15,7 @@ public class DigitalFoosballGetDataAPIShould {
 
     @Test
     public void load_all_teams_ignoring_case() {
-        DigitalFoosballGetDataAPI getDataAPI = new DigitalFoosballGetDataAPI(null, new FakeDataPort());
+        DigitalFoosballGetDataAPI getDataAPI = new DigitalFoosballGetDataAPI(new FakeDataPort());
 
         List<TeamOutputModel> actual = getDataAPI.getAllTeams();
 
@@ -24,7 +24,7 @@ public class DigitalFoosballGetDataAPIShould {
 
     @Test
     public void load_nothing_when_there_are_no_teams_starting_with_given_letters() {
-        DigitalFoosballGetDataAPI getDataAPI = new DigitalFoosballGetDataAPI(null, new DummyDataPort());
+        DigitalFoosballGetDataAPI getDataAPI = new DigitalFoosballGetDataAPI(new DummyDataPort());
 
         List<TeamOutputModel> actual = getDataAPI.getAllTeams();
 

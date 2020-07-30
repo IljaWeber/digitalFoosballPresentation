@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.api;
 
 import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballUserCommandAPI;
+import com.valtech.digitalFoosball.api.driver.usercommands.RankedAPI;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -17,19 +17,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.valtech.digitalFoosball.domain.common.constants.GameMode.RANKED;
-import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
+import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
+import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration(classes = Application.class)
-@SpringBootTest(classes = DigitalFoosballUserCommandAPI.class)
+@SpringBootTest(classes = RankedAPI.class)
 @SpringBootConfiguration
 @Import(com.valtech.digitalFoosball.api.RestEndpointRequestPerformer.class)
-public class DigitalFoosballUserCommandAPIShouldUndo {
-    private ObjectMapper mapper;
-    private ComparableOutputModelCreator comparableOutput;
+public class
+RankedAPIShouldRaise {
+
+    private ObjectMapper
+            mapper;
+    private ComparableOutputModelCreator
+            comparableOutput;
 
     @Autowired
-    private RestEndpointRequestPerformer endpointRequestPerformer;
+    private RestEndpointRequestPerformer
+            endpointRequestPerformer;
 
     @BeforeEach
     void setUp() {
@@ -54,81 +60,50 @@ public class DigitalFoosballUserCommandAPIShouldUndo {
     }
 
     @Test
-    public void a_scored_goal() throws Exception {
+    public void scores() throws Exception {
         comparableOutput
-                .prepareScoreOfTeamOne(2);
-        String expected
-                = mapper.writeValueAsString(comparableOutput);
-        endpointRequestPerformer
-                .initializeGame(RANKED);
-        endpointRequestPerformer.countGoalForTeam(ONE, ONE,
-                                                  TWO);
-
-        endpointRequestPerformer.undoLastGoal();
-
-        String actual
-                = endpointRequestPerformer.getGameValues();
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    public void a_won_set_when_winning_goal_was_undone() throws Exception {
-        comparableOutput
-                .prepareScoreOfTeamOne(5);
+                .prepareScoreOfTeamOne(4);
         comparableOutput
                 .prepareScoreOfTeamTwo(3);
-        comparableOutput
-                .setWinnerOfSet(NO_TEAM);
         String expected
                 = mapper.writeValueAsString(comparableOutput);
         endpointRequestPerformer
                 .initializeGame(RANKED);
+
         endpointRequestPerformer.countGoalForTeam(ONE,
                                                   TWO, TWO,
                                                   ONE, ONE,
                                                   TWO,
-                                                  ONE, ONE, ONE);
-
-        endpointRequestPerformer.undoLastGoal();
+                                                  ONE);
 
         String actual
-                = endpointRequestPerformer.getGameValues();
+                = endpointRequestPerformer.getGameValues(RANKED);
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
-    public void a_won_match_when_winning_goal_was_undone() throws Exception {
+    public void only_until_a_set_was_won() throws Exception {
         comparableOutput
                 .prepareScoreOfTeamOne(5);
         comparableOutput
-                .prepareScoreOfTeamTwo(3);
+                .prepareScoreOfTeamTwo(7);
         comparableOutput
-                .setWinnerOfSet(NO_TEAM);
-        comparableOutput
-                .setMatchWinner(NO_TEAM);
+                .setWinnerOfSet(TWO);
         String expected
                 = mapper.writeValueAsString(comparableOutput);
         endpointRequestPerformer
                 .initializeGame(RANKED);
-        endpointRequestPerformer.countGoalForTeam(TWO, TWO,
-                                                  ONE, ONE,
-                                                  TWO,
-                                                  ONE, ONE, ONE,
-                                                  TWO,
-                                                  ONE);
-        endpointRequestPerformer
-                .startANewRound();
-        endpointRequestPerformer.countGoalForTeam(ONE,
-                                                  TWO, TWO,
-                                                  ONE, ONE, ONE, ONE,
-                                                  TWO,
-                                                  ONE);
 
-        endpointRequestPerformer.undoLastGoal();
+        endpointRequestPerformer.countGoalForTeam(ONE, ONE, ONE,
+                                                  TWO, TWO,
+                                                  ONE,
+                                                  TWO, TWO,
+                                                  ONE,
+                                                  TWO, TWO, TWO,
+                                                  ONE);
 
         String actual
-                = endpointRequestPerformer.getGameValues();
+                = endpointRequestPerformer.getGameValues(RANKED);
         assertThat(actual).isEqualTo(expected);
     }
-
 }

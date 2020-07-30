@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.api;
 
 import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballUserCommandAPI;
+import com.valtech.digitalFoosball.api.driver.usercommands.RankedAPI;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -22,10 +22,10 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration(classes = Application.class)
-@SpringBootTest(classes = DigitalFoosballUserCommandAPI.class)
+@SpringBootTest(classes = RankedAPI.class)
 @SpringBootConfiguration
 @Import(com.valtech.digitalFoosball.api.RestEndpointRequestPerformer.class)
-public class DigitalFoosballUserCommandAPIShouldRedo {
+public class RankedAPIShouldRedo {
 
     private ObjectMapper mapper;
     private ComparableOutputModelCreator comparableOutput;
@@ -68,12 +68,12 @@ public class DigitalFoosballUserCommandAPIShouldRedo {
         endpointRequestPerformer.countGoalForTeam(ONE,
                                                   TWO, TWO,
                                                   ONE);
-        endpointRequestPerformer.undoLastGoal();
+        endpointRequestPerformer.undoLastGoal(RANKED);
 
-        endpointRequestPerformer.redoLastUndoneGoal();
+        endpointRequestPerformer.redoLastUndoneGoal(RANKED);
 
         String actual
-                = endpointRequestPerformer.getGameValues();
+                = endpointRequestPerformer.getGameValues(RANKED);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -93,12 +93,12 @@ public class DigitalFoosballUserCommandAPIShouldRedo {
                                                   TWO,
                                                   ONE,
                                                   TWO, TWO, TWO, TWO, TWO);
-        endpointRequestPerformer.undoLastGoal();
+        endpointRequestPerformer.undoLastGoal(RANKED);
 
-        endpointRequestPerformer.redoLastUndoneGoal();
+        endpointRequestPerformer.redoLastUndoneGoal(RANKED);
 
         String actual
-                = endpointRequestPerformer.getGameValues();
+                = endpointRequestPerformer.getGameValues(RANKED);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -122,14 +122,14 @@ public class DigitalFoosballUserCommandAPIShouldRedo {
                                                   TWO, TWO,
                                                   ONE);
         endpointRequestPerformer
-                .startANewRound();
+                .startANewRound(RANKED);
         endpointRequestPerformer.countGoalForTeam(TWO, TWO, TWO,
                                                   ONE,
                                                   TWO, TWO,
                                                   ONE, ONE,
                                                   TWO);
         endpointRequestPerformer
-                .startANewRound();
+                .startANewRound(RANKED);
         endpointRequestPerformer.countGoalForTeam(TWO,
                                                   ONE, ONE,
                                                   TWO, TWO, TWO,
@@ -139,12 +139,12 @@ public class DigitalFoosballUserCommandAPIShouldRedo {
                                                   TWO, TWO,
                                                   ONE,
                                                   TWO, TWO);
-        endpointRequestPerformer.undoLastGoal();
+        endpointRequestPerformer.undoLastGoal(RANKED);
 
-        endpointRequestPerformer.redoLastUndoneGoal();
+        endpointRequestPerformer.redoLastUndoneGoal(RANKED);
 
         String actual
-                = endpointRequestPerformer.getGameValues();
+                = endpointRequestPerformer.getGameValues(RANKED);
         assertThat(actual).isEqualTo(expected);
     }
 }

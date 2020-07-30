@@ -7,16 +7,12 @@ import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.ClassicGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
 public class ClassicGame implements IPlayAGame {
     private final InitService initService;
     private ClassicGameRules classicGameRules;
     private GameDataModel model;
 
-    @Autowired
     public ClassicGame(InitService initService) {
         this.initService = initService;
         classicGameRules = new ClassicGameRules();

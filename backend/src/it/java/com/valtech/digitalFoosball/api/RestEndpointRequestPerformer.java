@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class RestEndpointRequestPerformer {
     private final Gson gson;
-    private String json;
+    private String json = "";
 
     @Autowired
     private MockMvc mockMvc;
@@ -33,7 +33,7 @@ public class RestEndpointRequestPerformer {
     }
 
     public void countGoalForTeam(Team... teams) throws Exception {
-        builder = MockMvcRequestBuilders.post("/api/raise");
+        builder = MockMvcRequestBuilders.post("/raspi/raise");
         for (Team team : teams) {
             int hardwareValueOfTeam = team.hardwareValue();
             builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(String.valueOf(hardwareValueOfTeam));
@@ -42,45 +42,47 @@ public class RestEndpointRequestPerformer {
     }
 
     public void initializeGame(GameMode gameMode) throws Exception {
-        String mode = "";
+        String mode = gameMode.toString();
 
-        switch (gameMode) {
-            case AD_HOC:
-                mode = "adhoc";
-                break;
-            case RANKED:
-                mode = "ranked";
-        }
-
-        builder = MockMvcRequestBuilders.post("/api/init/" + mode);
+        builder = MockMvcRequestBuilders.post(mode + "/init");
         builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
 
         mockMvc.perform(builder);
     }
 
-    public void startANewRound() throws Exception {
-        builder = MockMvcRequestBuilders.post("/api/newRound");
+    public void startANewRound(GameMode gameMode) throws Exception {
+        String mode = gameMode.toString();
+
+        builder = MockMvcRequestBuilders.post(mode + "/newRound");
         mockMvc.perform(builder);
     }
 
-    public void resetValues() throws Exception {
-        builder = MockMvcRequestBuilders.delete("/api/reset");
+    public void resetValues(GameMode gameMode) throws Exception {
+        String mode = gameMode.toString();
+
+        builder = MockMvcRequestBuilders.delete(mode + "/reset");
         mockMvc.perform(builder);
     }
 
-    public void undoLastGoal() throws Exception {
-        builder = MockMvcRequestBuilders.put("/api/undo");
+    public void undoLastGoal(GameMode gameMode) throws Exception {
+        String mode = gameMode.toString();
+
+        builder = MockMvcRequestBuilders.put(mode + "/undo");
         mockMvc.perform(builder);
     }
 
-    public void redoLastUndoneGoal() throws Exception {
-        builder = MockMvcRequestBuilders.put("/api/redo");
+    public void redoLastUndoneGoal(GameMode gameMode) throws Exception {
+        String mode = gameMode.toString();
+
+        builder = MockMvcRequestBuilders.put(mode + "/redo");
         mockMvc.perform(builder);
 
     }
 
-    public String getGameValues() throws Exception {
-        builder = MockMvcRequestBuilders.get("/data/game");
+    public String getGameValues(GameMode gameMode) throws Exception {
+        String mode = gameMode.toString();
+
+        builder = MockMvcRequestBuilders.get(mode + "/game");
         MvcResult result = mockMvc.perform(builder).andExpect(status().isOk()).andReturn();
 
         return result.getResponse().getContentAsString();

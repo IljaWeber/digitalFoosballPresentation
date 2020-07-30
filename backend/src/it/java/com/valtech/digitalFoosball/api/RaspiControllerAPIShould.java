@@ -2,8 +2,8 @@ package com.valtech.digitalFoosball.api;
 
 import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballUserCommandAPI;
-import com.valtech.digitalFoosball.domain.common.GameController;
+import com.valtech.digitalFoosball.api.driver.usercommands.AdHocAPI;
+import com.valtech.digitalFoosball.domain.adhoc.AdHocGame;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,14 +22,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = Application.class)
-@SpringBootTest(classes = DigitalFoosballUserCommandAPI.class)
+@SpringBootTest(classes = AdHocAPI.class)
 public class RaspiControllerAPIShould {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private GameController game;
+    private AdHocGame game;
 
     private MockHttpServletRequestBuilder builder;
 
@@ -39,7 +39,7 @@ public class RaspiControllerAPIShould {
     public void setUp() throws Exception {
         gson = new Gson();
 
-        builder = MockMvcRequestBuilders.post("/api/init/adhoc");
+        builder = MockMvcRequestBuilders.post("/adhoc/init");
         mockMvc.perform(builder);
     }
 
