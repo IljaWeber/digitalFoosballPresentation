@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TimeGameRulesShould {
 
-    private TimeGameRules rules;
+    TimeGameRules rules;
 
     @BeforeEach
     void setUp() {
@@ -111,9 +111,29 @@ public class TimeGameRulesShould {
         assertThat(finalScoreOfTeamTwo).isEqualTo(6);
     }
 
+    @Test
+    public void end_first_half_when_time_is_over() {
+        FirstHalfFake firstHalfFake = new FirstHalfFake(rules);
+        raiseScoreForTeam(ONE,
+                          TWO, TWO, TWO,
+                          ONE, ONE);
+
+        firstHalfFake.nextSequenceByTime();
+
+        IPlayATimeGame actual = rules.getActualGameSequence();
+        assertThat(actual).isInstanceOf(HalfTime.class);
+    }
+
     private void raiseScoreForTeam(Team... teams) {
         for (Team team : teams) {
             rules.raise(team);
+        }
+    }
+
+    private class FirstHalfFake extends FirstHalf {
+
+        public FirstHalfFake(TimeGameRules timeGameRules) {
+            this.rules = timeGameRules;
         }
     }
 }
