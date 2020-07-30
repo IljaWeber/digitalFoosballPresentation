@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.api;
+package com.valtech.digitalFoosball.api.helper;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.output.team.ClassicTeamOutputModel;
@@ -16,7 +16,7 @@ public class ComparableOutputModelCreator {
     private TeamOutputModel teamTwo;
     private TeamOutputModel teamOne;
 
-    ComparableOutputModelCreator() {
+    public ComparableOutputModelCreator() {
         teams = new ArrayList<>();
         matchWinner = NO_TEAM;
         winnerOfSet = NO_TEAM;
