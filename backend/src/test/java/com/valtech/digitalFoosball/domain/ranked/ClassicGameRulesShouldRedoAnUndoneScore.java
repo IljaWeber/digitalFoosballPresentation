@@ -9,6 +9,7 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.common.models.output.game.ClassicGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -79,7 +80,7 @@ public class ClassicGameRulesShouldRedoAnUndoneScore {
     }
 
     private Team getNumberOfWonSets(Team team) {
-        GameOutputModel gameData = game.getGameData();
+        ClassicGameOutputModel gameData = (ClassicGameOutputModel) game.getGameData();
         return gameData.getWinnerOfSet();
     }
 

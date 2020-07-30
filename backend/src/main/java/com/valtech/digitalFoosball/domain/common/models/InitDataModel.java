@@ -8,6 +8,8 @@ public class InitDataModel {
     private TeamDataModel teamTwo;
 
     public InitDataModel() {
+        teamOne = new TeamDataModel();
+        teamTwo = new TeamDataModel();
     }
 
     public InitDataModel(TeamDataModel teamDataModelOne, TeamDataModel teamDataModelTwo) {

@@ -8,7 +8,7 @@ import com.valtech.digitalFoosball.domain.ranked.ClassicGameRules;
 
 import java.util.SortedMap;
 
-public class ClassicGameOutputModel extends BaseGameOutputModel implements GameOutputModel {
+public class ClassicGameOutputModel extends BaseGameOutputModel {
     private final Team winnerOfSet;
 
     public ClassicGameOutputModel(GameDataModel gameDataModel,
@@ -28,9 +28,7 @@ public class ClassicGameOutputModel extends BaseGameOutputModel implements GameO
         teams.get(1).setScore(classicGameRules.getScoreOfTeam(Team.TWO));
     }
 
-    @Override
     public Team getWinnerOfSet() {
         return winnerOfSet;
     }
-
 }
