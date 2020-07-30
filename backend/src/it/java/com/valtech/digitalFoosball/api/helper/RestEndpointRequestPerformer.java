@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.api;
+package com.valtech.digitalFoosball.api.helper;
 
 import com.google.gson.Gson;
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
