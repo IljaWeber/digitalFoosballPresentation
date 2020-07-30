@@ -129,4 +129,8 @@ public class TimeGameRules {
     public void redo() {
         actualGameSequence.redoLastGoal();
     }
+
+    public void changeover() {
+        actualGameSequence.changeover();
+    }
 }

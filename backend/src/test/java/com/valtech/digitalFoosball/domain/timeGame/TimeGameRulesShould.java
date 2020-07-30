@@ -97,6 +97,17 @@ public class TimeGameRulesShould {
         assertThat(actualScore).isEqualTo(0);
     }
 
+    @Test
+    public void start_second_half_when_there_was_a_changeover() {
+        FirstHalfFake firstHalfFake = new FirstHalfFake(rules);
+        firstHalfFake.nextSequenceByTime();
+
+        rules.changeover();
+
+        IPlayATimeGame actual = rules.getActualGameSequence();
+        assertThat(actual).isInstanceOf(SecondHalf.class);
+    }
+
     private void raiseScoreForTeam(Team... teams) {
         for (Team team : teams) {
             rules.raise(team);
