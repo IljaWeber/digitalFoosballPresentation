@@ -12,12 +12,14 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 
 public class SecondHalf implements IPlayATimeGame {
     private final Stack<Team> goalOverview;
+    private final Stack<Team> undoOverview;
     private final TimeGameRules rules;
 
     public SecondHalf(Stack<Team> goalOverview, TimeGameRules rules) {
         this.goalOverview = goalOverview;
         this.rules = rules;
 
+        undoOverview = new Stack<>();
     }
 
     @Override
@@ -31,12 +33,20 @@ public class SecondHalf implements IPlayATimeGame {
 
     @Override
     public void undoLastGoal() {
+        if (goalOverview.isEmpty()) {
+            return;
+        }
 
+        undoOverview.push(goalOverview.pop());
     }
 
     @Override
     public void redoLastGoal() {
+        if (undoOverview.isEmpty()) {
+            return;
+        }
 
+        raiseScoreFor(undoOverview.pop());
     }
 
     @Override
