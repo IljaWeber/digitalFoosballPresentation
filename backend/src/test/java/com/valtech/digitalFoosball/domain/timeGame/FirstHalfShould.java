@@ -22,28 +22,19 @@ class FirstHalfShould {
 
     @Test
     public void raise_score() {
-        raiseScoreForTeam(ONE,
-                          TWO, TWO,
-                          ONE);
+        raiseScoreForTeam(ONE, ONE);
 
         Map<Team, Integer> gameData = firstHalf.getScoreOfTeams();
         Integer actualScoreOfTeamOne = gameData.get(ONE);
         assertThat(actualScoreOfTeamOne).isEqualTo(2);
-
-        Integer actualScoreOfPlayerTwo = gameData.get(TWO);
-        assertThat(actualScoreOfPlayerTwo).isEqualTo(2);
     }
 
     @Test
     public void end_game_when_a_team_reaches_the_score_limit() {
-        raiseScoreForTeam(ONE, ONE, ONE,
-                          TWO, TWO,
-                          ONE,
-                          TWO, TWO, TWO,
-                          ONE, ONE, ONE,
-                          TWO,
-                          ONE,
-                          TWO,
+        raiseScoreForTeam(ONE, ONE,
+                          ONE, ONE,
+                          ONE, ONE,
+                          ONE, ONE,
                           ONE, ONE);
 
         assertThat(timeGameRules.game).isInstanceOf(EndByScoreLimit.class);
@@ -51,10 +42,7 @@ class FirstHalfShould {
 
     @Test
     public void end_first_half_when_time_is_over() {
-        raiseScoreForTeam(TWO,
-                          ONE, ONE,
-                          TWO, TWO,
-                          ONE);
+        raiseScoreForTeam(TWO, ONE);
 
         firstHalf.nextSequenceByTime();
 
@@ -63,32 +51,24 @@ class FirstHalfShould {
 
     @Test
     public void undo_last_scored_goals() {
-        raiseScoreForTeam(TWO, TWO, TWO,
-                          ONE);
+        raiseScoreForTeam(ONE, ONE);
 
-        firstHalf.undoLastGoal();
         firstHalf.undoLastGoal();
 
         Map<Team, Integer> scoresOfTeams = firstHalf.getScoreOfTeams();
         Integer scoreOfTeamOne = scoresOfTeams.get(ONE);
-        Integer scoreOfTeamTwo = scoresOfTeams.get(TWO);
-        assertThat(scoreOfTeamOne).isEqualTo(0);
-        assertThat(scoreOfTeamTwo).isEqualTo(2);
+        assertThat(scoreOfTeamOne).isEqualTo(1);
     }
 
     @Test
     public void redo_last_undone_goals() {
-        raiseScoreForTeam(TWO,
-                          ONE, ONE, ONE,
-                          TWO);
+        raiseScoreForTeam(TWO, TWO);
         firstHalf.undoLastGoal();
 
         firstHalf.redoLastGoal();
 
         Map<Team, Integer> scoresOfTeams = firstHalf.getScoreOfTeams();
-        Integer scoreOfTeamOne = scoresOfTeams.get(ONE);
         Integer scoreOfTeamTwo = scoresOfTeams.get(TWO);
-        assertThat(scoreOfTeamOne).isEqualTo(3);
         assertThat(scoreOfTeamTwo).isEqualTo(2);
     }
 
