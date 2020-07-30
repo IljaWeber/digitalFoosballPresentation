@@ -1,14 +1,11 @@
 package com.valtech.digitalFoosball.domain.common.models;
 
-import com.valtech.digitalFoosball.domain.common.constants.GameMode;
-
 import java.util.Arrays;
 import java.util.List;
 
 public class InitDataModel {
     private TeamDataModel teamOne;
     private TeamDataModel teamTwo;
-    private GameMode mode;
 
     public InitDataModel() {
     }
@@ -45,13 +42,5 @@ public class InitDataModel {
 
     public String toString() {
         return teamOne.toString() + "; " + teamTwo.toString();
-    }
-
-    public GameMode getMode() {
-        return mode;
-    }
-
-    public void setMode(GameMode mode) {
-        this.mode = mode;
     }
 }

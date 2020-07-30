@@ -1,10 +1,8 @@
 package com.valtech.digitalFoosball.api.driver.usercommands;
 
 import com.valtech.digitalFoosball.api.driven.persistence.IObtainTeams;
-import com.valtech.digitalFoosball.domain.common.GameController;
 import com.valtech.digitalFoosball.domain.common.converter.Converter;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
-import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,13 +18,10 @@ import java.util.List;
 public class
 DigitalFoosballGetDataAPI {
 
-    private final GameController gameController;
     private final IObtainTeams teamDataPort;
 
     @Autowired
-    public DigitalFoosballGetDataAPI(GameController gameController,
-                                     IObtainTeams teamDataPort) {
-        this.gameController = gameController;
+    public DigitalFoosballGetDataAPI(IObtainTeams teamDataPort) {
         this.teamDataPort = teamDataPort;
     }
 
@@ -40,10 +35,4 @@ DigitalFoosballGetDataAPI {
 
         return Converter.convertListToTeamOutputs(teamDataModels);
     }
-
-    @GetMapping(path = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GameOutputModel getGameData() {
-        return gameController.getGameData();
-    }
-
 }
