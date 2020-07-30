@@ -11,11 +11,12 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FirstHalfShould {
-    private IPlayATimeGame firstHalf;
+    private FirstHalf firstHalf;
+    private TimeGameRulesFake timeGameRules;
 
     @BeforeEach
     void setUp() {
-        TimeGameRules timeGameRules = new TimeGameRules();
+        timeGameRules = new TimeGameRulesFake();
         firstHalf = new FirstHalf(timeGameRules);
     }
 
@@ -32,6 +33,7 @@ class FirstHalfShould {
         Integer actualScoreOfPlayerTwo = gameData.get(TWO);
         assertThat(actualScoreOfPlayerTwo).isEqualTo(2);
     }
+
 
     @Test
     public void not_raise_score_when_a_team_has_a_score_of_at_least_ten() {
@@ -53,6 +55,18 @@ class FirstHalfShould {
 
         Integer actualScoreOfPlayerTwo = gameData.get(TWO);
         assertThat(actualScoreOfPlayerTwo).isEqualTo(8);
+    }
+
+    @Test
+    public void end_first_half_when_time_is_over() {
+        raiseScoreForTeam(TWO,
+                          ONE, ONE,
+                          TWO, TWO,
+                          ONE);
+
+        firstHalf.nextSequenceByTime();
+
+        assertThat(timeGameRules.game).isInstanceOf(HalfTime.class);
     }
 
     @Test
@@ -89,6 +103,15 @@ class FirstHalfShould {
     private void raiseScoreForTeam(Team... teams) {
         for (Team team : teams) {
             firstHalf.raiseScoreFor(team);
+        }
+    }
+
+    private class TimeGameRulesFake extends TimeGameRules {
+        public IPlayATimeGame game;
+
+        @Override
+        public void setActualTimeGameSequence(IPlayATimeGame gameSequence) {
+            game = gameSequence;
         }
     }
 }

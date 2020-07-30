@@ -2,10 +2,7 @@ package com.valtech.digitalFoosball.domain.timeGame;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
@@ -14,11 +11,15 @@ public class FirstHalf implements IPlayATimeGame {
     private final TimeGameRules rules;
     private final Stack<Team> goalOverView;
     private final Stack<Team> undoOverView;
+    private Timer timer;
 
     public FirstHalf(TimeGameRules timeGameRules) {
         this.rules = timeGameRules;
         goalOverView = new Stack<>();
         undoOverView = new Stack<>();
+        timer = new Timer();
+        timer.schedule(new TimeGameTimerTask(this), 420000);
+        timer.cancel();
     }
 
     @Override
@@ -71,12 +72,14 @@ public class FirstHalf implements IPlayATimeGame {
         return scores;
     }
 
-    public void changeTimeGameSequence(IPlayATimeGame sequence) {
-        rules.setActualTimeGameSequence(sequence);
-    }
-
     private void endGame() {
         IPlayATimeGame endByScoreLimit = new EndByScoreLimit(this, rules);
         rules.setActualTimeGameSequence(endByScoreLimit);
+    }
+
+    public void nextSequenceByTime() {
+        IPlayATimeGame halfTime = new HalfTime();
+
+        rules.setActualTimeGameSequence(halfTime);
     }
 }
