@@ -13,11 +13,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SecondHalfShould {
 
     private SecondHalf secondHalf;
+    private TimeGameRulesFake rules;
 
     @BeforeEach
     void setUp() {
         Stack<Team> goalsOfThePastHalf = new Stack<>();
-        TimeGameRules rules = new TimeGameRules();
+        rules = new TimeGameRulesFake();
         secondHalf = new SecondHalf(goalsOfThePastHalf, rules);
     }
 
@@ -28,5 +29,31 @@ class SecondHalfShould {
         Map<Team, Integer> scoreOfTeams = secondHalf.getScoreOfTeams();
         Integer actual = scoreOfTeams.get(ONE);
         assertThat(actual).isEqualTo(1);
+    }
+
+    @Test
+    public void end_game_when_a_team_reaches_the_score_limit() {
+        raiseScoreForTeam(ONE, ONE,
+                          ONE, ONE,
+                          ONE, ONE,
+                          ONE, ONE,
+                          ONE, ONE);
+
+        assertThat(rules.game).isInstanceOf(EndByScoreLimit.class);
+    }
+
+    private void raiseScoreForTeam(Team... teams) {
+        for (Team team : teams) {
+            secondHalf.raiseScoreFor(team);
+        }
+    }
+
+    private class TimeGameRulesFake extends TimeGameRules {
+        public IPlayATimeGame game;
+
+        @Override
+        public void setActualTimeGameSequence(IPlayATimeGame gameSequence) {
+            game = gameSequence;
+        }
     }
 }

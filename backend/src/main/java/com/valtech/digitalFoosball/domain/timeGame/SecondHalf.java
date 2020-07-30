@@ -24,6 +24,9 @@ public class SecondHalf implements IPlayATimeGame {
     public void raiseScoreFor(Team team) {
         goalOverview.push(team);
 
+        if (Collections.frequency(goalOverview, team) >= 10) {
+            endGame();
+        }
     }
 
     @Override
@@ -54,5 +57,10 @@ public class SecondHalf implements IPlayATimeGame {
         scores.put(TWO, Collections.frequency(goalOverview, TWO));
 
         return scores;
+    }
+
+    private void endGame() {
+        IPlayATimeGame endByScoreLimit = new EndByScoreLimit(this, rules);
+        rules.setActualTimeGameSequence(endByScoreLimit);
     }
 }
