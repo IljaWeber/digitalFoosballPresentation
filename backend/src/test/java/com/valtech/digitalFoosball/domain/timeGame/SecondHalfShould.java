@@ -77,6 +77,13 @@ class SecondHalfShould {
         assertThat(scoreOfTeamTwo).isEqualTo(1);
     }
 
+    @Test
+    public void end_whole_match_when_time_is_over() {
+        secondHalf.nextSequenceByTime();
+
+        assertThat(rules.game).isInstanceOf(EndByTime.class);
+    }
+
     private void raiseScoreForTeam(Team... teams) {
         for (Team team : teams) {
             secondHalf.raiseScoreFor(team);

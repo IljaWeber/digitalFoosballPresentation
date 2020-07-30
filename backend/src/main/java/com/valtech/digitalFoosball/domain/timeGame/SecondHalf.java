@@ -18,7 +18,6 @@ public class SecondHalf implements IPlayATimeGame {
     public SecondHalf(Stack<Team> goalOverview, TimeGameRules rules) {
         this.goalOverview = goalOverview;
         this.rules = rules;
-
         undoOverview = new Stack<>();
     }
 
@@ -72,5 +71,11 @@ public class SecondHalf implements IPlayATimeGame {
     private void endGame() {
         IPlayATimeGame endByScoreLimit = new EndByScoreLimit(this, rules);
         rules.setActualTimeGameSequence(endByScoreLimit);
+    }
+
+    public void nextSequenceByTime() {
+        IPlayATimeGame endByTime = new EndByTime();
+
+        rules.setActualTimeGameSequence(endByTime);
     }
 }
