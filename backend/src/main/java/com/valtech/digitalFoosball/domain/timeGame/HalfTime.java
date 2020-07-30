@@ -11,11 +11,12 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 
 public class HalfTime implements IPlayATimeGame {
-
     private final Stack<Team> goalOverview;
+    private final TimeGameRules rules;
 
-    public HalfTime(Stack<Team> goalOverView) {
+    public HalfTime(Stack<Team> goalOverView, TimeGameRules rules) {
         this.goalOverview = goalOverView;
+        this.rules = rules;
     }
 
     @Override
@@ -35,7 +36,8 @@ public class HalfTime implements IPlayATimeGame {
 
     @Override
     public void changeover() {
-
+        IPlayATimeGame secondHalf = new SecondHalf(goalOverview, rules);
+        rules.setActualTimeGameSequence(secondHalf);
     }
 
     @Override

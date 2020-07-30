@@ -74,7 +74,7 @@ public class FirstHalf implements IPlayATimeGame {
     }
 
     public void nextSequenceByTime() {
-        IPlayATimeGame halfTime = new HalfTime(goalOverView);
+        IPlayATimeGame halfTime = new HalfTime(goalOverView, rules);
 
         rules.setActualTimeGameSequence(halfTime);
     }
