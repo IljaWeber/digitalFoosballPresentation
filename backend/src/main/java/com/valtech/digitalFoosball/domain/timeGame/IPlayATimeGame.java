@@ -15,5 +15,5 @@ public interface IPlayATimeGame {
 
     void resetGame();
 
-    Map<Team, Integer> getScoresOfTeams();
+    Map<Team, Integer> getScoreOfTeams();
 }

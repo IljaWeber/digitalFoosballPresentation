@@ -25,7 +25,7 @@ class FirstHalfShould {
                           TWO, TWO,
                           ONE);
 
-        Map<Team, Integer> gameData = firstHalf.getScoresOfTeams();
+        Map<Team, Integer> gameData = firstHalf.getScoreOfTeams();
         Integer actualScoreOfTeamOne = gameData.get(ONE);
         assertThat(actualScoreOfTeamOne).isEqualTo(2);
 
@@ -47,7 +47,7 @@ class FirstHalfShould {
                           TWO,
                           ONE);
 
-        Map<Team, Integer> gameData = firstHalf.getScoresOfTeams();
+        Map<Team, Integer> gameData = firstHalf.getScoreOfTeams();
         Integer actualScoreOfTeamOne = gameData.get(ONE);
         assertThat(actualScoreOfTeamOne).isEqualTo(10);
 
@@ -63,7 +63,7 @@ class FirstHalfShould {
         firstHalf.undoLastGoal();
         firstHalf.undoLastGoal();
 
-        Map<Team, Integer> scoresOfTeams = firstHalf.getScoresOfTeams();
+        Map<Team, Integer> scoresOfTeams = firstHalf.getScoreOfTeams();
         Integer scoreOfTeamOne = scoresOfTeams.get(ONE);
         Integer scoreOfTeamTwo = scoresOfTeams.get(TWO);
         assertThat(scoreOfTeamOne).isEqualTo(0);
@@ -79,7 +79,7 @@ class FirstHalfShould {
 
         firstHalf.redoLastGoal();
 
-        Map<Team, Integer> scoresOfTeams = firstHalf.getScoresOfTeams();
+        Map<Team, Integer> scoresOfTeams = firstHalf.getScoreOfTeams();
         Integer scoreOfTeamOne = scoresOfTeams.get(ONE);
         Integer scoreOfTeamTwo = scoresOfTeams.get(TWO);
         assertThat(scoreOfTeamOne).isEqualTo(3);

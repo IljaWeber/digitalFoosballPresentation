@@ -63,7 +63,7 @@ public class FirstHalf implements IPlayATimeGame {
     }
 
     @Override
-    public Map<Team, Integer> getScoresOfTeams() {
+    public Map<Team, Integer> getScoreOfTeams() {
         Map<Team, Integer> scores = new HashMap<>();
 
         scores.put(ONE, Collections.frequency(goalOverView, ONE));

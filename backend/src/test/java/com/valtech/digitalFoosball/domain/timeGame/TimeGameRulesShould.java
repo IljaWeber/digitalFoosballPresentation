@@ -4,6 +4,8 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -66,6 +68,25 @@ public class TimeGameRulesShould {
 
         IPlayATimeGame actual = rules.getActualGameSequence();
         assertThat(actual).isInstanceOf(EndByScoreLimit.class);
+    }
+
+    @Test
+    public void show_the_final_score_when_a_team_won_by_the_score_limit() {
+        raiseScoreForTeam(ONE, ONE, ONE, ONE,
+                          TWO,
+                          ONE,
+                          TWO, TWO,
+                          ONE, ONE,
+                          TWO, TWO, TWO,
+                          ONE, ONE, ONE, ONE);
+
+        IPlayATimeGame gameSequence = rules.getActualGameSequence();
+
+        Map<Team, Integer> scoreOfTeams = gameSequence.getScoreOfTeams();
+        Integer finalScoreOfTeamOne = scoreOfTeams.get(ONE);
+        Integer finalScoreOfTeamTwo = scoreOfTeams.get(TWO);
+        assertThat(finalScoreOfTeamOne).isEqualTo(10);
+        assertThat(finalScoreOfTeamTwo).isEqualTo(6);
     }
 
     private void raiseScoreForTeam(Team... teams) {
