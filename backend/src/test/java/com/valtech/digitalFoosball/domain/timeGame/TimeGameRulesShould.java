@@ -75,6 +75,16 @@ public class TimeGameRulesShould {
     }
 
     @Test
+    public void start_the_half_time_when_time_limit_is_reached() {
+        FirstHalfFake firstHalfFake = new FirstHalfFake(rules);
+
+        firstHalfFake.nextSequenceByTime();
+
+        IPlayATimeGame actual = rules.getActualGameSequence();
+        assertThat(actual).isInstanceOf(HalfTime.class);
+    }
+
+    @Test
     public void not_count_goals_when_time_is_over_and_score_limit_is_not_reached() {
         FirstHalfFake firstHalfFake = new FirstHalfFake(rules);
         firstHalfFake.nextSequenceByTime();
