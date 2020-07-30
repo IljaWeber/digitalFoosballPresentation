@@ -23,10 +23,7 @@ public class FirstHalf implements IPlayATimeGame {
 
     @Override
     public void raiseScoreFor(Team team) {
-
-        if (Collections.frequency(goalOverView, team) < 10) {
-            goalOverView.push(team);
-        }
+        goalOverView.push(team);
 
         if (Collections.frequency(goalOverView, team) >= 10) {
             endGame();
