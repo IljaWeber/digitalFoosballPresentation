@@ -9,8 +9,8 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 
 public class FirstHalf implements IPlayATimeGame {
     public TimeGameRules rules;
-    private Stack<Team> goalOverView;
-    private Stack<Team> undoOverView;
+    private final Stack<Team> goalOverView;
+    private final Stack<Team> undoOverView;
     private Timer timer;
 
     public FirstHalf(TimeGameRules timeGameRules) {

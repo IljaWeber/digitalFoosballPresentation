@@ -42,8 +42,6 @@ class FirstHalfShould {
 
     @Test
     public void end_first_half_when_time_is_over() {
-        raiseScoreForTeam(TWO, ONE);
-
         firstHalf.nextSequenceByTime();
 
         assertThat(timeGameRules.game).isInstanceOf(HalfTime.class);
