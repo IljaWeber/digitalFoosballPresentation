@@ -3,9 +3,9 @@ package com.valtech.digitalFoosball.domain.timeGame;
 import java.util.TimerTask;
 
 public class TimeGameTimerTask extends TimerTask {
-    private final FirstHalf game;
+    private final PlayHalves game;
 
-    public TimeGameTimerTask(FirstHalf timeGame) {
+    public TimeGameTimerTask(PlayHalves timeGame) {
         this.game = timeGame;
     }
 

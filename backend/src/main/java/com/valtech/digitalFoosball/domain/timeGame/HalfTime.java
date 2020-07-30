@@ -36,7 +36,7 @@ public class HalfTime implements IPlayATimeGame {
 
     @Override
     public void changeover() {
-        IPlayATimeGame secondHalf = new SecondHalf(goalOverview, rules);
+        IPlayATimeGame secondHalf = new SecondHalf(rules);
         rules.setActualTimeGameSequence(secondHalf);
     }
 

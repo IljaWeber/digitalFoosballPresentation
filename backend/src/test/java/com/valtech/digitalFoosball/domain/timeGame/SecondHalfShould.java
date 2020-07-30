@@ -20,7 +20,7 @@ class SecondHalfShould {
     void setUp() {
         Stack<Team> goalsOfThePastHalf = new Stack<>();
         rules = new TimeGameRulesFake();
-        secondHalf = new SecondHalf(goalsOfThePastHalf, rules);
+        secondHalf = new SecondHalf(rules);
     }
 
     @Test
