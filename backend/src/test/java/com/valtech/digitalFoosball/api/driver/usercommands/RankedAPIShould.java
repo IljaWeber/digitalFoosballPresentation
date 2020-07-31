@@ -20,15 +20,15 @@ class RankedAPIShould {
 
         rankedAPI.init(new InitDataModel());
 
-        assertThat(raspiController.game).isInstanceOf(RankedGame.class);
+        assertThat(raspiController.IPlayAGame).isInstanceOf(RankedGame.class);
     }
 
     private class FakeRaspiController extends RaspiController {
-        public IPlayAGame game;
+        public IPlayAGame IPlayAGame;
 
         @Override
-        public void setGame(IPlayAGame game) {
-            this.game = game;
+        public void setGame(IPlayAGame IPlayAGame) {
+            this.IPlayAGame = IPlayAGame;
         }
     }
 

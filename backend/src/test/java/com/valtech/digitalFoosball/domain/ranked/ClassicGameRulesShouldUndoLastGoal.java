@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ClassicGameRulesShouldUndoLastGoal {
 
     private final UUID id = UUID.randomUUID();
-    public IPlayAGame game;
+    public IPlayAGame IPlayAGame;
 
     @BeforeEach
     void setUp() {
@@ -36,9 +36,9 @@ public class ClassicGameRulesShouldUndoLastGoal {
         TeamRepository teamRepository = new TeamRepositoryFake(id);
         PlayerRepository playerRepository = new PlayerRepositoryFake();
 
-        game = new ClassicGame(new RankedInitService(new TeamService(teamRepository,
-                                                                     new PlayerService(playerRepository))));
-        game.initGame(initDataModel);
+        IPlayAGame = new ClassicGame(new RankedInitService(new TeamService(teamRepository,
+                                                                           new PlayerService(playerRepository))));
+        IPlayAGame.initGame(initDataModel);
 
     }
 
@@ -46,20 +46,20 @@ public class ClassicGameRulesShouldUndoLastGoal {
     void in_the_reversed_order_of_scoring() {
         raiseScoreOf(ONE, TWO, ONE);
 
-        game.undoGoal();
+        IPlayAGame.undoGoal();
 
         int actual = getScoreOfTeam(ONE);
         assertThat(actual).isEqualTo(1);
     }
 
     private int getScoreOfTeam(Team team) {
-        GameOutputModel gameData = game.getGameData();
+        GameOutputModel gameData = IPlayAGame.getGameData();
         return gameData.getTeam(team).getScore();
     }
 
     @Test
     void but_if_no_scores_have_been_made_then_do_nothing() {
-        game.undoGoal();
+        IPlayAGame.undoGoal();
 
         int actualScoreTeamOne = getScoreOfTeam(ONE);
         int actualScoreTeamTwo = getScoreOfTeam(TWO);
@@ -71,16 +71,16 @@ public class ClassicGameRulesShouldUndoLastGoal {
     void and_decrease_the_number_of_won_sets_when_win_condition_has_been_fulfilled() {
         raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
 
-        game.undoGoal();
+        IPlayAGame.undoGoal();
 
-        ClassicGameOutputModel gameData = (ClassicGameOutputModel) game.getGameData();
+        ClassicGameOutputModel gameData = (ClassicGameOutputModel) IPlayAGame.getGameData();
         Team actual = gameData.getWinnerOfSet();
         assertThat(actual).isEqualTo(NO_TEAM);
     }
 
     private void raiseScoreOf(Team... teams) {
         for (Team team : teams) {
-            game.countGoalFor(team);
+            IPlayAGame.countGoalFor(team);
         }
     }
 

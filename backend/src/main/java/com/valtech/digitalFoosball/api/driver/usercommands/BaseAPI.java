@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.*;
 
 public abstract class BaseAPI {
     protected final Logger logger;
-    protected final IPlayAGame game;
+    protected final IPlayAGame IPlayAGame;
 
-    public BaseAPI(IPlayAGame game) {
+    public BaseAPI(IPlayAGame IPlayAGame) {
         logger = LogManager.getLogger(AdHocAPI.class);
-        this.game = game;
+        this.IPlayAGame = IPlayAGame;
     }
 
     @GetMapping(path = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel getGameData() {
-        return game.getGameData();
+        return IPlayAGame.getGameData();
     }
 
     @PostMapping(path = "/raise", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -28,14 +28,14 @@ public abstract class BaseAPI {
 
         Team team = Team.getTeamBy(teamNo);
 
-        game.countGoalFor(team);
+        IPlayAGame.countGoalFor(team);
     }
 
     @PostMapping(path = "/newRound", produces = MediaType.APPLICATION_JSON_VALUE)
     public GameOutputModel newRound() {
         logger.info("New Round");
 
-        game.changeover();
+        IPlayAGame.changeover();
 
         return getGameData();
     }
@@ -44,7 +44,7 @@ public abstract class BaseAPI {
     public GameOutputModel undoLastGoal() {
         logger.info("Undo");
 
-        game.undoGoal();
+        IPlayAGame.undoGoal();
 
         return getGameData();
     }
@@ -53,7 +53,7 @@ public abstract class BaseAPI {
     public GameOutputModel redoLastGoal() {
         logger.info("Redo");
 
-        game.redoGoal();
+        IPlayAGame.redoGoal();
 
         return getGameData();
     }
@@ -62,7 +62,7 @@ public abstract class BaseAPI {
     public boolean resetGameValues() {
         logger.info("Reset");
 
-        game.resetMatch();
+        IPlayAGame.resetMatch();
 
         return true;
     }

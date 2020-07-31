@@ -28,10 +28,10 @@ public class RankedAPI extends BaseAPI {
     public GameOutputModel init(@RequestBody InitDataModel initDataModel) {
         logger.info("Sign in: " + initDataModel.toString());
 
-        raspiController.setGame(game);
+        raspiController.setGame(IPlayAGame);
 
-        game.initGame(initDataModel);
+        IPlayAGame.initGame(initDataModel);
 
-        return game.getGameData();
+        return IPlayAGame.getGameData();
     }
 }

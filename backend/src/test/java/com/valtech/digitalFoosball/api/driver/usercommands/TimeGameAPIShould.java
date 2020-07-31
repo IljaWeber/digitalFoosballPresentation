@@ -20,15 +20,15 @@ public class TimeGameAPIShould {
 
         timeGameAPI.init();
 
-        assertThat(raspiController.game).isInstanceOf(TimeGame.class);
+        assertThat(raspiController.IPlayAGame).isInstanceOf(TimeGame.class);
     }
 
     private class FakeRaspiController extends RaspiController {
-        public IPlayAGame game;
+        public IPlayAGame IPlayAGame;
 
         @Override
-        public void setGame(IPlayAGame game) {
-            this.game = game;
+        public void setGame(IPlayAGame IPlayAGame) {
+            this.IPlayAGame = IPlayAGame;
         }
     }
 

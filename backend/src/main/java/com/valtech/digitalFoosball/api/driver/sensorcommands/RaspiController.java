@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("raspi")
 public class RaspiController {
 
-    private IPlayAGame game;
+    private IPlayAGame IPlayAGame;
 
     private final Logger logger;
 
@@ -28,10 +28,10 @@ public class RaspiController {
 
         Team team = Team.getTeamBy(teamNo);
 
-        game.countGoalFor(team);
+        IPlayAGame.countGoalFor(team);
     }
 
-    public void setGame(IPlayAGame game) {
-        this.game = game;
+    public void setGame(IPlayAGame IPlayAGame) {
+        this.IPlayAGame = IPlayAGame;
     }
 }

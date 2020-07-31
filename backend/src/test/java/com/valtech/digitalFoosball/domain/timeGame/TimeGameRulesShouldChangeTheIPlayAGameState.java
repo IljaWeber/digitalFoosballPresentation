@@ -8,7 +8,7 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.timeGame.GameState.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TimeGameRulesShouldChangeTheGameState {
+public class TimeGameRulesShouldChangeTheIPlayAGameState {
 
     private TimeGameRules timeGameRules;
 

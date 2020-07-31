@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ClassicGameRulesShouldRaiseScore {
 
     private final UUID id = UUID.randomUUID();
-    public IPlayAGame game;
+    public IPlayAGame IPlayAGame;
 
     @BeforeEach
     void setUp() {
@@ -35,9 +35,9 @@ public class ClassicGameRulesShouldRaiseScore {
 
         TeamRepository teamRepository = new TeamRepositoryFake(id);
         PlayerRepository playerRepository = new PlayerRepositoryFake();
-        game = new ClassicGame(new RankedInitService(new TeamService(teamRepository,
-                                                                     new PlayerService(playerRepository))));
-        game.initGame(initDataModel);
+        IPlayAGame = new ClassicGame(new RankedInitService(new TeamService(teamRepository,
+                                                                           new PlayerService(playerRepository))));
+        IPlayAGame.initGame(initDataModel);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class ClassicGameRulesShouldRaiseScore {
     }
 
     private int getScoreOfTeam(Team team) {
-        GameOutputModel gameData = game.getGameData();
+        GameOutputModel gameData = IPlayAGame.getGameData();
 
         return gameData.getTeam(team).getScore();
     }
@@ -66,7 +66,7 @@ public class ClassicGameRulesShouldRaiseScore {
 
     private void raiseScoreOf(Team... teams) {
         for (Team team : teams) {
-            game.countGoalFor(team);
+            IPlayAGame.countGoalFor(team);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
+import com.valtech.digitalFoosball.domain.common.IKnowTheRules;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 
 import java.util.Collections;
@@ -7,7 +8,7 @@ import java.util.Stack;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
-public class ClassicGameRules {
+public class ClassicGameRules implements IKnowTheRules {
     private final Stack<Team> goalOverView;
     private final Stack<Team> undoOverView;
     private final Stack<Team> winOverview;

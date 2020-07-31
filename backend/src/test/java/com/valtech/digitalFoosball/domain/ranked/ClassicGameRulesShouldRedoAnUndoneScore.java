@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ClassicGameRulesShouldRedoAnUndoneScore {
 
     private final UUID id = UUID.randomUUID();
-    public IPlayAGame game;
+    public IPlayAGame IPlayAGame;
 
     @BeforeEach
     void setUp() {
@@ -37,30 +37,30 @@ public class ClassicGameRulesShouldRedoAnUndoneScore {
         TeamRepository teamRepository = new TeamRepositoryFake(id);
         PlayerRepository playerRepository = new PlayerRepositoryFake();
 
-        game = new ClassicGame(new RankedInitService(new TeamService(teamRepository,
-                                                                     new PlayerService(playerRepository))));
-        game.initGame(initDataModel);
+        IPlayAGame = new ClassicGame(new RankedInitService(new TeamService(teamRepository,
+                                                                           new PlayerService(playerRepository))));
+        IPlayAGame.initGame(initDataModel);
     }
 
     @Test
     void if_a_score_has_been_undone_recently() {
         raiseScoreOf(ONE);
-        game.undoGoal();
+        IPlayAGame.undoGoal();
 
-        game.redoGoal();
+        IPlayAGame.redoGoal();
 
         int actual = getScoreOfTeam(ONE);
         assertThat(actual).isEqualTo(1);
     }
 
     private int getScoreOfTeam(Team team) {
-        GameOutputModel gameData = game.getGameData();
+        GameOutputModel gameData = IPlayAGame.getGameData();
         return gameData.getTeam(team).getScore();
     }
 
     @Test
     void only_when_a_goal_was_undid_otherwise_do_nothing() {
-        game.redoGoal();
+        IPlayAGame.redoGoal();
 
         int actualScoreTeamOne = getScoreOfTeam(ONE);
         int actualScoreTeamTwo = getScoreOfTeam(TWO);
@@ -71,22 +71,22 @@ public class ClassicGameRulesShouldRedoAnUndoneScore {
     @Test
     void and_raise_the_won_sets_if_necessary() {
         raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE);
-        game.undoGoal();
+        IPlayAGame.undoGoal();
 
-        game.redoGoal();
+        IPlayAGame.redoGoal();
 
         Team actual = getNumberOfWonSets(ONE);
         assertThat(actual).isEqualTo(ONE);
     }
 
     private Team getNumberOfWonSets(Team team) {
-        ClassicGameOutputModel gameData = (ClassicGameOutputModel) game.getGameData();
+        ClassicGameOutputModel gameData = (ClassicGameOutputModel) IPlayAGame.getGameData();
         return gameData.getWinnerOfSet();
     }
 
     private void raiseScoreOf(Team... teams) {
         for (Team team : teams) {
-            game.countGoalFor(team);
+            IPlayAGame.countGoalFor(team);
         }
     }
 

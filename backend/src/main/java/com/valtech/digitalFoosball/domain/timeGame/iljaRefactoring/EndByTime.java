@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.domain.timeGame;
+package com.valtech.digitalFoosball.domain.timeGame.iljaRefactoring;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 
@@ -10,13 +10,12 @@ import java.util.Stack;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 
-public class HalfTime implements IPlayATimeGame {
-    private final Stack<Team> goalOverview;
-    private final TimeGameRules rules;
+public class EndByTime implements IPlayATimeGame {
 
-    public HalfTime(Stack<Team> goalOverView, TimeGameRules rules) {
-        this.goalOverview = goalOverView;
-        this.rules = rules;
+    private final Stack<Team> finalScore;
+
+    public EndByTime(Stack<Team> goalOverview) {
+        this.finalScore = goalOverview;
     }
 
     @Override
@@ -36,8 +35,7 @@ public class HalfTime implements IPlayATimeGame {
 
     @Override
     public void changeover() {
-        IPlayATimeGame secondHalf = new SecondHalf(rules);
-        rules.setActualTimeGameSequence(secondHalf);
+
     }
 
     @Override
@@ -49,8 +47,8 @@ public class HalfTime implements IPlayATimeGame {
     public Map<Team, Integer> getScoreOfTeams() {
         Map<Team, Integer> scores = new HashMap<>();
 
-        scores.put(ONE, Collections.frequency(goalOverview, ONE));
-        scores.put(TWO, Collections.frequency(goalOverview, TWO));
+        scores.put(ONE, Collections.frequency(finalScore, ONE));
+        scores.put(TWO, Collections.frequency(finalScore, TWO));
 
         return scores;
     }

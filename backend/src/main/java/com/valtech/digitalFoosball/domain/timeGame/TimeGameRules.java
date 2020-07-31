@@ -1,6 +1,9 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
+import com.valtech.digitalFoosball.domain.common.IKnowTheRules;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.timeGame.iljaRefactoring.FirstHalf;
+import com.valtech.digitalFoosball.domain.timeGame.iljaRefactoring.IPlayATimeGame;
 
 import java.util.Collections;
 import java.util.Stack;
@@ -10,7 +13,7 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 import static com.valtech.digitalFoosball.domain.timeGame.GameState.FIRST_HALF;
 import static com.valtech.digitalFoosball.domain.timeGame.GameState.OVER;
 
-public class TimeGameRules {
+public class TimeGameRules implements IKnowTheRules {
     public static final int halftimeInMillis = 420000;
     private final Stack<Team> goalOverView;
     private final Stack<Team> undoOverView;
@@ -25,6 +28,7 @@ public class TimeGameRules {
         gameState = FIRST_HALF;
         timer = new Timer();
         actualGameSequence = new FirstHalf(this);
+        startTimer();
     }
 
     // TODO: 28.07.20 m.huber think of a way to mock the timer to test this method
@@ -32,6 +36,7 @@ public class TimeGameRules {
         timer.schedule(new HalftimeTimerTask(this), halftimeInMillis);
     }
 
+    @Override
     public void raiseScoreFor(Team team) {
         if (gameState.isActive()) {
             goalOverView.push(team);
@@ -40,6 +45,7 @@ public class TimeGameRules {
         determineWinner();
     }
 
+    @Override
     public void undoLastGoal() {
         if (goalOverView.isEmpty()) {
             return;
@@ -49,6 +55,7 @@ public class TimeGameRules {
         undoOverView.push(team);
     }
 
+    @Override
     public void redoLastGoal() {
         if (undoOverView.isEmpty()) {
             return;
@@ -57,8 +64,10 @@ public class TimeGameRules {
         raiseScoreFor(undoOverView.pop());
     }
 
+    @Override
     public void changeOver() {
         gameState = gameState.getNext();
+        startTimer();
     }
 
     public GameState getGameState() {

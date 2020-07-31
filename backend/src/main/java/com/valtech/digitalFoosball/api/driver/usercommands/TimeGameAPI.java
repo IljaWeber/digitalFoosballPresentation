@@ -26,10 +26,10 @@ public class TimeGameAPI extends BaseAPI {
     public GameOutputModel init() {
         logger.info("New Time-Game");
 
-        raspiController.setGame(game);
+        raspiController.setGame(IPlayAGame);
 
-        game.initGame(new InitDataModel());
+        IPlayAGame.initGame(new InitDataModel());
 
-        return game.getGameData();
+        return IPlayAGame.getGameData();
     }
 }

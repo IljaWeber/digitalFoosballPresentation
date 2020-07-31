@@ -1,6 +1,7 @@
-package com.valtech.digitalFoosball.domain.timeGame;
+package com.valtech.digitalFoosball.domain.timeGame.iljaRefactoring;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.timeGame.TimeGameRules;
 
 import java.util.Map;
 

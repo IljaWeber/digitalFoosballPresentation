@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class ClassicGameRulesShould {
     private final UUID id = UUID.randomUUID();
-    public IPlayAGame game;
+    public IPlayAGame IPlayAGame;
 
     @BeforeEach
     void setUp() {
@@ -37,9 +37,9 @@ public class ClassicGameRulesShould {
 
         TeamRepository teamRepository = new TeamRepositoryFake(id);
         PlayerRepository playerRepository = new PlayerRepositoryFake();
-        game = new ClassicGame(new RankedInitService(new TeamService(teamRepository,
-                                                                     new PlayerService(playerRepository))));
-        game.initGame(initDataModel);
+        IPlayAGame = new ClassicGame(new RankedInitService(new TeamService(teamRepository,
+                                                                           new PlayerService(playerRepository))));
+        IPlayAGame.initGame(initDataModel);
     }
 
     @Test
@@ -49,11 +49,11 @@ public class ClassicGameRulesShould {
 
         InitDataModel initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
 
-        assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> game.initGame(initDataModel));
+        assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> IPlayAGame.initGame(initDataModel));
     }
 
     private List<TeamOutputModel> getTeamDataModels() {
-        GameOutputModel gameData = game.getGameData();
+        GameOutputModel gameData = IPlayAGame.getGameData();
         List<TeamOutputModel> teams = gameData.getTeams();
         return teams;
     }
@@ -62,7 +62,7 @@ public class ClassicGameRulesShould {
     public void reset_the_scores_to_zero_but_keep_the_names_saved() {
         raiseScoreOf(ONE, TWO);
 
-        game.changeover();
+        IPlayAGame.changeover();
 
         List<TeamOutputModel> teams = getTeamDataModels();
         assertThat(teams).extracting(TeamOutputModel::getScore).containsExactly(0, 0);
@@ -74,12 +74,12 @@ public class ClassicGameRulesShould {
     @Test
     public void forget_about_shot_goals_from_the_past_set() {
         raiseScoreOf(ONE);
-        game.undoGoal();
-        game.changeover();
+        IPlayAGame.undoGoal();
+        IPlayAGame.changeover();
 
-        game.undoGoal();
+        IPlayAGame.undoGoal();
 
-        GameOutputModel gameData = game.getGameData();
+        GameOutputModel gameData = IPlayAGame.getGameData();
         int actual = gameData.getTeam(ONE).getScore();
         assertThat(actual).isEqualTo(0);
     }
@@ -87,19 +87,19 @@ public class ClassicGameRulesShould {
     @Test
     public void forget_about_undid_goals_from_the_past_set() {
         raiseScoreOf(ONE);
-        game.undoGoal();
-        game.changeover();
+        IPlayAGame.undoGoal();
+        IPlayAGame.changeover();
 
-        game.redoGoal();
+        IPlayAGame.redoGoal();
 
-        GameOutputModel gameData = game.getGameData();
+        GameOutputModel gameData = IPlayAGame.getGameData();
         int actual = gameData.getTeam(ONE).getScore();
         assertThat(actual).isEqualTo(0);
     }
 
     private void raiseScoreOf(Team... teams) {
         for (Team team : teams) {
-            game.countGoalFor(team);
+            IPlayAGame.countGoalFor(team);
         }
     }
 

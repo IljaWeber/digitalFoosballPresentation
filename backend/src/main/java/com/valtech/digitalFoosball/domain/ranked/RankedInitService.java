@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
 import com.valtech.digitalFoosball.api.driven.persistence.IObtainTeams;
-import com.valtech.digitalFoosball.domain.common.InitService;
+import com.valtech.digitalFoosball.domain.common.IInitializeGames;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RankedInitService implements InitService {
+public class RankedInitService implements IInitializeGames {
 
     private final IObtainTeams teamDataPort;
 

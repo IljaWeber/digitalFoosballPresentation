@@ -1,6 +1,6 @@
 package com.valtech.digitalFoosball.domain.adhoc;
 
-import com.valtech.digitalFoosball.domain.common.InitService;
+import com.valtech.digitalFoosball.domain.common.IInitializeGames;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class AdHocInitService implements InitService {
+public class AdHocInitService implements IInitializeGames {
 
     @Override
     public GameDataModel init(InitDataModel initDataModel) {

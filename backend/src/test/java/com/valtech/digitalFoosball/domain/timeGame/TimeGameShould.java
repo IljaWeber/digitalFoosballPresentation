@@ -17,12 +17,12 @@ class TimeGameShould {
 
     @Test
     public void start_a_time_game() {
-        IPlayAGame timeGame = new TimeGame(new AdHocInitService());
+        IPlayAGame timeIPlayAGame = new TimeGame(new AdHocInitService());
 
-        timeGame.initGame(new InitDataModel());
+        timeIPlayAGame.initGame(new InitDataModel());
 
-        timeGame.countGoalFor(ONE);
-        GameOutputModel outputModel = timeGame.getGameData();
+        timeIPlayAGame.countGoalFor(ONE);
+        GameOutputModel outputModel = timeIPlayAGame.getGameData();
         List<TeamOutputModel> actual = outputModel.getTeams();
         assertThat(actual).extracting(TeamOutputModel::getName).containsExactly("Orange", "Green");
         assertThat(actual).extracting(TeamOutputModel::getPlayerOne).containsExactly("Goalie", "Goalie");
