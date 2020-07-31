@@ -18,8 +18,8 @@ public class ClassicGame extends BaseGame {
 
     public void initGame(InitDataModel initDataModel) {
         gameRules = new ClassicGameRules();
-        super.setGameRules(gameRules);
         model = initService.init(initDataModel);
+        super.setGameRules(gameRules);
     }
 
     @Override

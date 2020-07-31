@@ -1,7 +1,6 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
 import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
-import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
@@ -17,12 +16,12 @@ class TimeGameShould {
 
     @Test
     public void start_a_time_game() {
-        IPlayAGame timeIPlayAGame = new TimeGame(new AdHocInitService());
+        TimeGame timeGame = new TimeGame(new AdHocInitService());
 
-        timeIPlayAGame.initGame(new InitDataModel());
+        timeGame.initGame(new InitDataModel());
 
-        timeIPlayAGame.countGoalFor(ONE);
-        GameOutputModel outputModel = timeIPlayAGame.getGameData();
+        timeGame.countGoalFor(ONE);
+        GameOutputModel outputModel = timeGame.getGameData();
         List<TeamOutputModel> actual = outputModel.getTeams();
         assertThat(actual).extracting(TeamOutputModel::getName).containsExactly("Orange", "Green");
         assertThat(actual).extracting(TeamOutputModel::getPlayerOne).containsExactly("Goalie", "Goalie");

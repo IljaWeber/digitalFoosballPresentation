@@ -18,12 +18,12 @@ public class TimeGame extends BaseGame {
     public TimeGame(AdHocInitService initService) {
         timeGameRules = new TimeGameRules();
         this.initService = initService;
-        super.setGameRules(timeGameRules);
     }
 
     public void initGame(InitDataModel initDataModel) {
         model = initService.init(initDataModel);
         timeGameRules = new TimeGameRules();
+        super.setGameRules(timeGameRules);
     }
 
     public void resetMatch() {
