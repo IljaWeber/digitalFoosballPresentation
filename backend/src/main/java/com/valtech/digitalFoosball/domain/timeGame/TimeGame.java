@@ -21,9 +21,11 @@ public class TimeGame implements IPlayAGame {
         this.initService = initService;
     }
 
+    // TODO: 31.07.20 m.huber ask erwin how to test line 28
     public void initGame(InitDataModel initDataModel) {
-        timeGameRules = new TimeGameRules();
         model = initService.init(initDataModel);
+        timeGameRules = new TimeGameRules();
+        timeGameRules.startTimer();
     }
 
     public void countGoalFor(Team team) {
