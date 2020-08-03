@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
-import java.util.Stack;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
@@ -22,7 +21,6 @@ class SecondHalfShould {
 
     @BeforeEach
     void setUp() {
-        Stack<Team> goalsOfThePastHalf = new Stack<>();
         rules = new TimeGameRulesFake();
         secondHalf = new SecondHalf(rules);
     }

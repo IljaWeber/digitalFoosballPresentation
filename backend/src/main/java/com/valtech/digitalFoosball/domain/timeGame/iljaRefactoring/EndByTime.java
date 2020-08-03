@@ -7,8 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
-import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
+import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public class EndByTime implements IPlayATimeGame {
     private final Stack<Team> finalScore;
@@ -54,6 +53,18 @@ public class EndByTime implements IPlayATimeGame {
 
     @Override
     public Team getMatchWinner() {
-        return null;
+        Team winner = NO_TEAM;
+        int scoreOfTeamOne = Collections.frequency(finalScore, ONE);
+        int scoreOfTeamTwo = Collections.frequency(finalScore, TWO);
+
+        if (scoreOfTeamOne > scoreOfTeamTwo) {
+            winner = ONE;
+        }
+
+        if (scoreOfTeamOne < scoreOfTeamTwo) {
+            winner = TWO;
+        }
+
+        return winner;
     }
 }
