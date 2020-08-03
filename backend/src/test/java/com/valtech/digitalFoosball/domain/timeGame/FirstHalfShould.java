@@ -70,17 +70,6 @@ class FirstHalfShould {
         assertThat(scoreOfTeamTwo).isEqualTo(2);
     }
 
-    @Test
-    public void reset_the_scores() {
-        raiseScoreForTeam(ONE, ONE);
-
-        firstHalf.resetGame();
-
-        Map<Team, Integer> scoreOfTeams = firstHalf.getScoreOfTeams();
-        Integer actual = scoreOfTeams.get(ONE);
-        assertThat(actual).isEqualTo(0);
-    }
-
     private void raiseScoreForTeam(Team... teams) {
         for (Team team : teams) {
             firstHalf.raiseScoreFor(team);

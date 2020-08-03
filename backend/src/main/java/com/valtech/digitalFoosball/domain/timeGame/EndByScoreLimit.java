@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class EndByScoreLimit extends GameOver implements IPlayATimeGame {
     private final IPlayATimeGame previousTimeGameSequence;
-    private final TimeGameRules rules;
+    private TimeGameRules rules;
     private final Team winner;
 
     public EndByScoreLimit(IPlayATimeGame previous,
@@ -37,4 +37,5 @@ public class EndByScoreLimit extends GameOver implements IPlayATimeGame {
     public String toString() {
         return "End by Score Limit";
     }
+
 }

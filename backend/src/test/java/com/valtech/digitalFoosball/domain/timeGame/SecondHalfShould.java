@@ -53,17 +53,6 @@ class SecondHalfShould {
     }
 
     @Test
-    public void reset_the_scores() {
-        raiseScoreForTeam(TWO, TWO, TWO);
-
-        secondHalf.resetGame();
-
-        Map<Team, Integer> scoreOfTeams = secondHalf.getScoreOfTeams();
-        Integer actual = scoreOfTeams.get(TWO);
-        assertThat(actual).isEqualTo(0);
-    }
-
-    @Test
     public void redo_last_undone_goals() {
         raiseScoreForTeam(TWO);
         secondHalf.undoLastGoal();

@@ -75,6 +75,19 @@ public class TimeGameRulesShould {
     }
 
     @Test
+    public void determine_a_winner_when_goal_limit_has_reached_but_some_time_is_left() {
+        raiseScoreForTeam(ONE, ONE,
+                          ONE, ONE,
+                          ONE, ONE,
+                          ONE, ONE,
+                          ONE, ONE);
+
+        Team actual = rules.getMatchWinner();
+
+        assertThat(actual).isEqualTo(ONE);
+    }
+
+    @Test
     public void start_the_half_time_when_time_limit_is_reached() {
         FirstHalfFake firstHalfFake = new FirstHalfFake(rules);
 
@@ -106,19 +119,6 @@ public class TimeGameRulesShould {
 
         IPlayATimeGame actual = rules.getActualGameSequence();
         assertThat(actual).isInstanceOf(SecondHalf.class);
-    }
-
-    @Test
-    public void determine_a_winner_when_goal_limit_has_reached_but_some_time_is_left() {
-        raiseScoreForTeam(ONE, ONE,
-                          ONE, ONE,
-                          ONE, ONE,
-                          ONE, ONE,
-                          ONE, ONE);
-
-        Team actual = rules.getMatchWinner();
-
-        assertThat(actual).isEqualTo(ONE);
     }
 
     @Test
