@@ -21,7 +21,7 @@ public abstract class BaseGame implements IPlayAGame {
         gameRules.changeOver();
     }
 
-    public void setGameRules(IKnowTheRules gameRules) {
+    protected void setGameRules(IKnowTheRules gameRules) {
         this.gameRules = gameRules;
     }
 }

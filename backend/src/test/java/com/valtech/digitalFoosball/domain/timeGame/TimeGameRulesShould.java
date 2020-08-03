@@ -33,7 +33,7 @@ public class TimeGameRulesShould {
     }
 
     @Test
-    public void end_a_match_when_a_winning_goal_has_undone_and_redone_and_there_is_game_time_left() {
+    public void end_a_match_when_a_winning_goal_has_undone_then_redone_and_there_is_game_time_left() {
         raiseScoreForTeam(ONE, ONE,
                           ONE, ONE,
                           ONE, ONE,
@@ -107,6 +107,19 @@ public class TimeGameRulesShould {
 
         IPlayATimeGame actual = rules.getActualGameSequence();
         assertThat(actual).isInstanceOf(SecondHalf.class);
+    }
+
+    @Test
+    public void determine_a_winner_when_goal_limit_has_reached_but_some_time_is_left() {
+        raiseScoreForTeam(ONE, ONE,
+                          ONE, ONE,
+                          ONE, ONE,
+                          ONE, ONE,
+                          ONE, ONE);
+
+        Team actual = rules.getMatchWinner();
+
+        assertThat(actual).isEqualTo(ONE);
     }
 
     private void raiseScoreForTeam(Team... teams) {

@@ -1,5 +1,6 @@
 package com.valtech.digitalFoosball.domain.timeGame.iljaRefactoring;
 
+import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.timeGame.TimeGameRules;
 
 public class FirstHalf extends PlayHalves implements IPlayATimeGame {
@@ -10,8 +11,8 @@ public class FirstHalf extends PlayHalves implements IPlayATimeGame {
     }
 
     @Override
-    protected void finishGameByScoreLimit() {
-        IPlayATimeGame endByScoreLimit = new EndByScoreLimit(this, rules);
+    protected void finishGameByScoreLimit(Team winnerTeam) {
+        IPlayATimeGame endByScoreLimit = new EndByScoreLimit(this, rules, winnerTeam);
         rules.setActualTimeGameSequence(endByScoreLimit);
     }
 
@@ -26,5 +27,4 @@ public class FirstHalf extends PlayHalves implements IPlayATimeGame {
     public void changeover() {
 
     }
-
 }

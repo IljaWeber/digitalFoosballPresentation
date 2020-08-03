@@ -8,11 +8,13 @@ import java.util.Map;
 public class EndByScoreLimit implements IPlayATimeGame {
     private final IPlayATimeGame previousTimeGameSequence;
     private final TimeGameRules rules;
+    private final Team winner;
 
     public EndByScoreLimit(IPlayATimeGame previous,
-                           TimeGameRules rules) {
+                           TimeGameRules rules, Team winnerTeam) {
         this.previousTimeGameSequence = previous;
         this.rules = rules;
+        this.winner = winnerTeam;
     }
 
     @Override
@@ -45,5 +47,10 @@ public class EndByScoreLimit implements IPlayATimeGame {
     public Map<Team, Integer> getScoreOfTeams() {
 
         return previousTimeGameSequence.getScoreOfTeams();
+    }
+
+    @Override
+    public Team getMatchWinner() {
+        return winner;
     }
 }

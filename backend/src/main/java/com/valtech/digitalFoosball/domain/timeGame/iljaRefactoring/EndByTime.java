@@ -11,7 +11,6 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 
 public class EndByTime implements IPlayATimeGame {
-
     private final Stack<Team> finalScore;
 
     public EndByTime(Stack<Team> goalOverview) {
@@ -51,5 +50,10 @@ public class EndByTime implements IPlayATimeGame {
         scores.put(TWO, Collections.frequency(finalScore, TWO));
 
         return scores;
+    }
+
+    @Override
+    public Team getMatchWinner() {
+        return null;
     }
 }

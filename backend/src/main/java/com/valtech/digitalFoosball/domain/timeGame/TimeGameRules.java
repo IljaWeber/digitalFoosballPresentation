@@ -142,4 +142,8 @@ public class TimeGameRules implements IKnowTheRules {
     public void changeover() {
         actualGameSequence.changeover();
     }
+
+    public Team getMatchWinner() {
+        return actualGameSequence.getMatchWinner();
+    }
 }

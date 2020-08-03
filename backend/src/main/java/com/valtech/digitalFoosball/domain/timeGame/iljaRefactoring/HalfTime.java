@@ -55,4 +55,9 @@ public class HalfTime implements IPlayATimeGame {
 
         return scores;
     }
+
+    @Override
+    public Team getMatchWinner() {
+        return null;
+    }
 }

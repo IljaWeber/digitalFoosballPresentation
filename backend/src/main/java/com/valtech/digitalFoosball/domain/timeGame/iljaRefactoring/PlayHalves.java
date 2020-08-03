@@ -5,8 +5,7 @@ import com.valtech.digitalFoosball.domain.timeGame.TimeGameRules;
 
 import java.util.*;
 
-import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
-import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
+import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public abstract class PlayHalves {
     protected final Stack<Team> goalOverView;
@@ -26,7 +25,7 @@ public abstract class PlayHalves {
         goalOverView.push(team);
 
         if (Collections.frequency(goalOverView, team) >= 10) {
-            finishGameByScoreLimit();
+            finishGameByScoreLimit(team);
         }
     }
 
@@ -59,7 +58,11 @@ public abstract class PlayHalves {
         return scores;
     }
 
-    protected abstract void finishGameByScoreLimit();
+    protected abstract void finishGameByScoreLimit(Team winnerTeam);
 
-    public abstract void nextSequenceByTime();
+    protected abstract void nextSequenceByTime();
+
+    public Team getMatchWinner() {
+        return NO_TEAM;
+    }
 }
