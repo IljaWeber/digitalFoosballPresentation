@@ -29,4 +29,5 @@ class TimeGameShould {
         assertThat(actual).extracting(TeamOutputModel::getScore).containsExactly(1, 0);
         assertThat(outputModel.getMatchWinner()).isEqualTo(NO_TEAM);
     }
+
 }

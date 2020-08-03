@@ -4,6 +4,7 @@ import com.valtech.digitalFoosball.domain.common.IKnowTheRules;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.timeGame.iljaRefactoring.FirstHalf;
 import com.valtech.digitalFoosball.domain.timeGame.iljaRefactoring.IPlayATimeGame;
+import org.assertj.core.util.Objects;
 
 import java.util.Collections;
 import java.util.Stack;
@@ -145,5 +146,15 @@ public class TimeGameRules implements IKnowTheRules {
 
     public Team getMatchWinner() {
         return actualGameSequence.getMatchWinner();
+    }
+
+    public GameState prepareActualGameSequence() {
+        GameState actualGameState = OVER;
+
+        if (Objects.areEqual(actualGameSequence.getClass(), FirstHalf.class)) {
+            actualGameState = FIRST_HALF;
+        }
+
+        return actualGameState;
     }
 }

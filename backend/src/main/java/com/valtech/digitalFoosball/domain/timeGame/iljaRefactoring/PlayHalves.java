@@ -10,11 +10,10 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 public abstract class PlayHalves {
     protected final Stack<Team> goalOverView;
     protected final Stack<Team> undoOverView;
-    public TimeGameRules rules;
+    protected TimeGameRules rules;
     protected Timer timer;
 
-    public PlayHalves(
-            TimeGameRules timeGameRules) {
+    public PlayHalves(TimeGameRules timeGameRules) {
         this.rules = timeGameRules;
         goalOverView = new Stack<>();
         undoOverView = new Stack<>();

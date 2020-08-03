@@ -8,8 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
-import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
+import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public class HalfTime implements IPlayATimeGame {
     private final Stack<Team> goalOverview;
@@ -58,6 +57,6 @@ public class HalfTime implements IPlayATimeGame {
 
     @Override
     public Team getMatchWinner() {
-        return null;
+        return NO_TEAM;
     }
 }

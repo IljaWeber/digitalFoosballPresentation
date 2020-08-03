@@ -122,6 +122,13 @@ public class TimeGameRulesShould {
         assertThat(actual).isEqualTo(ONE);
     }
 
+    @Test
+    public void prepare_running_game_sequence() {
+        GameState actual = rules.prepareActualGameSequence();
+
+        assertThat(actual).isEqualTo(GameState.FIRST_HALF);
+    }
+
     private void raiseScoreForTeam(Team... teams) {
         for (Team team : teams) {
             rules.raise(team);
