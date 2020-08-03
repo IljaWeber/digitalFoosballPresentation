@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.domain.timeGame.iljaRefactoring;
+package com.valtech.digitalFoosball.domain.timeGame;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import org.junit.jupiter.api.Test;

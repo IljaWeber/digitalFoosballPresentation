@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.domain.timeGame.iljaRefactoring;
+package com.valtech.digitalFoosball.domain.timeGame;
 
 import java.util.TimerTask;
 

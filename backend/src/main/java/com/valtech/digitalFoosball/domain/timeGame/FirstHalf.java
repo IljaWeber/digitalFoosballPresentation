@@ -1,7 +1,6 @@
-package com.valtech.digitalFoosball.domain.timeGame.iljaRefactoring;
+package com.valtech.digitalFoosball.domain.timeGame;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.timeGame.TimeGameRules;
 
 public class FirstHalf extends PlayHalves implements IPlayATimeGame {
 

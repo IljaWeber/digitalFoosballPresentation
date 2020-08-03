@@ -1,8 +1,5 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
-import com.valtech.digitalFoosball.domain.timeGame.iljaRefactoring.HalfTime;
-import com.valtech.digitalFoosball.domain.timeGame.iljaRefactoring.IPlayATimeGame;
-import com.valtech.digitalFoosball.domain.timeGame.iljaRefactoring.SecondHalf;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

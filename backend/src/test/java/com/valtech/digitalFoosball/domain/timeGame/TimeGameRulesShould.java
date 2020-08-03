@@ -1,7 +1,6 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.timeGame.iljaRefactoring.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -39,9 +38,9 @@ public class TimeGameRulesShould {
                           ONE, ONE,
                           ONE, ONE,
                           ONE, ONE);
-        rules.undo();
+        rules.undoLastGoal();
 
-        rules.redo();
+        rules.redoLastGoal();
 
         actual = rules.getActualGameSequence();
         assertThat(actual).isInstanceOf(EndByScoreLimit.class);
@@ -69,7 +68,7 @@ public class TimeGameRulesShould {
                           ONE, ONE,
                           ONE, ONE);
 
-        rules.undo();
+        rules.undoLastGoal();
 
         actual = rules.getActualGameSequence();
         assertThat(actual).isInstanceOf(FirstHalf.class);
@@ -103,7 +102,7 @@ public class TimeGameRulesShould {
         FirstHalfFake firstHalfFake = new FirstHalfFake(rules);
         firstHalfFake.nextSequenceByTime();
 
-        rules.changeover();
+        rules.changeOver();
 
         IPlayATimeGame actual = rules.getActualGameSequence();
         assertThat(actual).isInstanceOf(SecondHalf.class);
@@ -123,7 +122,7 @@ public class TimeGameRulesShould {
     }
 
     @Test
-    public void prepare_running_game_sequence() {
+    public void prepare_running_game_sequence_for_output() {
         GameState actual = rules.prepareActualGameSequence();
 
         assertThat(actual).isEqualTo(GameState.FIRST_HALF);
@@ -131,7 +130,7 @@ public class TimeGameRulesShould {
 
     private void raiseScoreForTeam(Team... teams) {
         for (Team team : teams) {
-            rules.raise(team);
+            rules.raiseScoreFor(team);
         }
     }
 
