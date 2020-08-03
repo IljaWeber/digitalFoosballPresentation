@@ -9,7 +9,7 @@ import java.util.Stack;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
-public class EndByTime implements IPlayATimeGame {
+public class EndByTime extends GameOver implements IPlayATimeGame {
     private final Stack<Team> finalScore;
 
     public EndByTime(Stack<Team> goalOverview) {
@@ -17,27 +17,7 @@ public class EndByTime implements IPlayATimeGame {
     }
 
     @Override
-    public void raiseScoreFor(Team team) {
-
-    }
-
-    @Override
     public void undoLastGoal() {
-
-    }
-
-    @Override
-    public void redoLastGoal() {
-
-    }
-
-    @Override
-    public void changeover() {
-
-    }
-
-    @Override
-    public void resetGame() {
 
     }
 

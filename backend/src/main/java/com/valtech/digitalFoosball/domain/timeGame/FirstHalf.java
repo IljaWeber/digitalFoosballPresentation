@@ -26,9 +26,4 @@ public class FirstHalf extends PlayHalves implements IPlayATimeGame {
     public String toString() {
         return "First Half";
     }
-
-    @Override
-    public void changeover() {
-
-    }
 }

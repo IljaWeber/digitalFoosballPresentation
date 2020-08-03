@@ -13,8 +13,6 @@ public interface IPlayATimeGame {
 
     void changeover();
 
-    void resetGame();
-
     Map<Team, Integer> getScoreOfTeams();
 
     Team getMatchWinner();

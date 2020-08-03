@@ -40,11 +40,6 @@ public class HalfTime implements IPlayATimeGame {
     }
 
     @Override
-    public void resetGame() {
-
-    }
-
-    @Override
     public Map<Team, Integer> getScoreOfTeams() {
         Map<Team, Integer> scores = new HashMap<>();
 

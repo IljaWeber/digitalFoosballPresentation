@@ -11,16 +11,6 @@ public class SecondHalf extends PlayHalves implements IPlayATimeGame {
     }
 
     @Override
-    public void changeover() {
-
-    }
-
-    @Override
-    public void resetGame() {
-        goalOverView.clear();
-    }
-
-    @Override
     protected void finishGameByScoreLimit(Team winnerTeam) {
         IPlayATimeGame endByScoreLimit = new EndByScoreLimit(this, rules, winnerTeam);
         rules.setActualTimeGameSequence(endByScoreLimit);

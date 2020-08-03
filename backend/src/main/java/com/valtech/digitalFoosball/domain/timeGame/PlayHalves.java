@@ -43,10 +43,6 @@ public abstract class PlayHalves {
         raiseScoreFor(undoOverView.pop());
     }
 
-    public void resetGame() {
-        goalOverView.clear();
-    }
-
     public Map<Team, Integer> getScoreOfTeams() {
         Map<Team, Integer> scores = new HashMap<>();
 
@@ -54,6 +50,10 @@ public abstract class PlayHalves {
         scores.put(TWO, Collections.frequency(goalOverView, TWO));
 
         return scores;
+    }
+
+    public void changeover() {
+
     }
 
     protected abstract void finishGameByScoreLimit(Team winnerTeam);
