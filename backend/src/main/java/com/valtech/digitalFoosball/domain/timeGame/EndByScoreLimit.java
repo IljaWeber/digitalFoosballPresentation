@@ -52,4 +52,9 @@ public class EndByScoreLimit implements IPlayATimeGame {
     public Team getMatchWinner() {
         return winner;
     }
+
+    @Override
+    public String toString() {
+        return "End by Score Limit";
+    }
 }

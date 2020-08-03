@@ -67,4 +67,9 @@ public class EndByTime implements IPlayATimeGame {
 
         return winner;
     }
+
+    @Override
+    public String toString() {
+        return "End By Time";
+    }
 }

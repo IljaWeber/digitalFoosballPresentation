@@ -123,9 +123,9 @@ public class TimeGameRulesShould {
 
     @Test
     public void prepare_running_game_sequence_for_output() {
-        GameState actual = rules.prepareActualGameSequence();
+        String actual = rules.getAlternativeGameSequenceRepresentation();
 
-        assertThat(actual).isEqualTo(GameState.FIRST_HALF);
+        assertThat(actual).isEqualTo("First Half");
     }
 
     private void raiseScoreForTeam(Team... teams) {

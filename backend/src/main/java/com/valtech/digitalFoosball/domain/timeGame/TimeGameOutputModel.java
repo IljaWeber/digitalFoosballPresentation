@@ -9,12 +9,12 @@ import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputMo
 import java.util.Map;
 
 public class TimeGameOutputModel extends BaseGameOutputModel implements GameOutputModel {
-    private GameState gameState;
+    private final String actualGameSequence;
 
     public TimeGameOutputModel(GameDataModel model, TimeGameRules timeGameRules) {
         super.teams = Converter.convertMapToTeamOutputs(model.getTeams());
         super.matchWinner = timeGameRules.getMatchWinner();
-        gameState = timeGameRules.prepareActualGameSequence();
+        this.actualGameSequence = timeGameRules.getAlternativeGameSequenceRepresentation();
         Map<Team, Integer> scoreOfTeams = timeGameRules.getScoreOfTeams();
 
         if (teams.isEmpty()) {
@@ -25,7 +25,7 @@ public class TimeGameOutputModel extends BaseGameOutputModel implements GameOutp
         teams.get(1).setScore(scoreOfTeams.get(Team.TWO));
     }
 
-    public GameState getGameState() {
-        return gameState;
+    public String getActualGameSequence() {
+        return actualGameSequence;
     }
 }

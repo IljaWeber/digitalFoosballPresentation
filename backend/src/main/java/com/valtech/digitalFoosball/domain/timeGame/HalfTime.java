@@ -55,6 +55,11 @@ public class HalfTime implements IPlayATimeGame {
     }
 
     @Override
+    public String toString() {
+        return "Half Time";
+    }
+
+    @Override
     public Team getMatchWinner() {
         return NO_TEAM;
     }

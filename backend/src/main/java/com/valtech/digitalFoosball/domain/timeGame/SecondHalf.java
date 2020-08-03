@@ -31,4 +31,9 @@ public class SecondHalf extends PlayHalves implements IPlayATimeGame {
 
         rules.setActualTimeGameSequence(endByTime);
     }
+
+    @Override
+    public String toString() {
+        return "Second Half";
+    }
 }
