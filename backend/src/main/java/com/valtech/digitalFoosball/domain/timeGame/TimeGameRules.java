@@ -7,11 +7,9 @@ import java.util.Map;
 
 public class TimeGameRules implements IKnowTheRules {
     private IPlayATimeGame actualGameSequence;
-    private String alternativeGameSequenceRepresentation;
 
     public TimeGameRules() {
         actualGameSequence = new FirstHalf(this);
-        alternativeGameSequenceRepresentation = "First Half";
     }
 
     public void raiseScoreFor(Team team) {
@@ -20,7 +18,6 @@ public class TimeGameRules implements IKnowTheRules {
 
     public void setActualTimeGameSequence(IPlayATimeGame gameSequence) {
         actualGameSequence = gameSequence;
-        alternativeGameSequenceRepresentation = gameSequence.toString();
     }
 
     public Map<Team, Integer> getScoreOfTeams() {
@@ -48,6 +45,6 @@ public class TimeGameRules implements IKnowTheRules {
     }
 
     public String getAlternativeGameSequenceRepresentation() {
-        return alternativeGameSequenceRepresentation;
+        return actualGameSequence.toString();
     }
 }
