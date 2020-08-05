@@ -21,3 +21,4 @@ By `npm start run` in frontend module it will start the react application on loc
 Usually a new tab opens in your browser and displays the current developing progress of the React application. 
 
 #####Unlike the Spring application in the backend module this React application will start independently from Spring.
+
