@@ -30,7 +30,7 @@ If there is no leader after the time has expired, the game ends tie.
 
 
 ##How to use
-To run the Spring Boot application on localhost Port: 8888 run in command line: `mvn spring-boot:run`
+To run the Spring Boot application on localhost port: 8888 run in command line: `mvn spring-boot:run`
 This will also start the React application.
 Open your browser and visit: `localhost:8888/index.html`
 
