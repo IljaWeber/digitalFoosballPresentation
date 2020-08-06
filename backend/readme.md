@@ -21,7 +21,7 @@ To win a match you need to score at least 6 goals AND have a score difference of
 
 2. Ranked Game
 The win conditions are the same as in an Ad Hoc game but you can choose a name for your team and the players.
-The names are stored in a database and may reused in future ranked games. 
+The names are stored in a database and may be reused in future ranked games. 
 
 3. Time Game
 As in the Ad Hoc in a time game you play with default team and player names. The time limit of a half is 7 minutes. 
