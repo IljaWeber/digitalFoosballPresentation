@@ -1,9 +1,9 @@
 package com.valtech.digitalFoosball.api.ranked;
 
 import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.api.driver.usercommands.RankedAPI;
 import com.valtech.digitalFoosball.api.helper.ComparableOutputModelCreator;
 import com.valtech.digitalFoosball.api.helper.RestEndpointRequestPerformer;
+import com.valtech.digitalFoosball.api.usercommands.RankedAPI;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import org.codehaus.jackson.map.ObjectMapper;

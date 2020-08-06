@@ -1,14 +1,16 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
-import com.valtech.digitalFoosball.api.IObtainTeams;
 import com.valtech.digitalFoosball.api.persistence.PlayerService;
 import com.valtech.digitalFoosball.api.persistence.TeamService;
 import com.valtech.digitalFoosball.api.persistence.repository.PlayerRepository;
 import com.valtech.digitalFoosball.api.persistence.repository.TeamRepository;
-import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
+import com.valtech.digitalFoosball.domain.IPlayAGame;
+import com.valtech.digitalFoosball.domain.common.DigitalFoosballGame;
+import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,42 +23,57 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RankedInitServiceShould {
+public class DigitalFoosballGameRulesShouldRaiseScore {
 
-    private TeamDataModel teamDataModelOne;
-    private TeamDataModel teamDataModelTwo;
-    private UUID id;
-
-    private RankedInitService initService;
+    private final UUID id = UUID.randomUUID();
+    public IPlayAGame IPlayAGame;
 
     @BeforeEach
     void setUp() {
-        id = UUID.randomUUID();
+        TeamDataModel teamOne = new TeamDataModel("T1", "P1", "P2");
+        TeamDataModel teamTwo = new TeamDataModel("T2", "P3", "P4");
+        InitDataModel initDataModel = new InitDataModel(teamOne, teamTwo);
+
+        TeamRepository teamRepository = new TeamRepositoryFake(id);
         PlayerRepository playerRepository = new PlayerRepositoryFake();
-        PlayerService playerService = new PlayerService(
-                playerRepository);
-        TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
-        IObtainTeams iObtainTeams = new TeamService(teamRepository,
-                                                    playerService);
-        initService = new RankedInitService(iObtainTeams);
+        IPlayAGame = new DigitalFoosballGame(new RankedInitService(new TeamService(teamRepository,
+                                                                                   new PlayerService(playerRepository))));
+        IPlayAGame.initGame(initDataModel);
     }
 
     @Test
-    void init_game_with_the_names_from_the_initDataModel() {
-        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
-        teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
-        InitDataModel initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
+    void in_the_order_of_scoring() {
+        raiseScoreOf(ONE, ONE, ONE, TWO);
 
-        GameDataModel gameDataModel = initService.init(initDataModel);
-        TeamDataModel teamOne = gameDataModel.getTeam(ONE);
-        TeamDataModel teamTwo = gameDataModel.getTeam(TWO);
+        int scoreOfTeamOne = getScoreOfTeam(ONE);
+        int scoreOfTeamTwo = getScoreOfTeam(TWO);
+        assertThat(scoreOfTeamOne).isEqualTo(3);
+        assertThat(scoreOfTeamTwo).isEqualTo(1);
+    }
 
-        assertThat(teamOne).isEqualTo(teamDataModelOne);
-        assertThat(teamTwo).isEqualTo(teamDataModelTwo);
+    private int getScoreOfTeam(Team team) {
+        GameOutputModel gameData = IPlayAGame.getGameData();
+
+        return gameData.getTeam(team).getScore();
+    }
+
+    @Test
+    void only_until_the_win_condition_is_fulfilled() {
+        raiseScoreOf(ONE, ONE, ONE, ONE, ONE, ONE, ONE);
+
+        int actual = getScoreOfTeam(ONE);
+        assertThat(actual).isEqualTo(6);
+    }
+
+    private void raiseScoreOf(Team... teams) {
+        for (Team team : teams) {
+            IPlayAGame.countGoalFor(team);
+        }
     }
 
     private class TeamRepositoryFake implements TeamRepository {
         private final UUID id;
+        private List<TeamDataModel> teamDataModels;
 
         public TeamRepositoryFake(UUID id) {
             this.id = id;
@@ -120,11 +137,14 @@ public class RankedInitServiceShould {
 
         @Override
         public List<TeamDataModel> findAll() {
-            List<TeamDataModel> teamDataModels = new ArrayList<>();
-            teamDataModels.add(teamDataModelOne);
-            teamDataModels.add(teamDataModelTwo);
 
             return teamDataModels;
+        }
+
+        public void insertTeamDataModel(TeamDataModel teamOne, TeamDataModel teamTwo) {
+            teamDataModels = new ArrayList<>();
+            teamDataModels.add(teamOne);
+            teamDataModels.add(teamTwo);
         }
     }
 
@@ -190,76 +210,6 @@ public class RankedInitServiceShould {
         @Override
         public void deleteAll() {
 
-        }
-    }
-
-    private class TeamRepositoryFakeTwo implements TeamRepository {
-        private final UUID id;
-
-        public TeamRepositoryFakeTwo(UUID id) {
-            this.id = id;
-        }
-
-        @Override
-        public TeamDataModel save(TeamDataModel teamDataModel) {
-            teamDataModel.setId(id);
-            return teamDataModel;
-        }
-
-        @Override
-        public <S extends TeamDataModel> Iterable<S> saveAll(Iterable<S> iterable) {
-            return null;
-        }
-
-        @Override
-        public Optional<TeamDataModel> findById(UUID uuid) {
-            return Optional.empty();
-        }
-
-        @Override
-        public boolean existsById(UUID uuid) {
-            return false;
-        }
-
-        @Override
-        public Iterable<TeamDataModel> findAllById(Iterable<UUID> iterable) {
-            return null;
-        }
-
-        @Override
-        public long count() {
-            return 0;
-        }
-
-        @Override
-        public void deleteById(UUID uuid) {
-
-        }
-
-        @Override
-        public void delete(TeamDataModel teamDataModel) {
-
-        }
-
-        @Override
-        public void deleteAll(Iterable<? extends TeamDataModel> iterable) {
-
-        }
-
-        @Override
-        public void deleteAll() {
-
-        }
-
-        @Override
-        public Optional<TeamDataModel> findByNameIgnoreCase(String teamName) {
-            return Optional.empty();
-        }
-
-        @Override
-        public List<TeamDataModel> findAll() {
-
-            return new ArrayList<>();
         }
     }
 }

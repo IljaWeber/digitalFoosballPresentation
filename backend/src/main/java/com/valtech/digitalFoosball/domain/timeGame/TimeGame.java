@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
+import com.valtech.digitalFoosball.domain.IInitializeGames;
 import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
 import com.valtech.digitalFoosball.domain.common.BaseGame;
-import com.valtech.digitalFoosball.domain.common.IInitializeGames;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import org.springframework.beans.factory.annotation.Autowired;

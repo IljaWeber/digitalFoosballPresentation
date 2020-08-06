@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
-import com.valtech.digitalFoosball.api.driven.persistence.IObtainTeams;
-import com.valtech.digitalFoosball.domain.common.IInitializeGames;
+import com.valtech.digitalFoosball.api.IObtainTeams;
+import com.valtech.digitalFoosball.domain.IInitializeGames;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;

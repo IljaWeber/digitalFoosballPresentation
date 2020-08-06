@@ -1,5 +1,7 @@
 package com.valtech.digitalFoosball.domain.common;
 
+import com.valtech.digitalFoosball.domain.IKnowTheRules;
+import com.valtech.digitalFoosball.domain.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 
 public abstract class BaseGame implements IPlayAGame {

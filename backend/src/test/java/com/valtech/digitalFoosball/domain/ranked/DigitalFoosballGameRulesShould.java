@@ -1,14 +1,18 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
-import com.valtech.digitalFoosball.api.IObtainTeams;
 import com.valtech.digitalFoosball.api.persistence.PlayerService;
 import com.valtech.digitalFoosball.api.persistence.TeamService;
 import com.valtech.digitalFoosball.api.persistence.repository.PlayerRepository;
 import com.valtech.digitalFoosball.api.persistence.repository.TeamRepository;
-import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
+import com.valtech.digitalFoosball.domain.IPlayAGame;
+import com.valtech.digitalFoosball.domain.common.DigitalFoosballGame;
+import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.exceptions.NameDuplicateException;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
+import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,43 +24,89 @@ import java.util.UUID;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class RankedInitServiceShould {
-
-    private TeamDataModel teamDataModelOne;
-    private TeamDataModel teamDataModelTwo;
-    private UUID id;
-
-    private RankedInitService initService;
+public class DigitalFoosballGameRulesShould {
+    private final UUID id = UUID.randomUUID();
+    public IPlayAGame IPlayAGame;
 
     @BeforeEach
     void setUp() {
-        id = UUID.randomUUID();
+        TeamDataModel teamOne = new TeamDataModel("T1", "P1", "P2");
+        TeamDataModel teamTwo = new TeamDataModel("T2", "P3", "P4");
+        InitDataModel initDataModel = new InitDataModel(teamOne, teamTwo);
+
+        TeamRepository teamRepository = new TeamRepositoryFake(id);
         PlayerRepository playerRepository = new PlayerRepositoryFake();
-        PlayerService playerService = new PlayerService(
-                playerRepository);
-        TeamRepositoryFake teamRepository = new TeamRepositoryFake(id);
-        IObtainTeams iObtainTeams = new TeamService(teamRepository,
-                                                    playerService);
-        initService = new RankedInitService(iObtainTeams);
+        IPlayAGame = new DigitalFoosballGame(new RankedInitService(new TeamService(teamRepository,
+                                                                                   new PlayerService(playerRepository))));
+        IPlayAGame.initGame(initDataModel);
     }
 
     @Test
-    void init_game_with_the_names_from_the_initDataModel() {
-        teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
-        teamDataModelTwo = new TeamDataModel("T2", "P3", "P4");
+    public void throw_name_duplicate_exception_when_a_name_is_used_twice() {
+        TeamDataModel teamDataModelOne = new TeamDataModel("T1", "P1", "P2");
+        TeamDataModel teamDataModelTwo = new TeamDataModel("T2", "P3", "P1");
+
         InitDataModel initDataModel = new InitDataModel(teamDataModelOne, teamDataModelTwo);
 
-        GameDataModel gameDataModel = initService.init(initDataModel);
-        TeamDataModel teamOne = gameDataModel.getTeam(ONE);
-        TeamDataModel teamTwo = gameDataModel.getTeam(TWO);
+        assertThatExceptionOfType(NameDuplicateException.class).isThrownBy(() -> IPlayAGame.initGame(initDataModel));
+    }
 
-        assertThat(teamOne).isEqualTo(teamDataModelOne);
-        assertThat(teamTwo).isEqualTo(teamDataModelTwo);
+    private List<TeamOutputModel> getTeamDataModels() {
+        GameOutputModel gameData = IPlayAGame.getGameData();
+
+        return gameData.getTeams();
+    }
+
+    @Test
+    public void reset_the_scores_to_zero_but_keep_the_names_saved() {
+        raiseScoreOf(ONE, TWO);
+
+        IPlayAGame.changeover();
+
+        List<TeamOutputModel> teams = getTeamDataModels();
+        assertThat(teams).extracting(TeamOutputModel::getScore).containsExactly(0, 0);
+        assertThat(teams).extracting(TeamOutputModel::getName).containsExactly("T1", "T2");
+        assertThat(teams).extracting(TeamOutputModel::getPlayerOne).containsExactly("P1", "P3");
+        assertThat(teams).extracting(TeamOutputModel::getPlayerTwo).containsExactly("P2", "P4");
+    }
+
+    @Test
+    public void forget_about_shot_goals_from_the_past_set() {
+        raiseScoreOf(ONE);
+        IPlayAGame.undoGoal();
+        IPlayAGame.changeover();
+
+        IPlayAGame.undoGoal();
+
+        GameOutputModel gameData = IPlayAGame.getGameData();
+        int actual = gameData.getTeam(ONE).getScore();
+        assertThat(actual).isEqualTo(0);
+    }
+
+    @Test
+    public void forget_about_undid_goals_from_the_past_set() {
+        raiseScoreOf(ONE);
+        IPlayAGame.undoGoal();
+        IPlayAGame.changeover();
+
+        IPlayAGame.redoGoal();
+
+        GameOutputModel gameData = IPlayAGame.getGameData();
+        int actual = gameData.getTeam(ONE).getScore();
+        assertThat(actual).isEqualTo(0);
+    }
+
+    private void raiseScoreOf(Team... teams) {
+        for (Team team : teams) {
+            IPlayAGame.countGoalFor(team);
+        }
     }
 
     private class TeamRepositoryFake implements TeamRepository {
         private final UUID id;
+        private List<TeamDataModel> teamDataModels;
 
         public TeamRepositoryFake(UUID id) {
             this.id = id;
@@ -120,11 +170,14 @@ public class RankedInitServiceShould {
 
         @Override
         public List<TeamDataModel> findAll() {
-            List<TeamDataModel> teamDataModels = new ArrayList<>();
-            teamDataModels.add(teamDataModelOne);
-            teamDataModels.add(teamDataModelTwo);
 
             return teamDataModels;
+        }
+
+        public void insertTeamDataModel(TeamDataModel teamOne, TeamDataModel teamTwo) {
+            teamDataModels = new ArrayList<>();
+            teamDataModels.add(teamOne);
+            teamDataModels.add(teamTwo);
         }
     }
 
@@ -263,3 +316,6 @@ public class RankedInitServiceShould {
         }
     }
 }
+
+
+

@@ -1,9 +1,9 @@
 package com.valtech.digitalFoosball.api.adhoc;
 
 import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.api.driver.usercommands.AdHocAPI;
 import com.valtech.digitalFoosball.api.helper.ComparableOutputModelCreator;
 import com.valtech.digitalFoosball.api.helper.RestEndpointRequestPerformer;
+import com.valtech.digitalFoosball.api.usercommands.AdHocAPI;
 import org.assertj.core.api.Assertions;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

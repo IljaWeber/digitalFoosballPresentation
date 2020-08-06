@@ -2,7 +2,7 @@ package com.valtech.digitalFoosball.api.raspi;
 
 import com.google.gson.Gson;
 import com.valtech.digitalFoosball.Application;
-import com.valtech.digitalFoosball.api.driver.usercommands.AdHocAPI;
+import com.valtech.digitalFoosball.api.usercommands.AdHocAPI;
 import com.valtech.digitalFoosball.domain.adhoc.AdHocGame;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;

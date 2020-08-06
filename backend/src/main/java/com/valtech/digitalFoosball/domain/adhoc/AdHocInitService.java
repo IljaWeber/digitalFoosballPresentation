@@ -1,6 +1,6 @@
 package com.valtech.digitalFoosball.domain.adhoc;
 
-import com.valtech.digitalFoosball.domain.common.IInitializeGames;
+import com.valtech.digitalFoosball.domain.IInitializeGames;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;

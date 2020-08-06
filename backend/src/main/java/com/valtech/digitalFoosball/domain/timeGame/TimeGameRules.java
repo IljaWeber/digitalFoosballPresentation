@@ -1,6 +1,6 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
-import com.valtech.digitalFoosball.domain.common.IKnowTheRules;
+import com.valtech.digitalFoosball.domain.IKnowTheRules;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 
 import java.util.Map;

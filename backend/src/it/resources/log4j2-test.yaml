@@ -18,13 +18,13 @@ Configuration:
 
   Loggers:
     logger:
-      - name: com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballUserCommandAPI
+      - name: com.valtech.digitalFoosball.api.usercommands.DigitalFoosballUserCommandAPI
         level: info
         additivity: false
         AppenderRef:
           ref: File_Appender
 
-      - name: com.valtech.digitalFoosball.api.driver.usercommands.DigitalFoosballGetDataAPI
+      - name: com.valtech.digitalFoosball.api.usercommands.DigitalFoosballGetDataAPI
         level: info
         additivity: false
         AppenderRef:
