@@ -26,6 +26,10 @@ class AdHocAPIShould {
     private class FakeRaspiController extends RaspiController {
         public IPlayAGame IPlayAGame;
 
+        private FakeRaspiController() {
+            super(null);
+        }
+
         @Override
         public void setGame(IPlayAGame IPlayAGame) {
             this.IPlayAGame = IPlayAGame;

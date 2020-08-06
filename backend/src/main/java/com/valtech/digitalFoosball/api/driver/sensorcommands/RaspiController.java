@@ -1,5 +1,6 @@
 package com.valtech.digitalFoosball.api.driver.sensorcommands;
 
+import com.valtech.digitalFoosball.api.driven.notification.INotifyAboutStateChanges;
 import com.valtech.digitalFoosball.domain.common.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import org.apache.logging.log4j.LogManager;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("raspi")
 public class RaspiController {
 
-    private IPlayAGame IPlayAGame;
+    private IPlayAGame iPlayAGame;
+    private final INotifyAboutStateChanges publisher;
 
     private final Logger logger;
 
-    public RaspiController() {
+    public RaspiController(INotifyAboutStateChanges publisher) {
+        this.publisher = publisher;
         logger = LogManager.getLogger(RaspiController.class);
     }
 
@@ -28,10 +31,11 @@ public class RaspiController {
 
         Team team = Team.getTeamBy(teamNo);
 
-        IPlayAGame.countGoalFor(team);
+        iPlayAGame.countGoalFor(team);
+        publisher.notifyAboutStateChange(iPlayAGame.getGameData());
     }
 
     public void setGame(IPlayAGame IPlayAGame) {
-        this.IPlayAGame = IPlayAGame;
+        this.iPlayAGame = IPlayAGame;
     }
 }
