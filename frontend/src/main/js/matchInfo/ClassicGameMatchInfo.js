@@ -6,7 +6,7 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stomp-websocket';
 import RoundEndScreen from "./RoundEndScreen";
 
-export default class MatchInfo extends React.Component {
+export default class ClassicGameMatchInfo extends React.Component {
     state = {
         teams: [],
         winnerOfSet: "NO_TEAM",
@@ -80,7 +80,7 @@ export default class MatchInfo extends React.Component {
     };
 
     async updateState() {
-        const url = properties.fetchDataUrl + 'game';
+        const url = properties.hostAndPort + this.props.gameMode + "/game";
 
         const requestOptions = {
             method: 'GET',

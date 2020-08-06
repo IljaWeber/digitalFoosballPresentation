@@ -250,6 +250,7 @@ nav ul {
 .teamSignIn_Forms {
   display: flex;
   flex: 1;
+  animation-name: dropInShortDelay;
 }
 
 .teamSignIn_Forms_TeamOne {
@@ -269,6 +270,7 @@ nav ul {
 .teamSignIn_Submit {
   padding-top: 20px;
   padding-bottom: 20px;
+  animation-name: dropInShortDelay;
 }
 
 .teamSignInAdHoc {

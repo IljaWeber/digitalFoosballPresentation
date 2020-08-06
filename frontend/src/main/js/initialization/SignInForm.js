@@ -12,7 +12,7 @@ export default class SignInForm extends React.Component {
     teams;
 
     componentDidMount = async () => {
-        const url = properties.fetchDataUrl + "allTeams";
+        const url = properties.userCommandsUrl + "data/allTeams";
 
         const requestOptions = {
             method: 'GET',
@@ -31,32 +31,9 @@ export default class SignInForm extends React.Component {
         this.setState({teamTwo: team})
     };
 
-    submitAdHoc = async (event) => {
-        event.preventDefault();
-        const url = properties.userCommandsUrl + "init/adhoc";
-
-        const requestOptions = {
-            method: 'POST',
-            credentials: 'include',
-            Authorization: properties.auth,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
-
-        const response = await fetch(url, requestOptions);
-        const json = await response.json();
-
-        if (!response.ok) {
-            alert(json.errorMessage)
-        } else {
-            this.props.submitHandler(json)
-        }
-    };
-
     sendForm = async (event) => {
         event.preventDefault();
-        const url = properties.userCommandsUrl + "init/ranked";
+        const url = properties.userCommandsUrl + "ranked/init";
 
         const requestOptions = {
             method: 'POST',
@@ -97,16 +74,8 @@ export default class SignInForm extends React.Component {
                         <div className="teamSignIn_Submit">
                             <input type="submit" value="Submit" className="button slowDropIn"/>
                         </div>
-                        <h2>
-                            OR
-                        </h2>
                     </div>
                 </form>
-
-                <form onSubmit={this.submitAdHoc} className="teamSignInAdHoc">
-                    <input type="submit" value="Ad-Hoc" className="button slowDropIn"/>
-                </form>
-
             </div>
         )
     }
