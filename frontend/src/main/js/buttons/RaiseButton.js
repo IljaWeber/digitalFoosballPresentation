@@ -7,7 +7,7 @@ export default class RaiseButton extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        const url = properties.userCommandsUrl + 'raise';
+        const url = properties.userCommandsUrl + 'raspi/raise';
 
         let myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");

@@ -6,7 +6,7 @@ export default class RedoButton extends React.Component {
 
     handleSubmit = async(event) => {
         event.preventDefault();
-        const url = properties.userCommandsUrl + 'redo';
+        const url = properties.userCommandsUrl + this.props.gameMode + 'redo';
         const requestOptions = {
             method: 'PUT',
             Authorization: properties.auth,

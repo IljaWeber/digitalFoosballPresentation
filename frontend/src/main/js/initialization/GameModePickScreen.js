@@ -12,6 +12,13 @@ export class GameModePickScreen extends React.Component {
         showTimeGame: false
     }
 
+    resetHandler = () => {
+        this.setState({showAdHoc: false});
+        this.setState({showRanked: false});
+        this.setState({showTimeGame: false});
+        this.setState({showMenu: true});
+    }
+
     submitAdHocGame = (event) => {
         event.preventDefault();
         this.setState({showAdHoc: true, showMenu: false})
@@ -35,20 +42,20 @@ export class GameModePickScreen extends React.Component {
                 <form onSubmit={this.submitAdHocGame}>
                     <input type="submit" value="AdHoc Game" className={this.props.className + " button"}/>
                 </form>}
-                {this.state.showAdHoc && <AdHoc/>}
+                {this.state.showAdHoc && <AdHoc resetHandler={this.resetHandler}/>}
 
                 {this.state.showMenu &&
                 <form onSubmit={this.submitRanked}>
                     <input type="submit" value="Ranked Game" className={this.props.className + " button"}/>
                 </form>}
-                {this.state.showRanked && <Ranked/>}
+                {this.state.showRanked && <Ranked resetHandler={this.resetHandler}/>}
 
                 {this.state.showMenu &&
                 <form onSubmit={this.submitTimeGame}>
                     <input type="submit" value="Time Game" className={this.props.classname + " button"}/>
                 </form>
                 }
-                {this.state.showTimeGame && <TimeGame/>}
+                {this.state.showTimeGame && <TimeGame resetHandler={this.resetHandler}/>}
             </div>
         )
     }

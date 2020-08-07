@@ -17,7 +17,7 @@ Pick a fitting version and follow the installation instructions.
 Verify the installation of nodejs and npm with: `node -v` and `npm -v`
 
 ##How to use
-By `npm start run` in frontend module it will start the react application on localhost port:3000.
+By `npm start run` in frontend module it will start the react application on `localhost port:3000`.
 Usually a new tab opens in your browser and displays the current developing progress of the React application. 
 
 #####Unlike the Spring application in the backend module this React application will start independently from Spring.

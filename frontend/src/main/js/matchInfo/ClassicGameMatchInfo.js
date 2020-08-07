@@ -10,15 +10,16 @@ export default class ClassicGameMatchInfo extends React.Component {
     state = {
         teams: [],
         winnerOfSet: "NO_TEAM",
-        matchWinner: "NO_TEAM"
+        matchWinner: "NO_TEAM",
+        teamsLoaded: false
     };
 
     stompClient;
 
     async componentDidMount() {
+        this.stompClient = await this.connect();
         await this.updateState();
-
-        this.stompClient = this.connect();
+        this.setState({teamsLoaded: true})
     }
 
     connect() {
@@ -28,7 +29,6 @@ export default class ClassicGameMatchInfo extends React.Component {
             stompClient.subscribe('/update/score', (gameDataModel) => {
                 this.updateGameStatus(gameDataModel);
             });
-
         });
 
         return stompClient;
@@ -46,7 +46,6 @@ export default class ClassicGameMatchInfo extends React.Component {
     };
 
     reset = (response) => {
-        this.setState({teams: [], winnerOfSet: "NO_TEAM", matchWinner: "NO_TEAM"});
         this.props.resetHandler(response);
     };
 
@@ -80,7 +79,7 @@ export default class ClassicGameMatchInfo extends React.Component {
     };
 
     async updateState() {
-        const url = properties.hostAndPort + this.props.gameMode + "/game";
+        const url = properties.hostAndPort + this.props.gameMode + "game";
 
         const requestOptions = {
             method: 'GET',
@@ -106,23 +105,33 @@ export default class ClassicGameMatchInfo extends React.Component {
         const noTeam = "NO_TEAM".toString();
 
         let matchWinner = this.state.matchWinner.toString();
+
+        console.log("MW: " + matchWinner)
         if (matchWinner !== noTeam) {
             return (
-                <VictoryScreen winner={this.getWinningTeam()} resetHandler={this.reset} undoHandler={this.undo}/>
+                <VictoryScreen gameMode={this.props.gameMode} winner={this.getWinningTeam()} resetHandler={this.reset}
+                               undoHandler={this.undo}/>
             )
         }
 
         let winnerOfSet = this.state.winnerOfSet.toString();
+        console.log("WOS: " + winnerOfSet)
         if (winnerOfSet !== noTeam) {
             return (
-                <RoundEndScreen team={this.getRoundWinningTeam()} undoHandler={this.undo}
+                <RoundEndScreen gameMode={this.props.gameMode} team={this.getRoundWinningTeam()} undoHandler={this.undo}
                                 nextRoundHandler={this.nextRound}/>
             )
         } else {
-            return (
-                <ScoreScreen resetHandler={this.reset} undoHandler={this.undo} redoHandler={this.redo}
-                             teams={this.state.teams}/>
-            )
+            if (this.state.teamsLoaded) {
+                return (
+                    <ScoreScreen gameMode={this.props.gameMode} resetHandler={this.reset} undoHandler={this.undo}
+                                 redoHandler={this.redo}
+                                 teams={this.state.teams}/>
+                )
+            } else {
+                return <h1>PENIS</h1>
+            }
+
         }
     }
 }

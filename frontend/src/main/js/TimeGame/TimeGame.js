@@ -22,7 +22,8 @@ export class TimeGame extends React.Component {
     render() {
         return (
             <div>
-                <TimeGameMatchInfo teams={this.state.teams} gameMode={"timegame"}/>
+                <TimeGameMatchInfo teams={this.state.teams} gameMode={"timegame"}
+                                   resetHandler={this.props.resetHandler}/>
             </div>
         )
     }

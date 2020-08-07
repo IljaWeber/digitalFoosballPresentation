@@ -56,6 +56,21 @@ export class TimeGameMatchInfo extends React.Component {
         this.setState({matchWinner: json.matchWinner});
     }
 
+    reset = (response) => {
+        this.props.resetHandler(response);
+    };
+
+    undo = (response) => {
+        this.setState({teams: [...response.teams], matchWinner: "NO_TEAM"})
+    };
+
+    redo = (response) => {
+        this.setState({
+            teams: [...response.teams],
+            matchWinner: response.matchWinner
+        })
+    };
+
     render() {
         return (
             <TimeGameScoreScreen resetHandler={this.reset} undoHandler={this.undo} redoHandler={this.redo}

@@ -22,8 +22,8 @@ export default class VictoryScreen extends React.Component {
                     <p className="playersRule">{this.props.winner.playerOne} and {this.props.winner.playerTwo} rule!</p>
                 </div>
                 <div className="buttonListVictory">
-                    <UndoButton className="fastDropIn" undoHandler={this.handleUndo}/>
-                    <ResetButton className="middleDropIn" resetHandler={this.reset}/>
+                    <UndoButton gameMode={this.props.gameMode} className="fastDropIn" undoHandler={this.handleUndo}/>
+                    <ResetButton gameMode={this.props.gameMode} className="middleDropIn" resetHandler={this.reset}/>
                 </div>
             </div>
         )

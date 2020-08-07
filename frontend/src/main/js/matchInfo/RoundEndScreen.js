@@ -23,8 +23,9 @@ export default class RoundEndScreen extends React.Component {
                     <h4 className="congratulationsInfo">Please press 'Changeover' to switch sides</h4>
                 </div>
                 <div className="buttonListRoundEnd">
-                    <NextRoundButton className="fastDropIn" nextRoundHandler={this.nextRound}/>
-                    <UndoButton className="middleDropIn" undoHandler={this.handleUndo}/>
+                    <NextRoundButton gameMode={this.props.gameMode} className="fastDropIn"
+                                     nextRoundHandler={this.nextRound}/>
+                    <UndoButton gameMode={this.props.gameMode} className="middleDropIn" undoHandler={this.handleUndo}/>
                 </div>
             </div>
         )

@@ -4,7 +4,7 @@ import '../../resources/properties'
 import UndoButton from "../buttons/UndoButton";
 import ResetButton from "../buttons/ResetButton";
 import RedoButton from "../buttons/RedoButton";
-import RaiseButton from "../buttons/RaiseButton";
+import TeamComponent from "./TeamComponent";
 
 export default class ScoreScreen extends React.Component {
     reset = (response) => {
@@ -23,34 +23,19 @@ export default class ScoreScreen extends React.Component {
         return (
             <div className="scoreScreenContainer">
                 <div className="teamContainer">
-                    {this.getTeams()}
+                    <ul className="teams">
+                        <TeamComponent number="1" team={this.props.teams[0]}/>
+                        <TeamComponent number="2" team={this.props.teams[1]}/>
+                    </ul>
                 </div>
                 <ul className="buttonListScore">
-                    <li><UndoButton className="fastDropIn" undoHandler={this.undo}/></li>
-                    <li><ResetButton className="middleDropIn" resetHandler={this.reset}/></li>
-                    <li><RedoButton className="slowDropInWithOutDelay" redoHandler={this.redo}/></li>
+                    <li><UndoButton gameMode={this.props.gameMode} className="fastDropIn" undoHandler={this.undo}/></li>
+                    <li><ResetButton gameMode={this.props.gameMode} className="middleDropIn" resetHandler={this.reset}/>
+                    </li>
+                    <li><RedoButton gameMode={this.props.gameMode} className="slowDropInWithOutDelay"
+                                    redoHandler={this.redo}/></li>
                 </ul>
             </div>
         )
     }
-
-    getTeams() {
-        return (
-            <ul className="teams">
-                {this.props.teams.map((team, index) => {
-                    return (
-                        <li className={`team team${index + 1}`} key={index}>
-                            <ul className={`score score${index + 1}`}>{team.score}
-                                <li className="roundWins">Won rounds: {team.setWins}</li>
-                                <RaiseButton teamNo={index + 1}/>
-                            </ul>
-                            <ul className="name">{team.name}</ul>
-                            <ul className="player">{team.playerOne + ", "}</ul>
-                            <ul className="player">{team.playerTwo}</ul>
-                        </li>
-                    )
-                })}
-            </ul>
-        );
-    };
 }
