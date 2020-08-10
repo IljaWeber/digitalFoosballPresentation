@@ -8,21 +8,21 @@ export class TimeGame extends React.Component {
     }
 
     async componentDidMount() {
-        const url = properties.userCommandsUrl + 'timegame/init';
+        const url = properties.userCommandsUrl + 'time/init';
         const requestOptions = {
             method: 'POST',
             Authorization: properties.auth,
             credentials: 'include'
         };
         const response = await fetch(url, requestOptions);
-        const json = await response.json();
-        this.setState({teams: json})
+        let json = await response.json();
+        this.setState(json)
     }
 
     render() {
         return (
             <div>
-                <TimeGameMatchInfo teams={this.state.teams} gameMode={"timegame"}
+                <TimeGameMatchInfo teams={this.state.teams} gameMode={"time"}
                                    resetHandler={this.props.resetHandler}/>
             </div>
         )

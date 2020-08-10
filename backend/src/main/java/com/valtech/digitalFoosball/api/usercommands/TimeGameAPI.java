@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController("timegame_controller")
-@RequestMapping("timegame")
+@RequestMapping("time")
 public class TimeGameAPI extends BaseAPI {
 
     private final RaspiController raspiController;

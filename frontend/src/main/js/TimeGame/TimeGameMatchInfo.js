@@ -12,10 +12,11 @@ export class TimeGameMatchInfo extends React.Component {
         actualGameSequence: "First Half"
     }
 
-    async componentDidMount() {
-        await this.updateState();
 
-        this.stompClient = this.connect();
+    async componentDidMount() {
+        this.stompClient = await this.connect();
+        await this.updateState();
+        this.setState({teamsLoaded: true})
     }
 
     connect() {
@@ -31,7 +32,7 @@ export class TimeGameMatchInfo extends React.Component {
     }
 
     async updateState() {
-        const url = properties.userCommandsUrl + this.props.gameMode + "/game";
+        const url = properties.hostAndPort + this.props.gameMode + "/game";
 
         const requestOptions = {
             method: 'GET',
@@ -42,10 +43,7 @@ export class TimeGameMatchInfo extends React.Component {
         const response = await fetch(url, requestOptions);
         const json = await response.json();
         this.setState({teams: [...json.teams]});
-
         const matchWinner = json.matchWinner.toString();
-        const actualGameSequence = json.actualGameSequence.toString();
-        this.setState({actualGameSequence: actualGameSequence})
         this.setState({matchWinner: [matchWinner]});
     }
 
