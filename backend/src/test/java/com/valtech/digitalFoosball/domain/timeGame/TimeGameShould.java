@@ -1,13 +1,24 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
+import com.valtech.digitalFoosball.api.notification.Publisher;
 import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
+import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
+import java.math.BigDecimal;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.function.DoublePredicate;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,10 +26,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TimeGameShould {
 
     private TimeGame timeGame;
+    private FakePublisher fakePublisher;
 
     @BeforeEach
     void setUp() {
-        timeGame = new TimeGame(new AdHocInitService());
+        fakePublisher = new FakePublisher();
+        timeGame = new TimeGame(new AdHocInitService(), fakePublisher);
         timeGame.initGame(new InitDataModel());
     }
 
@@ -69,9 +82,31 @@ class TimeGameShould {
         assertThat(gameData.getMatchWinner()).isEqualTo(ONE);
     }
 
+    @Test
+    void inform_the_clients_when_the_game_sequence_changes() {
+        timeGame.gameSequenceChanged();
+
+        GameOutputModel gameData = fakePublisher.gameData;
+        List<TeamOutputModel> actual = gameData.getTeams();
+        assertThat(actual).extracting(TeamOutputModel::getName).containsExactly("Orange", "Green");
+    }
+
     private void raiseScoreFor(Team... teams) {
         for (Team team : teams) {
             timeGame.countGoalFor(team);
+        }
+    }
+
+    private class FakePublisher extends Publisher {
+        public GameOutputModel gameData;
+
+        public FakePublisher() {
+            super(null);
+        }
+
+        @Override
+        public void notifyAboutStateChange(GameOutputModel gameData) {
+            this.gameData = gameData;
         }
     }
 }
