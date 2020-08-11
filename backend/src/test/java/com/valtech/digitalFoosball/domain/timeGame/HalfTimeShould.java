@@ -1,7 +1,5 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
-import com.valtech.digitalFoosball.api.INotifyAboutStateChanges;
-import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
