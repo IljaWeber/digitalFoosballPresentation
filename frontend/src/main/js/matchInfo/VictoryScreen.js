@@ -10,7 +10,7 @@ export default class VictoryScreen extends React.Component {
     };
 
     handleUndo = (response) => {
-        this.props.undoHandler(response);
+        this.props.undo(response);
     };
 
     render() {

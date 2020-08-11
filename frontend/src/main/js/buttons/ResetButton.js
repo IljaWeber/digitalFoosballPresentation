@@ -24,7 +24,8 @@ export default class ResetButton extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-            <input type="submit" value="Start New Match" className={this.props.className + " button"} onSubmit={this.handleSubmit}/>
+                <input type="submit" value="Start New Match" className={this.props.className + " button"}
+                       onSubmit={this.handleSubmit}/>
             </form>
         );
     }

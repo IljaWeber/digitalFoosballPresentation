@@ -12,6 +12,8 @@ export class AdHoc extends React.Component {
             Authorization: properties.auth,
             credentials: 'include'
         };
+
+        console.log(url);
         const response = await fetch(url, requestOptions);
         let json = await response.json();
         this.setState(json)
@@ -19,10 +21,8 @@ export class AdHoc extends React.Component {
 
     render() {
         return (
-            <div>
                 <ClassicGameMatchInfo teams={this.state.teams} resetHandler={this.props.resetHandler}
                                       gameMode={"adhoc/"}/>
-            </div>
         )
     }
 

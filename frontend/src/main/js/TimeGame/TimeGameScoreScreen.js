@@ -25,9 +25,10 @@ export class TimeGameScoreScreen extends React.Component {
                     {this.getTeams()}
                 </div>
                 <ul className="buttonListScore">
-                    <li><UndoButton className="fastDropIn" undoHandler={this.undo}/></li>
+                    <li><UndoButton className="fastDropIn" gameMode={this.props.gameMode} undoHandler={this.undo}/></li>
                     <li><ResetButton className="middleDropIn" resetHandler={this.reset}/></li>
-                    <li><RedoButton className="slowDropInWithOutDelay" redoHandler={this.redo}/></li>
+                    <li><RedoButton className="slowDropInWithOutDelay" gameMode={this.props.gameMode}
+                                    redoHandler={this.redo}/></li>
                 </ul>
             </div>
         )

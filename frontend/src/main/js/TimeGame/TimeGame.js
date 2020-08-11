@@ -22,7 +22,7 @@ export class TimeGame extends React.Component {
     render() {
         return (
             <div>
-                <TimeGameMatchInfo teams={this.state.teams} gameMode={"time"}
+                <TimeGameMatchInfo teams={this.state.teams} gameMode={"time/"}
                                    resetHandler={this.props.resetHandler}/>
             </div>
         )

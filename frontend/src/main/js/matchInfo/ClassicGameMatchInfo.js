@@ -103,19 +103,15 @@ export default class ClassicGameMatchInfo extends React.Component {
 
     render() {
         const noTeam = "NO_TEAM".toString();
-
         let matchWinner = this.state.matchWinner.toString();
 
-        console.log("MW: " + matchWinner)
         if (matchWinner !== noTeam) {
             return (
                 <VictoryScreen gameMode={this.props.gameMode} winner={this.getWinningTeam()} resetHandler={this.reset}
                                undoHandler={this.undo}/>
             )
         }
-
         let winnerOfSet = this.state.winnerOfSet.toString();
-        console.log("WOS: " + winnerOfSet)
         if (winnerOfSet !== noTeam) {
             return (
                 <RoundEndScreen gameMode={this.props.gameMode} team={this.getRoundWinningTeam()} undoHandler={this.undo}
@@ -129,9 +125,10 @@ export default class ClassicGameMatchInfo extends React.Component {
                                  teams={this.state.teams}/>
                 )
             } else {
-                return <h1>PENIS</h1>
+                return (
+                    <div></div>
+                )
             }
-
         }
     }
 }
