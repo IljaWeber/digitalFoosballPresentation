@@ -20,10 +20,6 @@ public class TimeGameRules implements IKnowTheRules {
     public void setActualTimeGameSequence(IPlayATimeGame gameSequence) {
         actualGameSequence = gameSequence;
 
-        if (null==game) {
-            return;
-        }
-
         game.gameSequenceChanged();
     }
 

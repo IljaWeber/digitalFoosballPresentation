@@ -27,6 +27,7 @@ public class TimeGame extends BaseGame {
         model = initService.init(initDataModel);
         timeGameRules = new TimeGameRules();
         super.setGameRules(timeGameRules);
+        timeGameRules.setGame(this);
     }
 
     public void resetMatch() {

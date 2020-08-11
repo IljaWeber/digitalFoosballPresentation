@@ -1,7 +1,5 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
-import com.valtech.digitalFoosball.api.INotifyAboutStateChanges;
-import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +17,7 @@ public class TimeGameRulesShould {
     @BeforeEach
     void setUp() {
         rules = new TimeGameRules();
+        rules.setGame(new FakeTimeGame());
     }
 
     @Test
@@ -156,13 +155,13 @@ public class TimeGameRulesShould {
     private class FakeTimeGame extends TimeGame {
         boolean isInformed = false;
 
+        public FakeTimeGame() {
+            super(null, null);
+        }
+
         @Override
         public void gameSequenceChanged() {
             isInformed = true;
-        }
-
-        public FakeTimeGame() {
-            super(null, null);
         }
     }
 }

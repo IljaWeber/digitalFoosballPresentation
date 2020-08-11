@@ -1,5 +1,7 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
+import com.valtech.digitalFoosball.api.INotifyAboutStateChanges;
+import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +17,7 @@ class HalfTimeShould {
     @BeforeEach
     void setUp() {
         rules = new TimeGameRules();
+        rules.setGame(new FakeTimeGame());
         this.halftime = new HalfTime(new Stack<>(), rules);
     }
 
@@ -24,5 +27,15 @@ class HalfTimeShould {
 
         IPlayATimeGame actual = rules.getActualGameSequence();
         assertThat(actual).isInstanceOf(SecondHalf.class);
+    }
+
+    private class FakeTimeGame extends TimeGame {
+        public FakeTimeGame() {
+            super(null, null);
+        }
+
+        @Override
+        public void gameSequenceChanged() {
+        }
     }
 }
