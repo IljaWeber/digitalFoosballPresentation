@@ -1,5 +1,7 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
+import com.valtech.digitalFoosball.api.INotifyAboutStateChanges;
+import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -128,6 +130,16 @@ public class TimeGameRulesShould {
         assertThat(actual).isEqualTo("First Half");
     }
 
+    @Test
+    void inform_the_game_when_the_sequence_changes() {
+        FakeTimeGame game = new FakeTimeGame();
+        rules.setGame(game);
+
+        rules.setActualTimeGameSequence(new FirstHalf(rules));
+
+        assertThat(game.isInformed).isTrue();
+    }
+
     private void raiseScoreForTeam(Team... teams) {
         for (Team team : teams) {
             rules.raiseScoreFor(team);
@@ -138,6 +150,19 @@ public class TimeGameRulesShould {
 
         public FirstHalfFake(TimeGameRules timeGameRules) {
             super(timeGameRules);
+        }
+    }
+
+    private class FakeTimeGame extends TimeGame {
+        boolean isInformed = false;
+
+        @Override
+        public void gameSequenceChanged() {
+            isInformed = true;
+        }
+
+        public FakeTimeGame() {
+            super(null, null);
         }
     }
 }
