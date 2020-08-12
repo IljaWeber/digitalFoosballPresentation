@@ -5,6 +5,7 @@ import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.timeGame.sequences.FirstHalf;
 
 import java.util.Map;
+import java.util.Timer;
 
 public class TimeGameRules implements IKnowTheRules {
     private IPlayATimeGame actualGameSequence;

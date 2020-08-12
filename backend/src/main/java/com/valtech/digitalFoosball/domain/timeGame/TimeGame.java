@@ -9,17 +9,21 @@ import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Timer;
+
 @Service
 public class TimeGame extends BaseGame {
     private final IInitializeGames initService;
     private final INotifyAboutStateChanges publisher;
     private TimeGameRules timeGameRules;
     private GameDataModel model;
+    protected Timer timer;
 
     @Autowired
     public TimeGame(AdHocInitService initService, INotifyAboutStateChanges publisher) {
         this.initService = initService;
         this.publisher = publisher;
+        timer = new Timer();
     }
 
     public void initGame(InitDataModel initDataModel) {
@@ -32,6 +36,9 @@ public class TimeGame extends BaseGame {
     public void resetMatch() {
         model.resetMatch();
         timeGameRules = new TimeGameRules();
+    }
+
+    public void timeRanDown(){
     }
 
     public TimeGameOutputModel getGameData() {
