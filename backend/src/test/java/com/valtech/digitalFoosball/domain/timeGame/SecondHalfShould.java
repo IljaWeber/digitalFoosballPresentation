@@ -22,7 +22,7 @@ class SecondHalfShould {
     @BeforeEach
     void setUp() {
         rules = new TimeGameRulesFake();
-        secondHalf = new SecondHalf(new Stack<>(), , rules);
+        secondHalf = new SecondHalf(new Stack<>(), new Stack<>(), rules);
     }
 
     @Test
