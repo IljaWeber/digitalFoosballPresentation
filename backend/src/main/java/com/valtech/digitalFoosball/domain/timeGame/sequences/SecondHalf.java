@@ -13,7 +13,7 @@ public class SecondHalf extends PlayHalves implements IPlayATimeGame {
                       TimeGameRules rules) {
         super(rules);
         super.goalOverView = goalOverview;
-        timer.schedule(new TimeGameTimerTask(this), 10000);
+        timer.schedule(new TimeGameTimerTask(this), 420000);
     }
 
     @Override

@@ -4,8 +4,8 @@ import com.valtech.digitalFoosball.domain.IKnowTheRules;
 import com.valtech.digitalFoosball.domain.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 
-public abstract class BaseGame implements IPlayAGame {
-    private IKnowTheRules gameRules;
+public abstract class BaseGame<T extends IKnowTheRules> implements IPlayAGame {
+    protected T gameRules;
 
     public void countGoalFor(Team team) {
         gameRules.raiseScoreFor(team);
@@ -23,7 +23,7 @@ public abstract class BaseGame implements IPlayAGame {
         gameRules.changeOver();
     }
 
-    protected void setGameRules(IKnowTheRules gameRules) {
+    public void setGameRules(T gameRules) {
         this.gameRules = gameRules;
     }
 }

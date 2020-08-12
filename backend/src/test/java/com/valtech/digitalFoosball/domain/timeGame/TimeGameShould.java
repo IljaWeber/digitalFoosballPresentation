@@ -8,17 +8,8 @@ import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputMo
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 
-import java.math.BigDecimal;
-import java.nio.file.Path;
 import java.util.List;
-import java.util.function.DoublePredicate;
-import java.util.function.IntPredicate;
-import java.util.function.LongPredicate;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -91,6 +82,17 @@ class TimeGameShould {
         assertThat(actual).extracting(TeamOutputModel::getName).containsExactly("Orange", "Green");
     }
 
+    @Test
+    void inform_the_rules_when_the_time_ran_down() {
+        TimeGame timeGame = new TimeGame(null, null);
+        FakeGameRules rules = new FakeGameRules();
+        timeGame.setGameRules(rules);
+
+        timeGame.timeRanDown();
+
+        assertThat(rules.isInformed).isTrue();
+    }
+
     private void raiseScoreFor(Team... teams) {
         for (Team team : teams) {
             timeGame.countGoalFor(team);
@@ -107,6 +109,15 @@ class TimeGameShould {
         @Override
         public void notifyAboutStateChange(GameOutputModel gameData) {
             this.gameData = gameData;
+        }
+    }
+
+    private class FakeGameRules extends TimeGameRules {
+        public boolean isInformed = false;
+
+        @Override
+        public void timeRanDown() {
+            isInformed = true;
         }
     }
 }

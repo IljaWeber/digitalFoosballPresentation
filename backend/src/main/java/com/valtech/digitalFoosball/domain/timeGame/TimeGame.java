@@ -12,37 +12,37 @@ import org.springframework.stereotype.Service;
 import java.util.Timer;
 
 @Service
-public class TimeGame extends BaseGame {
+public class TimeGame extends BaseGame<TimeGameRules> {
     private final IInitializeGames initService;
     private final INotifyAboutStateChanges publisher;
-    private TimeGameRules timeGameRules;
-    private GameDataModel model;
     protected Timer timer;
+    private GameDataModel model;
 
     @Autowired
     public TimeGame(AdHocInitService initService, INotifyAboutStateChanges publisher) {
         this.initService = initService;
         this.publisher = publisher;
+        gameRules = new TimeGameRules();
         timer = new Timer();
     }
 
     public void initGame(InitDataModel initDataModel) {
         model = initService.init(initDataModel);
-        timeGameRules = new TimeGameRules();
-        super.setGameRules(timeGameRules);
-        timeGameRules.setGame(this);
+        gameRules = new TimeGameRules();
+        gameRules.setGame(this);
     }
 
     public void resetMatch() {
         model.resetMatch();
-        timeGameRules = new TimeGameRules();
+        gameRules = new TimeGameRules();
     }
 
-    public void timeRanDown(){
+    public void timeRanDown() {
+        gameRules.timeRanDown();
     }
 
     public TimeGameOutputModel getGameData() {
-        return new TimeGameOutputModel(model, timeGameRules);
+        return new TimeGameOutputModel(model, gameRules);
     }
 
     public void gameSequenceChanged() {

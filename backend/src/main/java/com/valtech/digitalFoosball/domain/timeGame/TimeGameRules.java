@@ -56,4 +56,7 @@ public class TimeGameRules implements IKnowTheRules {
     public void setGame(TimeGame game) {
         this.game = game;
     }
+
+    public void timeRanDown() {
+    }
 }

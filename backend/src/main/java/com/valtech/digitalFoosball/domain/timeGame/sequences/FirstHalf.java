@@ -9,7 +9,7 @@ public class FirstHalf extends PlayHalves implements IPlayATimeGame {
 
     public FirstHalf(TimeGameRules timeGameRules) {
         super(timeGameRules);
-        timer.schedule(new TimeGameTimerTask(this), 5000);
+        timer.schedule(new TimeGameTimerTask(this), 4200000);
     }
 
     @Override
