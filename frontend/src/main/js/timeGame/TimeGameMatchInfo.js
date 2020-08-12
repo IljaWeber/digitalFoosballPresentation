@@ -53,9 +53,12 @@ export class TimeGameMatchInfo extends React.Component {
 
     updateGameStatus(message) {
         const json = JSON.parse(message.body);
-        this.setState({teams: json.teams});
-        this.setState({actualGameSequence: json.actualGameSequence})
-        this.setState({winner: json.matchWinner});
+
+        this.setState({
+            teams: [...json.teams],
+            actualGameSequence: json.actualGameSequence,
+            winner: json.matchWinner
+        })
     }
 
     reset = (response) => {
