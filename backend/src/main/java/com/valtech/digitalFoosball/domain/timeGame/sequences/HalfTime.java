@@ -13,7 +13,7 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public class HalfTime implements IPlayATimeGame {
     private final Stack<Team> goalOverView;
-    private Stack<Team> undoOverView;
+    private final Stack<Team> undoOverView;
     private final TimeGameRules rules;
 
     public HalfTime(Stack<Team> goalOverView,

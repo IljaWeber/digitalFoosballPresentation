@@ -33,7 +33,7 @@ public class TimeGame extends BaseGame<TimeGameRules> {
 
     private void startTimer() {
         MyTimerTask task = new MyTimerTask(this);
-        timer.schedule(task, 10000);
+        timer.schedule(task, 420000);
     }
 
     public void resetMatch() {

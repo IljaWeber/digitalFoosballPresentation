@@ -10,6 +10,7 @@ public class EndByScore extends GameOver implements IPlayATimeGame {
     private final IPlayATimeGame previousTimeGameSequence;
     private final TimeGameRules rules;
     private final Team winner;
+    private boolean timeRanDown = false;
 
     public EndByScore(IPlayATimeGame previous,
                       TimeGameRules rules, Team winnerTeam) {
@@ -21,7 +22,12 @@ public class EndByScore extends GameOver implements IPlayATimeGame {
     @Override
     public void undoLastGoal() {
         previousTimeGameSequence.undoLastGoal();
-        rules.setActualTimeGameSequence(previousTimeGameSequence);
+
+        if (timeRanDown) {
+            previousTimeGameSequence.timeRanDown();
+        } else {
+            rules.setActualTimeGameSequence(previousTimeGameSequence);
+        }
     }
 
     @Override
@@ -36,6 +42,7 @@ public class EndByScore extends GameOver implements IPlayATimeGame {
 
     @Override
     public void timeRanDown() {
+        timeRanDown = true;
     }
 
     @Override
