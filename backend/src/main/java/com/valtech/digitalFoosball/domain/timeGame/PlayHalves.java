@@ -7,8 +7,8 @@ import java.util.*;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public abstract class PlayHalves {
-    protected final Stack<Team> goalOverView;
-    protected final Stack<Team> undoOverView;
+    protected Stack<Team> goalOverView;
+    protected Stack<Team> undoOverView;
     protected TimeGameRules rules;
     protected Timer timer;
 

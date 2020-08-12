@@ -9,6 +9,7 @@ public class SecondHalf extends PlayHalves implements IPlayATimeGame {
     public SecondHalf(Stack<Team> goalOverview,
                       TimeGameRules rules) {
         super(rules);
+        super.goalOverView = goalOverview;
         timer.schedule(new TimeGameTimerTask(this), 420000);
     }
 
