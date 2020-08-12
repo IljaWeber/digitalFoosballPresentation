@@ -11,22 +11,39 @@ import java.util.Stack;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public class EndByTime extends GameOver implements IPlayATimeGame {
-    private final Stack<Team> finalScore;
+    private final Stack<Team> goalOverView;
+    private final Stack<Team> undoOverView;
 
-    public EndByTime(Stack<Team> goalOverview) {
-        this.finalScore = goalOverview;
+    public EndByTime(Stack<Team> goalOverview,
+                     Stack<Team> undoOverView) {
+        this.goalOverView = goalOverview;
+        this.undoOverView = undoOverView;
     }
 
     @Override
     public void undoLastGoal() {
+        if (goalOverView.isEmpty()) {
+            return;
+        }
+
+        undoOverView.push(goalOverView.pop());
+    }
+
+    @Override
+    public void redoLastGoal() {
+        if (undoOverView.isEmpty()) {
+            return;
+        }
+
+        raiseScoreFor(undoOverView.pop());
     }
 
     @Override
     public Map<Team, Integer> getScoreOfTeams() {
         Map<Team, Integer> scores = new HashMap<>();
 
-        scores.put(ONE, Collections.frequency(finalScore, ONE));
-        scores.put(TWO, Collections.frequency(finalScore, TWO));
+        scores.put(ONE, Collections.frequency(goalOverView, ONE));
+        scores.put(TWO, Collections.frequency(goalOverView, TWO));
 
         return scores;
     }
@@ -34,8 +51,8 @@ public class EndByTime extends GameOver implements IPlayATimeGame {
     @Override
     public Team getMatchWinner() {
         Team winner = NO_TEAM;
-        int scoreOfTeamOne = Collections.frequency(finalScore, ONE);
-        int scoreOfTeamTwo = Collections.frequency(finalScore, TWO);
+        int scoreOfTeamOne = Collections.frequency(goalOverView, ONE);
+        int scoreOfTeamTwo = Collections.frequency(goalOverView, TWO);
 
         if (scoreOfTeamOne > scoreOfTeamTwo) {
             winner = ONE;

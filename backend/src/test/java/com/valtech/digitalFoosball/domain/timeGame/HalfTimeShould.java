@@ -17,7 +17,7 @@ class HalfTimeShould {
     @BeforeEach
     void setUp() {
         rules = new TimeGameRules();
-        this.halftime = new HalfTime(new Stack<>(), rules);
+        this.halftime = new HalfTime(new Stack<>(), new Stack<>() , rules);
     }
 
     @Test

@@ -15,7 +15,7 @@ class EndByTimeShould {
     public void determine_a_match_winner_when_time_is_over_and_goal_limit_was_not_reached_but_a_team_has_a_higher_score_than_the_other() {
         Stack<Team> overview = new Stack<>();
         overview.push(ONE);
-        EndByTime endByTime = new EndByTime(overview);
+        EndByTime endByTime = new EndByTime(overview, );
 
         Team actual = endByTime.getMatchWinner();
 
@@ -27,7 +27,7 @@ class EndByTimeShould {
         Stack<Team> overview = new Stack<>();
         overview.push(ONE);
         overview.push(TWO);
-        EndByTime endByTime = new EndByTime(overview);
+        EndByTime endByTime = new EndByTime(overview, );
 
         Team actual = endByTime.getMatchWinner();
 

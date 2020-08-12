@@ -6,13 +6,13 @@ import com.valtech.digitalFoosball.domain.timeGame.TimeGameRules;
 
 import java.util.Map;
 
-public class EndByScoreLimit extends GameOver implements IPlayATimeGame {
+public class EndByScore extends GameOver implements IPlayATimeGame {
     private final IPlayATimeGame previousTimeGameSequence;
     private final TimeGameRules rules;
     private final Team winner;
 
-    public EndByScoreLimit(IPlayATimeGame previous,
-                           TimeGameRules rules, Team winnerTeam) {
+    public EndByScore(IPlayATimeGame previous,
+                      TimeGameRules rules, Team winnerTeam) {
         this.previousTimeGameSequence = previous;
         this.rules = rules;
         this.winner = winnerTeam;

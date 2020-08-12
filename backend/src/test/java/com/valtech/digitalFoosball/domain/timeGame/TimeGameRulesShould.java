@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.timeGame.sequences.EndByScoreLimit;
+import com.valtech.digitalFoosball.domain.timeGame.sequences.EndByScore;
 import com.valtech.digitalFoosball.domain.timeGame.sequences.FirstHalf;
 import com.valtech.digitalFoosball.domain.timeGame.sequences.HalfTime;
 import com.valtech.digitalFoosball.domain.timeGame.sequences.SecondHalf;
@@ -32,7 +32,7 @@ public class TimeGameRulesShould {
                           ONE, ONE);
 
         actual = rules.getActualGameSequence();
-        assertThat(actual).isInstanceOf(EndByScoreLimit.class);
+        assertThat(actual).isInstanceOf(EndByScore.class);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class TimeGameRulesShould {
         rules.redoLastGoal();
 
         actual = rules.getActualGameSequence();
-        assertThat(actual).isInstanceOf(EndByScoreLimit.class);
+        assertThat(actual).isInstanceOf(EndByScore.class);
     }
 
     @Test

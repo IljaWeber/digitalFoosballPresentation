@@ -12,11 +12,15 @@ import java.util.Stack;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 
 public class HalfTime implements IPlayATimeGame {
-    private final Stack<Team> goalOverview;
+    private final Stack<Team> goalOverView;
+    private Stack<Team> undoOverView;
     private final TimeGameRules rules;
 
-    public HalfTime(Stack<Team> goalOverView, TimeGameRules rules) {
-        this.goalOverview = goalOverView;
+    public HalfTime(Stack<Team> goalOverView,
+                    Stack<Team> undoOverView,
+                    TimeGameRules rules) {
+        this.goalOverView = goalOverView;
+        this.undoOverView = undoOverView;
         this.rules = rules;
     }
 
@@ -27,17 +31,25 @@ public class HalfTime implements IPlayATimeGame {
 
     @Override
     public void undoLastGoal() {
+        if (goalOverView.isEmpty()) {
+            return;
+        }
 
+        undoOverView.push(goalOverView.pop());
     }
 
     @Override
     public void redoLastGoal() {
+        if (undoOverView.isEmpty()) {
+            return;
+        }
 
+        raiseScoreFor(undoOverView.pop());
     }
 
     @Override
     public void changeover() {
-        IPlayATimeGame secondHalf = new SecondHalf(goalOverview, rules);
+        IPlayATimeGame secondHalf = new SecondHalf(goalOverView, undoOverView, rules);
         rules.setActualTimeGameSequence(secondHalf);
     }
 
@@ -45,8 +57,8 @@ public class HalfTime implements IPlayATimeGame {
     public Map<Team, Integer> getScoreOfTeams() {
         Map<Team, Integer> scores = new HashMap<>();
 
-        scores.put(ONE, Collections.frequency(goalOverview, ONE));
-        scores.put(TWO, Collections.frequency(goalOverview, TWO));
+        scores.put(ONE, Collections.frequency(goalOverView, ONE));
+        scores.put(TWO, Collections.frequency(goalOverView, TWO));
 
         return scores;
     }

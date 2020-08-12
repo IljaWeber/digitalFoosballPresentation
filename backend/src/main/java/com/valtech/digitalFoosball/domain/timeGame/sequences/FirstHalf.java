@@ -3,7 +3,6 @@ package com.valtech.digitalFoosball.domain.timeGame.sequences;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.timeGame.IPlayATimeGame;
 import com.valtech.digitalFoosball.domain.timeGame.TimeGameRules;
-import com.valtech.digitalFoosball.domain.timeGame.TimeGameTimerTask;
 
 public class FirstHalf extends PlayHalves {
 
@@ -13,13 +12,13 @@ public class FirstHalf extends PlayHalves {
 
     @Override
     protected void finishGameByScoreLimit(Team winnerTeam) {
-        IPlayATimeGame endByScoreLimit = new EndByScoreLimit(this, rules, winnerTeam);
+        IPlayATimeGame endByScoreLimit = new EndByScore(this, rules, winnerTeam);
         rules.setActualTimeGameSequence(endByScoreLimit);
     }
 
     @Override
     public void timeRanDown() {
-        IPlayATimeGame halfTime = new HalfTime(goalOverView, rules);
+        IPlayATimeGame halfTime = new HalfTime(goalOverView, undoOverView, rules);
 
         rules.setActualTimeGameSequence(halfTime);
     }

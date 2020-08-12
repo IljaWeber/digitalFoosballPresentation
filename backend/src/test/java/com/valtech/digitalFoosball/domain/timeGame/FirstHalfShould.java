@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.timeGame.sequences.EndByScoreLimit;
+import com.valtech.digitalFoosball.domain.timeGame.sequences.EndByScore;
 import com.valtech.digitalFoosball.domain.timeGame.sequences.FirstHalf;
 import com.valtech.digitalFoosball.domain.timeGame.sequences.HalfTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +40,7 @@ class FirstHalfShould {
                           ONE, ONE,
                           ONE, ONE);
 
-        assertThat(timeGameRules.game).isInstanceOf(EndByScoreLimit.class);
+        assertThat(timeGameRules.game).isInstanceOf(EndByScore.class);
     }
 
     @Test
