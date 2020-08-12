@@ -22,7 +22,6 @@ public class TimeGame extends BaseGame<TimeGameRules> {
     public TimeGame(AdHocInitService initService, INotifyAboutStateChanges publisher) {
         this.initService = initService;
         this.publisher = publisher;
-        gameRules = new TimeGameRules();
         timer = new Timer();
     }
 
