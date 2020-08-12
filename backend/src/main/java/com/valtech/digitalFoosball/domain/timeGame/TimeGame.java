@@ -29,6 +29,12 @@ public class TimeGame extends BaseGame<TimeGameRules> {
         model = initService.init(initDataModel);
         gameRules = new TimeGameRules();
         gameRules.setGame(this);
+        startTimer();
+    }
+
+    private void startTimer() {
+        MyTimerTask task = new MyTimerTask(this);
+        timer.schedule(task, 420000);
     }
 
     public void resetMatch() {
@@ -44,7 +50,13 @@ public class TimeGame extends BaseGame<TimeGameRules> {
         return new TimeGameOutputModel(model, gameRules);
     }
 
-    public void gameSequenceChanged() {
+    public void informClients() {
         publisher.notifyAboutStateChange(getGameData());
+    }
+
+    @Override
+    public void changeover() {
+        super.changeover();
+        startTimer();
     }
 }

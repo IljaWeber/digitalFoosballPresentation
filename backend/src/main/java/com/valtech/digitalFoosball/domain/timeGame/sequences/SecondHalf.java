@@ -3,7 +3,6 @@ package com.valtech.digitalFoosball.domain.timeGame.sequences;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.timeGame.IPlayATimeGame;
 import com.valtech.digitalFoosball.domain.timeGame.TimeGameRules;
-import com.valtech.digitalFoosball.domain.timeGame.TimeGameTimerTask;
 
 import java.util.Stack;
 
@@ -13,7 +12,6 @@ public class SecondHalf extends PlayHalves implements IPlayATimeGame {
                       TimeGameRules rules) {
         super(rules);
         super.goalOverView = goalOverview;
-        timer.schedule(new TimeGameTimerTask(this), 420000);
     }
 
     @Override
@@ -22,7 +20,7 @@ public class SecondHalf extends PlayHalves implements IPlayATimeGame {
         rules.setActualTimeGameSequence(endByScoreLimit);
     }
 
-    public void nextSequenceByTime() {
+    public void timeRanDown() {
         IPlayATimeGame endByTime = new EndByTime(goalOverView);
 
         rules.setActualTimeGameSequence(endByTime);

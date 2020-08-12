@@ -75,7 +75,7 @@ class TimeGameShould {
 
     @Test
     void inform_the_clients_when_the_game_sequence_changes() {
-        timeGame.gameSequenceChanged();
+        timeGame.informClients();
 
         GameOutputModel gameData = fakePublisher.gameData;
         List<TeamOutputModel> actual = gameData.getTeams();

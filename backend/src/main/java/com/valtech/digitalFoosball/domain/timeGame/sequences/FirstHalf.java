@@ -5,11 +5,10 @@ import com.valtech.digitalFoosball.domain.timeGame.IPlayATimeGame;
 import com.valtech.digitalFoosball.domain.timeGame.TimeGameRules;
 import com.valtech.digitalFoosball.domain.timeGame.TimeGameTimerTask;
 
-public class FirstHalf extends PlayHalves implements IPlayATimeGame {
+public class FirstHalf extends PlayHalves {
 
     public FirstHalf(TimeGameRules timeGameRules) {
         super(timeGameRules);
-        timer.schedule(new TimeGameTimerTask(this), 4200000);
     }
 
     @Override
@@ -19,7 +18,7 @@ public class FirstHalf extends PlayHalves implements IPlayATimeGame {
     }
 
     @Override
-    public void nextSequenceByTime() {
+    public void timeRanDown() {
         IPlayATimeGame halfTime = new HalfTime(goalOverView, rules);
 
         rules.setActualTimeGameSequence(halfTime);

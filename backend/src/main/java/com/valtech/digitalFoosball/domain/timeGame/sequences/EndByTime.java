@@ -19,7 +19,6 @@ public class EndByTime extends GameOver implements IPlayATimeGame {
 
     @Override
     public void undoLastGoal() {
-
     }
 
     @Override
@@ -47,6 +46,10 @@ public class EndByTime extends GameOver implements IPlayATimeGame {
         }
 
         return winner;
+    }
+
+    @Override
+    public void timeRanDown() {
     }
 
     @Override

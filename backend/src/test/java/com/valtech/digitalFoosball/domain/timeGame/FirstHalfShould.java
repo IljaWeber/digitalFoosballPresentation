@@ -45,7 +45,7 @@ class FirstHalfShould {
 
     @Test
     public void end_first_half_when_time_is_over() {
-        firstHalf.nextSequenceByTime();
+        firstHalf.timeRanDown();
 
         assertThat(timeGameRules.game).isInstanceOf(HalfTime.class);
     }

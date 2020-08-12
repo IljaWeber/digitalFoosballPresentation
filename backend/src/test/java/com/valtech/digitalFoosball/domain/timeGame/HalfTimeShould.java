@@ -35,7 +35,7 @@ class HalfTimeShould {
         }
 
         @Override
-        public void gameSequenceChanged() {
+        public void informClients() {
         }
     }
 }

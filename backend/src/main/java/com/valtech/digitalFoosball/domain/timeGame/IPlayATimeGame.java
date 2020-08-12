@@ -16,4 +16,6 @@ public interface IPlayATimeGame {
     Map<Team, Integer> getScoreOfTeams();
 
     Team getMatchWinner();
+
+    void timeRanDown();
 }

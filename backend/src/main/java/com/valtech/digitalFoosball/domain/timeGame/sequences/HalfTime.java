@@ -60,4 +60,8 @@ public class HalfTime implements IPlayATimeGame {
     public Team getMatchWinner() {
         return NO_TEAM;
     }
+
+    @Override
+    public void timeRanDown() {
+    }
 }

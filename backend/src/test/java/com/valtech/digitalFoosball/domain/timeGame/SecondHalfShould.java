@@ -70,7 +70,7 @@ class SecondHalfShould {
 
     @Test
     public void end_whole_match_when_time_is_over() {
-        secondHalf.nextSequenceByTime();
+        secondHalf.timeRanDown();
 
         assertThat(rules.game).isInstanceOf(EndByTime.class);
     }
