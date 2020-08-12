@@ -95,8 +95,7 @@ export class TimeGameMatchInfo extends React.Component {
     }
 
     render() {
-        console.log("MatchInfo: " + this.state.winner)
-        if (this.state.actualGameSequence === 'End by Score Limit') {
+        if (this.state.actualGameSequence === 'End By Score') {
             return (
                 <div>
                     <ScoreLimitReachedScreen winner={this.getWinningTeam()} resetHandler={this.reset} undo={this.undo}

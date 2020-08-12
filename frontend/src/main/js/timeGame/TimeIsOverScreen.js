@@ -6,7 +6,6 @@ import ResetButton from "../buttons/ResetButton";
 export class TimeIsOverScreen extends React.Component {
 
     getCorrectPresentation() {
-        console.log("TimeOver: " + this.props.winner)
         if (this.props.winner === null) {
             return (
                 <h3 className="congratulationsInfo">Congratulations, nobody lost!</h3>

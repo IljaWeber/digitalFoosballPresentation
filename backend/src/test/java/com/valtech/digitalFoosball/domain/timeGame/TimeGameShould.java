@@ -15,8 +15,8 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TimeGameShould {
-
     private TimeGame timeGame;
+
     private FakePublisher fakePublisher;
 
     @BeforeEach
@@ -24,6 +24,56 @@ class TimeGameShould {
         fakePublisher = new FakePublisher();
         timeGame = new TimeGame(new AdHocInitService(), fakePublisher);
         timeGame.initGame(new InitDataModel());
+    }
+
+    @Test
+    void play_a_time_game_until_one_team_scored_ten_goals() {
+        raiseScoreFor(ONE, ONE,
+                      TWO,
+                      ONE,
+                      TWO, TWO);
+        timeGame.timeRanDown();
+        timeGame.changeover();
+
+        raiseScoreFor(ONE, ONE,
+                      TWO,
+                      ONE,
+                      TWO, TWO,
+                      ONE, ONE, ONE, ONE);
+
+        TimeGameOutputModel gameData = timeGame.getGameData();
+        List<TeamOutputModel> actual = gameData.getTeams();
+        assertThat(actual).extracting(TeamOutputModel::getName).containsExactly("Orange", "Green");
+        assertThat(actual).extracting(TeamOutputModel::getPlayerOne).containsExactly("Goalie", "Goalie");
+        assertThat(actual).extracting(TeamOutputModel::getPlayerTwo).containsExactly("Striker", "Striker");
+        assertThat(actual).extracting(TeamOutputModel::getScore).containsExactly(10, 6);
+        assertThat(gameData.getActualGameSequence()).isEqualTo("End By Score");
+        assertThat(gameData.getMatchWinner()).isEqualTo(ONE);
+    }
+
+    @Test
+    void play_a_time_game_until_second_half_is_over_no_matter_if_there_is_a_winner() {
+        raiseScoreFor(ONE, ONE,
+                      TWO,
+                      ONE,
+                      TWO, TWO);
+        timeGame.timeRanDown();
+        timeGame.changeover();
+        raiseScoreFor(ONE, ONE,
+                      TWO,
+                      ONE,
+                      TWO, TWO);
+
+        timeGame.timeRanDown();
+
+        TimeGameOutputModel gameData = timeGame.getGameData();
+        List<TeamOutputModel> actual = gameData.getTeams();
+        assertThat(actual).extracting(TeamOutputModel::getName).containsExactly("Orange", "Green");
+        assertThat(actual).extracting(TeamOutputModel::getPlayerOne).containsExactly("Goalie", "Goalie");
+        assertThat(actual).extracting(TeamOutputModel::getPlayerTwo).containsExactly("Striker", "Striker");
+        assertThat(actual).extracting(TeamOutputModel::getScore).containsExactly(6, 6);
+        assertThat(gameData.getActualGameSequence()).isEqualTo("End By Time");
+        assertThat(gameData.getMatchWinner()).isEqualTo(NO_TEAM);
     }
 
     @Test
@@ -38,39 +88,6 @@ class TimeGameShould {
         assertThat(actual).extracting(TeamOutputModel::getScore).containsExactly(0, 0);
         assertThat(outputModel.getActualGameSequence()).isEqualTo("First Half");
         assertThat(outputModel.getMatchWinner()).isEqualTo(NO_TEAM);
-    }
-
-    @Test
-    public void prepare_a_game_in_first_half_with_team_and_player_names_with_their_scores_for_output() {
-        raiseScoreFor(ONE, ONE,
-                      TWO);
-
-        TimeGameOutputModel gameData = timeGame.getGameData();
-        List<TeamOutputModel> actual = gameData.getTeams();
-        assertThat(actual).extracting(TeamOutputModel::getName).containsExactly("Orange", "Green");
-        assertThat(actual).extracting(TeamOutputModel::getPlayerOne).containsExactly("Goalie", "Goalie");
-        assertThat(actual).extracting(TeamOutputModel::getPlayerTwo).containsExactly("Striker", "Striker");
-        assertThat(actual).extracting(TeamOutputModel::getScore).containsExactly(2, 1);
-        assertThat(gameData.getActualGameSequence()).isEqualTo("First Half");
-        assertThat(gameData.getMatchWinner()).isEqualTo(NO_TEAM);
-    }
-
-    @Test
-    public void show_game_which_has_won_by_reaching_the_score_limit_with_the_winner_all_team_and_player_names_and_their_scores() {
-        raiseScoreFor(ONE, ONE,
-                      ONE, ONE,
-                      ONE, ONE,
-                      ONE, ONE,
-                      ONE, ONE);
-
-        TimeGameOutputModel gameData = timeGame.getGameData();
-        List<TeamOutputModel> actual = gameData.getTeams();
-        assertThat(actual).extracting(TeamOutputModel::getName).containsExactly("Orange", "Green");
-        assertThat(actual).extracting(TeamOutputModel::getPlayerOne).containsExactly("Goalie", "Goalie");
-        assertThat(actual).extracting(TeamOutputModel::getPlayerTwo).containsExactly("Striker", "Striker");
-        assertThat(actual).extracting(TeamOutputModel::getScore).containsExactly(10, 0);
-        assertThat(gameData.getActualGameSequence()).isEqualTo("End by Score Limit");
-        assertThat(gameData.getMatchWinner()).isEqualTo(ONE);
     }
 
     @Test

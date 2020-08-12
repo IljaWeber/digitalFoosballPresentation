@@ -40,7 +40,7 @@ public class EndByScoreLimit extends GameOver implements IPlayATimeGame {
 
     @Override
     public String toString() {
-        return "End by Score Limit";
+        return "End By Score";
     }
 
 }

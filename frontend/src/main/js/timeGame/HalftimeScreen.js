@@ -15,7 +15,7 @@ export class HalftimeScreen extends React.Component {
         this.props.resetHandler(response);
     };
 
-    nextRoundHandler = (response) => {
+    nextRoundHandler = () => {
         this.props.changeToSecondHalf();
     }
 

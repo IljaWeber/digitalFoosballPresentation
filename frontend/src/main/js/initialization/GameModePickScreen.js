@@ -2,7 +2,7 @@ import React from 'react'
 import foosballPic from "../../resources/foosball.jpeg";
 import {AdHoc} from "../adHoc/AdHoc";
 import {Ranked} from "../ranked/Ranked";
-import {TimeGame} from "../TimeGame/TimeGame";
+import {TimeGame} from "../timeGame/TimeGame";
 
 export class GameModePickScreen extends React.Component {
     state = {
