@@ -1,6 +1,7 @@
-package com.valtech.digitalFoosball.domain.timeGame;
+package com.valtech.digitalFoosball.domain.timeGame.sequences;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.timeGame.TimeGameRules;
 
 import java.util.*;
 
@@ -58,7 +59,7 @@ public abstract class PlayHalves {
 
     protected abstract void finishGameByScoreLimit(Team winnerTeam);
 
-    protected abstract void nextSequenceByTime();
+    public abstract void nextSequenceByTime();
 
     public Team getMatchWinner() {
         return NO_TEAM;

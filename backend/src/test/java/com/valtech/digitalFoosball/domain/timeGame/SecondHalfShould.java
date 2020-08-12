@@ -1,6 +1,9 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.timeGame.sequences.EndByScoreLimit;
+import com.valtech.digitalFoosball.domain.timeGame.sequences.EndByTime;
+import com.valtech.digitalFoosball.domain.timeGame.sequences.SecondHalf;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

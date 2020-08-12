@@ -4,7 +4,8 @@ import SockJS from "sockjs-client";
 import {properties} from "../../resources/properties";
 import {TimeGameScoreScreen} from "./TimeGameScoreScreen";
 import {HalftimeScreen} from "./HalftimeScreen";
-import VictoryScreen from "../matchInfo/VictoryScreen";
+import {ScoreLimitReachedScreen} from "./ScoreLimitReachedScreen";
+import {TimeIsOverScreen} from "./TimeIsOverScreen";
 
 
 export class TimeGameMatchInfo extends React.Component {
@@ -73,33 +74,44 @@ export class TimeGameMatchInfo extends React.Component {
         this.setState({
             teams: [...response.teams],
             actualGameSequence: response.actualGameSequence,
-            matchWinner: response.matchWinner
+            winner: response.matchWinner
         })
     };
 
     getWinningTeam = () => {
-        if (this.state.matchWinner === "ONE") {
+        if (this.state.winner === "NO_TEAM") {
+            return null
+        }
+
+        if (this.state.winner === "ONE") {
             return this.state.teams[0];
         }
 
         return this.state.teams[1];
     };
 
-    changeToHalfTime = () => {
-        this.setState({actualGameSequence: 'Half Time'});
-    }
-
     changeToSecondHalf = () => {
         this.setState({actualGameSequence: 'Second Half'})
     }
 
     render() {
+        console.log("MatchInfo: " + this.state.winner)
         if (this.state.actualGameSequence === 'End by Score Limit') {
             return (
                 <div>
-                    <VictoryScreen winner={this.getWinningTeam()} resetHandler={this.reset} undo={this.undo}
-                                   gameMode={this.props.gameMode}>
-                    </VictoryScreen>
+                    <ScoreLimitReachedScreen winner={this.getWinningTeam()} resetHandler={this.reset} undo={this.undo}
+                                             gameMode={this.props.gameMode}>
+                    </ScoreLimitReachedScreen>
+                </div>
+            )
+        }
+
+        if (this.state.actualGameSequence === 'End By Time') {
+            return (
+                <div>
+                    <TimeIsOverScreen winner={this.getWinningTeam()} resetHandler={this.reset} undo={this.undo}
+                                      gameMode={this.props.gameMode}>
+                    </TimeIsOverScreen>
                 </div>
             )
         }
@@ -119,14 +131,8 @@ export class TimeGameMatchInfo extends React.Component {
                                              undoHandler={this.undo} redoHandler={this.redo}
                                              teams={this.state.teams}/>
                     </div>
-                    <div>
-                        <form onSubmit={this.changeToHalfTime}>
-                            <input type="submit" value="HalfTime" className={this.props.className + " button"}/>
-                        </form>
-                    </div>
                 </div>
             )
         }
-
     }
 }

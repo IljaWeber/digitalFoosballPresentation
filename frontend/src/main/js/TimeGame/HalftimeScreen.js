@@ -3,10 +3,12 @@ import ResetButton from "../buttons/ResetButton";
 import NextRoundButton from "../buttons/NextRoundButton";
 
 export class HalftimeScreen extends React.Component {
-    showHalfTimeScreen = true;
+    state = {
+        showHalfTimeScreen: true
+    }
 
     componentDidMount() {
-        setTimeout(() => (this.showHalfTimeScreen = false), 3000)
+        setTimeout(() => this.setState({showHalfTimeScreen: false}), 3000)
     }
 
     reset = (response) => {
@@ -20,7 +22,7 @@ export class HalftimeScreen extends React.Component {
     render() {
         return (
             <div>
-                {this.showHalfTimeScreen &&
+                {this.state.showHalfTimeScreen &&
                 <div className="init__container">
                     <h1 className="init__container__headline">Half Time</h1>
                 </div>
@@ -30,9 +32,9 @@ export class HalftimeScreen extends React.Component {
                         {this.getTeams()}
                     </div>
                     <ul className="buttonListScore">
-                        <li><ResetButton className="middleDropIn" resetHandler={this.reset}/></li>
+                        <li><ResetButton className="middleDropIn" resetHandler={this.reset} gameMode="time/"/></li>
                         <li><NextRoundButton className="slowDropInWithOutDelay"
-                                             nextRoundHandler={this.nextRoundHandler}/></li>
+                                             nextRoundHandler={this.nextRoundHandler} gameMode="time/"/></li>
                     </ul>
                 </div>
             </div>

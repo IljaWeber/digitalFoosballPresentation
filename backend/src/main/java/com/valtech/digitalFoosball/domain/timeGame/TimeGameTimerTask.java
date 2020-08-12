@@ -1,5 +1,7 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
+import com.valtech.digitalFoosball.domain.timeGame.sequences.PlayHalves;
+
 import java.util.TimerTask;
 
 public class TimeGameTimerTask extends TimerTask {

@@ -1,6 +1,8 @@
-package com.valtech.digitalFoosball.domain.timeGame;
+package com.valtech.digitalFoosball.domain.timeGame.sequences;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.timeGame.IPlayATimeGame;
+import com.valtech.digitalFoosball.domain.timeGame.TimeGameRules;
 
 import java.util.Map;
 
