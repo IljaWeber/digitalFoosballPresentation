@@ -21,7 +21,6 @@ public class TimeGameRulesShould {
     @BeforeEach
     void setUp() {
         rules = new TimeGameRules();
-        rules.setGame(new FakeTimeGame());
     }
 
     @Test
@@ -133,16 +132,6 @@ public class TimeGameRulesShould {
         assertThat(actual).isEqualTo("First Half");
     }
 
-    @Test
-    void inform_the_game_when_the_sequence_changes() {
-        FakeTimeGame game = new FakeTimeGame();
-        rules.setGame(game);
-
-        rules.setActualTimeGameSequence(new FirstHalf(rules));
-
-        assertThat(game.isInformed).isTrue();
-    }
-
     private void raiseScoreForTeam(Team... teams) {
         for (Team team : teams) {
             rules.raiseScoreFor(team);
@@ -153,19 +142,6 @@ public class TimeGameRulesShould {
 
         public FirstHalfFake(TimeGameRules timeGameRules) {
             super(timeGameRules);
-        }
-    }
-
-    private class FakeTimeGame extends TimeGame {
-        boolean isInformed = false;
-
-        public FakeTimeGame() {
-            super(null, null);
-        }
-
-        @Override
-        public void informClients() {
-            isInformed = true;
         }
     }
 }

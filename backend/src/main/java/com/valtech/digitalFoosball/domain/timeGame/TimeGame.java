@@ -15,7 +15,7 @@ import java.util.Timer;
 public class TimeGame extends BaseGame<TimeGameRules> {
     private final IInitializeGames initService;
     private final INotifyAboutStateChanges publisher;
-    protected Timer timer;
+    private final Timer timer;
     private GameDataModel model;
 
     @Autowired
@@ -28,7 +28,6 @@ public class TimeGame extends BaseGame<TimeGameRules> {
     public void initGame(InitDataModel initDataModel) {
         model = initService.init(initDataModel);
         gameRules = new TimeGameRules();
-        gameRules.setGame(this);
         startTimer();
     }
 
@@ -44,6 +43,7 @@ public class TimeGame extends BaseGame<TimeGameRules> {
 
     public void timeRanDown() {
         gameRules.timeRanDown();
+        informClients();
     }
 
     public TimeGameOutputModel getGameData() {

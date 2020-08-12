@@ -75,16 +75,13 @@ class TimeGameShould {
 
     @Test
     void inform_the_clients_when_the_game_sequence_changes() {
-        timeGame.informClients();
+        timeGame.timeRanDown();
 
-        GameOutputModel gameData = fakePublisher.gameData;
-        List<TeamOutputModel> actual = gameData.getTeams();
-        assertThat(actual).extracting(TeamOutputModel::getName).containsExactly("Orange", "Green");
+        assertThat(fakePublisher.clientsInformed).isTrue();
     }
 
     @Test
     void inform_the_rules_when_the_time_ran_down() {
-        TimeGame timeGame = new TimeGame(null, null);
         FakeGameRules rules = new FakeGameRules();
         timeGame.setGameRules(rules);
 
@@ -100,7 +97,7 @@ class TimeGameShould {
     }
 
     private class FakePublisher extends Publisher {
-        public GameOutputModel gameData;
+        public boolean clientsInformed = false;
 
         public FakePublisher() {
             super(null);
@@ -108,7 +105,7 @@ class TimeGameShould {
 
         @Override
         public void notifyAboutStateChange(GameOutputModel gameData) {
-            this.gameData = gameData;
+            clientsInformed = true;
         }
     }
 

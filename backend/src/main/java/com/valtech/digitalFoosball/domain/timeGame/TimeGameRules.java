@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class TimeGameRules implements IKnowTheRules {
     private IPlayATimeGame actualGameSequence;
-    private TimeGame game;
 
     public TimeGameRules() {
         actualGameSequence = new FirstHalf(this);
@@ -20,8 +19,6 @@ public class TimeGameRules implements IKnowTheRules {
 
     public void setActualTimeGameSequence(IPlayATimeGame gameSequence) {
         actualGameSequence = gameSequence;
-
-        game.informClients();
     }
 
     public Map<Team, Integer> getScoreOfTeams() {
@@ -50,10 +47,6 @@ public class TimeGameRules implements IKnowTheRules {
 
     public String getAlternativeGameSequenceRepresentation() {
         return actualGameSequence.toString();
-    }
-
-    public void setGame(TimeGame game) {
-        this.game = game;
     }
 
     public void timeRanDown() {
