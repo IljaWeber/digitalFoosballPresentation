@@ -2,12 +2,14 @@ package com.valtech.digitalFoosball.domain.timeGame;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 
+import java.util.Stack;
+
 public class SecondHalf extends PlayHalves implements IPlayATimeGame {
 
-    public SecondHalf(TimeGameRules rules) {
+    public SecondHalf(Stack<Team> goalOverview,
+                      TimeGameRules rules) {
         super(rules);
         timer.schedule(new TimeGameTimerTask(this), 420000);
-
     }
 
     @Override
