@@ -6,6 +6,9 @@ import {TimeGameScoreScreen} from "./TimeGameScoreScreen";
 import {HalftimeScreen} from "./HalftimeScreen";
 import {ScoreLimitReachedScreen} from "./ScoreLimitReachedScreen";
 import {TimeIsOverScreen} from "./TimeIsOverScreen";
+import UndoButton from "../buttons/UndoButton";
+import ResetButton from "../buttons/ResetButton";
+import RedoButton from "../buttons/RedoButton";
 
 
 export class TimeGameMatchInfo extends React.Component {
@@ -32,6 +35,10 @@ export class TimeGameMatchInfo extends React.Component {
         });
 
         return stompClient;
+    }
+
+    componentWillUnmount() {
+        this.stompClient.disconnect();
     }
 
     async updateState() {
@@ -98,6 +105,22 @@ export class TimeGameMatchInfo extends React.Component {
     }
 
     render() {
+        return (
+            <div>
+                {this.getScreen()}
+                <ul className="buttonListScore">
+                    <li><UndoButton className="fastDropIn" gameMode={this.props.gameMode} undoHandler={this.undo}/></li>
+                    <li><ResetButton className="middleDropIn" resetHandler={this.reset} gameMode={this.props.gameMode}/>
+                    </li>
+                    <li><RedoButton className="slowDropInWithOutDelay" gameMode={this.props.gameMode}
+                                    redoHandler={this.redo}/></li>
+                </ul>
+            </div>
+
+        )
+    }
+
+    getScreen() {
         if (this.state.actualGameSequence === 'End By Score') {
             return (
                 <div>

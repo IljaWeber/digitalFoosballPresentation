@@ -34,6 +34,10 @@ export default class ClassicGameMatchInfo extends React.Component {
         return stompClient;
     }
 
+    componentWillUnmount() {
+        this.stompClient.disconnect();
+    }
+
     updateGameStatus(message) {
         const json = JSON.parse(message.body);
         this.setState({teams: json.teams});
@@ -95,10 +99,6 @@ export default class ClassicGameMatchInfo extends React.Component {
         const matchWinner = json.matchWinner.toString();
         this.setState({winnerOfSet: [winnerOfSet]});
         this.setState({matchWinner: [matchWinner]});
-    }
-
-    componentWillUnmount() {
-        this.stompClient.disconnect();
     }
 
     render() {

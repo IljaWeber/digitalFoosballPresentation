@@ -1,7 +1,4 @@
 import React from 'react'
-import UndoButton from "../buttons/UndoButton";
-import ResetButton from "../buttons/ResetButton";
-import RedoButton from "../buttons/RedoButton";
 import RaiseButton from "../buttons/RaiseButton";
 
 export class TimeGameScoreScreen extends React.Component {
@@ -24,13 +21,6 @@ export class TimeGameScoreScreen extends React.Component {
                 <div className="teamContainer">
                     {this.getTeams()}
                 </div>
-                <ul className="buttonListScore">
-                    <li><UndoButton className="fastDropIn" gameMode={this.props.gameMode} undoHandler={this.undo}/></li>
-                    <li><ResetButton className="middleDropIn" resetHandler={this.reset} gameMode={this.props.gameMode}/>
-                    </li>
-                    <li><RedoButton className="slowDropInWithOutDelay" gameMode={this.props.gameMode}
-                                    redoHandler={this.redo}/></li>
-                </ul>
             </div>
         )
     }

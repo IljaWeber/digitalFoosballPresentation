@@ -1,6 +1,4 @@
 import React from 'react'
-import UndoButton from "../buttons/UndoButton";
-import ResetButton from "../buttons/ResetButton";
 
 
 export class TimeIsOverScreen extends React.Component {
@@ -27,12 +25,6 @@ export class TimeIsOverScreen extends React.Component {
                 <div className="victoryContainer fastDropIn">
                     <h1>The Match Time is Over!</h1>
                     {this.getCorrectPresentation()}
-                </div>
-                <div className="buttonListVictory">
-                    <UndoButton gameMode={this.props.gameMode} className="fastDropIn"
-                                undoHandler={this.props.undo}/>
-                    <ResetButton gameMode={this.props.gameMode} className="middleDropIn"
-                                 resetHandler={this.props.resetHandler}/>
                 </div>
             </div>
         );
