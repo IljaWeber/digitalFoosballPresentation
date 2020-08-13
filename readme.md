@@ -18,5 +18,9 @@ It's split up in different sub modules:
 
 - [Raspberry-Controller-readme](raspicontroller/readme.md)
 
+##Interaction among modules
+
+User commands like choosing game mode, goal scoring or team naming triggering through REST calls 
+the business layer of the application. Processed commands are send to the web application by a web socket.  
 
 
