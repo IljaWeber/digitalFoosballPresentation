@@ -72,7 +72,7 @@ export default class SignInForm extends React.Component {
 
                     <div className="teamSignIn_Buttons">
                         <div className="teamSignIn_Submit">
-                            <input type="submit" value="Submit" className="button slowDropIn"/>
+                            <input type="submit" value="Submit" className="button fastDropIn"/>
                         </div>
                     </div>
                 </form>

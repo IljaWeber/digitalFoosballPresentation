@@ -9,7 +9,6 @@ export default class TeamComponent extends React.Component {
         return (
             <li className={`team team${number}`}>
                 <ul className={`score score${number}`}>{team.score}
-                    <li className="roundWins">Won rounds: {team.setWins}</li>
                     <RaiseButton teamNo={number}/>
                 </ul>
                 <ul className="name">{team.name}</ul>

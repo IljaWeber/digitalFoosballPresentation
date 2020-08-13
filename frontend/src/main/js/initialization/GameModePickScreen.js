@@ -36,23 +36,24 @@ export class GameModePickScreen extends React.Component {
 
 
     render() {
+        console.log(this.props.classname)
         return (
             <div className="app_foosballImage" style={{backgroundImage: `url(${foosballPic})`}}>
                 {this.state.showMenu &&
                 <form onSubmit={this.submitAdHocGame}>
-                    <input type="submit" value="AdHoc Game" className={this.props.className + " button"}/>
+                    <input type="submit" value="AdHoc Game" className="button fastDropIn submitGame"/>
                 </form>}
                 {this.state.showAdHoc && <AdHoc resetHandler={this.resetHandler}/>}
 
                 {this.state.showMenu &&
                 <form onSubmit={this.submitRanked}>
-                    <input type="submit" value="Ranked Game" className={this.props.className + " button"}/>
+                    <input type="submit" value="Ranked Game" className="button middleDropIn submitGame"/>
                 </form>}
                 {this.state.showRanked && <Ranked resetHandler={this.resetHandler}/>}
 
                 {this.state.showMenu &&
                 <form onSubmit={this.submitTimeGame}>
-                    <input type="submit" value="Time Game" className={this.props.classname + " button"}/>
+                    <input type="submit" value="Time Game" className="button slowDropInWithOutDelay submitGame"/>
                 </form>
                 }
                 {this.state.showTimeGame && <TimeGame resetHandler={this.resetHandler}/>}
