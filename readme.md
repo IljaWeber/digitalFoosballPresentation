@@ -25,4 +25,4 @@ The raspberry module is responsible for listening to the light barriers and send
 REST calls to the backend module.
 The Frontend module is responsible for all other user commands, like submitting players or choosing game modes. 
 To match the responsible REST endpoint which is called by the raspberry pi with 
-the correct game mode the IOC container Spring ist used.
+the correct game mode the IOC container Spring is used.
