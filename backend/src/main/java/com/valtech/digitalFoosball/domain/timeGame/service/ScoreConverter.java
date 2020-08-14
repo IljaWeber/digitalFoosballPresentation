@@ -22,7 +22,7 @@ public class ScoreConverter {
         return scores;
     }
 
-    private static int getScoreOfTeam(Team one, Stack<Team> goalOverView) {
-        return Collections.frequency(goalOverView, one);
+    private static int getScoreOfTeam(Team team, Stack<Team> goalOverView) {
+        return Collections.frequency(goalOverView, team);
     }
 }
