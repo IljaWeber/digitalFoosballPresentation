@@ -4,7 +4,6 @@ import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.api.helper.ComparableOutputModelCreator;
 import com.valtech.digitalFoosball.api.helper.RestEndpointRequestPerformer;
 import com.valtech.digitalFoosball.api.usercommands.AdHocAPI;
-import org.assertj.core.api.Assertions;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +14,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 
 import static com.valtech.digitalFoosball.domain.common.constants.GameMode.AD_HOC;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration(classes = Application.class)
 @SpringBootTest(classes = AdHocAPI.class)
@@ -45,8 +45,7 @@ public class AdHocAPIShould {
 
         endpointRequestPerformer.initializeGame(AD_HOC);
 
-        String actual
-                = endpointRequestPerformer.getGameValues(AD_HOC);
-        Assertions.assertThat(actual).isEqualTo(expected);
+        String actual = endpointRequestPerformer.getGameValues(AD_HOC);
+        assertThat(actual).isEqualTo(expected);
     }
 }

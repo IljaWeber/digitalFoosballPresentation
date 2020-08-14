@@ -13,6 +13,7 @@ public interface IPlayATimeGame {
 
     void changeover();
 
+    // todo: created on 14.08.20 by iljaweber: map to object to hide intern details  
     Map<Team, Integer> getScoreOfTeams();
 
     Team getMatchWinner();

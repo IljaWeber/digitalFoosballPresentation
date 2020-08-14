@@ -3,8 +3,9 @@ package com.valtech.digitalFoosball.domain.timeGame.sequences;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 
 public abstract class GameOver {
-    public void raiseScoreFor(Team team) {
 
+    public void raiseScoreFor(Team team) {
+        
     }
 
     public void redoLastGoal() {

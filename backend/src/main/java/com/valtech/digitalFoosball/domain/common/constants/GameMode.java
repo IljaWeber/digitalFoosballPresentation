@@ -5,11 +5,9 @@ public enum GameMode {
 
     @Override
     public String toString() {
-        switch (this) {
-            case AD_HOC:
-                return "/adhoc";
-            default:
-                return "/ranked";
+        if (this == GameMode.AD_HOC) {
+            return "/adhoc";
         }
+        return "/ranked";
     }
 }

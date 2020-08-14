@@ -21,6 +21,7 @@ public class DigitalFoosballRaspPi {
 
         System.out.println("Controller started");
 
+        // todo: created on 14.08.20 by iljaweber: remove infinite while loop with java 8 concurrency
         while (true) {
             Thread.sleep(10000);
         }
