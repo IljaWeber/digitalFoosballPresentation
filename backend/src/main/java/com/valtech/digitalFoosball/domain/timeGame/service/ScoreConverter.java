@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.domain.timeGame;
+package com.valtech.digitalFoosball.domain.timeGame.service;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 

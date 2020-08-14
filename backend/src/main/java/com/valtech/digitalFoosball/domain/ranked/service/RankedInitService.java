@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.domain.ranked;
+package com.valtech.digitalFoosball.domain.ranked.service;
 
 import com.valtech.digitalFoosball.api.IObtainTeams;
 import com.valtech.digitalFoosball.domain.IInitializeGames;

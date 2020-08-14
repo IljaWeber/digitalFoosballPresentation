@@ -2,9 +2,9 @@ package com.valtech.digitalFoosball.domain.timeGame.sequences;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.timeGame.IPlayATimeGame;
-import com.valtech.digitalFoosball.domain.timeGame.MatchScores;
-import com.valtech.digitalFoosball.domain.timeGame.ScoreConverter;
 import com.valtech.digitalFoosball.domain.timeGame.TimeGameRules;
+import com.valtech.digitalFoosball.domain.timeGame.service.MatchScores;
+import com.valtech.digitalFoosball.domain.timeGame.service.ScoreConverter;
 
 import java.util.Stack;
 

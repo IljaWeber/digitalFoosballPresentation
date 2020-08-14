@@ -6,6 +6,7 @@ import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
 import com.valtech.digitalFoosball.domain.common.BaseGame;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
+import com.valtech.digitalFoosball.domain.timeGame.service.TimeGameTimerTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

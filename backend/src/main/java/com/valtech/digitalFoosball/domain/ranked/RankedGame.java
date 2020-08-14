@@ -1,6 +1,7 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
 import com.valtech.digitalFoosball.domain.common.DigitalFoosballGame;
+import com.valtech.digitalFoosball.domain.ranked.service.RankedInitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

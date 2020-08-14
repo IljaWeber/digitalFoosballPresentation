@@ -1,5 +1,6 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
+import com.valtech.digitalFoosball.domain.timeGame.service.TimeGameTimerTask;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

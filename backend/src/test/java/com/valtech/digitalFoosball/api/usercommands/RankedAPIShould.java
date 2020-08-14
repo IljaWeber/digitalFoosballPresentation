@@ -5,7 +5,7 @@ import com.valtech.digitalFoosball.domain.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedGame;
-import com.valtech.digitalFoosball.domain.ranked.RankedInitService;
+import com.valtech.digitalFoosball.domain.ranked.service.RankedInitService;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

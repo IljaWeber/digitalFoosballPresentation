@@ -11,6 +11,7 @@ import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.ranked.service.RankedInitService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

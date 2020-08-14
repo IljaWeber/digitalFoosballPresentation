@@ -1,4 +1,6 @@
-package com.valtech.digitalFoosball.domain.timeGame;
+package com.valtech.digitalFoosball.domain.timeGame.service;
+
+import com.valtech.digitalFoosball.domain.timeGame.TimeGame;
 
 import java.util.TimerTask;
 

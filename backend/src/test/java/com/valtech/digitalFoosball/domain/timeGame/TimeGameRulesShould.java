@@ -5,6 +5,7 @@ import com.valtech.digitalFoosball.domain.timeGame.sequences.EndByScore;
 import com.valtech.digitalFoosball.domain.timeGame.sequences.FirstHalf;
 import com.valtech.digitalFoosball.domain.timeGame.sequences.HalfTime;
 import com.valtech.digitalFoosball.domain.timeGame.sequences.SecondHalf;
+import com.valtech.digitalFoosball.domain.timeGame.service.MatchScores;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

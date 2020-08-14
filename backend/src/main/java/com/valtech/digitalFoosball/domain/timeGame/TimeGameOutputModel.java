@@ -4,6 +4,7 @@ import com.valtech.digitalFoosball.domain.common.converter.Converter;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.BaseGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.timeGame.service.MatchScores;
 
 public class TimeGameOutputModel extends BaseGameOutputModel implements GameOutputModel {
     private final String actualGameSequence;

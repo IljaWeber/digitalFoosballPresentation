@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.domain.timeGame;
+package com.valtech.digitalFoosball.domain.timeGame.service;
 
 public class MatchScores {
     private int scoreOfTeamOne;

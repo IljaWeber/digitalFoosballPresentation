@@ -3,6 +3,7 @@ package com.valtech.digitalFoosball.domain.timeGame;
 import com.valtech.digitalFoosball.domain.IKnowTheRules;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.timeGame.sequences.FirstHalf;
+import com.valtech.digitalFoosball.domain.timeGame.service.MatchScores;
 
 public class TimeGameRules implements IKnowTheRules {
     private IPlayATimeGame actualGameSequence;
