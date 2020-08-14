@@ -20,9 +20,13 @@ It's split up in different sub modules:
 
 ##Interaction among modules
 
-The business layer is triggerd by the frontend module and raspberry pi module using REST endpoints.
-The raspberry module is responsible for listening to the light barriers and sending raise goal 
-REST calls to the backend module.
-The Frontend module is responsible for all other user commands, like submitting players or choosing game modes. 
-To match the raspberry pi pin listener to the different games the IOC container Spring is used. 
+The first module - the Raspberry-Controller - tracks the foosball-table and whenever one team scores a goal, this goal
+gets sent via Rest-Calls to the backend.
 
+With the second module - the frontend - the user is able to start a game and send commands like "undo the last goal"
+and more to the backend. Also the frontend presents the current state of the game - it gets updated by the backend
+via a websocket.
+
+The last module - the backend - is the center of the application. The backend holds the business logic, it knows when
+it is legal to score a goal and when it's not. Also it is the connection between the Raspberry Pi and the frontend as
+you may already have thought.
