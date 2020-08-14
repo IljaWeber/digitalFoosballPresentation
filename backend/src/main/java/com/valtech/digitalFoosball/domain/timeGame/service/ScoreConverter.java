@@ -13,12 +13,16 @@ public class ScoreConverter {
     public static MatchScores convert(Stack<Team> goalOverView) {
         MatchScores scores = new MatchScores();
 
-        int scoreOfTeamOne = Collections.frequency(goalOverView, ONE);
+        int scoreOfTeamOne = getScoreOfTeam(ONE, goalOverView);
         scores.setScoreOfTeamOne(scoreOfTeamOne);
 
-        int scoreOfTeamTwo = Collections.frequency(goalOverView, TWO);
+        int scoreOfTeamTwo = getScoreOfTeam(TWO, goalOverView);
         scores.setScoreOfTeamTwo(scoreOfTeamTwo);
 
         return scores;
+    }
+
+    private static int getScoreOfTeam(Team one, Stack<Team> goalOverView) {
+        return Collections.frequency(goalOverView, one);
     }
 }
