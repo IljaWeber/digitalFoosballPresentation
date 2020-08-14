@@ -8,8 +8,6 @@ import com.valtech.digitalFoosball.domain.timeGame.sequences.SecondHalf;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
-
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -59,8 +57,8 @@ public class TimeGameRulesShould {
                           ONE, ONE,
                           ONE);
 
-        Map<Team, Integer> gameData = rules.getActualGameSequence().getScoreOfTeams();
-        Integer actualScore = gameData.get(ONE);
+        MatchScores matchScores = rules.getMatchScores();
+        int actualScore = matchScores.getScoreOfTeamOne();
         assertThat(actualScore).isEqualTo(10);
     }
 
@@ -108,9 +106,8 @@ public class TimeGameRulesShould {
 
         raiseScoreForTeam(ONE);
 
-        IPlayATimeGame gameSequence = rules.getActualGameSequence();
-        Map<Team, Integer> scoreOfTeams = gameSequence.getScoreOfTeams();
-        Integer actualScore = scoreOfTeams.get(ONE);
+        MatchScores matchScores = rules.getMatchScores();
+        int actualScore = matchScores.getScoreOfTeamOne();
         assertThat(actualScore).isEqualTo(0);
     }
 

@@ -2,13 +2,17 @@ package com.valtech.digitalFoosball.domain.timeGame.sequences;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.timeGame.IPlayATimeGame;
+import com.valtech.digitalFoosball.domain.timeGame.MatchScores;
+import com.valtech.digitalFoosball.domain.timeGame.ScoreConverter;
 import com.valtech.digitalFoosball.domain.timeGame.TimeGameRules;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Stack;
 
-import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
+import static com.valtech.digitalFoosball.domain.common.constants.Team.NO_TEAM;
 
 public abstract class PlayHalves implements IPlayATimeGame {
+    private final int GOAL_LIMIT;
     protected Stack<Team> goalOverView;
     protected Stack<Team> undoOverView;
     protected TimeGameRules rules;
@@ -17,12 +21,13 @@ public abstract class PlayHalves implements IPlayATimeGame {
         this.rules = timeGameRules;
         goalOverView = new Stack<>();
         undoOverView = new Stack<>();
+        GOAL_LIMIT = 10;
     }
 
     public void raiseScoreFor(Team team) {
         goalOverView.push(team);
 
-        if (getScoreOfTeam(team) >= 10) {
+        if (getScoreOfTeam(team) >= GOAL_LIMIT) {
             finishGameByScoreLimit(team);
         }
     }
@@ -47,13 +52,8 @@ public abstract class PlayHalves implements IPlayATimeGame {
         raiseScoreFor(undoOverView.pop());
     }
 
-    public Map<Team, Integer> getScoreOfTeams() {
-        Map<Team, Integer> scores = new HashMap<>();
-
-        scores.put(ONE, getScoreOfTeam(ONE));
-        scores.put(TWO, getScoreOfTeam(TWO));
-
-        return scores;
+    public MatchScores getMatchScores() {
+        return ScoreConverter.convert(goalOverView);
     }
 
     public void changeover() {

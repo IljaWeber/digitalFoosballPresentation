@@ -7,7 +7,6 @@ import com.valtech.digitalFoosball.domain.timeGame.sequences.SecondHalf;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
 import java.util.Stack;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
@@ -29,8 +28,8 @@ class SecondHalfShould {
     public void raise_score() {
         secondHalf.raiseScoreFor(ONE);
 
-        Map<Team, Integer> scoreOfTeams = secondHalf.getScoreOfTeams();
-        Integer actual = scoreOfTeams.get(ONE);
+        MatchScores matchScores = secondHalf.getMatchScores();
+        int actual = matchScores.getScoreOfTeamOne();
         assertThat(actual).isEqualTo(1);
     }
 
@@ -51,9 +50,9 @@ class SecondHalfShould {
 
         secondHalf.undoLastGoal();
 
-        Map<Team, Integer> scoresOfTeams = secondHalf.getScoreOfTeams();
-        Integer scoreOfTeamOne = scoresOfTeams.get(ONE);
-        assertThat(scoreOfTeamOne).isEqualTo(0);
+        MatchScores matchScores = secondHalf.getMatchScores();
+        int actual = matchScores.getScoreOfTeamOne();
+        assertThat(actual).isEqualTo(0);
     }
 
     @Test
@@ -63,9 +62,9 @@ class SecondHalfShould {
 
         secondHalf.redoLastGoal();
 
-        Map<Team, Integer> scoresOfTeams = secondHalf.getScoreOfTeams();
-        Integer scoreOfTeamTwo = scoresOfTeams.get(TWO);
-        assertThat(scoreOfTeamTwo).isEqualTo(1);
+        MatchScores matchScores = secondHalf.getMatchScores();
+        int actual = matchScores.getScoreOfTeamTwo();
+        assertThat(actual).isEqualTo(1);
     }
 
     @Test

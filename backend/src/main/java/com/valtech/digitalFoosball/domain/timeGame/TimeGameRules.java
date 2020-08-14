@@ -4,8 +4,6 @@ import com.valtech.digitalFoosball.domain.IKnowTheRules;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.timeGame.sequences.FirstHalf;
 
-import java.util.Map;
-
 public class TimeGameRules implements IKnowTheRules {
     private IPlayATimeGame actualGameSequence;
 
@@ -21,8 +19,8 @@ public class TimeGameRules implements IKnowTheRules {
         actualGameSequence = gameSequence;
     }
 
-    public Map<Team, Integer> getScoreOfTeams() {
-        return actualGameSequence.getScoreOfTeams();
+    public MatchScores getMatchScores() {
+        return actualGameSequence.getMatchScores();
     }
 
     public IPlayATimeGame getActualGameSequence() {

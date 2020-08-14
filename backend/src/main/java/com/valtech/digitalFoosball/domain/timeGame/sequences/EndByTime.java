@@ -2,10 +2,10 @@ package com.valtech.digitalFoosball.domain.timeGame.sequences;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.timeGame.IPlayATimeGame;
+import com.valtech.digitalFoosball.domain.timeGame.MatchScores;
+import com.valtech.digitalFoosball.domain.timeGame.ScoreConverter;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
 
 import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
@@ -39,13 +39,8 @@ public class EndByTime extends GameOver implements IPlayATimeGame {
     }
 
     @Override
-    public Map<Team, Integer> getScoreOfTeams() {
-        Map<Team, Integer> scores = new HashMap<>();
-
-        scores.put(ONE, Collections.frequency(goalOverView, ONE));
-        scores.put(TWO, Collections.frequency(goalOverView, TWO));
-
-        return scores;
+    public MatchScores getMatchScores() {
+        return ScoreConverter.convert(goalOverView);
     }
 
     @Override

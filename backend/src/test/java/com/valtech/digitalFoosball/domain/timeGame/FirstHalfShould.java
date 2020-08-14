@@ -7,8 +7,6 @@ import com.valtech.digitalFoosball.domain.timeGame.sequences.HalfTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
-
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,9 +25,9 @@ class FirstHalfShould {
     public void raise_score() {
         raiseScoreForTeam(ONE, ONE);
 
-        Map<Team, Integer> gameData = firstHalf.getScoreOfTeams();
-        Integer actualScoreOfTeamOne = gameData.get(ONE);
-        assertThat(actualScoreOfTeamOne).isEqualTo(2);
+        MatchScores matchScores = firstHalf.getMatchScores();
+        int actual = matchScores.getScoreOfTeamOne();
+        assertThat(actual).isEqualTo(2);
     }
 
     @Test
@@ -56,8 +54,8 @@ class FirstHalfShould {
 
         firstHalf.undoLastGoal();
 
-        Map<Team, Integer> scoresOfTeams = firstHalf.getScoreOfTeams();
-        Integer scoreOfTeamOne = scoresOfTeams.get(ONE);
+        MatchScores matchScores = firstHalf.getMatchScores();
+        int scoreOfTeamOne = matchScores.getScoreOfTeamOne();
         assertThat(scoreOfTeamOne).isEqualTo(1);
     }
 
@@ -68,8 +66,8 @@ class FirstHalfShould {
 
         firstHalf.redoLastGoal();
 
-        Map<Team, Integer> scoresOfTeams = firstHalf.getScoreOfTeams();
-        Integer scoreOfTeamTwo = scoresOfTeams.get(TWO);
+        MatchScores matchScores = firstHalf.getMatchScores();
+        int scoreOfTeamTwo = matchScores.getScoreOfTeamTwo();
         assertThat(scoreOfTeamTwo).isEqualTo(2);
     }
 

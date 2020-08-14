@@ -2,9 +2,8 @@ package com.valtech.digitalFoosball.domain.timeGame.sequences;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.timeGame.IPlayATimeGame;
+import com.valtech.digitalFoosball.domain.timeGame.MatchScores;
 import com.valtech.digitalFoosball.domain.timeGame.TimeGameRules;
-
-import java.util.Map;
 
 public class EndByScore extends GameOver implements IPlayATimeGame {
     private final IPlayATimeGame previousTimeGameSequence;
@@ -31,8 +30,8 @@ public class EndByScore extends GameOver implements IPlayATimeGame {
     }
 
     @Override
-    public Map<Team, Integer> getScoreOfTeams() {
-        return previousTimeGameSequence.getScoreOfTeams();
+    public MatchScores getMatchScores() {
+        return previousTimeGameSequence.getMatchScores();
     }
 
     @Override
