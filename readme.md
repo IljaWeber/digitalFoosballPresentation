@@ -20,7 +20,10 @@ It's split up in different sub modules:
 
 ##Interaction among modules
 
-User commands like choosing game mode, goal scoring or team naming triggering through REST calls 
-the business layer of the application. Processed commands are send to the web application by a web socket.  
+The business layer is triggerd by the frontend module and raspberry pi module using REST endpoints.
+The raspberry module is responsible for listening to the light barriers and sending raise goal 
+REST calls to the backend module.
+The Frontend module is responsible for all other user commands, like submitting players or choosing game modes. 
+To identify to different games to the correct raspberry pi pin listener the IOC Spring is used. 
 
 
