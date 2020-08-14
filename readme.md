@@ -24,5 +24,5 @@ The business layer is triggerd by the frontend module and raspberry pi module us
 The raspberry module is responsible for listening to the light barriers and sending raise goal 
 REST calls to the backend module.
 The Frontend module is responsible for all other user commands, like submitting players or choosing game modes. 
-To match the responsible REST endpoint which is are called by the raspberry pi with 
+To match the responsible REST endpoint which is called by the raspberry pi with 
 the correct game mode the IOC container Spring ist used.
