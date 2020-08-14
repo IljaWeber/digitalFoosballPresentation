@@ -4,14 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MyTimerTaskShould {
+public class TimeGameTimerTaskShould {
 
     @Test
     void inform_the_rules_when_time_ran_down() {
         FakeTimeGame game = new FakeTimeGame();
-        MyTimerTask myTimerTask = new MyTimerTask(game);
+        TimeGameTimerTask timeGameTimerTask = new TimeGameTimerTask(game);
 
-        myTimerTask.run();
+        timeGameTimerTask.run();
 
         assertThat(game.isInformed).isTrue();
     }
