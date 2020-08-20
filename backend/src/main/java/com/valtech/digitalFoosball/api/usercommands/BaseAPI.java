@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+
 public abstract class BaseAPI {
     protected final Logger logger;
     protected final IPlayAGame IPlayAGame;
@@ -15,6 +17,14 @@ public abstract class BaseAPI {
     public BaseAPI(IPlayAGame IPlayAGame) {
         logger = LogManager.getLogger(AdHocAPI.class);
         this.IPlayAGame = IPlayAGame;
+    }
+
+    @RequestMapping(value= "/api/**", method=RequestMethod.OPTIONS)
+    public void corsHeaders(HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, x-requested-with");
+        response.addHeader("Access-Control-Max-Age", "3600");
     }
 
     @GetMapping(path = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
