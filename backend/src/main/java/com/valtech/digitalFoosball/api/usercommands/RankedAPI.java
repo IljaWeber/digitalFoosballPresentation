@@ -3,7 +3,7 @@ package com.valtech.digitalFoosball.api.usercommands;
 import com.valtech.digitalFoosball.api.sensorcommands.RaspiController;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedGame;
+import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +18,7 @@ public class RankedAPI extends BaseAPI {
     private final RaspiController raspiController;
 
     @Autowired
-    public RankedAPI(RankedGame game,
+    public RankedAPI(RankedGameRules game,
                      RaspiController raspiController) {
         super(game);
         this.raspiController = raspiController;

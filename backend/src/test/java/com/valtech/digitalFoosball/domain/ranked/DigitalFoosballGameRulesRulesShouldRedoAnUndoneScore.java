@@ -5,7 +5,7 @@ import com.valtech.digitalFoosball.api.persistence.TeamService;
 import com.valtech.digitalFoosball.api.persistence.repository.PlayerRepository;
 import com.valtech.digitalFoosball.api.persistence.repository.TeamRepository;
 import com.valtech.digitalFoosball.domain.IPlayAGame;
-import com.valtech.digitalFoosball.domain.common.DigitalFoosballGame;
+import com.valtech.digitalFoosball.domain.common.DigitalFoosballGameRules;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.PlayerDataModel;
@@ -25,7 +25,7 @@ import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DigitalFoosballGameRulesShouldRedoAnUndoneScore {
+public class DigitalFoosballGameRulesRulesShouldRedoAnUndoneScore {
 
     private final UUID id = UUID.randomUUID();
     public IPlayAGame IPlayAGame;
@@ -39,8 +39,9 @@ public class DigitalFoosballGameRulesShouldRedoAnUndoneScore {
         TeamRepository teamRepository = new TeamRepositoryFake(id);
         PlayerRepository playerRepository = new PlayerRepositoryFake();
 
-        IPlayAGame = new DigitalFoosballGame(new RankedInitService(new TeamService(teamRepository,
-                                                                                   new PlayerService(playerRepository))));
+        IPlayAGame = new DigitalFoosballGameRules(new RankedInitService(new TeamService(teamRepository,
+                                                                                        new PlayerService(
+                                                                                                playerRepository))));
         IPlayAGame.initGame(initDataModel);
     }
 

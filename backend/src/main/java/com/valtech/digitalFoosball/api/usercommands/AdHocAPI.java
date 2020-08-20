@@ -1,7 +1,7 @@
 package com.valtech.digitalFoosball.api.usercommands;
 
 import com.valtech.digitalFoosball.api.sensorcommands.RaspiController;
-import com.valtech.digitalFoosball.domain.adhoc.AdHocGame;
+import com.valtech.digitalFoosball.domain.adhoc.AdHocGameRules;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class AdHocAPI extends BaseAPI {
     private final RaspiController raspiController;
 
     @Autowired
-    public AdHocAPI(AdHocGame game,
+    public AdHocAPI(AdHocGameRules game,
                     RaspiController raspiController) {
         super(game);
         this.raspiController = raspiController;

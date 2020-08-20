@@ -1,12 +1,11 @@
 package com.valtech.digitalFoosball.api.sensorcommands;
 
 import com.valtech.digitalFoosball.api.INotifyAboutStateChanges;
-import com.valtech.digitalFoosball.domain.common.DigitalFoosballGameRules;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.ClassicGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedGame;
+import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,14 +14,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RaspiControllerShould {
 
     private RaspiController raspiController;
-    private FakeRankedGame game;
+    private FakeRankedGameRules game;
     private FakePublisher publisher;
 
     @BeforeEach
     void setUp() {
         publisher = new FakePublisher();
         raspiController = new RaspiController(publisher);
-        game = new FakeRankedGame();
+        game = new FakeRankedGameRules();
     }
 
     @Test
@@ -41,17 +40,17 @@ class RaspiControllerShould {
         assertThat(publisher.clientsInformed).isTrue();
     }
 
-    private class FakeRankedGame extends RankedGame {
+    private class FakeRankedGameRules extends RankedGameRules {
 
         public boolean scoreRaised = false;
 
-        public FakeRankedGame() {
+        public FakeRankedGameRules() {
             super(null);
         }
 
         @Override
         public GameOutputModel getGameData() {
-            return new ClassicGameOutputModel(new GameDataModel(), new DigitalFoosballGameRules());
+            return new ClassicGameOutputModel(new GameDataModel());
         }
 
         @Override

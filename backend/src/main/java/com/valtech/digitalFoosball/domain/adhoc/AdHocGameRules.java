@@ -1,14 +1,14 @@
 package com.valtech.digitalFoosball.domain.adhoc;
 
-import com.valtech.digitalFoosball.domain.common.DigitalFoosballGame;
+import com.valtech.digitalFoosball.domain.common.DigitalFoosballGameRules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdHocGame extends DigitalFoosballGame {
+public class AdHocGameRules extends DigitalFoosballGameRules {
 
     @Autowired
-    public AdHocGame(AdHocInitService initService) {
+    public AdHocGameRules(AdHocInitService initService) {
         super(initService);
     }
 }

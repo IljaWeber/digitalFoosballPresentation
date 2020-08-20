@@ -1,15 +1,15 @@
 package com.valtech.digitalFoosball.domain.ranked;
 
-import com.valtech.digitalFoosball.domain.common.DigitalFoosballGame;
+import com.valtech.digitalFoosball.domain.common.DigitalFoosballGameRules;
 import com.valtech.digitalFoosball.domain.ranked.service.RankedInitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RankedGame extends DigitalFoosballGame {
+public class RankedGameRules extends DigitalFoosballGameRules {
 
     @Autowired
-    public RankedGame(RankedInitService initService) {
+    public RankedGameRules(RankedInitService initService) {
         super(initService);
     }
 }

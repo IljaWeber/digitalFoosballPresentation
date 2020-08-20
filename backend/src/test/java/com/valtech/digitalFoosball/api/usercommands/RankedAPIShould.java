@@ -4,7 +4,7 @@ import com.valtech.digitalFoosball.api.sensorcommands.RaspiController;
 import com.valtech.digitalFoosball.domain.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
-import com.valtech.digitalFoosball.domain.ranked.RankedGame;
+import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
 import com.valtech.digitalFoosball.domain.ranked.service.RankedInitService;
 import org.junit.jupiter.api.Test;
 
@@ -14,13 +14,13 @@ class RankedAPIShould {
 
     @Test
     void inform_the_raspi_controller_that_the_current_game_is_ranked() {
-        RankedGame game = new RankedGame(new FakeInitService());
+        RankedGameRules game = new RankedGameRules(new FakeInitService());
         FakeRaspiController raspiController = new FakeRaspiController();
         RankedAPI rankedAPI = new RankedAPI(game, raspiController);
 
         rankedAPI.init(new InitDataModel());
 
-        assertThat(raspiController.IPlayAGame).isInstanceOf(RankedGame.class);
+        assertThat(raspiController.IPlayAGame).isInstanceOf(RankedGameRules.class);
     }
 
     private class FakeRaspiController extends RaspiController {

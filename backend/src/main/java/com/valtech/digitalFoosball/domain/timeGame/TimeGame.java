@@ -2,8 +2,9 @@ package com.valtech.digitalFoosball.domain.timeGame;
 
 import com.valtech.digitalFoosball.api.INotifyAboutStateChanges;
 import com.valtech.digitalFoosball.domain.IInitializeGames;
+import com.valtech.digitalFoosball.domain.IPlayAGame;
 import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
-import com.valtech.digitalFoosball.domain.common.BaseGame;
+import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.timeGame.service.TimeGameTimerTask;
@@ -13,10 +14,11 @@ import org.springframework.stereotype.Service;
 import java.util.Timer;
 
 @Service
-public class TimeGame extends BaseGame<TimeGameRules> {
+public class TimeGame implements IPlayAGame {
     private final IInitializeGames initService;
     private final INotifyAboutStateChanges publisher;
     private final Timer timer;
+    protected TimeGameRules gameRules;
     private GameDataModel model;
 
     @Autowired
@@ -57,7 +59,23 @@ public class TimeGame extends BaseGame<TimeGameRules> {
 
     @Override
     public void changeover() {
-        super.changeover();
+        gameRules.changeOver();
         startTimer();
+    }
+
+    public void countGoalFor(Team team) {
+        gameRules.raiseScoreFor(team);
+    }
+
+    public void undoGoal() {
+        gameRules.undoLastGoal();
+    }
+
+    public void redoGoal() {
+        gameRules.redoLastGoal();
+    }
+
+    public void setGameRules(TimeGameRules gameRules) {
+        this.gameRules = gameRules;
     }
 }

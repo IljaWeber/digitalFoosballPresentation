@@ -1,107 +1,53 @@
 package com.valtech.digitalFoosball.domain.common;
 
-import com.valtech.digitalFoosball.domain.IKnowTheRules;
+import com.valtech.digitalFoosball.domain.IInitializeGames;
+import com.valtech.digitalFoosball.domain.IPlayAGame;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
+import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
+import com.valtech.digitalFoosball.domain.common.models.output.game.ClassicGameOutputModel;
+import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 
-import java.util.Collections;
-import java.util.Stack;
+public class DigitalFoosballGameRules implements IPlayAGame {
+    private final IInitializeGames initService;
+    private GameDataModel model;
 
-import static com.valtech.digitalFoosball.domain.common.constants.Team.*;
-
-public class DigitalFoosballGameRules implements IKnowTheRules {
-    private final Stack<Team> goalOverView;
-    private final Stack<Team> undoOverView;
-    private final Stack<Team> winOverview;
-    private Team currentSetWinner = NO_TEAM;
-
-    public DigitalFoosballGameRules() {
-        goalOverView = new Stack<>();
-        undoOverView = new Stack<>();
-        winOverview = new Stack<>();
+    public DigitalFoosballGameRules(IInitializeGames initService) {
+        this.initService = initService;
     }
 
-    public Team getCurrentSetWinner() {
-        return currentSetWinner;
+    @Override
+    public void initGame(InitDataModel initDataModel) {
+        model = initService.init(initDataModel);
     }
 
-    // OPTIMIZE: created on 28.07.20 by iljaweber: reconsider implementation of raiseScoreFor
-
-    public void raiseScoreFor(Team team) {
-
-        if (currentSetWinner != NO_TEAM) {
-            return;
-        }
-
-        goalOverView.push(team);
-
-        checkForWin();
-
-        if (currentSetWinner != NO_TEAM) {
-            winOverview.push(currentSetWinner);
-        }
+    @Override
+    public void resetMatch() {
+        model.resetMatch();
     }
 
-    public int getScoreOfTeam(Team team) {
-        if (goalOverView.isEmpty()) {
-            return 0;
-        }
-
-        return Collections.frequency(goalOverView, team);
+    @Override
+    public GameOutputModel getGameData() {
+        return new ClassicGameOutputModel(model);
     }
 
-    public Team getMatchWinner() {
-        for (Team team : Team.getTeams()) {
-            if (Collections.frequency(winOverview, team) >= 2) {
-                return team;
-            }
-        }
-
-        return NO_TEAM;
+    @Override
+    public void countGoalFor(Team team) {
+        model.raiseScoreFor(team);
     }
 
-    public void undoLastGoal() {
-        if (goalOverView.isEmpty()) {
-            return;
-        }
-
-        if (currentSetWinner != NO_TEAM) {
-            winOverview.pop();
-            currentSetWinner = NO_TEAM;
-        }
-
-        Team team = goalOverView.pop();
-        undoOverView.push(team);
+    @Override
+    public void undoGoal() {
+        model.undoLastGoal();
     }
 
-    public void redoLastGoal() {
-        if (undoOverView.isEmpty()) {
-            return;
-        }
-
-        raiseScoreFor(undoOverView.pop());
+    @Override
+    public void redoGoal() {
+        model.redoLastGoal();
     }
 
-    public void changeOver() {
-        goalOverView.clear();
-        undoOverView.clear();
-        currentSetWinner = NO_TEAM;
-    }
-
-    private void checkForWin() {
-        int neededGoals = 6;
-        int scoreOfTeamOne = Collections.frequency(goalOverView, ONE);
-        int scoreOfTeamTwo = Collections.frequency(goalOverView, TWO);
-
-        if (scoreOfTeamOne >= neededGoals) {
-            if (scoreOfTeamOne - scoreOfTeamTwo >= 2) {
-                currentSetWinner = ONE;
-            }
-        }
-
-        if (scoreOfTeamTwo >= neededGoals) {
-            if (scoreOfTeamTwo - scoreOfTeamOne >= 2) {
-                currentSetWinner = TWO;
-            }
-        }
+    @Override
+    public void changeover() {
+        model.changeOver();
     }
 }
