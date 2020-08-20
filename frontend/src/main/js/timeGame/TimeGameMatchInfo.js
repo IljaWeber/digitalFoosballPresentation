@@ -47,7 +47,6 @@ export class TimeGameMatchInfo extends React.Component {
         const requestOptions = {
             method: 'GET',
             Authorization: properties.auth,
-            mode: 'same-origin',
             credentials: 'include'
         };
 
