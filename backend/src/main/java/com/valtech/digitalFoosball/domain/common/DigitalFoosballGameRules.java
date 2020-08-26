@@ -9,7 +9,7 @@ import com.valtech.digitalFoosball.domain.common.models.output.game.ClassicGameO
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 
 public class DigitalFoosballGameRules implements IPlayAGame {
-    private final IInitializeGames initService;
+    private IInitializeGames initService;
     private GameDataModel model;
 
     public DigitalFoosballGameRules(IInitializeGames initService) {
@@ -29,6 +29,11 @@ public class DigitalFoosballGameRules implements IPlayAGame {
     @Override
     public GameOutputModel getGameData() {
         return new ClassicGameOutputModel(model);
+    }
+
+    @Override
+    public void setGameDataModel(GameDataModel gameDataModel) {
+        this.model = gameDataModel;
     }
 
     @Override

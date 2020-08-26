@@ -1,15 +1,13 @@
 package com.valtech.digitalFoosball.api.sensorcommands;
 
 import com.valtech.digitalFoosball.api.INotifyAboutStateChanges;
+import com.valtech.digitalFoosball.api.usercommands.DigitalFoosballFacade;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.ClassicGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class RaspiControllerShould {
 
@@ -20,24 +18,17 @@ class RaspiControllerShould {
     @BeforeEach
     void setUp() {
         publisher = new FakePublisher();
-        raspiController = new RaspiController(publisher);
+        raspiController = new RaspiController(publisher, new DigitalFoosballFacadeFake(game));
         game = new FakeRankedGameRules();
     }
 
-    @Test
-    void raise_score_in_the_given_game() {
-        raspiController.setGame(game);
-        raspiController.raiseScore(1);
+    private class DigitalFoosballFacadeFake extends DigitalFoosballFacade {
+        private FakeRankedGameRules rules;
 
-        assertThat(game.scoreRaised).isTrue();
-    }
-
-    @Test
-    void inform_the_clients_about_a_goal() {
-        raspiController.setGame(game);
-        raspiController.raiseScore(1);
-
-        assertThat(publisher.clientsInformed).isTrue();
+        public DigitalFoosballFacadeFake(FakeRankedGameRules rules) {
+            super(null, null);
+            this.rules = rules;
+        }
     }
 
     private class FakeRankedGameRules extends RankedGameRules {

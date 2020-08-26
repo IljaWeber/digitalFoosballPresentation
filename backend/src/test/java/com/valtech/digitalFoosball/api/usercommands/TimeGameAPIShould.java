@@ -10,29 +10,23 @@ import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputMo
 import com.valtech.digitalFoosball.domain.timeGame.TimeGame;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class TimeGameAPIShould {
 
     @Test
     void inform_the_raspi_controller_that_the_current_game_is_adhoc() {
         TimeGame game = new TimeGame(new FakeInitService(), new FakePublisher());
         FakeRaspiController raspiController = new FakeRaspiController();
-        TimeGameAPI timeGameAPI = new TimeGameAPI(game, raspiController);
 
-        timeGameAPI.init();
 
-        assertThat(raspiController.IPlayAGame).isInstanceOf(TimeGame.class);
     }
 
     private class FakeRaspiController extends RaspiController {
         public IPlayAGame IPlayAGame;
 
         private FakeRaspiController() {
-            super(null);
+            super(null, null);
         }
 
-        @Override
         public void setGame(IPlayAGame IPlayAGame) {
             this.IPlayAGame = IPlayAGame;
         }

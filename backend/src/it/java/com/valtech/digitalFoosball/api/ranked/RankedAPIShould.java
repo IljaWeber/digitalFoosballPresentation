@@ -4,6 +4,7 @@ import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.api.helper.ComparableOutputModelCreator;
 import com.valtech.digitalFoosball.api.helper.RestEndpointRequestPerformer;
 import com.valtech.digitalFoosball.api.usercommands.RankedAPI;
+import com.valtech.digitalFoosball.domain.SessionIdentifier;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -17,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static com.valtech.digitalFoosball.domain.common.constants.GameMode.RANKED;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
@@ -35,13 +37,20 @@ public class RankedAPIShould {
     @Autowired
     RestEndpointRequestPerformer
             endpointRequestPerformer;
+    private String raspberryPi;
+    private SessionIdentifier identifier;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         mapper = new ObjectMapper();
         List<TeamDataModel> teams = new ArrayList<>();
         comparableOutput = new ComparableOutputModelCreator();
         GameDataModel gameDataModel = new GameDataModel();
+        raspberryPi = endpointRequestPerformer.registerRaspberryPi();
+        identifier = new SessionIdentifier();
+
+        identifier.setId(UUID.fromString(raspberryPi));
+
         TeamDataModel teamOne = new TeamDataModel("FC Barcelona",
                                                   "Marc-Andre ter Stegen", "Lionel Messi");
         TeamDataModel teamTwo = new TeamDataModel("FC Madrid",
@@ -50,7 +59,7 @@ public class RankedAPIShould {
         teams.add(teamOne);
         teams.add(teamTwo);
         gameDataModel.setTeams(teams);
-        endpointRequestPerformer.prepareTeamsForInitialization(teamOne, teamTwo);
+        endpointRequestPerformer.prepareTeamsForInitialization(teamOne, teamTwo, identifier);
 
         comparableOutput.prepareCompareTeamOneWithValues("FC Barcelona",
                                                          "Marc-Andre ter Stegen", "Lionel Messi");
@@ -61,11 +70,10 @@ public class RankedAPIShould {
     @Test
     void initialise_a_ranked_game_with_individual_team_and_player_names() throws Exception {
         String expected = mapper.writeValueAsString(comparableOutput);
-
         endpointRequestPerformer.initializeGame(RANKED);
 
         String actual
-                = endpointRequestPerformer.getGameValues(RANKED);
+                = endpointRequestPerformer.getGameValues(RANKED, identifier);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -76,14 +84,15 @@ public class RankedAPIShould {
                 mapper.writeValueAsString(comparableOutput);
         endpointRequestPerformer
                 .initializeGame(RANKED);
-        endpointRequestPerformer.countGoalForTeam(ONE,
+        endpointRequestPerformer.countGoalForTeam(identifier,
+                                                  ONE,
                                                   TWO,
                                                   ONE, ONE, ONE);
 
-        endpointRequestPerformer.resetValues(RANKED);
+        endpointRequestPerformer.resetValues(RANKED, identifier);
 
         String actual
-                = endpointRequestPerformer.getGameValues(RANKED);
+                = endpointRequestPerformer.getGameValues(RANKED, identifier);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -99,13 +108,14 @@ public class RankedAPIShould {
                 = mapper.writeValueAsString(comparableOutput);
         endpointRequestPerformer
                 .initializeGame(RANKED);
-        endpointRequestPerformer.countGoalForTeam(ONE,
+        endpointRequestPerformer.countGoalForTeam(identifier,
+                                                  ONE,
                                                   TWO, TWO,
                                                   ONE, ONE,
                                                   TWO,
                                                   ONE, ONE, ONE);
 
-        String actual = endpointRequestPerformer.getGameValues(RANKED);
+        String actual = endpointRequestPerformer.getGameValues(RANKED, identifier);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -124,26 +134,29 @@ public class RankedAPIShould {
                 mapper.writeValueAsString(comparableOutput);
         endpointRequestPerformer
                 .initializeGame(RANKED);
-        endpointRequestPerformer.countGoalForTeam(ONE,
+        endpointRequestPerformer.countGoalForTeam(identifier,
+                                                  ONE,
                                                   TWO, TWO,
                                                   ONE,
                                                   TWO,
                                                   ONE, ONE,
                                                   TWO, TWO, TWO);
-        endpointRequestPerformer.countGoalForTeam(ONE, ONE, ONE,
+        endpointRequestPerformer.countGoalForTeam(identifier,
+                                                  ONE, ONE, ONE,
                                                   TWO, TWO,
                                                   ONE, ONE,
                                                   TWO,
                                                   ONE);
         endpointRequestPerformer
-                .startANewRound(RANKED);
-        endpointRequestPerformer.countGoalForTeam(TWO, TWO,
+                .startANewRound(RANKED, identifier);
+        endpointRequestPerformer.countGoalForTeam(identifier,
+                                                  TWO, TWO,
                                                   ONE, ONE, ONE,
                                                   TWO,
                                                   ONE,
                                                   TWO, TWO, TWO);
 
-        String actual = endpointRequestPerformer.getGameValues(RANKED);
+        String actual = endpointRequestPerformer.getGameValues(RANKED, identifier);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -155,16 +168,17 @@ public class RankedAPIShould {
         endpointRequestPerformer
                 .initializeGame(RANKED);
         endpointRequestPerformer
-                .countGoalForTeam(ONE, ONE, ONE,
+                .countGoalForTeam(identifier,
+                                  ONE, ONE, ONE,
                                   TWO,
                                   ONE, ONE,
                                   TWO, TWO, TWO,
                                   ONE);
 
-        endpointRequestPerformer.startANewRound(RANKED);
+        endpointRequestPerformer.startANewRound(RANKED, identifier);
 
         String actual
-                = endpointRequestPerformer.getGameValues(RANKED);
+                = endpointRequestPerformer.getGameValues(RANKED, identifier);
         assertThat(actual).isEqualTo(expected);
     }
 }

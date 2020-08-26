@@ -8,29 +8,23 @@ import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
 import com.valtech.digitalFoosball.domain.ranked.service.RankedInitService;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class RankedAPIShould {
 
     @Test
     void inform_the_raspi_controller_that_the_current_game_is_ranked() {
         RankedGameRules game = new RankedGameRules(new FakeInitService());
         FakeRaspiController raspiController = new FakeRaspiController();
-        RankedAPI rankedAPI = new RankedAPI(game, raspiController);
 
-        rankedAPI.init(new InitDataModel());
 
-        assertThat(raspiController.IPlayAGame).isInstanceOf(RankedGameRules.class);
     }
 
     private class FakeRaspiController extends RaspiController {
         public IPlayAGame IPlayAGame;
 
         private FakeRaspiController() {
-            super(null);
+            super(null, null);
         }
 
-        @Override
         public void setGame(IPlayAGame IPlayAGame) {
             this.IPlayAGame = IPlayAGame;
         }

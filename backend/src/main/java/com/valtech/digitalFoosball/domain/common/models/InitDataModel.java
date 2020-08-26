@@ -1,11 +1,16 @@
 package com.valtech.digitalFoosball.domain.common.models;
 
+import com.valtech.digitalFoosball.domain.SessionIdentifier;
+import com.valtech.digitalFoosball.domain.common.constants.GameMode;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class InitDataModel {
     private TeamDataModel teamOne;
     private TeamDataModel teamTwo;
+    private GameMode mode;
+    private SessionIdentifier identifier;
 
     public InitDataModel() {
         teamOne = new TeamDataModel();
@@ -44,5 +49,22 @@ public class InitDataModel {
 
     public String toString() {
         return teamOne.toString() + "; " + teamTwo.toString();
+    }
+
+    public void setMode(GameMode mode) {
+        this.mode = mode;
+
+    }
+
+    public GameMode getMode() {
+        return mode;
+    }
+
+    public void setIdentifier(SessionIdentifier identifier) {
+        this.identifier = identifier;
+    }
+
+    public SessionIdentifier getIdentifier() {
+        return identifier;
     }
 }

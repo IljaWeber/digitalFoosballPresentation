@@ -4,6 +4,7 @@ import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.api.helper.ComparableOutputModelCreator;
 import com.valtech.digitalFoosball.api.helper.RestEndpointRequestPerformer;
 import com.valtech.digitalFoosball.api.usercommands.RankedAPI;
+import com.valtech.digitalFoosball.domain.SessionIdentifier;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -17,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static com.valtech.digitalFoosball.domain.common.constants.GameMode.RANKED;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
@@ -37,13 +39,18 @@ public class RankedAPIShouldRaise {
     @Autowired
     private RestEndpointRequestPerformer
             endpointRequestPerformer;
+    private String raspberryPi;
+    private SessionIdentifier identifier;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         mapper = new ObjectMapper();
         List<TeamDataModel> teams = new ArrayList<>();
         comparableOutput = new ComparableOutputModelCreator();
         GameDataModel gameDataModel = new GameDataModel();
+        raspberryPi = endpointRequestPerformer.registerRaspberryPi();
+        identifier = new SessionIdentifier();
+        identifier.setId(UUID.fromString(raspberryPi));
         TeamDataModel teamOne = new TeamDataModel("FC Barcelona",
                                                   "Marc-Andre ter Stegen", "Lionel Messi");
         TeamDataModel teamTwo = new TeamDataModel("FC Madrid",
@@ -52,7 +59,7 @@ public class RankedAPIShouldRaise {
         teams.add(teamOne);
         teams.add(teamTwo);
         gameDataModel.setTeams(teams);
-        endpointRequestPerformer.prepareTeamsForInitialization(teamOne, teamTwo);
+        endpointRequestPerformer.prepareTeamsForInitialization(teamOne, teamTwo, identifier);
 
         comparableOutput.prepareCompareTeamOneWithValues("FC Barcelona",
                                                          "Marc-Andre ter Stegen", "Lionel Messi");
@@ -71,14 +78,15 @@ public class RankedAPIShouldRaise {
         endpointRequestPerformer
                 .initializeGame(RANKED);
 
-        endpointRequestPerformer.countGoalForTeam(ONE,
+        endpointRequestPerformer.countGoalForTeam(identifier,
+                                                  ONE,
                                                   TWO, TWO,
                                                   ONE, ONE,
                                                   TWO,
                                                   ONE);
 
         String actual
-                = endpointRequestPerformer.getGameValues(RANKED);
+                = endpointRequestPerformer.getGameValues(RANKED, identifier);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -95,7 +103,8 @@ public class RankedAPIShouldRaise {
         endpointRequestPerformer
                 .initializeGame(RANKED);
 
-        endpointRequestPerformer.countGoalForTeam(ONE, ONE, ONE,
+        endpointRequestPerformer.countGoalForTeam(identifier,
+                                                  ONE, ONE, ONE,
                                                   TWO, TWO,
                                                   ONE,
                                                   TWO, TWO,
@@ -104,7 +113,7 @@ public class RankedAPIShouldRaise {
                                                   ONE);
 
         String actual
-                = endpointRequestPerformer.getGameValues(RANKED);
+                = endpointRequestPerformer.getGameValues(RANKED, identifier);
         assertThat(actual).isEqualTo(expected);
     }
 }

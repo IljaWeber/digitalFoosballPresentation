@@ -1,6 +1,9 @@
 package com.valtech.digitalFoosball.api.helper;
 
 import com.google.gson.Gson;
+import com.jayway.jsonpath.JsonPath;
+import com.valtech.digitalFoosball.domain.RaiseScoreIdentifier;
+import com.valtech.digitalFoosball.domain.SessionIdentifier;
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
@@ -32,11 +35,25 @@ public class RestEndpointRequestPerformer {
         gson = new Gson();
     }
 
-    public void countGoalForTeam(Team... teams) throws Exception {
+    public String registerRaspberryPi() throws Exception {
+        builder = MockMvcRequestBuilders.post("/raspi/register");
+        String response = mockMvc.perform(builder).andReturn().getResponse().getContentAsString();
+
+        String result = JsonPath.read(response, "$.identifier");
+
+        return result;
+    }
+
+    public void countGoalForTeam(SessionIdentifier identifier, Team... teams) throws Exception {
+        RaiseScoreIdentifier scoreIdentifier = new RaiseScoreIdentifier();
+        scoreIdentifier.setIdentifier(identifier);
         builder = MockMvcRequestBuilders.post("/raspi/raise");
+
         for (Team team : teams) {
             int hardwareValueOfTeam = team.hardwareValue();
-            builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(String.valueOf(hardwareValueOfTeam));
+            scoreIdentifier.setTeamNo(hardwareValueOfTeam);
+            json = gson.toJson(scoreIdentifier);
+            builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
             mockMvc.perform(builder);
         }
     }
@@ -50,45 +67,57 @@ public class RestEndpointRequestPerformer {
         mockMvc.perform(builder);
     }
 
-    public void startANewRound(GameMode gameMode) throws Exception {
+    public void startANewRound(GameMode gameMode, SessionIdentifier identifier) throws Exception {
+        json = gson.toJson(identifier);
         String mode = gameMode.toString();
 
         builder = MockMvcRequestBuilders.post(mode + "/newRound");
+        builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
     }
 
-    public void resetValues(GameMode gameMode) throws Exception {
+    public void resetValues(GameMode gameMode, SessionIdentifier identifier) throws Exception {
+        json = gson.toJson(identifier);
         String mode = gameMode.toString();
 
         builder = MockMvcRequestBuilders.delete(mode + "/reset");
+        builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
     }
 
-    public void undoLastGoal(GameMode gameMode) throws Exception {
+    public void undoLastGoal(GameMode gameMode, SessionIdentifier identifier) throws Exception {
+        json = gson.toJson(identifier);
         String mode = gameMode.toString();
 
         builder = MockMvcRequestBuilders.put(mode + "/undo");
+        builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
     }
 
-    public void redoLastUndoneGoal(GameMode gameMode) throws Exception {
+    public void redoLastUndoneGoal(GameMode gameMode, SessionIdentifier identifier) throws Exception {
+        json = gson.toJson(identifier);
         String mode = gameMode.toString();
 
         builder = MockMvcRequestBuilders.put(mode + "/redo");
+        builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         mockMvc.perform(builder);
 
     }
 
-    public String getGameValues(GameMode gameMode) throws Exception {
+    public String getGameValues(GameMode gameMode, SessionIdentifier identifier) throws Exception {
+        json = gson.toJson(identifier);
         String mode = gameMode.toString();
 
         builder = MockMvcRequestBuilders.get(mode + "/game");
+        builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
         MvcResult result = mockMvc.perform(builder).andExpect(status().isOk()).andReturn();
 
         return result.getResponse().getContentAsString();
     }
 
-    public void prepareTeamsForInitialization(TeamDataModel teamOne, TeamDataModel teamTwo) {
+    public void prepareTeamsForInitialization(TeamDataModel teamOne,
+                                              TeamDataModel teamTwo,
+                                              SessionIdentifier identifier) {
         InitDataModel initDataModel = new InitDataModel();
         List<TeamDataModel> teams = new ArrayList<>();
 
@@ -96,7 +125,12 @@ public class RestEndpointRequestPerformer {
         teams.add(teamTwo);
 
         initDataModel.setTeams(teams);
+        initDataModel.setIdentifier(identifier);
 
         json = gson.toJson(initDataModel);
+    }
+
+    public void prepareAdHocInitialization(SessionIdentifier identifier) {
+        json = gson.toJson(identifier);
     }
 }

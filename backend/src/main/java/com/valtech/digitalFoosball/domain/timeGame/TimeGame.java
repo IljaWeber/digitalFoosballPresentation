@@ -53,6 +53,11 @@ public class TimeGame implements IPlayAGame {
         return new TimeGameOutputModel(model, gameRules);
     }
 
+    @Override
+    public void setGameDataModel(GameDataModel gameDataModel) {
+        this.model = gameDataModel;
+    }
+
     public void informClients() {
         publisher.notifyAboutStateChange(getGameData());
     }

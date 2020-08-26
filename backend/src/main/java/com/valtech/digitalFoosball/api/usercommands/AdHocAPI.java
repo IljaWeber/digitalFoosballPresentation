@@ -1,36 +1,35 @@
 package com.valtech.digitalFoosball.api.usercommands;
 
-import com.valtech.digitalFoosball.api.sensorcommands.RaspiController;
-import com.valtech.digitalFoosball.domain.adhoc.AdHocGameRules;
+import com.valtech.digitalFoosball.domain.SessionIdentifier;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static com.valtech.digitalFoosball.domain.common.constants.GameMode.AD_HOC;
 
 @RestController("adhoc_controller")
 @RequestMapping("adhoc")
 public class AdHocAPI extends BaseAPI {
 
-    private final RaspiController raspiController;
-
     @Autowired
-    public AdHocAPI(AdHocGameRules game,
-                    RaspiController raspiController) {
-        super(game);
-        this.raspiController = raspiController;
+    public AdHocAPI(DigitalFoosballFacade facade) {
+        super(facade);
     }
 
     @PostMapping(path = "/init", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GameOutputModel init() {
+    public GameOutputModel init(@RequestBody SessionIdentifier assosiatedRaspBerryId) {
         logger.info("New AdHoc-Game");
+        InitDataModel initDataModel = new InitDataModel();
+        initDataModel.setMode(AD_HOC);
 
-        raspiController.setGame(IPlayAGame);
+        iPlayAGame.initGame(initDataModel, assosiatedRaspBerryId.getIdentifier());
 
-        IPlayAGame.initGame(new InitDataModel());
-
-        return IPlayAGame.getGameData();
+        return iPlayAGame.getGameData(assosiatedRaspBerryId.getIdentifier());
     }
+
 }

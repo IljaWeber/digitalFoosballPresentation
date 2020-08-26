@@ -4,6 +4,7 @@ import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.api.helper.ComparableOutputModelCreator;
 import com.valtech.digitalFoosball.api.helper.RestEndpointRequestPerformer;
 import com.valtech.digitalFoosball.api.usercommands.RankedAPI;
+import com.valtech.digitalFoosball.domain.SessionIdentifier;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -17,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static com.valtech.digitalFoosball.domain.common.constants.GameMode.RANKED;
 import static com.valtech.digitalFoosball.domain.common.constants.Team.ONE;
@@ -34,12 +36,17 @@ public class RankedAPIShouldRedo {
 
     @Autowired
     private RestEndpointRequestPerformer endpointRequestPerformer;
+    private String raspberryPi;
+    private SessionIdentifier identifier;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         mapper = new ObjectMapper();
         List<TeamDataModel> teams = new ArrayList<>();
         comparableOutput = new ComparableOutputModelCreator();
+        raspberryPi = endpointRequestPerformer.registerRaspberryPi();
+        identifier = new SessionIdentifier();
+        identifier.setId(UUID.fromString(raspberryPi));
         GameDataModel gameDataModel = new GameDataModel();
         TeamDataModel teamOne = new TeamDataModel("FC Barcelona",
                                                   "Marc-Andre ter Stegen", "Lionel Messi");
@@ -49,7 +56,7 @@ public class RankedAPIShouldRedo {
         teams.add(teamOne);
         teams.add(teamTwo);
         gameDataModel.setTeams(teams);
-        endpointRequestPerformer.prepareTeamsForInitialization(teamOne, teamTwo);
+        endpointRequestPerformer.prepareTeamsForInitialization(teamOne, teamTwo, identifier);
 
         comparableOutput.prepareCompareTeamOneWithValues("FC Barcelona",
                                                          "Marc-Andre ter Stegen", "Lionel Messi");
@@ -67,15 +74,16 @@ public class RankedAPIShouldRedo {
                 mapper.writeValueAsString(comparableOutput);
         endpointRequestPerformer
                 .initializeGame(RANKED);
-        endpointRequestPerformer.countGoalForTeam(ONE,
+        endpointRequestPerformer.countGoalForTeam(identifier,
+                                                  ONE,
                                                   TWO, TWO,
                                                   ONE);
-        endpointRequestPerformer.undoLastGoal(RANKED);
+        endpointRequestPerformer.undoLastGoal(RANKED, identifier);
 
-        endpointRequestPerformer.redoLastUndoneGoal(RANKED);
+        endpointRequestPerformer.redoLastUndoneGoal(RANKED, identifier);
 
         String actual
-                = endpointRequestPerformer.getGameValues(RANKED);
+                = endpointRequestPerformer.getGameValues(RANKED, identifier);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -91,16 +99,17 @@ public class RankedAPIShouldRedo {
                 = mapper.writeValueAsString(comparableOutput);
         endpointRequestPerformer
                 .initializeGame(RANKED);
-        endpointRequestPerformer.countGoalForTeam(ONE, ONE,
+        endpointRequestPerformer.countGoalForTeam(identifier,
+                                                  ONE, ONE,
                                                   TWO,
                                                   ONE,
                                                   TWO, TWO, TWO, TWO, TWO);
-        endpointRequestPerformer.undoLastGoal(RANKED);
+        endpointRequestPerformer.undoLastGoal(RANKED, identifier);
 
-        endpointRequestPerformer.redoLastUndoneGoal(RANKED);
+        endpointRequestPerformer.redoLastUndoneGoal(RANKED, identifier);
 
         String actual
-                = endpointRequestPerformer.getGameValues(RANKED);
+                = endpointRequestPerformer.getGameValues(RANKED, identifier);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -118,21 +127,24 @@ public class RankedAPIShouldRedo {
                 = mapper.writeValueAsString(comparableOutput);
         endpointRequestPerformer
                 .initializeGame(RANKED);
-        endpointRequestPerformer.countGoalForTeam(ONE, ONE,
+        endpointRequestPerformer.countGoalForTeam(identifier,
+                                                  ONE, ONE,
                                                   TWO,
                                                   ONE, ONE, ONE,
                                                   TWO, TWO,
                                                   ONE);
         endpointRequestPerformer
-                .startANewRound(RANKED);
-        endpointRequestPerformer.countGoalForTeam(TWO, TWO, TWO,
+                .startANewRound(RANKED, identifier);
+        endpointRequestPerformer.countGoalForTeam(identifier,
+                                                  TWO, TWO, TWO,
                                                   ONE,
                                                   TWO, TWO,
                                                   ONE, ONE,
                                                   TWO);
         endpointRequestPerformer
-                .startANewRound(RANKED);
-        endpointRequestPerformer.countGoalForTeam(TWO,
+                .startANewRound(RANKED, identifier);
+        endpointRequestPerformer.countGoalForTeam(identifier,
+                                                  TWO,
                                                   ONE, ONE,
                                                   TWO, TWO, TWO,
                                                   ONE, ONE,
@@ -141,12 +153,12 @@ public class RankedAPIShouldRedo {
                                                   TWO, TWO,
                                                   ONE,
                                                   TWO, TWO);
-        endpointRequestPerformer.undoLastGoal(RANKED);
+        endpointRequestPerformer.undoLastGoal(RANKED, identifier);
 
-        endpointRequestPerformer.redoLastUndoneGoal(RANKED);
+        endpointRequestPerformer.redoLastUndoneGoal(RANKED, identifier);
 
         String actual
-                = endpointRequestPerformer.getGameValues(RANKED);
+                = endpointRequestPerformer.getGameValues(RANKED, identifier);
         assertThat(actual).isEqualTo(expected);
     }
 }
