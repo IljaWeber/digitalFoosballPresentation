@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.domain;
+package com.valtech.digitalFoosball.domain.common.session;
 
 import java.util.UUID;
 

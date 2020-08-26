@@ -1,4 +1,4 @@
-package com.valtech.digitalFoosball.domain.common;
+package com.valtech.digitalFoosball.domain.common.session;
 
 import com.valtech.digitalFoosball.domain.IPlayAGame;
 

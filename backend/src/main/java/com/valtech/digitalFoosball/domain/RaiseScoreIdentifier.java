@@ -1,5 +1,7 @@
 package com.valtech.digitalFoosball.domain;
 
+import com.valtech.digitalFoosball.domain.common.session.SessionIdentifier;
+
 public class RaiseScoreIdentifier {
     private int teamNo;
     private SessionIdentifier identifier;

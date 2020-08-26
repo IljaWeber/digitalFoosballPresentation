@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.api.usercommands;
 
-import com.valtech.digitalFoosball.domain.SessionIdentifier;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.common.session.SessionIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;

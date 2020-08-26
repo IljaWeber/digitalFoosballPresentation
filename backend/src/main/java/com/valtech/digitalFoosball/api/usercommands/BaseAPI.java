@@ -1,9 +1,9 @@
 package com.valtech.digitalFoosball.api.usercommands;
 
 import com.valtech.digitalFoosball.domain.RaiseScoreIdentifier;
-import com.valtech.digitalFoosball.domain.SessionIdentifier;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.common.session.SessionIdentifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.MediaType;

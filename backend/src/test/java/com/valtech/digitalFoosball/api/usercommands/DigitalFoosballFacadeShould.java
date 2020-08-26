@@ -2,12 +2,12 @@ package com.valtech.digitalFoosball.api.usercommands;
 
 import com.valtech.digitalFoosball.api.INotifyAboutStateChanges;
 import com.valtech.digitalFoosball.api.IObtainTeams;
-import com.valtech.digitalFoosball.domain.SessionIdentifier;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
+import com.valtech.digitalFoosball.domain.common.session.SessionIdentifier;
 import com.valtech.digitalFoosball.domain.ranked.service.RankedInitService;
 import org.junit.jupiter.api.Test;
 

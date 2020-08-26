@@ -4,7 +4,7 @@ import com.valtech.digitalFoosball.Application;
 import com.valtech.digitalFoosball.api.helper.ComparableOutputModelCreator;
 import com.valtech.digitalFoosball.api.helper.RestEndpointRequestPerformer;
 import com.valtech.digitalFoosball.api.usercommands.AdHocAPI;
-import com.valtech.digitalFoosball.domain.SessionIdentifier;
+import com.valtech.digitalFoosball.domain.common.session.SessionIdentifier;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -2,14 +2,14 @@ package com.valtech.digitalFoosball.api.usercommands;
 
 import com.valtech.digitalFoosball.api.INotifyAboutStateChanges;
 import com.valtech.digitalFoosball.domain.IPlayAGame;
-import com.valtech.digitalFoosball.domain.SessionIdentifier;
-import com.valtech.digitalFoosball.domain.SessionManager;
 import com.valtech.digitalFoosball.domain.adhoc.AdHocGameRules;
 import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.common.session.SessionIdentifier;
+import com.valtech.digitalFoosball.domain.common.session.SessionManager;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
 import com.valtech.digitalFoosball.domain.ranked.service.RankedInitService;
 import com.valtech.digitalFoosball.domain.timeGame.TimeGame;

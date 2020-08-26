@@ -1,6 +1,6 @@
-package com.valtech.digitalFoosball.domain;
+package com.valtech.digitalFoosball.domain.common.session;
 
-import com.valtech.digitalFoosball.domain.common.GameSession;
+import com.valtech.digitalFoosball.domain.IPlayAGame;
 
 import java.util.HashMap;
 import java.util.Map;
