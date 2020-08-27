@@ -64,6 +64,20 @@ class SessionManagerShould {
         assertThat(actual).contains("Office Munich #1", "Office Cologne #1");
     }
 
+    @Test
+    public void register_clients_to_their_desired_playgrounds() {
+        SessionManager manager = new SessionManager();
+        manager.registerRaspberryPiWithName("Office Munich #1");
+        String clientsPlayground = "Office Munich #1";
+        IPlayAGame game = createAdHocGame();
+
+        manager.registerClientToPlayground(clientsPlayground, game);
+
+        IPlayAGame gameData = manager.getSession(clientsPlayground);
+        List<TeamOutputModel> actual = gameData.getGameData().getTeams();
+        assertThat(actual).extracting(TeamOutputModel::getName).containsExactly("Orange", "Green");
+    }
+
     private IPlayAGame createAdHocGame() {
         AdHocInitService initService = new AdHocInitService();
         AdHocGameRules gameRules = new AdHocGameRules(initService);

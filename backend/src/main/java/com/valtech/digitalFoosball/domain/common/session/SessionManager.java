@@ -5,14 +5,18 @@ import com.valtech.digitalFoosball.domain.IPlayAGame;
 import java.util.*;
 
 public class SessionManager {
+
+    @Deprecated
     private final Map<UUID, GameSession> runningSessions;
-    private final HashMap<String, GameSession> currentSessions;
+
+    private final Map<String, GameSession> currentSessions;
 
     public SessionManager() {
         runningSessions = new HashMap<>();
         currentSessions = new HashMap<>();
     }
 
+    @Deprecated
     public UUID registerRaspberryPiWithId() {
         GameSession gameSession = new GameSession();
         UUID uuid = UUID.randomUUID();
@@ -22,6 +26,7 @@ public class SessionManager {
         return uuid;
     }
 
+    @Deprecated
     public UUID setSession(UUID availableRaspberry, IPlayAGame gameRules) {
         GameSession gameSession = runningSessions.get(availableRaspberry);
 
@@ -30,6 +35,7 @@ public class SessionManager {
         return availableRaspberry;
     }
 
+    @Deprecated
     public IPlayAGame getSession(UUID relatedIdentifier) {
         GameSession gameSession = runningSessions.get(relatedIdentifier);
 
@@ -43,5 +49,13 @@ public class SessionManager {
 
     public List<String> getAllAvailableRaspberryPi() {
         return new ArrayList<>(currentSessions.keySet());
+    }
+
+    public void registerClientToPlayground(String clientsPlayground, IPlayAGame game) {
+        currentSessions.get(clientsPlayground).registerClient(game);
+    }
+
+    public IPlayAGame getSession(String clientsPlayground) {
+        return currentSessions.get(clientsPlayground).getRules();
     }
 }
