@@ -56,8 +56,8 @@ class SessionManagerShould {
     @Test
     public void show_all_available_raspberry_pi() {
         SessionManager manager = new SessionManager();
-        manager.registerRaspberryPiWithName("Office Munich #1");
-        manager.registerRaspberryPiWithName("Office Cologne #1");
+        manager.registerRaspberryPiWith("Office Munich #1");
+        manager.registerRaspberryPiWith("Office Cologne #1");
 
         List<String> actual = manager.getAllAvailableRaspberryPi();
 
@@ -67,7 +67,7 @@ class SessionManagerShould {
     @Test
     public void register_clients_to_their_desired_playgrounds() {
         SessionManager manager = new SessionManager();
-        manager.registerRaspberryPiWithName("Office Munich #1");
+        manager.registerRaspberryPiWith("Office Munich #1");
         String clientsPlayground = "Office Munich #1";
         IPlayAGame game = createAdHocGame();
 

@@ -42,7 +42,7 @@ public class SessionManager {
         return gameSession.getRules();
     }
 
-    public void registerRaspberryPiWithName(String nameOfRegisteredPi) {
+    public void registerRaspberryPiWith(String nameOfRegisteredPi) {
         GameSession session = new GameSession();
         currentSessions.put(nameOfRegisteredPi, session);
     }

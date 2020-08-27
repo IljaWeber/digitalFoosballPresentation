@@ -125,6 +125,19 @@ class DigitalFoosballFacadeShould {
         assertThat(actual).isEmpty();
     }
 
+    @Test
+    public void register_clients_with_their_data_to_available_playgrounds() {
+        String playgroundName = "Office Munich #1";
+        facade.registerAvailablePlaygroundWith(playgroundName);
+        InitDataModel adHocGame = createAdHocInitDataModel();
+
+        facade.initGameWith(playgroundName, adHocGame);
+
+        GameOutputModel gameData = facade.getGameData(playgroundName);
+        List<TeamOutputModel> actual = gameData.getTeams();
+        assertThat(actual).extracting(TeamOutputModel::getName).containsExactly("Orange", "Green");
+    }
+
     private void raiseScoreFor(UUID assignedId, Team... teams) {
         for (Team team : teams) {
             facade.countGoalFor(team, assignedId);
