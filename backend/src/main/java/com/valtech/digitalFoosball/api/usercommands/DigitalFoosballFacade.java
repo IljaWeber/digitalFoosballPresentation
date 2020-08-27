@@ -116,4 +116,27 @@ public class DigitalFoosballFacade {
 
         return session.getGameData();
     }
+
+    public void countGoalFor(String playgroundName, Team team) {
+        sessionManager.getSession(playgroundName).countGoalFor(team);
+    }
+
+    public void undoGoal(String playgroundName) {
+        sessionManager.getSession(playgroundName).undoGoal();
+    }
+
+    public void redoGoal(String playgroundName) {
+        sessionManager.getSession(playgroundName).redoGoal();
+
+    }
+
+    public void changeover(String playgroundName) {
+        sessionManager.getSession(playgroundName).changeover();
+
+    }
+
+    public void resetMatch(String playgroundName) {
+        sessionManager.getSession(playgroundName).resetMatch();
+
+    }
 }

@@ -138,6 +138,86 @@ class DigitalFoosballFacadeShould {
         assertThat(actual).extracting(TeamOutputModel::getName).containsExactly("Orange", "Green");
     }
 
+    @Test
+    public void raise_scores() {
+        String playgroundName = "Office Munich #1";
+        facade.registerAvailablePlaygroundWith(playgroundName);
+        InitDataModel adHocGame = createAdHocInitDataModel();
+        facade.initGameWith(playgroundName, adHocGame);
+
+        facade.countGoalFor(playgroundName, ONE);
+
+        GameOutputModel gameData = facade.getGameData(playgroundName);
+        List<TeamOutputModel> actual = gameData.getTeams();
+        assertThat(actual).extracting(TeamOutputModel::getScore).containsExactly(1, 0);
+    }
+
+    @Test
+    public void undo_scores() {
+        String playgroundName = "Office Munich #1";
+        facade.registerAvailablePlaygroundWith(playgroundName);
+        InitDataModel adHocGame = createAdHocInitDataModel();
+        facade.initGameWith(playgroundName, adHocGame);
+        facade.countGoalFor(playgroundName, ONE);
+
+        facade.undoGoal(playgroundName);
+
+        GameOutputModel gameData = facade.getGameData(playgroundName);
+        List<TeamOutputModel> actual = gameData.getTeams();
+        assertThat(actual).extracting(TeamOutputModel::getScore).containsExactly(0, 0);
+    }
+
+    @Test
+    public void redo_scores() {
+        String playgroundName = "Office Munich #1";
+        facade.registerAvailablePlaygroundWith(playgroundName);
+        InitDataModel adHocGame = createAdHocInitDataModel();
+        facade.initGameWith(playgroundName, adHocGame);
+        facade.countGoalFor(playgroundName, ONE);
+        facade.undoGoal(playgroundName);
+
+        facade.redoGoal(playgroundName);
+
+        GameOutputModel gameData = facade.getGameData(playgroundName);
+        List<TeamOutputModel> actual = gameData.getTeams();
+        assertThat(actual).extracting(TeamOutputModel::getScore).containsExactly(1, 0);
+    }
+
+    @Test
+    public void changeover_after_a_won_set() {
+        String playgroundName = "Office Munich #1";
+        facade.registerAvailablePlaygroundWith(playgroundName);
+        InitDataModel adHocGame = createAdHocInitDataModel();
+        facade.initGameWith(playgroundName, adHocGame);
+        facade.countGoalFor(playgroundName, ONE);
+        facade.countGoalFor(playgroundName, ONE);
+        facade.countGoalFor(playgroundName, ONE);
+        facade.countGoalFor(playgroundName, ONE);
+        facade.countGoalFor(playgroundName, ONE);
+        facade.countGoalFor(playgroundName, ONE);
+
+        facade.changeover(playgroundName);
+
+        GameOutputModel gameData = facade.getGameData(playgroundName);
+        List<TeamOutputModel> actual = gameData.getTeams();
+        assertThat(actual).extracting(TeamOutputModel::getScore).containsExactly(0, 0);
+    }
+
+    @Test
+    public void reset_the_game() {
+        String playgroundName = "Office Munich #1";
+        facade.registerAvailablePlaygroundWith(playgroundName);
+        InitDataModel adHocGame = createAdHocInitDataModel();
+        facade.initGameWith(playgroundName, adHocGame);
+        facade.countGoalFor(playgroundName, ONE);
+
+        facade.resetMatch(playgroundName);
+
+        GameOutputModel gameData = facade.getGameData(playgroundName);
+        List<TeamOutputModel> actual = gameData.getTeams();
+        assertThat(actual).isEmpty();
+    }
+
     private void raiseScoreFor(UUID assignedId, Team... teams) {
         for (Team team : teams) {
             facade.countGoalFor(team, assignedId);
