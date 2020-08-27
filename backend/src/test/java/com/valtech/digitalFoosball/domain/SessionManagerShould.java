@@ -53,6 +53,17 @@ class SessionManagerShould {
         assertThat(actualGameTwo).extracting(TeamOutputModel::getName).containsExactly("FC Barcelona", "FC Madrid");
     }
 
+    @Test
+    public void show_all_available_raspberry_pi() {
+        SessionManager manager = new SessionManager();
+        manager.registerRaspberryPiWithName("Office Munich #1");
+        manager.registerRaspberryPiWithName("Office Cologne #1");
+
+        List<String> actual = manager.getAllAvailableRaspberryPi();
+
+        assertThat(actual).contains("Office Munich #1", "Office Cologne #1");
+    }
+
     private IPlayAGame createAdHocGame() {
         AdHocInitService initService = new AdHocInitService();
         AdHocGameRules gameRules = new AdHocGameRules(initService);

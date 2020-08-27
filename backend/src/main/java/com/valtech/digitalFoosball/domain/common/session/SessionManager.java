@@ -2,15 +2,15 @@ package com.valtech.digitalFoosball.domain.common.session;
 
 import com.valtech.digitalFoosball.domain.IPlayAGame;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class SessionManager {
     private final Map<UUID, GameSession> runningSessions;
+    private final HashMap<String, GameSession> currentSessions;
 
     public SessionManager() {
         runningSessions = new HashMap<>();
+        currentSessions = new HashMap<>();
     }
 
     public UUID registerRaspberryPiWithId() {
@@ -34,5 +34,14 @@ public class SessionManager {
         GameSession gameSession = runningSessions.get(relatedIdentifier);
 
         return gameSession.getRules();
+    }
+
+    public void registerRaspberryPiWithName(String nameOfRegisteredPi) {
+        GameSession session = new GameSession();
+        currentSessions.put(nameOfRegisteredPi, session);
+    }
+
+    public List<String> getAllAvailableRaspberryPi() {
+        return new ArrayList<>(currentSessions.keySet());
     }
 }
