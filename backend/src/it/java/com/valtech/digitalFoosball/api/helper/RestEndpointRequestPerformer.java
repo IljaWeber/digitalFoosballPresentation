@@ -2,6 +2,7 @@ package com.valtech.digitalFoosball.api.helper;
 
 import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
+import com.valtech.digitalFoosball.domain.PlaygroundIdentifier;
 import com.valtech.digitalFoosball.domain.RaiseScoreIdentifier;
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
@@ -115,6 +116,17 @@ public class RestEndpointRequestPerformer {
         return result.getResponse().getContentAsString();
     }
 
+    public String getGameValues(GameMode gameMode, PlaygroundIdentifier identifier) throws Exception {
+        json = gson.toJson(identifier);
+        String mode = gameMode.toString();
+
+        builder = MockMvcRequestBuilders.get(mode + "/game");
+        builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
+        MvcResult result = mockMvc.perform(builder).andExpect(status().isOk()).andReturn();
+
+        return result.getResponse().getContentAsString();
+    }
+
     public void prepareTeamsForInitialization(TeamDataModel teamOne,
                                               TeamDataModel teamTwo,
                                               SessionIdentifier identifier) {
@@ -133,4 +145,15 @@ public class RestEndpointRequestPerformer {
     public void prepareAdHocInitialization(SessionIdentifier identifier) {
         json = gson.toJson(identifier);
     }
+
+    public void registerRaspberryPi(String playgroundName) throws Exception {
+        PlaygroundIdentifier identifier = new PlaygroundIdentifier();
+        identifier.setIdentifier(playgroundName);
+        json = gson.toJson(identifier);
+        builder = MockMvcRequestBuilders.post("/raspi/register");
+        builder.contentType(MediaType.APPLICATION_JSON_VALUE).content(json);
+
+        mockMvc.perform(builder);
+    }
+
 }

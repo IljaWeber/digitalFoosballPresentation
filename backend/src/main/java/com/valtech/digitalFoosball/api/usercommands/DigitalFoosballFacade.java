@@ -32,7 +32,6 @@ public class DigitalFoosballFacade {
         this.rankedInitService = rankedInitService;
     }
 
-    @Deprecated
     public void initGame(InitDataModel initDataModel, UUID raspberryId) {
         IPlayAGame rules = initializeGameRules(initDataModel);
 
@@ -60,83 +59,37 @@ public class DigitalFoosballFacade {
         return rules;
     }
 
-    @Deprecated
     public void countGoalFor(Team team, UUID relatedIdentifier) {
         sessionManager.getSession(relatedIdentifier).countGoalFor(team);
     }
 
-    @Deprecated
     public void changeover(UUID relatedIdentifier) {
         sessionManager.getSession(relatedIdentifier).changeover();
 
     }
 
-    @Deprecated
     public void undoGoal(UUID relatedIdentifier) {
         sessionManager.getSession(relatedIdentifier).undoGoal();
     }
 
-    @Deprecated
     public void redoGoal(UUID relatedIdentifier) {
         sessionManager.getSession(relatedIdentifier).redoGoal();
     }
 
-    @Deprecated
     public void resetMatch(UUID relatedIdentifier) {
         sessionManager.getSession(relatedIdentifier).resetMatch();
     }
 
-    @Deprecated
     public GameOutputModel getGameData(UUID relatedIdentifier) {
         IPlayAGame session = sessionManager.getSession(relatedIdentifier);
         return session.getGameData();
     }
 
-    @Deprecated
     public SessionIdentifier registerAvailableRaspBerry() {
         SessionIdentifier identifier = new SessionIdentifier();
 
         identifier.setId(sessionManager.registerRaspberryPiWithId());
 
         return identifier;
-    }
-
-    public void registerAvailablePlaygroundWith(String name) {
-        sessionManager.registerRaspberryPiWith(name);
-    }
-
-    public void initGameWith(String playgroundName, InitDataModel adHocGame) {
-        IPlayAGame rules = initializeGameRules(adHocGame);
-
-        sessionManager.registerClientToPlayground(playgroundName, rules);
-    }
-
-    public GameOutputModel getGameData(String playgroundName) {
-        IPlayAGame session = sessionManager.getSession(playgroundName);
-
-        return session.getGameData();
-    }
-
-    public void countGoalFor(String playgroundName, Team team) {
-        sessionManager.getSession(playgroundName).countGoalFor(team);
-    }
-
-    public void undoGoal(String playgroundName) {
-        sessionManager.getSession(playgroundName).undoGoal();
-    }
-
-    public void redoGoal(String playgroundName) {
-        sessionManager.getSession(playgroundName).redoGoal();
-
-    }
-
-    public void changeover(String playgroundName) {
-        sessionManager.getSession(playgroundName).changeover();
-
-    }
-
-    public void resetMatch(String playgroundName) {
-        sessionManager.getSession(playgroundName).resetMatch();
-
     }
 }

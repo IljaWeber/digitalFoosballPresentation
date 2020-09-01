@@ -16,7 +16,6 @@ public class SessionManager {
         currentSessions = new HashMap<>();
     }
 
-    @Deprecated
     public UUID registerRaspberryPiWithId() {
         GameSession gameSession = new GameSession();
         UUID uuid = UUID.randomUUID();
@@ -26,7 +25,6 @@ public class SessionManager {
         return uuid;
     }
 
-    @Deprecated
     public UUID setSession(UUID availableRaspberry, IPlayAGame gameRules) {
         GameSession gameSession = runningSessions.get(availableRaspberry);
 
@@ -35,13 +33,14 @@ public class SessionManager {
         return availableRaspberry;
     }
 
-    @Deprecated
     public IPlayAGame getSession(UUID relatedIdentifier) {
         GameSession gameSession = runningSessions.get(relatedIdentifier);
 
         return gameSession.getRules();
     }
 
+    // todo: created on 01.09.20 by iljaweber:  Raspberry Pi which registers should get a name by the backend not vice versa
+    @Deprecated
     public void registerRaspberryPiWith(String nameOfRegisteredPi) {
         GameSession session = new GameSession();
         currentSessions.put(nameOfRegisteredPi, session);
