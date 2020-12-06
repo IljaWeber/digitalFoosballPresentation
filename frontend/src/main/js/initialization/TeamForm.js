@@ -14,6 +14,7 @@ export default class TeamForm extends React.Component {
         showSuggestions: false
     };
 
+
     handleChange = () => {
         let json = {
             name: this.state.name,

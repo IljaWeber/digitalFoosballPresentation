@@ -6,21 +6,27 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="persistence" />
         <module name="RaspiController" />
-        <module name="backend" />
+        <module name="web" />
+        <module name="domain" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="backend" target="11" />
       <module name="Digitalfoosball" target="11" />
       <module name="digitial-foosball" target="11" />
+      <module name="domain" target="11" />
+      <module name="persistence" target="11" />
       <module name="RaspiController" target="11" />
+      <module name="web" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="RaspiController" options="" />
-      <module name="backend" options="" />
+      <module name="RaspiController" options="-parameters" />
+      <module name="domain" options="-parameters" />
+      <module name="persistence" options="-parameters" />
+      <module name="web" options="-parameters" />
     </option>
   </component>
 </project>
