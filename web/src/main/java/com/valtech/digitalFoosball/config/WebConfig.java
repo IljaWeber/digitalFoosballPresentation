@@ -1,8 +1,8 @@
 package com.valtech.digitalFoosball.config;
 
 import com.valtech.digitalFoosball.domain.DigitalFoosballFacade;
-import com.valtech.digitalFoosball.domain.IInitializeGames;
 import com.valtech.digitalFoosball.domain.IPlayDigitalFoosball;
+import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
 import com.valtech.digitalFoosball.domain.ports.INotifyAboutStateChanges;
 import com.valtech.digitalFoosball.domain.ports.RankedGamePersistencePort;
 import com.valtech.digitalFoosball.domain.ranked.service.RankedInitService;
@@ -16,13 +16,13 @@ import org.springframework.context.annotation.Import;
 public class WebConfig {
 
     @Bean(name = "facade_bean")
-    public IPlayDigitalFoosball iPlayDigitalFoosball(@Qualifier("ranked_init_service") IInitializeGames rankedInitService,
+    public IPlayDigitalFoosball iPlayDigitalFoosball(@Qualifier("ranked_init_service") RankedInitService rankedInitService,
                                                      INotifyAboutStateChanges publisher) {
-        return new DigitalFoosballFacade(rankedInitService, publisher);
+        return new DigitalFoosballFacade(rankedInitService, new AdHocInitService(), publisher);
     }
 
     @Bean(name = "ranked_init_service")
-    public IInitializeGames iInitializeGames(RankedGamePersistencePort rankedGamePersistencePort) {
+    public RankedInitService iInitializeGames(RankedGamePersistencePort rankedGamePersistencePort) {
         return new RankedInitService(rankedGamePersistencePort);
     }
 }

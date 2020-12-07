@@ -20,16 +20,15 @@ public class PlayerService {
     }
 
     public PlayerDataEntity setUp(PlayerDataEntity playerDataEntity) {
-        Optional<PlayerDataEntity> optionalPlayerDataModel = playerRepository.findByName(playerDataEntity.getName());
-
-        if (optionalPlayerDataModel.isEmpty()) {
+        Optional<PlayerDataEntity> players = playerRepository.findByName(playerDataEntity.getName());
+        if (players.isEmpty()) {
             logger.info("{} saved into DB", playerDataEntity.toString());
 
             return playerRepository.save(playerDataEntity);
         }
 
-        logger.info("{} loaded from DB", optionalPlayerDataModel.get().toString());
+        logger.info("{} loaded from DB", players.get().toString());
 
-        return optionalPlayerDataModel.get();
+        return players.get();
     }
 }

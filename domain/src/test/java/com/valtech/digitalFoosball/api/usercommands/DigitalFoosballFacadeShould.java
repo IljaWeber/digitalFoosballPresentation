@@ -1,6 +1,7 @@
 package com.valtech.digitalFoosball.api.usercommands;
 
 import com.valtech.digitalFoosball.domain.DigitalFoosballFacade;
+import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
@@ -133,7 +134,7 @@ class DigitalFoosballFacadeShould {
     }
 
     private DigitalFoosballFacade createDigitalFoosballFacade() {
-        return new DigitalFoosballFacade(new RankedInitServiceFake(null), new FakePublisher());
+        return new DigitalFoosballFacade(new RankedInitServiceFake(null), new AdHocInitService(), new FakePublisher());
     }
 
     private InitDataModel createAdHocInitDataModel() {

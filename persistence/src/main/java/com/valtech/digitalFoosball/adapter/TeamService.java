@@ -38,6 +38,7 @@ public class TeamService implements RankedGamePersistencePort {
         if (optionalTeamDataModel.isEmpty()) {
             logger.info("{} saved into DB", teamDataModel.toString());
             TeamDataEntity translatedEntity = translateIntoTeamEntity(teamDataModel);
+            translatedEntity.setPlayers(playersFromDatabase);
             TeamDataEntity teamDataEntity = teamRepository.save(translatedEntity);
 
             return translateFromTeamEntity(teamDataEntity);
@@ -112,4 +113,5 @@ public class TeamService implements RankedGamePersistencePort {
 
         return teamDataModel;
     }
+
 }

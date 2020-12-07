@@ -7,6 +7,7 @@ import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputMo
 import com.valtech.digitalFoosball.domain.common.session.SessionIdentifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ public abstract class BaseAPI {
     protected final Logger logger;
     protected final IPlayDigitalFoosball iPlayAGame;
 
+    @Autowired
     public BaseAPI(IPlayDigitalFoosball facade) {
         this.iPlayAGame = facade;
         logger = LogManager.getLogger(AdHocAPI.class);

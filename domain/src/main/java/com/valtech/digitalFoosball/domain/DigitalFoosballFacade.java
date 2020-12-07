@@ -10,6 +10,7 @@ import com.valtech.digitalFoosball.domain.common.session.SessionIdentifier;
 import com.valtech.digitalFoosball.domain.common.session.SessionManager;
 import com.valtech.digitalFoosball.domain.ports.INotifyAboutStateChanges;
 import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
+import com.valtech.digitalFoosball.domain.ranked.service.RankedInitService;
 import com.valtech.digitalFoosball.domain.timeGame.TimeGame;
 
 import java.util.UUID;
@@ -17,11 +18,14 @@ import java.util.UUID;
 public class DigitalFoosballFacade implements IPlayDigitalFoosball {
     private final INotifyAboutStateChanges publisher;
     private final SessionManager sessionManager;
-    private IInitializeGames rankedInitService;
+    private RankedInitService rankedInitService;
+    private AdHocInitService adHocInitService;
 
-    public DigitalFoosballFacade(IInitializeGames rankedInitService,
+    public DigitalFoosballFacade(RankedInitService rankedInitService,
+                                 AdHocInitService adHocInitService,
                                  INotifyAboutStateChanges publisher) {
         this.publisher = publisher;
+        this.adHocInitService = adHocInitService;
         this.sessionManager = new SessionManager();
         this.rankedInitService = rankedInitService;
     }
@@ -42,12 +46,12 @@ public class DigitalFoosballFacade implements IPlayDigitalFoosball {
         }
 
         if (initDataModel.getMode() == GameMode.AD_HOC) {
-            rules = new AdHocGameRules(new AdHocInitService());
+            rules = new AdHocGameRules(adHocInitService);
             rules.initGame(initDataModel);
         }
 
         if (initDataModel.getMode() == GameMode.TIME_GAME) {
-            rules = new TimeGame(new AdHocInitService(), publisher);
+            rules = new TimeGame(adHocInitService, publisher);
             rules.initGame(initDataModel);
         }
 

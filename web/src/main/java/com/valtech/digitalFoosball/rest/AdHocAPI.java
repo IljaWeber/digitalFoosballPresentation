@@ -5,8 +5,6 @@ import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.common.session.SessionIdentifier;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,8 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("adhoc")
 public class AdHocAPI extends BaseAPI {
 
-    @Autowired
-    public AdHocAPI(@Qualifier("facade_bean") IPlayDigitalFoosball facade) {
+    public AdHocAPI(IPlayDigitalFoosball facade) {
         super(facade);
     }
 
