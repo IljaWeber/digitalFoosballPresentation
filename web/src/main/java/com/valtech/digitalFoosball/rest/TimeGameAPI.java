@@ -1,13 +1,10 @@
 package com.valtech.digitalFoosball.rest;
 
-import com.valtech.digitalFoosball.config.WebConfig;
 import com.valtech.digitalFoosball.domain.IPlayDigitalFoosball;
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,11 +15,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("time")
-@Import(WebConfig.class)
 public class TimeGameAPI extends BaseAPI {
 
     @Autowired
-    public TimeGameAPI(@Qualifier("facade_bean") IPlayDigitalFoosball facade) {
+    public TimeGameAPI(IPlayDigitalFoosball facade) {
         super(facade);
     }
 
