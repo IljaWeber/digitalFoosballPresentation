@@ -39,7 +39,6 @@ public class SessionManager {
         return gameSession.getRules();
     }
 
-    // todo: created on 01.09.20 by iljaweber:  Raspberry Pi which registers should get a name by the backend not vice versa
     @Deprecated
     public void registerRaspberryPiWith(String nameOfRegisteredPi) {
         GameSession session = new GameSession();

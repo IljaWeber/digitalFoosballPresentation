@@ -1,15 +1,15 @@
 package com.valtech.digitalFoosball.domain;
 
-import com.valtech.digitalFoosball.domain.adhoc.AdHocGameRules;
-import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
 import com.valtech.digitalFoosball.domain.common.models.GameDataModel;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
 import com.valtech.digitalFoosball.domain.common.session.SessionManager;
 import com.valtech.digitalFoosball.domain.ports.RankedGamePersistencePort;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
-import com.valtech.digitalFoosball.domain.ranked.service.RankedInitService;
+import com.valtech.digitalFoosball.domain.usecases.adhoc.AdHocGameRules;
+import com.valtech.digitalFoosball.domain.usecases.adhoc.AdHocInitService;
+import com.valtech.digitalFoosball.domain.usecases.ranked.RankedGameRules;
+import com.valtech.digitalFoosball.domain.usecases.ranked.service.RankedInitService;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

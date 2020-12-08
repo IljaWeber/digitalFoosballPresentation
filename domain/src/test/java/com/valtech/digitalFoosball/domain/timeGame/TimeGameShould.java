@@ -1,11 +1,14 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
-import com.valtech.digitalFoosball.api.notification.Publisher;
-import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.team.TeamOutputModel;
+import com.valtech.digitalFoosball.domain.ports.INotifyAboutStateChanges;
+import com.valtech.digitalFoosball.domain.usecases.adhoc.AdHocInitService;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.TimeGame;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.TimeGameOutputModel;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.TimeGameRules;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -113,12 +116,8 @@ class TimeGameShould {
         }
     }
 
-    private class FakePublisher extends Publisher {
+    private class FakePublisher implements INotifyAboutStateChanges {
         public boolean clientsInformed = false;
-
-        public FakePublisher() {
-            super(null);
-        }
 
         @Override
         public void notifyAboutStateChange(GameOutputModel gameData) {

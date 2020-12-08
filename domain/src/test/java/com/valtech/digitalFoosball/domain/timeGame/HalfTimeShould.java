@@ -1,7 +1,9 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
-import com.valtech.digitalFoosball.domain.timeGame.sequences.HalfTime;
-import com.valtech.digitalFoosball.domain.timeGame.sequences.SecondHalf;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.IPlayATimeGame;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.TimeGameRules;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.sequences.HalfTime;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.sequences.SecondHalf;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

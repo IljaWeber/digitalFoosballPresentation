@@ -7,7 +7,7 @@ import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.ClassicGameOutputModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
 import com.valtech.digitalFoosball.domain.ports.RankedGamePersistencePort;
-import com.valtech.digitalFoosball.domain.ranked.service.RankedInitService;
+import com.valtech.digitalFoosball.domain.usecases.ranked.service.RankedInitService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
