@@ -1,7 +1,9 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.timeGame.sequences.*;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.IPlayATimeGame;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.TimeGameRules;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.sequences.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Stack;

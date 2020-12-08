@@ -1,9 +1,9 @@
 package com.valtech.digitalFoosball.rest;
 
-import com.valtech.digitalFoosball.domain.IPlayDigitalFoosball;
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputModel;
+import com.valtech.digitalFoosball.domain.ports.IPlayDigitalFoosball;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;

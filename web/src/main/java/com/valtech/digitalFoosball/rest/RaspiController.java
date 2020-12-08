@@ -1,21 +1,20 @@
 package com.valtech.digitalFoosball.rest;
 
-import com.valtech.digitalFoosball.domain.IPlayDigitalFoosball;
-import com.valtech.digitalFoosball.domain.RaiseScoreIdentifier;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.identifier.RaiseScoreIdentifier;
 import com.valtech.digitalFoosball.domain.common.session.SessionIdentifier;
 import com.valtech.digitalFoosball.domain.ports.INotifyAboutStateChanges;
+import com.valtech.digitalFoosball.domain.ports.IPlayDigitalFoosball;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("raspi_controller")
+@RestController
 @RequestMapping("raspi")
 public class RaspiController {
 
@@ -24,7 +23,7 @@ public class RaspiController {
     private final Logger logger;
 
     @Autowired
-    public RaspiController(INotifyAboutStateChanges publisher, @Qualifier("facade_bean") IPlayDigitalFoosball facade) {
+    public RaspiController(INotifyAboutStateChanges publisher, IPlayDigitalFoosball facade) {
         this.publisher = publisher;
         logger = LogManager.getLogger(RaspiController.class);
         this.facade = facade;

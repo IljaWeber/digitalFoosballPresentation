@@ -2,10 +2,10 @@ package com.valtech.digitalFoosball.helper;
 
 import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
-import com.valtech.digitalFoosball.domain.PlaygroundIdentifier;
-import com.valtech.digitalFoosball.domain.RaiseScoreIdentifier;
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
+import com.valtech.digitalFoosball.domain.common.identifier.PlaygroundIdentifier;
+import com.valtech.digitalFoosball.domain.common.identifier.RaiseScoreIdentifier;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
 import com.valtech.digitalFoosball.domain.common.models.TeamDataModel;
 import com.valtech.digitalFoosball.domain.common.session.SessionIdentifier;

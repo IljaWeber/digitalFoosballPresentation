@@ -1,10 +1,12 @@
 package com.valtech.digitalFoosball.domain.timeGame;
 
 import com.valtech.digitalFoosball.domain.common.constants.Team;
-import com.valtech.digitalFoosball.domain.timeGame.sequences.EndByScore;
-import com.valtech.digitalFoosball.domain.timeGame.sequences.FirstHalf;
-import com.valtech.digitalFoosball.domain.timeGame.sequences.HalfTime;
-import com.valtech.digitalFoosball.domain.timeGame.service.MatchScores;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.IPlayATimeGame;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.TimeGameRules;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.sequences.EndByScore;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.sequences.FirstHalf;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.sequences.HalfTime;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.service.MatchScores;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,5 @@
 package com.valtech.digitalFoosball.domain;
 
-import com.valtech.digitalFoosball.domain.adhoc.AdHocGameRules;
-import com.valtech.digitalFoosball.domain.adhoc.AdHocInitService;
 import com.valtech.digitalFoosball.domain.common.constants.GameMode;
 import com.valtech.digitalFoosball.domain.common.constants.Team;
 import com.valtech.digitalFoosball.domain.common.models.InitDataModel;
@@ -9,9 +7,12 @@ import com.valtech.digitalFoosball.domain.common.models.output.game.GameOutputMo
 import com.valtech.digitalFoosball.domain.common.session.SessionIdentifier;
 import com.valtech.digitalFoosball.domain.common.session.SessionManager;
 import com.valtech.digitalFoosball.domain.ports.INotifyAboutStateChanges;
-import com.valtech.digitalFoosball.domain.ranked.RankedGameRules;
-import com.valtech.digitalFoosball.domain.ranked.service.RankedInitService;
-import com.valtech.digitalFoosball.domain.timeGame.TimeGame;
+import com.valtech.digitalFoosball.domain.ports.IPlayDigitalFoosball;
+import com.valtech.digitalFoosball.domain.usecases.adhoc.AdHocGameRules;
+import com.valtech.digitalFoosball.domain.usecases.adhoc.AdHocInitService;
+import com.valtech.digitalFoosball.domain.usecases.ranked.RankedGameRules;
+import com.valtech.digitalFoosball.domain.usecases.ranked.service.RankedInitService;
+import com.valtech.digitalFoosball.domain.usecases.timeGame.TimeGame;
 
 import java.util.UUID;
 
